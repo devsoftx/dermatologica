@@ -15,6 +15,7 @@ public partial class Derma_Admin_EditMedication : PageBase
     {
         if (!Page.IsPostBack)
         {
+            GetServices();
             SetMedication();
         }
     }
@@ -31,6 +32,11 @@ public partial class Derma_Admin_EditMedication : PageBase
                 break;
         }
     }
+    private void GetServices()
+    {
+        var Services = BussinessFactory.GetServiceService().GetAll();
+        BindControl<Service>.BindDropDownList(dwService, Services);
+    }
     void LoadMedication(Guid id)
     {
         var Medication = BussinessFactory.GetMedicationService().Get(id);
@@ -38,7 +44,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         txtDescription.Text = Medication.Description;
         txtNumberSessions.Text = Convert.ToString(Medication.NumberSessions);
         //txtTotalPrice.Text = Convert.ToString(Medication.TotalPrice);
-     }
+    }
 
     private void Save()
     {
@@ -46,16 +52,22 @@ public partial class Derma_Admin_EditMedication : PageBase
         {
             Id = Guid.NewGuid(),
             //Name = txtName.Text.Trim(),
-            Description=txtDescription.Text.Trim(),
-            NumberSessions= Convert.ToInt32(txtNumberSessions.Text.Trim()),
+            //IdPatient=,
+            //IdService=CdwService.SelectedValue,
+
+            Description = txtDescription.Text.Trim(),
+            NumberSessions = Convert.ToInt32(txtNumberSessions.Text.Trim()),
             //TotalPrice=Convert.ToDecimal( txtTotalPrice.Text.Trim()),
+            IsCompleted = false,
             IsActive = true,
             LastModified = LastModified,
             CreationDate = CreationDate,
             ModifiedBy = ModifiedBy,
             CreatedBy = CreatedBy
         };
-    
+        Medication.Person = new Person() { Id = new Guid("10211cfb-1ffd-401c-bdff-d2181c50c001") };
+        Medication.Service = new Service() { Id = new Guid(dwService.SelectedValue) };
+        // Person.PersonType = new PersonType() { Id = new Guid(dwTipoPersona.SelectedValue) };
         try
         {
             var response = BussinessFactory.GetMedicationService().Save(Medication);
@@ -66,7 +78,7 @@ public partial class Derma_Admin_EditMedication : PageBase
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo crear La Medicationa");
+                litMensaje.Text = string.Format("No se puedo crear El tratamiento");
             }
         }
         catch (Exception e)

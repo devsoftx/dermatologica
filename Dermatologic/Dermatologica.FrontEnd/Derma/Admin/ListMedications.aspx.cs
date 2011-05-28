@@ -9,7 +9,7 @@ public partial class Derma_Admin_ListMedications : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Page.IsPostBack) return;
-        GetMedications();
+       // GetMedications();
     }
     protected void gvMedication_RowCommand(object sender, GridViewCommandEventArgs e)
     {

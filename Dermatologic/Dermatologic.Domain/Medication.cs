@@ -9,7 +9,7 @@ namespace Dermatologic.Domain
     {
 
 
-        private IList<Session> _session;
+        //private IList<Session> _session;
 
         //public Medication()
         //{ 
@@ -23,7 +23,7 @@ namespace Dermatologic.Domain
         {
             _person = new Person();
             _service = new Service();
-            _session = new List<Session>();
+            //_session = new List<Session>();
         }
 
         [DataMember]
@@ -47,12 +47,6 @@ namespace Dermatologic.Domain
         //[DataMember]
         //public virtual bool IsPaid { set; get; }
         [DataMember]
-        public virtual Guid? IdPatient { set; get; }
-
-        [DataMember]
-        public virtual Guid? IdService { set; get; }
-
-        [DataMember]
         public virtual bool IsActive { set; get; }
 
         [DataMember]
@@ -72,12 +66,12 @@ namespace Dermatologic.Domain
             return Id.Equals(other.Id);
         }
 
-        [DataMember]
-        public virtual IList<Session> Sessions
-        {
-            set { _session = value; }
-            get { return _session; }
-        }
+        //[DataMember]
+        //public virtual IList<Session> Sessions
+        //{
+        //    set { _session = value; }
+        //    get { return _session; }
+        //}
 
         [DataMember]
         public virtual Person Person

@@ -2,14 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <style type="text/css">
+
         .style1
         {
             width: 100%;
-        }
-        .style2
-        {
-            width: 107px;
-            text-align: right;
         }
         .style3
         {
@@ -20,7 +16,12 @@
         {
             height: 21px;
         }
-    </style>
+        .style2
+        {
+            width: 107px;
+            text-align: right;
+        }
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <div id="Main">
@@ -29,7 +30,7 @@
                 <td class="style3">
                 </td>
                 <td class="style4">
-        <asp:Literal ID="litMensaje" runat="server" />
+                    <asp:Literal ID="litMensaje" runat="server" />
                 </td>
                 <td class="style4">
                 </td>
@@ -39,7 +40,7 @@
                     <asp:Label ID="Label5" runat="server" Text="Servicio"></asp:Label>
                 </td>
                 <td>
-                    <asp:DropDownList ID="DropDownList1" runat="server">
+                    <asp:DropDownList ID="dwService" runat="server">
                     </asp:DropDownList>
                 </td>
                 <td>
@@ -60,7 +61,7 @@
                     <asp:Label ID="Label4" runat="server" Text="Paciente"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="TextBox1" runat="server" Width="338px"></asp:TextBox>
+                    <asp:TextBox ID="TextBox1" runat="server" Width="339px"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;</td>
@@ -101,6 +102,7 @@
                         CellPadding="4" ForeColor="#333333" GridLines="None">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
+                            <asp:BoundField DataField="IdMedication" HeaderText="IdMedication" />
                             <asp:BoundField HeaderText="Descripcion" />
                             <asp:BoundField HeaderText="Moneda" />
                             <asp:BoundField HeaderText="Precio" />
@@ -126,13 +128,13 @@
             </tr>
             <tr>
                 <td class="style2">
-                                <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" 
-                                    onclick="btnAceptar_Click" />
-                            </td>
+                    <asp:Button ID="btnAceptar" runat="server" onclick="btnAceptar_Click" 
+                        Text="Aceptar" />
+                </td>
                 <td>
-                                <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" 
-                                    onclick="btnCancelar_Click" />
-                            </td>
+                    <asp:Button ID="btnCancelar" runat="server" onclick="btnCancelar_Click" 
+                        Text="Cancelar" />
+                </td>
                 <td>
                     &nbsp;</td>
             </tr>
