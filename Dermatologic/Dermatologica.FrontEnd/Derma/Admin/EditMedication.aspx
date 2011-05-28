@@ -98,18 +98,18 @@
                 <td class="style2">
                     &nbsp;</td>
                 <td>
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+                    <asp:GridView ID="gvSessions" runat="server" AutoGenerateColumns="False" 
                         CellPadding="4" ForeColor="#333333" GridLines="None">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:BoundField DataField="IdMedication" HeaderText="IdMedication" />
-                            <asp:BoundField HeaderText="Descripcion" />
-                            <asp:BoundField HeaderText="Moneda" />
-                            <asp:BoundField HeaderText="Precio" />
-                            <asp:BoundField HeaderText="Acuenta" />
-                            <asp:BoundField HeaderText="Saldo" />
-                            <asp:CheckBoxField HeaderText="Completa" />
-                            <asp:CheckBoxField HeaderText="Pagada" />
+                            <asp:BoundField DataField="Description" HeaderText="Descripcion" />
+                            <asp:BoundField DataField="Currency" HeaderText="Moneda" />
+                            <asp:BoundField DataField="Price" HeaderText="Precio" />
+                            <asp:BoundField DataField="Account" HeaderText="Acuenta" />
+                            <asp:BoundField DataField="Residue" HeaderText="Saldo" />
+                            <asp:CheckBoxField DataField="IsCompleted" HeaderText="Completa" />
+                            <asp:CheckBoxField DataField="IsPaid" HeaderText="Pagada" />
                         </Columns>
                         <EditRowStyle BackColor="#999999" />
                         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
