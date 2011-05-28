@@ -188,14 +188,22 @@ namespace Dermatologic.Data.Persistence
 			mapper.Class<Medication>(cm =>
 			{
 				cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
-				cm.Bag(
-					o => o.Sessions,
-					x =>
-					{
-						x.Key(k => k.Column("Id"));
-						x.Lazy(CollectionLazy.Lazy);
-					},
-					x => { });
+                cm.ManyToOne(
+                    x => x.Person,
+                    m =>
+                    {
+                        m.Column("IdPatient");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                   x => x.Service,
+                   m =>
+                   {
+                       m.Column("IdService");
+                       m.Fetch(FetchMode.Join);
+                       m.NotNullable(true);
+                   });
 			});
 			
 			mapper.Class<Session>(cm =>

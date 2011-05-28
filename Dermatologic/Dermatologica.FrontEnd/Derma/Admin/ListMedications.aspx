@@ -5,7 +5,7 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-	<telerik:radcodeblock id="rcbInvitation" runat="server">
+    <telerik:radcodeblock id="rcbInvitation" runat="server">
 		<script type="text/javascript">
 		    function openRadWindow(url, rw) {
 		        var aleatorio = Math.ceil(Math.random() * 1000);
@@ -27,7 +27,7 @@
 		    }
         </script>
 	</telerik:radcodeblock>
-    	<telerik:radajaxmanager id="RadAjaxManager" runat="server">
+     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
 	   <AjaxSettings>			
 			<telerik:AjaxSetting AjaxControlID="btnDoPostBack">
 			   <UpdatedControls>
@@ -40,7 +40,7 @@
 			   </UpdatedControls>
 			 </telerik:AjaxSetting>
 	   </AjaxSettings>
-	</telerik:radajaxmanager>
+	 </telerik:RadAjaxManager>
 	<telerik:radajaxloadingpanel runat="server" id="rlpLoading" transparency="50" height="100%"
 		width="100%">
 		<table style="height: 100%; width: 100%;" border="0">
@@ -142,7 +142,7 @@
     </telerik:radajaxpanel>    
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
-<telerik:radwindowmanager showcontentduringload="false" autosize="false" id="RadWindowManager1"
+    <telerik:radwindowmanager showcontentduringload="false" autosize="false" id="RadWindowManager1"
 			width="510px" height="410px" runat="server" modal="true" behaviors="Close, Resize"
 			destroyonclose="false">
 		<Windows>
