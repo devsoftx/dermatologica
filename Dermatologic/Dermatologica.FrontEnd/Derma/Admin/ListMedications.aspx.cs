@@ -56,7 +56,7 @@ public partial class Derma_Admin_ListMedications : PageBase
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-        const string javascript = "openRadWindow('~/Derma/Admin/SearchPersons.aspx?personType=','rw1');";
+        const string javascript = "openRadWindow('SearchPersons.aspx?personType=','rw1');";
         System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
 }
