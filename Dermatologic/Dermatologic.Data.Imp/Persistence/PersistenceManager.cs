@@ -189,7 +189,7 @@ namespace Dermatologic.Data.Persistence
             {
                 cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
                 cm.ManyToOne(
-                    x => x.Person,
+                    x => x.Patient,
                     m =>
                     {
                         m.Column("IdPatient");
