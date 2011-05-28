@@ -9,9 +9,10 @@ using Dermatologic.Domain;
 
 public partial class Derma_SearchPersons : PageBase
 {
+    
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
     }
 
     private void SearchPersons()
