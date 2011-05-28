@@ -1,0 +1,84 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Dermatologica.FrontEnd", "Dermatologica.FrontEnd\", "{9D2105C0-C78D-4B93-8187-4840490874F7}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "Svn"
+		SccAuxPath = "Svn"
+		SccLocalPath = "Svn"
+		SccProvider = "SubversionScc"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{E2C509FA-8921-43F4-900C-1ED960ECC46B}|Dermatologic.Domain.dll;{1D4385B0-31DA-403C-A66D-BDB5E4105E1D}|Dermatologic.Services.dll;{63CAA245-E7E9-4033-A8FD-0AF9FD55D26E}|Dermatologic.Data.dll;{8BDC68D9-8C5C-4F6E-9780-5F4618E3D7EB}|Dermatologic.Data.Imp.dll;{05424165-2884-449D-861A-562209107179}|Dermatologic.Services.Imp.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/Dermatologica.FrontEnd"
+		Debug.AspNetCompiler.PhysicalPath = "Dermatologica.FrontEnd\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Dermatologica.FrontEnd\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Dermatologica.FrontEnd"
+		Release.AspNetCompiler.PhysicalPath = "Dermatologica.FrontEnd\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Dermatologica.FrontEnd\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "10525"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dermatologic.Data", "Dermatologic.Data\Dermatologic.Data.csproj", "{63CAA245-E7E9-4033-A8FD-0AF9FD55D26E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dermatologic.Data.Imp", "Dermatologic.Data.Imp\Dermatologic.Data.Imp.csproj", "{8BDC68D9-8C5C-4F6E-9780-5F4618E3D7EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dermatologic.Data.Tests", "Dermatologic.Data.Tests\Dermatologic.Data.Tests.csproj", "{25B923E4-2D6D-4C32-9517-012B94762960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dermatologic.Domain", "Dermatologic.Domain\Dermatologic.Domain.csproj", "{E2C509FA-8921-43F4-900C-1ED960ECC46B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dermatologic.Services", "Dermatologic.Services\Dermatologic.Services.csproj", "{1D4385B0-31DA-403C-A66D-BDB5E4105E1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dermatologic.Services.Imp", "Dermatologic.Services.Imp\Dermatologic.Services.Imp.csproj", "{05424165-2884-449D-861A-562209107179}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D2105C0-C78D-4B93-8187-4840490874F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D2105C0-C78D-4B93-8187-4840490874F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D2105C0-C78D-4B93-8187-4840490874F7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D2105C0-C78D-4B93-8187-4840490874F7}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{63CAA245-E7E9-4033-A8FD-0AF9FD55D26E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63CAA245-E7E9-4033-A8FD-0AF9FD55D26E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63CAA245-E7E9-4033-A8FD-0AF9FD55D26E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63CAA245-E7E9-4033-A8FD-0AF9FD55D26E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BDC68D9-8C5C-4F6E-9780-5F4618E3D7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BDC68D9-8C5C-4F6E-9780-5F4618E3D7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BDC68D9-8C5C-4F6E-9780-5F4618E3D7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BDC68D9-8C5C-4F6E-9780-5F4618E3D7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25B923E4-2D6D-4C32-9517-012B94762960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25B923E4-2D6D-4C32-9517-012B94762960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25B923E4-2D6D-4C32-9517-012B94762960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25B923E4-2D6D-4C32-9517-012B94762960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2C509FA-8921-43F4-900C-1ED960ECC46B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2C509FA-8921-43F4-900C-1ED960ECC46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2C509FA-8921-43F4-900C-1ED960ECC46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2C509FA-8921-43F4-900C-1ED960ECC46B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D4385B0-31DA-403C-A66D-BDB5E4105E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4385B0-31DA-403C-A66D-BDB5E4105E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D4385B0-31DA-403C-A66D-BDB5E4105E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D4385B0-31DA-403C-A66D-BDB5E4105E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05424165-2884-449D-861A-562209107179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05424165-2884-449D-861A-562209107179}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05424165-2884-449D-861A-562209107179}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05424165-2884-449D-861A-562209107179}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

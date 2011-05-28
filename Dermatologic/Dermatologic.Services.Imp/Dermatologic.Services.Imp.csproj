@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{05424165-2884-449D-861A-562209107179}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Dermatologic.Services.Imp</RootNamespace>
+    <AssemblyName>Dermatologic.Services.Imp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractServiceFactory.cs" />
+    <Compile Include="Imp\AppointmentService.cs" />
+    <Compile Include="Imp\ItemTableService.cs" />
+    <Compile Include="Imp\MedicalCareService.cs" />
+    <Compile Include="Imp\PaymentService.cs" />
+    <Compile Include="Imp\PersonService.cs" />
+    <Compile Include="Imp\MailerService.cs" />
+    <Compile Include="Imp\MedicationService.cs" />
+    <Compile Include="Imp\MenuRoleService.cs" />
+    <Compile Include="Imp\MenuService.cs" />
+    <Compile Include="Imp\PersonTypeService.cs" />
+    <Compile Include="Imp\RateService.cs" />
+    <Compile Include="Imp\RoleService.cs" />
+    <Compile Include="Imp\ServiceService.cs" />
+    <Compile Include="Imp\SessionService.cs" />
+    <Compile Include="Imp\SupplyService.cs" />
+    <Compile Include="Imp\TableService.cs" />
+    <Compile Include="Imp\UbigeoService.cs" />
+    <Compile Include="Imp\UsersInRolesService.cs" />
+    <Compile Include="Imp\UsersService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceController.cs" />
+    <Compile Include="ServiceFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dermatologic.Data.Imp\Dermatologic.Data.Imp.csproj">
+      <Project>{8BDC68D9-8C5C-4F6E-9780-5F4618E3D7EB}</Project>
+      <Name>Dermatologic.Data.Imp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dermatologic.Data\Dermatologic.Data.csproj">
+      <Project>{63CAA245-E7E9-4033-A8FD-0AF9FD55D26E}</Project>
+      <Name>Dermatologic.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dermatologic.Domain\Dermatologic.Domain.csproj">
+      <Project>{E2C509FA-8921-43F4-900C-1ED960ECC46B}</Project>
+      <Name>Dermatologic.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dermatologic.Services\Dermatologic.Services.csproj">
+      <Project>{1D4385B0-31DA-403C-A66D-BDB5E4105E1D}</Project>
+      <Name>Dermatologic.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

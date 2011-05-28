@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Dermatologic.Domain.Menu">
+    <Position X="1.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAAAAAAAQAkAAAABQCAAAAAAAgCgAAAAAAAAE=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.Role">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAACAAAAAAAAkAAAABACAAAAAAggAAAAEAAAAAE=</HashCode>
+      <FileName>Role.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.User">
+    <Position X="6.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAACAAAAAAAAkAAAAAACAAAAAAgCAAAQAAAAAAE=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.Province">
+    <Position X="8.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAAAAAAAAAkAAACAQCAAAAAAAAAAAABAAAAAE=</HashCode>
+      <FileName>Province.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.Customer">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCEAAACAAAAAAkAAAAAACAAgAAAACAAAAIACAAAk=</HashCode>
+      <FileName>Customer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.District">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAAAAAAAAAkAAAAAACAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>District.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.Employee" Collapsed="true">
+    <Position X="4.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAECCEAAAAAAAAAAkAAAAAACAAAAAAAAAAAAAAAAAAk=</HashCode>
+      <FileName>Employee.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.State">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAAAAAAAAAkEAAAAQCAAIAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>State.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.Ubication">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAAAAAAAAAkAAAAAACAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Ubication.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.Country">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAAAAAAAAAgAAAAAQCAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Country.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dermatologic.Domain.MenuRole">
+    <Position X="4.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACCAAAAAAAAAAAkAAAAAACAAAIAAAAAAABACAAAAE=</HashCode>
+      <FileName>MenuRole.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

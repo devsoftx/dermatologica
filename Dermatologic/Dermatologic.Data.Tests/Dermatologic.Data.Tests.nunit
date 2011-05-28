@@ -1,0 +1,6 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Default" />
+  <Config name="Default" configfile="App.config" binpathtype="Auto">
+    <assembly path="bin\Debug\Dermatologic.Data.Tests.dll" />
+  </Config>
+</NUnitProject>
