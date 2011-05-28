@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="ListMedications.aspx.cs" Inherits="Derma_Admin_ListMedications" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%--<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>--%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-    <telerik:radcodeblock id="rcbInvitation" runat="server">
+    <%--<telerik:radcodeblock id="rcbInvitation" runat="server">
 		<script type="text/javascript">
 		    function openRadWindow(url, rw) {
 		        var aleatorio = Math.ceil(Math.random() * 1000);
@@ -139,10 +139,10 @@
                 </asp:Panel>
             </ContentTemplate>
         </asp:UpdatePanel>
-    </telerik:radajaxpanel>    
+    </telerik:radajaxpanel>--%>    
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
-    <telerik:radwindowmanager showcontentduringload="false" autosize="false" id="RadWindowManager1"
+    <%--<telerik:radwindowmanager showcontentduringload="false" autosize="false" id="RadWindowManager1"
 			width="510px" height="410px" runat="server" modal="true" behaviors="Close, Resize"
 			destroyonclose="false">
 		<Windows>
@@ -150,5 +150,5 @@
 				Title="Busqueda de Pacientes">
 			</telerik:RadWindow>        
 		</Windows>
-	</telerik:radwindowmanager>
+	</telerik:radwindowmanager>--%>
 </asp:Content>

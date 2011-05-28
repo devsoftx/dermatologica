@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Derma_Default" %>
-<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+<%--<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>--%>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td>
-                <asp:UpdatePanel runat="server" ID="upCalendar">
+                <%--<asp:UpdatePanel runat="server" ID="upCalendar">
                     <ContentTemplate>
                         <asp:Panel runat="Server" ID="panContainer">
                             <telerik:RadScheduler ID="radCalendar" runat="server" Skin="Simple" Culture="Spanish (Peru)"
@@ -82,7 +82,7 @@
                                 <appointmenttemplate>
                                     <div>
                                         <b style="font-size: 10px;"><%# Eval("Subject") %></b>
-                                        <%--<div style="font-style: italic; font-size: 9px;"><%# Eval("Tipo.Text") %></div>--%>
+                                        <div style="font-style: italic; font-size: 9px;"><%# Eval("Tipo.Text") %></div>
                                     </div>
                                 </appointmenttemplate>
                             </telerik:RadScheduler>
@@ -97,7 +97,7 @@
                         <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="Navigationcomplete" />
                         <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="Appointmentclick" />
                     </Triggers>
-                </asp:UpdatePanel>
+                </asp:UpdatePanel>--%>
             </td>
         </tr>        
     </table>
