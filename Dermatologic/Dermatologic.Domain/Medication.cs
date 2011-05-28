@@ -16,12 +16,12 @@ namespace Dermatologic.Domain
         //    _session = new List<Session>();
         //}
 
-        private Person _person;
+        private Person _patient;
 
         private Service _service;
         public Medication()
         {
-            _person = new Person();
+            _patient = new Person();
             _service = new Service();
             //_session = new List<Session>();
         }
@@ -74,10 +74,10 @@ namespace Dermatologic.Domain
         //}
 
         [DataMember]
-        public virtual Person Person
+        public virtual Person Patient
         {
-            set { _person = value; }
-            get { return _person; }
+            set { _patient = value; }
+            get { return _patient; }
         }
         [DataMember]
         public virtual Service Service
