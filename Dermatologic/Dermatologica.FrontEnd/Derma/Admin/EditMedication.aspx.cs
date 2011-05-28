@@ -65,7 +65,7 @@ public partial class Derma_Admin_EditMedication : PageBase
             ModifiedBy = ModifiedBy,
             CreatedBy = CreatedBy
         };
-        Medication.Person = new Person() { Id = new Guid("10211cfb-1ffd-401c-bdff-d2181c50c001") };
+        Medication.Patient = new Person() { Id = new Guid("10211cfb-1ffd-401c-bdff-d2181c50c001") };
         Medication.Service = new Service() { Id = new Guid(dwService.SelectedValue) };
         // Person.PersonType = new PersonType() { Id = new Guid(dwTipoPersona.SelectedValue) };
         try
