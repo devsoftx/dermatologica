@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Medication = Dermatologic.Domain.Medication;
@@ -47,6 +49,8 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     private void Save()
     {
+        var patientResponse = BussinessFactory.GetPersonService().GetPersonByDni(txtDni.Text.Trim());
+        var patient = patientResponse.Person;
         var medication = new Medication
                              {
                                  Id = Guid.NewGuid(),
@@ -58,14 +62,32 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  CreationDate = CreationDate,
                                  ModifiedBy = ModifiedBy,
                                  CreatedBy = CreatedBy,
-                                 Patient = new Person {Id = BussinessFactory.GetPersonService().GetPersonByDni(txtDni.Text.Trim()).Person.Id},
+                                 Patient = patient,
                                  Service = new Service {Id = new Guid(dwService.SelectedValue)}
                              };
         try
         {
-            //var response = BussinessFactory.GetMedicationService().Save(Medication);
-            var sessions = GetSessions();
-            var response = BussinessFactory.GetMedicationService().SaveMedication(medication, sessions);
+            foreach (GridViewRow row in gvSessions.Rows)
+            {
+                var session = new Session
+                                  {
+                                      Id = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString()),
+                                      Currency = ddlCurrency.SelectedValue,
+                                      Price = Convert.ToDecimal(row.Cells[1].Text),
+                                      Account = Convert.ToDecimal(row.Cells[2].Text),
+                                      Residue = Convert.ToDecimal(row.Cells[3].Text),
+                                      IsCompleted = ((CheckBox) row.FindControl("chkIsCompleted")).Checked,
+                                      IsPaid = ((CheckBox) row.FindControl("chkIsPaid")).Checked,
+                                      IsActive = true,
+                                      LastModified = LastModified,
+                                      CreatedBy = CreatedBy,
+                                      CreationDate = CreationDate,
+                                      ModifiedBy = ModifiedBy
+                                  };
+                session.Medication = medication;
+                medication.Sessions.Add(session);
+            }
+            var response = BussinessFactory.GetMedicationService().Save(medication);
 
             if (response.OperationResult == OperationResult.Success)
             {
@@ -94,7 +116,6 @@ public partial class Derma_Admin_EditMedication : PageBase
             Medication.IsActive = true;
             Medication.LastModified = LastModified;
             Medication.ModifiedBy = ModifiedBy;
-
             var response = BussinessFactory.GetMedicationService().Update(Medication);
             if (response.OperationResult == OperationResult.Success)
             {
@@ -158,7 +179,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         var intSession = Convert.ToInt32(txtNumberSessions.Text.Trim());
         decimal price = (Convert.ToInt32(txtPrice.Text.Trim()) / intSession);
         IList<Session> sessions = new List<Session>();
-        for (int i = 0; i < intSession; i++)
+        for (var i = 0; i < intSession; i++)
         {
             var session = new Session
                               {
@@ -171,45 +192,11 @@ public partial class Derma_Admin_EditMedication : PageBase
                                   LastModified = LastModified,
                                   CreatedBy = CreatedBy,
                                   CreationDate = CreationDate,
-                                  ModifiedBy = ModifiedBy,
-                                  Medication =
-                                      {
-                                          Id = Request.QueryString.Get("action") == "new"
-                                                   ? Guid.NewGuid()
-                                                   : new Guid(Request.QueryString.Get("id"))
-                                      }
+                                  ModifiedBy = ModifiedBy
                               };
             sessions.Add(session);
         }
-        gvSessions.DataSource = sessions;
-        gvSessions.DataBind();
+        BindControl<Session>.BindGrid(gvSessions,sessions);
     }
 
-    private IEnumerable<Session> GetSessions()
-    {
-        IList<Session> sessions = new List<Session>();
-        foreach (GridViewRow row in gvSessions.Rows)
-        {
-            var session = new Session();
-            session.Id = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString());
-            session.Currency = ddlCurrency.SelectedValue;
-            session.Price = Convert.ToDecimal(row.Cells[1].Text);
-            session.Account = Convert.ToDecimal(row.Cells[2].Text);
-            session.Residue = Convert.ToDecimal(row.Cells[3].Text);
-            session.IsCompleted = ((CheckBox) row.FindControl("chkIsCompleted")).Checked;
-            session.IsPaid = ((CheckBox)row.FindControl("chkIsPaid")).Checked;
-            session.IsActive = true;
-            session.LastModified = LastModified;
-            session.CreatedBy = CreatedBy;
-            session.CreationDate = CreationDate;
-            session.ModifiedBy = ModifiedBy;
-            sessions.Add(session);
-        }
-        return sessions;
-
-        //return (from GridView row in gvSessions.Rows
-        //        select new Session(
-
-        //            )).ToList();
-    }
 }

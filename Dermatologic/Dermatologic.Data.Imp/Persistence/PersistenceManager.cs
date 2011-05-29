@@ -65,6 +65,7 @@ namespace Dermatologic.Data.Persistence
                 db.HqlToSqlSubstitutions = "true 1, false 0, yes 'Y', no 'N'";
                 db.LogFormatedSql = true;
                 db.AutoCommentSql = true;
+                db.PrepareCommands = true;
             });
 
             configure.AddDeserializedMapping(GetMapping(), "Dermatologic.Data");
@@ -204,6 +205,19 @@ namespace Dermatologic.Data.Persistence
                        m.Fetch(FetchMode.Join);
                        m.NotNullable(true);
                    });
+                cm.Bag(
+                    o => o.Sessions,
+                    x =>
+                    {
+                        x.Key(k => k.Column("Id"));
+                        x.Cascade(Cascade.All);
+                        x.Table("Session");
+                    },
+                    x =>
+                        {
+                            x.ManyToMany(k => k.Column("Id"));
+                            x.ManyToMany(g => g.Class(typeof(Session)));
+                        });
             });
 
             mapper.Class<Session>(cm =>
@@ -215,7 +229,7 @@ namespace Dermatologic.Data.Persistence
                     {
                         m.Column("IdMedication");
                         m.Fetch(FetchMode.Join);
-                        m.NotNullable(true);
+                        m.Cascade(Cascade.Persist | Cascade.Remove);
                     });
             });
 

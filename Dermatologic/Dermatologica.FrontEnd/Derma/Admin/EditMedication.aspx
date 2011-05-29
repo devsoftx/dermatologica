@@ -266,6 +266,7 @@
                             </tr>
                         </table>
                     </div>
+                    <asp:HiddenField ID="hdnValue" runat="server" />
                     <asp:Button ID="btnDoPostBack" runat="server" BorderStyle="None" Height="0" Width="0"
                         OnClick="btnDoPostBack_Click" />
                 </asp:Panel>
