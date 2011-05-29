@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using ASP.App_Code;
@@ -137,7 +138,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                 return;
             }
         }
-        var javascript = string.Format("openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54&documentType={0}','rw1');",ddlDocumentType.SelectedValue);
+        var javascript = "openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54','rw1');";
         System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
 
@@ -145,4 +146,34 @@ public partial class Derma_Admin_EditMedication : PageBase
     {
 
     }
+
+    protected void btnAddSessions_Click(object sender, EventArgs e)
+    {
+        var intSession = Convert.ToInt32(txtNumberSessions.Text.Trim());
+        decimal price = (Convert.ToInt32(txtPrice.Text.Trim()) / intSession);
+        
+        IList<Session> sessions = new List<Session>();
+        for (int i = 0; i < intSession; i++)
+        {
+            var session = new Session
+                              {
+                                  Id = Guid.NewGuid(),
+                                  Currency = ddlCurrency.SelectedValue,
+                                  Price = price,
+                                  IsCompleted = false,
+                                  IsPaid = false,
+                                  IsActive = true,
+                                  LastModified = LastModified,
+                                  CreatedBy = CreatedBy,
+                                  CreationDate = CreationDate,
+                                  ModifiedBy = ModifiedBy
+                              };
+            session.Medication.Id = Request.QueryString.Get("action") == "new" ? Guid.NewGuid() :
+            new Guid(Request.QueryString.Get("id"));
+            sessions.Add(session);
+        }
+        gvSessions.DataSource = sessions;
+        gvSessions.DataBind();
+    }
+
 }

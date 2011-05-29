@@ -443,8 +443,10 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
-                    cm.Property(x => x.Key, m => m.Column("Key"));
+                    cm.Property(x => x.Currency, m => m.Column("Currency"));
+                    cm.Property(x => x.Price, m => m.Column("Price"));
+                    cm.Property(x => x.Account, m => m.Column("Account"));
+                    cm.Property(x => x.Residue, m => m.Column("Residue"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.IsCompleted, m => m.Column("IsCompleted"));
                     cm.Property(x => x.IsPaid, m => m.Column("IsPaid"));

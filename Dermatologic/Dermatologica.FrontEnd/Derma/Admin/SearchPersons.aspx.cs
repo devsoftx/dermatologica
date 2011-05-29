@@ -12,20 +12,21 @@ public partial class Derma_SearchPersons : PageBase
     
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        SearchPersons();
     }
 
     private void SearchPersons()
     {
+        var personType = Request.QueryString.Get("personType");
         var example = new Person
                           {
-                              DocumentType = "",
-                              PersonType = {Id = new Guid("")},
-                              FirstName = "",
-                              LastName = "",
-                              DocumentNumber = ""
+                              PersonType = { Id = new Guid(personType) },
+                              FirstName = txtSearch.Text.Trim().ToLower(),
+                              LastName = txtSearch.Text.Trim().ToLower(),
                           };
         var pacients = BussinessFactory.GetPersonService().GetPacients(example);
+        gvPersons.DataSource = pacients;
+        gvPersons.DataBind();
     }
 
     protected void gvPersons_RowCommand(object sender, GridViewCommandEventArgs e)

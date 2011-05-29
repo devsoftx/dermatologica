@@ -5,11 +5,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />    
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body>
+<body style="background-color:White;">
     <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"/>
     <div>
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         

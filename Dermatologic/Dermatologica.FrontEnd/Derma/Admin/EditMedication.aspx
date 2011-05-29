@@ -116,7 +116,7 @@
                                         <tr>
                                             <td>
                                                 <asp:DropDownList ID="ddlDocumentType" runat="server" AppendDataBoundItems="True"
-                                                    Width="50px">
+                                                    Width="100px">
                                                     <asp:ListItem>Dni</asp:ListItem>
                                                     <asp:ListItem Value="PAS">Pasaporte</asp:ListItem>
                                                     <asp:ListItem Value="CEX">Carnet de Extranjería</asp:ListItem>
@@ -143,11 +143,39 @@
                             </tr>
                             <tr>
                                 <td class="style2">
+                                    Moneda</td>
+                                <td>
+                                    <asp:DropDownList ID="ddlCurrency" runat="server" AppendDataBoundItems="True" 
+                                        Width="50px">
+                                        <asp:ListItem>USD</asp:ListItem>
+                                        <asp:ListItem Value="PEN">PEN</asp:ListItem>
+                                        <asp:ListItem>EUR</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="style2">
+                                    Precio Total</td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="txtPrice" Runat="server" 
+                                        DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
+                                    </telerik:RadNumericTextBox>
+                                </td>
+                                <td>
+                                    &nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="style2">
                                     <asp:Label ID="Label3" runat="server" Text="N° de Sesiones"></asp:Label>
                                 </td>
                                 <td>
-                                    <asp:TextBox ID="txtNumberSessions" runat="server" Width="40px"></asp:TextBox>
-                                    <asp:Button ID="btnAddSessions" runat="server" Text="Agregar" />
+                                    <telerik:RadNumericTextBox ID="txtNumberSessions" Runat="server" 
+                                        DataType="System.Int32" MaxValue="99" MinValue="1" Width="35px">
+                                    </telerik:RadNumericTextBox>
+                                    <asp:Button ID="btnAddSessions" runat="server" onclick="btnAddSessions_Click" 
+                                        Text="Agregar" />
                                 </td>
                                 <td>
                                     &nbsp;
@@ -183,14 +211,23 @@
                                         ForeColor="#333333" GridLines="None">
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
-                                            <asp:BoundField DataField="IdMedication" HeaderText="IdMedication" />
-                                            <asp:BoundField DataField="Description" HeaderText="Descripcion" />
                                             <asp:BoundField DataField="Currency" HeaderText="Moneda" />
                                             <asp:BoundField DataField="Price" HeaderText="Precio" />
                                             <asp:BoundField DataField="Account" HeaderText="Acuenta" />
                                             <asp:BoundField DataField="Residue" HeaderText="Saldo" />
                                             <asp:CheckBoxField DataField="IsCompleted" HeaderText="Completa" />
                                             <asp:CheckBoxField DataField="IsPaid" HeaderText="Pagada" />
+                                            <asp:TemplateField HeaderText="Pagar">
+                                                <ItemTemplate>
+                                                    <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?id={0}",Eval("Id")) %>'>Pagar</asp:HyperLink>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Editar">
+                                                <ItemTemplate>
+                                                    <asp:HyperLink ID="lnkEdit" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("EditSession.aspx?id={0}",Eval("Id")) %>' >Editar</asp:HyperLink>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="Description" HeaderText="Descripcion" />
                                         </Columns>
                                         <EditRowStyle BackColor="#999999" />
                                         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -230,10 +267,10 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
     <telerik:radwindowmanager showcontentduringload="false" autosize="false" id="RadWindowManager1"
-			width="510px" height="410px" runat="server" modal="true" behaviors="Close, Resize"
+			width="650px" height="410px" runat="server" modal="true" behaviors="Close, Resize, Move"
 			destroyonclose="false">
 		<Windows>
-			<telerik:RadWindow ID="rw1" runat="server" Height="410px" Width="510px" Modal="true"
+			<telerik:RadWindow ID="rw1" runat="server" Height="410px" Width="650px" Modal="true"
 				Title="Busqueda de Pacientes">
 			</telerik:RadWindow>        
 		</Windows>
