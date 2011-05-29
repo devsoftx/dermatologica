@@ -23,13 +23,14 @@ public partial class Derma_Admin_EditMedication : PageBase
     private void SetMedication()
     {
         var action = Request.QueryString.Get("action");
-        string id = Request.QueryString.Get("id");
+        var id = Request.QueryString.Get("id");
         switch (action)
         {
             case "new":
                 break;
             case "edit":
                 LoadMedication(new Guid(id));
+                LoadSessions(new Guid(id));
                 break;
         }
     }
@@ -42,9 +43,12 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     private void LoadMedication(Guid id)
     {
-        var Medication = BussinessFactory.GetMedicationService().Get(id);
-        txtDescription.Text = Medication.Description;
-        txtNumberSessions.Text = Convert.ToString(Medication.NumberSessions);
+        var medication = BussinessFactory.GetMedicationService().Get(id);
+        txtDescription.Text = medication.Description;
+        txtNumberSessions.Text = Convert.ToString(medication.NumberSessions);
+        ddlDocumentType.SelectedValue = medication.Patient.DocumentType;
+        txtDni.Text = medication.Patient.DocumentNumber;
+        txtPacient.Text = string.Format("{0} {1}", medication.Patient.FirstName, medication.Patient.LastName);
     }
 
     private void Save()
@@ -199,4 +203,14 @@ public partial class Derma_Admin_EditMedication : PageBase
         BindControl<Session>.BindGrid(gvSessions,sessions);
     }
 
+    private void LoadSessions(Guid medicationId)
+    {
+        var session = new Session {Medication = {Id = medicationId}};
+        var response = BussinessFactory.GetSessionService().GetSessionByMedication(session);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            txtPrice.Text = response.Sessions.Sum(p => p.Price).ToString();
+            BindControl<Session>.BindGrid(gvSessions,response.Sessions);
+        }
+    }
 }

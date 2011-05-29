@@ -173,6 +173,7 @@
                                 <td>
                                     <telerik:RadNumericTextBox ID="txtNumberSessions" Runat="server" 
                                         DataType="System.Int32" MaxValue="99" MinValue="1" Width="35px">
+                                        <NumberFormat AllowRounding="False" DecimalDigits="0" />
                                     </telerik:RadNumericTextBox>
                                     <asp:Button ID="btnAddSessions" runat="server" onclick="btnAddSessions_Click" 
                                         Text="Agregar" />

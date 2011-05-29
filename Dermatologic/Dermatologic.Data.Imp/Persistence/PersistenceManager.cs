@@ -293,6 +293,7 @@ namespace Dermatologic.Data.Persistence
             mapper.Class<UsersInRoles>(x => x.Table("aspnet_UsersInRoles"));
             mapper.Class<Users>(x => x.Table("aspnet_Users"));
             mapper.Class<Table>(x => x.Table("[Table]"));
+            mapper.Class<Table>(x => x.Table("[Session]"));
         }
 
         private static void CustomizeColumns(Mapper mapper)

@@ -8,6 +8,6 @@ namespace Dermatologic.Data
 {
     public interface ISessionRepository : IRepository<Session>
     {
-
+        IList<Session> GetSessionByMedication(Session medication);
     }
 }
