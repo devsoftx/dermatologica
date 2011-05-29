@@ -208,15 +208,23 @@
                                 </td>
                                 <td>
                                     <asp:GridView ID="gvSessions" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                        ForeColor="#333333" GridLines="None">
+                                        ForeColor="#333333" GridLines="None" DataKeyNames="Id">
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
                                             <asp:BoundField DataField="Currency" HeaderText="Moneda" />
                                             <asp:BoundField DataField="Price" HeaderText="Precio" />
                                             <asp:BoundField DataField="Account" HeaderText="Acuenta" />
                                             <asp:BoundField DataField="Residue" HeaderText="Saldo" />
-                                            <asp:CheckBoxField DataField="IsCompleted" HeaderText="Completa" />
-                                            <asp:CheckBoxField DataField="IsPaid" HeaderText="Pagada" />
+                                            <asp:TemplateField HeaderText="Completa">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="chkIsCompleted" runat="server" Checked = '<%# Eval("IsCompleted") %>' />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Pagada">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="chkIsPaid" runat="server" Checked = '<%# Eval("IsPaid") %>' />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagar">
                                                 <ItemTemplate>
                                                     <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?id={0}",Eval("Id")) %>'>Pagar</asp:HyperLink>

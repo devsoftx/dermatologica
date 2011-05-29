@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Medication = Dermatologic.Domain.Medication;
 using Dermatologic.Domain;
@@ -17,6 +17,7 @@ public partial class Derma_Admin_EditMedication : PageBase
             SetMedication();
         }
     }
+
     private void SetMedication()
     {
         var action = Request.QueryString.Get("action");
@@ -30,12 +31,14 @@ public partial class Derma_Admin_EditMedication : PageBase
                 break;
         }
     }
+
     private void GetServices()
     {
         var Services = BussinessFactory.GetServiceService().GetAll();
         BindControl<Service>.BindDropDownList(dwService, Services);
     }
-    void LoadMedication(Guid id)
+
+    private void LoadMedication(Guid id)
     {
         var Medication = BussinessFactory.GetMedicationService().Get(id);
         txtDescription.Text = Medication.Description;
@@ -44,7 +47,7 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     private void Save()
     {
-        var Medication = new Medication
+        var medication = new Medication
                              {
                                  Id = Guid.NewGuid(),
                                  Description = txtDescription.Text.Trim(),
@@ -55,12 +58,14 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  CreationDate = CreationDate,
                                  ModifiedBy = ModifiedBy,
                                  CreatedBy = CreatedBy,
-                                 Patient = new Person() {Id = new Guid("10211cfb-1ffd-401c-bdff-d2181c50c001")},
-                                 Service = new Service() {Id = new Guid(dwService.SelectedValue)}
+                                 Patient = new Person {Id = BussinessFactory.GetPersonService().GetPersonByDni(txtDni.Text.Trim()).Person.Id},
+                                 Service = new Service {Id = new Guid(dwService.SelectedValue)}
                              };
         try
         {
-            var response = BussinessFactory.GetMedicationService().Save(Medication);
+            //var response = BussinessFactory.GetMedicationService().Save(Medication);
+            var sessions = GetSessions();
+            var response = BussinessFactory.GetMedicationService().SaveMedication(medication, sessions);
 
             if (response.OperationResult == OperationResult.Success)
             {
@@ -120,6 +125,7 @@ public partial class Derma_Admin_EditMedication : PageBase
     {
         Response.Redirect("~/Derma/Admin/ListMedications.aspx", true);
     }
+
     protected void lnkSearch_Click(object sender, EventArgs e)
     {
         var dni = txtDni.Text.Trim();
@@ -179,4 +185,31 @@ public partial class Derma_Admin_EditMedication : PageBase
         gvSessions.DataBind();
     }
 
+    private IEnumerable<Session> GetSessions()
+    {
+        IList<Session> sessions = new List<Session>();
+        foreach (GridViewRow row in gvSessions.Rows)
+        {
+            var session = new Session();
+            session.Id = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString());
+            session.Currency = ddlCurrency.SelectedValue;
+            session.Price = Convert.ToDecimal(row.Cells[1].Text);
+            session.Account = Convert.ToDecimal(row.Cells[2].Text);
+            session.Residue = Convert.ToDecimal(row.Cells[3].Text);
+            session.IsCompleted = ((CheckBox) row.FindControl("chkIsCompleted")).Checked;
+            session.IsPaid = ((CheckBox)row.FindControl("chkIsPaid")).Checked;
+            session.IsActive = true;
+            session.LastModified = LastModified;
+            session.CreatedBy = CreatedBy;
+            session.CreationDate = CreationDate;
+            session.ModifiedBy = ModifiedBy;
+            sessions.Add(session);
+        }
+        return sessions;
+
+        //return (from GridView row in gvSessions.Rows
+        //        select new Session(
+
+        //            )).ToList();
+    }
 }
