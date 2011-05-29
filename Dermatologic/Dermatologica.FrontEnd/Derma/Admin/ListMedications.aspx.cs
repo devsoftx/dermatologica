@@ -9,7 +9,7 @@ public partial class Derma_Admin_ListMedications : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Page.IsPostBack) return;
-       // GetMedications();
+        GetMedications();
     }
     protected void gvMedication_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -28,7 +28,7 @@ public partial class Derma_Admin_ListMedications : PageBase
     private void GetMedications()
     {
         var Medications = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive == true);
-        //BindControl<Medication>.BindGrid(gvMedications, Medications);
+        BindControl<Medication>.BindGrid(gvMedications, Medications);
     }
     private void DeleteMedication(Guid id)
     {
@@ -41,7 +41,7 @@ public partial class Derma_Admin_ListMedications : PageBase
             var response = BussinessFactory.GetMedicationService().Update(Medication);
             if (response.OperationResult == OperationResult.Success)
             {
-                //litMensaje.Text = string.Format("Se eliminó El Tratamiento");
+                litMensaje.Text = string.Format("Se eliminó El Tratamiento");
                 return;
             }
         }
@@ -56,7 +56,7 @@ public partial class Derma_Admin_ListMedications : PageBase
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-        //const string javascript = "openRadWindow('SearchPersons.aspx?personType=','rw1');";
-        //System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
+        const string javascript = "openRadWindow('SearchPersons.aspx?personType=','rw1');";
+        System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
 }

@@ -8,29 +8,17 @@ namespace Dermatologic.Domain
     public class Medication : IEquatable<Medication>
     {
 
-
-        //private IList<Session> _session;
-
-        //public Medication()
-        //{ 
-        //    _session = new List<Session>();
-        //}
-
         private Person _patient;
-
         private Service _service;
+
         public Medication()
         {
             _patient = new Person();
             _service = new Service();
-            //_session = new List<Session>();
         }
 
         [DataMember]
         public virtual Guid? Id { set; get; }
-
-        //[DataMember]
-        //public virtual string Name { set; get; }
 
         [DataMember]
         public virtual string Description { set; get; }
@@ -38,14 +26,9 @@ namespace Dermatologic.Domain
         [DataMember]
         public virtual int NumberSessions { set; get; }
 
-        //[DataMember]
-        //public virtual Decimal TotalPrice { set; get; }
-
         [DataMember]
         public virtual bool IsCompleted { set; get; }
 
-        //[DataMember]
-        //public virtual bool IsPaid { set; get; }
         [DataMember]
         public virtual bool IsActive { set; get; }
 
@@ -65,13 +48,6 @@ namespace Dermatologic.Domain
         {
             return Id.Equals(other.Id);
         }
-
-        //[DataMember]
-        //public virtual IList<Session> Sessions
-        //{
-        //    set { _session = value; }
-        //    get { return _session; }
-        //}
 
         [DataMember]
         public virtual Person Patient
