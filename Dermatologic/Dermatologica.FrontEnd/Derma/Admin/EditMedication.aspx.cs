@@ -138,7 +138,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                 return;
             }
         }
-        var javascript = "openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54','rw1');";
+        const string javascript = "openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54','rw1');";
         System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
 
@@ -151,7 +151,6 @@ public partial class Derma_Admin_EditMedication : PageBase
     {
         var intSession = Convert.ToInt32(txtNumberSessions.Text.Trim());
         decimal price = (Convert.ToInt32(txtPrice.Text.Trim()) / intSession);
-        
         IList<Session> sessions = new List<Session>();
         for (int i = 0; i < intSession; i++)
         {
@@ -166,10 +165,14 @@ public partial class Derma_Admin_EditMedication : PageBase
                                   LastModified = LastModified,
                                   CreatedBy = CreatedBy,
                                   CreationDate = CreationDate,
-                                  ModifiedBy = ModifiedBy
+                                  ModifiedBy = ModifiedBy,
+                                  Medication =
+                                      {
+                                          Id = Request.QueryString.Get("action") == "new"
+                                                   ? Guid.NewGuid()
+                                                   : new Guid(Request.QueryString.Get("id"))
+                                      }
                               };
-            session.Medication.Id = Request.QueryString.Get("action") == "new" ? Guid.NewGuid() :
-            new Guid(Request.QueryString.Get("id"));
             sessions.Add(session);
         }
         gvSessions.DataSource = sessions;

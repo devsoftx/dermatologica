@@ -8,7 +8,7 @@ namespace Dermatologic.Data
     {
         public IList<Person> GetPacients(Person example)
         {
-            string query = "from Person p where p.PersonType.Id = :personTypeId and ( lower(p.FirstName) like :firstName or lower(p.LastName) like :lastName) ";
+            const string query = "from Person p where p.PersonType.Id = :personTypeId and ( lower(p.FirstName) like :firstName or lower(p.LastName) like :lastName) ";
             string[] parameters = { "personTypeId", "firstName", "lastName" };
             object[] values = {
                                   example.PersonType.Id, string.Format("{0}" + example.FirstName + "{0}", "%"),

@@ -126,7 +126,7 @@
                                                 DNI:
                                             </td>
                                             <td>
-                                                <asp:TextBox ID="txtDni" runat="server" Width="120px" />
+                                                <asp:TextBox ID="txtDni" runat="server" Width="100px" MaxLength="8" />
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="txtPacient" runat="server" Width="339px"></asp:TextBox>
