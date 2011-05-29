@@ -121,7 +121,6 @@ public partial class Derma_Admin_EditMedication : PageBase
     }
     protected void lnkSearch_Click(object sender, EventArgs e)
     {
-        string javascript;
         var dni = txtDni.Text.Trim();
         if (!string.IsNullOrEmpty(dni))
         {
@@ -135,22 +134,13 @@ public partial class Derma_Admin_EditMedication : PageBase
             {
                 var pacient = examples.FirstOrDefault();
                 txtPacient.Text = string.Format("{0} {1}", pacient.FirstName, pacient.LastName);
-            }
-            else
-            {
-                javascript =
-                    string.Format(
-                        "openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54&documentType={0}&documentNumber={1}','rw1'));",
-                        ddlDocumentType.SelectedValue, txtDni.Text.Trim());
-                System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons1", javascript, true);
+                return;
             }
         }
-        else
-        {
-            javascript = string.Format("openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54&documentType={0}','rw1');",ddlDocumentType.SelectedValue);
-            System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons2", javascript, true);
-        }
+        var javascript = string.Format("openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54&documentType={0}','rw1');",ddlDocumentType.SelectedValue);
+        System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
+
     protected void btnDoPostBack_Click(object sender, EventArgs e)
     {
 
