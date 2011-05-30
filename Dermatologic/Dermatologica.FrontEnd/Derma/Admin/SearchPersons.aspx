@@ -55,6 +55,16 @@
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
+            <div>
+                <table>
+                    <tr>
+                        <td><asp:Button ID="btnAcept" runat="server" Text="Aceptar" 
+                                onclick="btnAcept_Click" /></td>
+                        <td><asp:Button ID="btnCancel" runat="server" Text="Cancelar" 
+                                onclick="btnCancel_Click" /></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </asp:Content>

@@ -14,9 +14,16 @@
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"/>
     <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
+        <table>
+            <tr>
+                <td>
+                    <div style=" text-align:right;">
+                        <asp:Image ID="img" ImageUrl = "~/Images/logo.jpg" runat="server" />
+                    </div>                    
+                </td>
+            </tr>
+        </table>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server"/>
     </div>
     </form>
 </body>
