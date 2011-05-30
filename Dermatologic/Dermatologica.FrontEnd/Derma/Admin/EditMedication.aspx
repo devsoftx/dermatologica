@@ -237,7 +237,13 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="Description" HeaderText="Descripcion" />
-                                        </Columns>
+                                            <asp:TemplateField HeaderText="Descripcion">
+                                             <ItemTemplate>
+                                            <asp:TextBox ID="txtDescripcion" runat="server"  Text='<%# Eval("Description") %>' with="100px" MaxLength="250">
+                                            </asp:TextBox>
+                                             </ItemTemplate>
+                                            </asp:TemplateField>
+                                         </Columns>
                                         <EditRowStyle BackColor="#999999" />
                                         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
                                         <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
