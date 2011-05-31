@@ -191,6 +191,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                                   Id = Guid.NewGuid(),
                                   Currency = ddlCurrency.SelectedValue,
                                   Price = price,
+                                  Residue = price,
                                   IsCompleted = false,
                                   IsPaid = false,
                                   IsActive = true,

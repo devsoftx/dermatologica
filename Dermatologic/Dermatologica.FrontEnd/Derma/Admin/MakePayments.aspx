@@ -19,7 +19,7 @@
         }
         .style3
         {
-            width: 224px;
+            width: 368px;
         }
         .style4
         {
@@ -69,6 +69,20 @@
                 </td>
                 <td class="style3">
                     <asp:TextBox ID="txtName" runat="server" Width="319px"></asp:TextBox>
+                </td>
+                <td class="style4">
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    <asp:Label ID="Label9" runat="server" Text="Precio"></asp:Label>
+                </td>
+                <td class="style3">
+                    <asp:TextBox ID="txtPrice" runat="server" Enabled="False" Width="111px"></asp:TextBox>
+                    <asp:Label ID="Label10" runat="server" Text="Saldo"></asp:Label>
+                    <asp:TextBox ID="txtResidue" runat="server" Enabled="False" Width="105px"></asp:TextBox>
                 </td>
                 <td class="style4">
                     &nbsp;</td>
