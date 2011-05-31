@@ -229,7 +229,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagar">
                                                 <ItemTemplate>
-                                                    <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?id={0}",Eval("Id")) %>'>Pagar</asp:HyperLink>
+                                                    <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?idSession={0}&idMedication={1}",Eval("Id"),Request.QueryString.Get("action")) %>'>Pagar</asp:HyperLink>
                                                 </ItemTemplate>
                                             </asp:TemplateField>                                                                                        
                                             <asp:BoundField DataField="Description" HeaderText="Descripcion" />
