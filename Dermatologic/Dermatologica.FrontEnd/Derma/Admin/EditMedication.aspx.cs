@@ -95,7 +95,8 @@ public partial class Derma_Admin_EditMedication : PageBase
 
             if (response.OperationResult == OperationResult.Success)
             {
-                Response.Redirect("~/Derma/Admin/ListMedications.aspx", true);
+                litMensaje.Text = string.Format("Se Guardó Correctamente");
+                // Response.Redirect("~/Derma/Admin/ListMedications.aspx", true);
             }
             else
             {
@@ -134,16 +135,16 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
-        var action = Request.QueryString.Get("action");
-        switch (action)
-        {
-            case "new":
+        //var action = Request.QueryString.Get("action");
+        //switch (action)
+        //{
+        //    case "new":
                 Save();
-                break;
-            case "edit":
-                Update();
-                break;
-        }
+            //    break;
+            //case "edit":
+            //    Update();
+            //    break;
+       // }
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)
@@ -214,7 +215,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         }
     }
 
-    protected void gvMenus_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void gvSessions_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
         {
@@ -245,4 +246,5 @@ public partial class Derma_Admin_EditMedication : PageBase
             }
         }
     }
+    
 }

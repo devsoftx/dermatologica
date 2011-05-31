@@ -210,7 +210,7 @@
                                 <td>
                                     <asp:GridView ID="gvSessions" runat="server" AutoGenerateColumns="False" CellPadding="4"
                                         ForeColor="#333333" GridLines="None" DataKeyNames="Id" 
-                                        onrowcommand="gvMenus_RowCommand">
+                                        onrowcommand="gvSessions_RowCommand">
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
                                             <asp:BoundField DataField="Currency" HeaderText="Moneda" />
