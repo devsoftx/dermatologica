@@ -213,4 +213,36 @@ public partial class Derma_Admin_EditMedication : PageBase
             BindControl<Session>.BindGrid(gvSessions,response.Sessions);
         }
     }
+
+    protected void gvMenus_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        switch (e.CommandName)
+        {
+            case "cmd_editar":
+                var id = new Guid(e.CommandArgument.ToString());
+                Response.Redirect(string.Format("EditSession.aspx?id={0}&action=edit", id), true);
+                break;
+            case "cmd_eliminar":
+                Delete(new Guid(e.CommandArgument.ToString()));
+                LoadMedication(new Guid(Request.QueryString.Get("id")));
+                break;
+        }
+    }
+
+    private void Delete(Guid id)
+    {
+        var session = BussinessFactory.GetSessionService().Get(id);
+        if (session != null)
+        {
+            session.IsActive = false;
+            session.LastModified = LastModified;
+            session.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetSessionService().Update(session);
+            if (response.OperationResult == OperationResult.Success)
+            {
+                litMensaje.Text = string.Format("Se eliminó la sessión: {0}", session.Description);
+                return;
+            }
+        }
+    }
 }

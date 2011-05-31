@@ -37,6 +37,7 @@ public partial class Derma_Admin_ListMenus : PageBase
                 break;
         }
     }
+
     protected void lnkNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/EditMenu.aspx?action=new");

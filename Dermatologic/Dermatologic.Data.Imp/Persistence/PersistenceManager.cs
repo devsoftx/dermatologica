@@ -293,7 +293,7 @@ namespace Dermatologic.Data.Persistence
             mapper.Class<UsersInRoles>(x => x.Table("aspnet_UsersInRoles"));
             mapper.Class<Users>(x => x.Table("aspnet_Users"));
             mapper.Class<Table>(x => x.Table("[Table]"));
-            mapper.Class<Table>(x => x.Table("[Session]"));
+            mapper.Class<Session>(x => x.Table("[Session]"));
         }
 
         private static void CustomizeColumns(Mapper mapper)
@@ -335,7 +335,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.Url, m => m.NotNullable(false));
                     cm.Property(x => x.Url, m => m.Column("Url"));
                     cm.Property(x => x.Name, m => m.NotNullable(true));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
+                    cm.Property(x => x.Name, m => m.Column("[Name]"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.Orden, m => m.Column("[Order]"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
@@ -477,7 +477,7 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
+                    cm.Property(x => x.Name, m => m.Column("[Name]"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.Amount, m => m.Column("Amount"));
                     cm.Property(x => x.Currency, m => m.Column("Currency"));
@@ -512,7 +512,7 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
+                    cm.Property(x => x.Name, m => m.Column("[Name]"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));
@@ -525,7 +525,7 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
+                    cm.Property(x => x.Name, m => m.Column("[Name]"));
                     cm.Property(x => x.Value1, m => m.Column("Value1"));
                     cm.Property(x => x.Value2, m => m.Column("Value2"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));

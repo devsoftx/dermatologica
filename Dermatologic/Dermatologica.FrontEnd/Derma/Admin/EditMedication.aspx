@@ -209,7 +209,8 @@
                                 </td>
                                 <td>
                                     <asp:GridView ID="gvSessions" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                        ForeColor="#333333" GridLines="None" DataKeyNames="Id">
+                                        ForeColor="#333333" GridLines="None" DataKeyNames="Id" 
+                                        onrowcommand="gvMenus_RowCommand">
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
                                             <asp:BoundField DataField="Currency" HeaderText="Moneda" />
@@ -230,19 +231,7 @@
                                                 <ItemTemplate>
                                                     <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?id={0}",Eval("Id")) %>'>Pagar</asp:HyperLink>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>                                            
-                                            <asp:TemplateField HeaderText="Acciones">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                                                        CommandName="cmd_editar">
-                                                        <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' />
-                                                    </asp:LinkButton>
-                                                    <asp:LinkButton ID="lnk_eliminar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                                                        CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tratamiento?');">
-                                                        <img id="Img4" src="~/images/action_delete.png" alt="Eliminar" border="0" runat="server" />
-                                                    </asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>                                                                                        
                                             <asp:BoundField DataField="Description" HeaderText="Descripcion" />
                                             <asp:TemplateField HeaderText="Acciones">
                                                 <ItemTemplate>
