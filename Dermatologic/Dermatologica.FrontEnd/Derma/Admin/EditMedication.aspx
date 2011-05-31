@@ -230,18 +230,31 @@
                                                 <ItemTemplate>
                                                     <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?id={0}",Eval("Id")) %>'>Pagar</asp:HyperLink>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Editar">
+                                            </asp:TemplateField>                                            
+                                            <asp:TemplateField HeaderText="Acciones">
                                                 <ItemTemplate>
-                                                    <asp:HyperLink ID="lnkEdit" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("EditSession.aspx?id={0}",Eval("Id")) %>' >Editar</asp:HyperLink>
+                                                    <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
+                                                        CommandName="cmd_editar">
+                                                        <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' />
+                                                    </asp:LinkButton>
+                                                    <asp:LinkButton ID="lnk_eliminar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
+                                                        CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tratamiento?');">
+                                                        <img id="Img4" src="~/images/action_delete.png" alt="Eliminar" border="0" runat="server" />
+                                                    </asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="Description" HeaderText="Descripcion" />
-                                            <asp:TemplateField HeaderText="Descripcion">
-                                             <ItemTemplate>
-                                            <asp:TextBox ID="txtDescripcion" runat="server"  Text='<%# Eval("Description") %>' with="100px" MaxLength="250">
-                                            </asp:TextBox>
-                                             </ItemTemplate>
+                                            <asp:TemplateField HeaderText="Acciones">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
+                                                        CommandName="cmd_editar">
+                                                        <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' />
+                                                    </asp:LinkButton>
+                                                    <asp:LinkButton ID="lnk_eliminar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
+                                                        CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tratamiento?');">
+                                                        <img id="Img4" src="~/images/action_delete.png" alt="Eliminar" border="0" runat="server" />
+                                                    </asp:LinkButton>
+                                                </ItemTemplate>
                                             </asp:TemplateField>
                                          </Columns>
                                         <EditRowStyle BackColor="#999999" />
