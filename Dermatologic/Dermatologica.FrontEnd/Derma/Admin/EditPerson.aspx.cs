@@ -39,22 +39,22 @@ public partial class Derma_Admin_EditPerson : PageBase
 
     private void LoadPerson(Guid id)
     {
-        var Person = BussinessFactory.GetPersonService().Get(id);
-        txtNombres.Text = Person.FirstName;
-        txtApellidos.Text = Person.LastName;
-        txtTelefono.Text = Person.Phone;
-        txtTelefonoEmergencia.Text = Person.EmergencyPhone;
-        txtNumeroDocumento.Text = Person.DocumentNumber;
-        txtCelular.Text = Person.CellPhone;
-        txtEmail.Text = Person.Email;
-        txtFechaCumpleaños.Text = Person.DateBirthDay.Value.ToShortDateString();
-        dwTipoPersona.SelectedValue = Person.PersonType.Id.ToString();
-        txtDireccion.Text = Person.Address;
+        var person = BussinessFactory.GetPersonService().Get(id);
+        txtNombres.Text = person.FirstName;
+        txtApellidos.Text = person.LastName;
+        txtTelefono.Text = person.Phone;
+        txtTelefonoEmergencia.Text = person.EmergencyPhone;
+        txtNumeroDocumento.Text = person.DocumentNumber;
+        txtCelular.Text = person.CellPhone;
+        txtEmail.Text = person.Email;
+        txtFechaCumpleaños.Text = person.DateBirthDay.Value.ToShortDateString();
+        dwTipoPersona.SelectedValue = person.PersonType.Id.ToString();
+        txtDireccion.Text = person.Address;
     }
     
     private void Save()
     {
-        var Person = new Person
+        var person = new Person
         {
             Id = Guid.NewGuid(),
             FirstName = txtNombres.Text.Trim(),
@@ -65,6 +65,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             Phone = txtTelefono.Text.Trim(),
             CellPhone = txtCelular.Text.Trim(),
             Email = txtEmail.Text.Trim(),
+            PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue)),
             EmergencyPhone = txtTelefonoEmergencia.Text.Trim(),
             Address = txtDireccion.Text.Trim(),
             IsActive = true,
@@ -73,11 +74,9 @@ public partial class Derma_Admin_EditPerson : PageBase
             ModifiedBy = ModifiedBy,
             CreatedBy = CreatedBy
         };
-        Person.PersonType = new PersonType() {Id = new Guid(dwTipoPersona.SelectedValue)};
         try
         {
-            
-            var response = BussinessFactory.GetPersonService().Save(Person);
+            var response = BussinessFactory.GetPersonService().Save(person);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListPersons.aspx", true);

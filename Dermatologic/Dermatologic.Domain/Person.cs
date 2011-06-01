@@ -7,6 +7,7 @@ namespace Dermatologic.Domain
     public class Person : IEquatable<Person>
     {
         private PersonType _personType;
+
         public Person()
         {
             _personType = new PersonType();

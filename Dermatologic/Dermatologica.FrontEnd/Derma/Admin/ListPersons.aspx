@@ -40,7 +40,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText = "Tipo de Persona">
                             <ItemTemplate>
-                                <asp:Literal ID = "liNombres" runat="server" Text = '<%# ((PersonType)Eval("PersonType")).Name %>' />
+                                <asp:Literal ID = "litNombres" runat="server" Text = '<%# ((PersonType)Eval("PersonType")).Name %>' />
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="DocumentType" HeaderText="Tipo de Documento" />
