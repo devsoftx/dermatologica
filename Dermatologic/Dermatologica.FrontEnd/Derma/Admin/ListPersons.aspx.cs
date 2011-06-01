@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
@@ -30,8 +32,8 @@ public partial class Derma_Admin_ListPersons : PageBase
   
     private void GetPersons()
     {
-        var Persons = BussinessFactory.GetPersonService().GetAll(u => u.IsActive == true);
-        BindControl<Person>.BindGrid(gvPersons, Persons);
+        var persons = BussinessFactory.GetPersonService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
+        BindControl<Person>.BindGrid(gvPersons, persons);
     }
     private void DeletePerson(Guid id)
     {

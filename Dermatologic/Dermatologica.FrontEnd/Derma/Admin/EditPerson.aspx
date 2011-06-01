@@ -127,7 +127,9 @@
                 <asp:Label ID="Label4" runat="server" Text="N° de Documento"></asp:Label>
             </td>
             <td class="style7">
-                <asp:TextBox ID="txtNumeroDocumento" runat="server" Width="321px"></asp:TextBox>
+                <asp:TextBox ID="txtNumeroDocumento" runat="server" Width="100px" MaxLength="8"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvtxtDocumentNumber" runat="server" 
+                    ControlToValidate="txtNumeroDocumento" ErrorMessage="*" ForeColor="Red"></asp:RequiredFieldValidator>
             </td>
             <td>
                 &nbsp;</td>

@@ -31,8 +31,8 @@ public partial class Derma_Admin_ListPersonTypes : PageBase
     }
     private void GetPersonTypes()
     {
-        var PersonTypes = BussinessFactory.GetPersonTypeService().GetAll(u => u.IsActive == true);
-        BindControl<PersonType>.BindGrid(gvPersonTypes, PersonTypes);
+        var personTypes = BussinessFactory.GetPersonTypeService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
+        BindControl<PersonType>.BindGrid(gvPersonTypes, personTypes);
     }
     private void DeletePersonType(Guid id)
     {

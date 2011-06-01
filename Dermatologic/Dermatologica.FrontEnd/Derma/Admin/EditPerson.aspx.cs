@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using ASP.App_Code;
 using Person = Dermatologic.Domain.Person;
 using Dermatologic.Domain;
@@ -31,7 +33,7 @@ public partial class Derma_Admin_EditPerson : PageBase
 
     private void GetPersonTypes()
     {
-        var personTypes = BussinessFactory.GetPersonTypeService().GetAll();
+        var personTypes = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive).OrderBy(u => u.Name).ToList();
         BindControl<PersonType>.BindDropDownList(dwTipoPersona,personTypes);
     }
 
@@ -93,27 +95,27 @@ public partial class Derma_Admin_EditPerson : PageBase
 
     private void Update()
     {
-        var Id = Request.QueryString.Get("id");
-        var Person = BussinessFactory.GetPersonService().Get(new Guid(Id));
-        if (Person != null)
+        var id = Request.QueryString.Get("id");
+        var person = BussinessFactory.GetPersonService().Get(new Guid(id));
+        if (person != null)
         {
-            Person.FirstName = txtNombres.Text.Trim();
-            Person.LastName = txtApellidos.Text.Trim();
-            Person.DocumentType = dwTipoPersona.SelectedValue;
-            Person.DocumentNumber = txtNumeroDocumento.Text.Trim();
-            Person.PersonType.Id = new Guid(dwTipoPersona.SelectedValue);
-            Person.Phone = txtTelefono.Text.Trim();
-            Person.EmergencyPhone = txtTelefonoEmergencia.Text.Trim();
-            Person.CellPhone = txtCelular.Text.Trim();
-            Person.Address = txtDireccion.Text.Trim();
-            Person.LastModified = LastModified;
-            Person.ModifiedBy = ModifiedBy;
-            Person.Email = txtEmail.Text.Trim();
-            Person.DateBirthDay = Convert.ToDateTime(txtFechaCumpleaños.Text.Trim());
-            Person.IsActive = true;
-            Person.LastModified = LastModified;
-            Person.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetPersonService().Update(Person);
+            person.FirstName = txtNombres.Text.Trim();
+            person.LastName = txtApellidos.Text.Trim();
+            person.DocumentType = dwTipoPersona.SelectedValue;
+            person.DocumentNumber = txtNumeroDocumento.Text.Trim();
+            person.PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue));
+            person.Phone = txtTelefono.Text.Trim();
+            person.EmergencyPhone = txtTelefonoEmergencia.Text.Trim();
+            person.CellPhone = txtCelular.Text.Trim();
+            person.Address = txtDireccion.Text.Trim();
+            person.LastModified = LastModified;
+            person.ModifiedBy = ModifiedBy;
+            person.Email = txtEmail.Text.Trim();
+            person.DateBirthDay = Convert.ToDateTime(txtFechaCumpleaños.Text.Trim());
+            person.IsActive = true;
+            person.LastModified = LastModified;
+            person.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetPersonService().Update(person);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListPersons.aspx", true);

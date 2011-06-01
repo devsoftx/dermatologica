@@ -9,7 +9,13 @@ namespace Dermatologic.Domain
         public virtual Guid? Id { set; get; }
 
         [DataMember]
+        public virtual decimal Price { set; get; }
+
+        [DataMember]
         public virtual string Description { set; get; }
+
+        [DataMember]
+        public virtual string Currency { set; get; }
 
         [DataMember]
         public virtual string Name { set; get; }

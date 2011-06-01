@@ -294,6 +294,7 @@ namespace Dermatologic.Data.Persistence
             mapper.Class<Users>(x => x.Table("aspnet_Users"));
             mapper.Class<Table>(x => x.Table("[Table]"));
             mapper.Class<Session>(x => x.Table("[Session]"));
+            mapper.Class<Service>(x => x.Table("[Service]"));
         }
 
         private static void CustomizeColumns(Mapper mapper)
@@ -486,6 +487,22 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.Invoice, m => m.Column("Invoice"));
                     cm.Property(x => x.MPayment, m => m.Column("MPayment"));
                     cm.Property(x => x.NInvoice, m => m.Column("NInvoice"));
+                    cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                    cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                    cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                    cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                    cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+                }
+                );
+
+            mapper.Class<Service>(
+                cm =>
+                {
+                    cm.Id(x => x.Id, m => m.Column("Id"));
+                    cm.Property(x => x.Name, m => m.Column("[Name]"));
+                    cm.Property(x => x.Description, m => m.Column("Description"));
+                    cm.Property(x => x.Price, m => m.Column("Price"));
+                    cm.Property(x => x.Currency, m => m.Column("Currency"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));

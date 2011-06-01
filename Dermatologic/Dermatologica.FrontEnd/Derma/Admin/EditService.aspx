@@ -49,9 +49,30 @@
             </tr>
             <tr>
                 <td class="style2">
-                    &nbsp;</td>
+                    <asp:Label ID="Label3" runat="server" style="text-align: right" 
+                        Text="Price"></asp:Label>
+                </td>
+                <td>
+                    <telerik:RadNumericTextBox ID="txtPrice" Runat="server" 
+                        DataType="System.Decimal" MaxValue="9999" MinValue="0" Width="75px">
+                    </telerik:RadNumericTextBox>
+                </td>
                 <td>
                     &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    <asp:Label ID="Label4" runat="server" style="text-align: right" 
+                        Text="Price"></asp:Label>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ddlCurrency" runat="server" AppendDataBoundItems="True" 
+                                        Width="50px">
+                                        <asp:ListItem>USD</asp:ListItem>
+                                        <asp:ListItem Value="PEN">PEN</asp:ListItem>
+                                        <asp:ListItem>EUR</asp:ListItem>
+                                    </asp:DropDownList>
+                </td>
                 <td>
                     &nbsp;</td>
             </tr>

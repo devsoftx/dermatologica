@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Service = Dermatologic.Domain.Service;
-using Dermatologic.Domain;
 using Dermatologic.Services;
 
 public partial class Derma_Admin_EditService : PageBase
@@ -18,6 +12,7 @@ public partial class Derma_Admin_EditService : PageBase
             SetService();
         }
     }
+
     private void SetService()
     {
         var action = Request.QueryString.Get("action");
@@ -31,11 +26,14 @@ public partial class Derma_Admin_EditService : PageBase
                 break;
         }
     }
-    void LoadService(Guid id)
+
+    private void LoadService(Guid id)
     {
-        var Service = BussinessFactory.GetServiceService().Get(id);
-        txtName.Text = Service.Name;
-        txtDescription.Text = Service.Description;
+        var service = BussinessFactory.GetServiceService().Get(id);
+        txtName.Text = service.Name;
+        txtDescription.Text = service.Description;
+        txtPrice.Text = service.Price.ToString();
+        ddlCurrency.SelectedValue = service.Currency;
     }
 
     private void Save()
@@ -45,6 +43,8 @@ public partial class Derma_Admin_EditService : PageBase
             Id = Guid.NewGuid(),
             Name = txtName.Text.Trim(),
             Description = txtDescription.Text.Trim(),
+            Price = Convert.ToDecimal(txtPrice.Text.Trim()),
+            Currency = ddlCurrency.SelectedValue,
             IsActive = true,
             LastModified = LastModified,
             CreationDate = CreationDate,
@@ -71,26 +71,28 @@ public partial class Derma_Admin_EditService : PageBase
         }
 
     }
+
     private void Update()
     {
-        var Id = Request.QueryString.Get("id");
-        var Service = BussinessFactory.GetServiceService().Get(new Guid(Id));
-        if (Service != null)
+        var id = Request.QueryString.Get("id");
+        var service = BussinessFactory.GetServiceService().Get(new Guid(id));
+        if (service != null)
         {
-            Service.Name = txtName.Text.Trim();
-            Service.Description = txtDescription.Text.Trim();
-            Service.IsActive = true;
-            Service.LastModified = LastModified;
-            Service.ModifiedBy = ModifiedBy;
-
-            var response = BussinessFactory.GetServiceService().Update(Service);
+            service.Name = txtName.Text.Trim();
+            service.Description = txtDescription.Text.Trim();
+            service.IsActive = true;
+            service.LastModified = LastModified;
+            service.ModifiedBy = ModifiedBy;
+            service.Price = Convert.ToDecimal(txtPrice.Text.Trim());
+            service.Currency = ddlCurrency.SelectedValue;
+            var response = BussinessFactory.GetServiceService().Update(service);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListServices.aspx", true);
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo actualizar el Tipo de Persona");
+                litMensaje.Text = string.Format("No se puedo actualizar el tipo de tratamiento");
             }
         }
     }

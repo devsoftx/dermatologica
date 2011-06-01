@@ -35,6 +35,7 @@
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Nombre" />
                             <asp:BoundField DataField="Description" HeaderText="Descripción" />
+                            <asp:BoundField DataField="LastModified" DataFormatString="{0:dd-MM-yyyy}" HeaderText="Última Modificación" />                    
                             <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                            <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
