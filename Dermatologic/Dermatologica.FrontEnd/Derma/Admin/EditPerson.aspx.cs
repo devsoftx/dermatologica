@@ -37,7 +37,7 @@ public partial class Derma_Admin_EditPerson : PageBase
         BindControl<PersonType>.BindDropDownList(dwTipoPersona,personTypes);
     }
 
-    void LoadPerson(Guid id)
+    private void LoadPerson(Guid id)
     {
         var Person = BussinessFactory.GetPersonService().Get(id);
         txtNombres.Text = Person.FirstName;
@@ -122,7 +122,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo actualizar la Persona -> {0}", response.Message);
+                litMensaje.Text = string.Format("No se puedo actualizar la Persona -> {0} ", response.Message);
             }
         }
     }

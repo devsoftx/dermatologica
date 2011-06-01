@@ -168,7 +168,7 @@ namespace Dermatologic.Data.Persistence
                     {
                         m.Column("IdPersonType");
                         m.Fetch(FetchMode.Join);
-                        m.NotNullable(true);
+                        m.Cascade(Cascade.All);
                     });
             });
 
