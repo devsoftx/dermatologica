@@ -33,8 +33,7 @@ public partial class Derma_Admin_ListExchangeRates : PageBase
     
     private void GetExchangeRates()
     {
-        var Services = BussinessFactory.GetServiceService().GetAll(u => u.IsActive == true);
-        
+               
         var ExchangeRates = BussinessFactory.GetExchangeRateService().GetAll(u => u.IsActive == true);
         BindControl<ExchangeRate>.BindGrid(gvExchangeRates, ExchangeRates);
     }
