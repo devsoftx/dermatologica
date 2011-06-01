@@ -22,6 +22,7 @@ public partial class Account_Login : System.Web.UI.Page
         {
             e.Authenticated = true;
             Session["userName"] = userName;
+            Session["UserId"] = Membership.GetUser(userName).ProviderUserKey.ToString();
             if (Request.QueryString["ReturnUrl"] != null)
             {   
                 FormsAuthentication.RedirectFromLoginPage(userName, LoginUser.RememberMeSet);

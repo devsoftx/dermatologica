@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
@@ -27,7 +29,7 @@ public partial class Derma_Admin_ListMedications : PageBase
     }
     private void GetMedications()
     {
-        var Medications = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive == true);
+        var Medications = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
         BindControl<Medication>.BindGrid(gvMedications, Medications);
     }
     private void DeleteMedication(Guid id)

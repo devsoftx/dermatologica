@@ -23,7 +23,6 @@ namespace Dermatologic.Data.Persistence
                 currentSession = OpenSession();
                 context.Items[CurrentSessionKey] = currentSession;
             }
-            currentSession.FlushMode = FlushMode.Commit;
             return currentSession;
         }
 

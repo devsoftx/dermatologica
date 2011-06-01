@@ -66,6 +66,7 @@ namespace Dermatologic.Data.Persistence
                 db.LogFormatedSql = true;
                 db.AutoCommentSql = true;
                 db.PrepareCommands = true;
+                
             });
 
             configure.AddDeserializedMapping(GetMapping(), "Dermatologic.Data");
