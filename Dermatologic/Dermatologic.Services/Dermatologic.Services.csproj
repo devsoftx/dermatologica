@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Inter\IAppointmentService.cs" />
+    <Compile Include="Inter\IExchangeRateService.cs" />
     <Compile Include="Inter\IItemTableService.cs" />
     <Compile Include="Inter\IMedicalCareService.cs" />
     <Compile Include="Inter\IPaymentService.cs" />

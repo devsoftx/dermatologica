@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AbstractServiceFactory.cs" />
     <Compile Include="Imp\AppointmentService.cs" />
+    <Compile Include="Imp\ExchangeRateService.cs" />
     <Compile Include="Imp\ItemTableService.cs" />
     <Compile Include="Imp\MedicalCareService.cs" />
     <Compile Include="Imp\PaymentService.cs" />

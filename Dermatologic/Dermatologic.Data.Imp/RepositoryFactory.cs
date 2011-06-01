@@ -1,4 +1,5 @@
 using System;
+using Dermatologic.Data.Imp;
 
 namespace Dermatologic.Data
 {
@@ -92,7 +93,12 @@ namespace Dermatologic.Data
         public override IPersonTypeRepository GetPersonTypeRepository()
         {
             return new PersonTypeRepository();
-            ;
+          
+        }
+        public override IExchangeRateRepository GetExchangeRateRepository()
+        {
+            return new ExchangeRateRepository();
+           
         }
     }
 }

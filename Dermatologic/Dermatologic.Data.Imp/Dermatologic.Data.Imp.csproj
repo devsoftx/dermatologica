@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRepositoryFactory.cs" />
+    <Compile Include="Imp\ExchangeRateRepository.cs" />
     <Compile Include="Imp\AppointmentRepository.cs" />
     <Compile Include="Imp\ItemTableRepository.cs" />
     <Compile Include="Imp\MedicalCareRepository.cs" />

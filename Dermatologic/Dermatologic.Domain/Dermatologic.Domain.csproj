@@ -49,6 +49,7 @@
     <Compile Include="Contracts\DataMemeber.cs" />
     <Compile Include="Contracts\Enums.cs" />
     <Compile Include="Contracts\MailRequest.cs" />
+    <Compile Include="ExchangeRate.cs" />
     <Compile Include="ItemTable.cs" />
     <Compile Include="MedicalCare.cs" />
     <Compile Include="Payment.cs" />

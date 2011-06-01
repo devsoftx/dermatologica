@@ -97,5 +97,9 @@ namespace Dermatologic.Services
         {
             return new PersonTypeService();
         }
+        public override IExchangeRateService GetExchangeRateService()
+        {
+            return new ExchangeRateService();
+        }
     }
 }

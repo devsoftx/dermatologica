@@ -53,5 +53,7 @@ namespace Dermatologic.Data
         public abstract IPersonRepository GetPersonRepository();
 
         public abstract IPersonTypeRepository GetPersonTypeRepository();
+
+        public abstract IExchangeRateRepository GetExchangeRateRepository();
     }
 }

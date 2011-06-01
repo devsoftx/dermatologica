@@ -553,6 +553,22 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
                 }
                 );
+            mapper.Class<ExchangeRate>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.DateRate, m => m.Column("DateRate"));
+                   cm.Property(x => x.Currency, m => m.Column("Currency"));
+                   cm.Property(x => x.Buy, m => m.Column("Buy"));
+                   cm.Property(x => x.Sale, m => m.Column("Sale"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+
         }
 
         private static IEnumerable<Type> GetEntities()
