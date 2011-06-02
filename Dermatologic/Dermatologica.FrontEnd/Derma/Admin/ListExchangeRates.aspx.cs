@@ -48,7 +48,7 @@ public partial class Derma_Admin_ListExchangeRates : PageBase
             var response = BussinessFactory.GetExchangeRateService().Update(ExchangeRate);
             if (response.OperationResult == OperationResult.Success)
             {
-                litMensaje.Text = string.Format("Se eliminó El Servicio");
+                litMensaje.Text = string.Format("Se eliminó tipo de cambio");
                 return;
             }
         }
