@@ -24,7 +24,7 @@ public partial class Derma_Admin_ListExchangeRates : PageBase
                 Response.Redirect(string.Format("EditExchangeRate.aspx?id={0}&action=edit", id), true);
                 break;
             case "cmd_eliminar":
-                DeleteService(new Guid(e.CommandArgument.ToString()));
+                DeleteExchangeRate(new Guid(e.CommandArgument.ToString()));
                 GetExchangeRates();
                 break;
 
@@ -32,20 +32,20 @@ public partial class Derma_Admin_ListExchangeRates : PageBase
     }
     
     private void GetExchangeRates()
-    {
-               
+    {    
         var ExchangeRates = BussinessFactory.GetExchangeRateService().GetAll(u => u.IsActive == true);
         BindControl<ExchangeRate>.BindGrid(gvExchangeRates, ExchangeRates);
     }
-    private void DeleteService(Guid id)
+   
+    private void DeleteExchangeRate(Guid id)
     {
-        var Service = BussinessFactory.GetServiceService().Get(id);
-        if (Service != null)
+        var ExchangeRate = BussinessFactory.GetExchangeRateService().Get(id);
+        if (ExchangeRate != null)
         {
-            Service.IsActive = false;
-            Service.LastModified = LastModified;
-            Service.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetServiceService().Update(Service);
+            ExchangeRate.IsActive = false;
+            ExchangeRate.LastModified = LastModified;
+            ExchangeRate.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetExchangeRateService().Update(ExchangeRate);
             if (response.OperationResult == OperationResult.Success)
             {
                 litMensaje.Text = string.Format("Se eliminó El Servicio");
@@ -55,7 +55,7 @@ public partial class Derma_Admin_ListExchangeRates : PageBase
     }
     protected void lnkNew_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Derma/Admin/EditService.aspx?action=new");
+        Response.Redirect("~/Derma/Admin/EditExchangeRate.aspx?action=new");
     }
    
 }
