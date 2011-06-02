@@ -15,7 +15,7 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
     {
         if (!Page.IsPostBack)
         {
-            txtDateRate.Text = Convert.ToString(CreationDate);
+            if (CreationDate != null) txtDateRate.Text = CreationDate.Value.ToShortDateString();
             SetExchangeRate();
         }
     }
