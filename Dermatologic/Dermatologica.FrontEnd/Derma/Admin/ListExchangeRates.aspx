@@ -1,6 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListExchangeRates.aspx.cs"Inherits="Derma_Admin_ListExchangeRates" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+<script type="text/javascript">
+    $(function () {
+        $("#MainContent_txtStartDate").datepicker();
+        $("#MainContent_txtStartDate").datepicker($.datepicker.regional['es']);
+
+        $("#MainContent_txtEndDate").datepicker();
+        $("#MainContent_txtEndDate").datepicker($.datepicker.regional['es']);        
+    });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div id="Main">
@@ -14,6 +22,34 @@
                 </td>
                 <td>
                     &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                Fecha Inicio:
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtStartDate" runat="server" Width="100px"></asp:TextBox>
+                            </td>
+                            <td>
+                                Fecha Fin:
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtEndDate" runat="server" Width="100px"></asp:TextBox>
+                            </td>
+                            <td></td>
+                            <td>
+                                <asp:Button ID="btnSearch" runat="server" Text="Buscar" 
+                                    onclick="btnSearch_Click" /></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
                 </td>
             </tr>
             <tr>

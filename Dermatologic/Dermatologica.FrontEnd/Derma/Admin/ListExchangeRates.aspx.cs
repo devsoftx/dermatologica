@@ -57,5 +57,16 @@ public partial class Derma_Admin_ListExchangeRates : PageBase
     {
         Response.Redirect("~/Derma/Admin/EditExchangeRate.aspx?action=new");
     }
-   
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        var dateStart = Convert.ToDateTime(txtStartDate.Text.Trim());
+        var dateEnd = Convert.ToDateTime(txtEndDate.Text.Trim());
+        var response = BussinessFactory.GetExchangeRateService().GetExchangeRateByDates(dateStart,dateEnd);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            gvExchangeRates.DataSource = response.Results;
+            gvExchangeRates.DataBind();
+        }
+    }
 }
