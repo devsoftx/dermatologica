@@ -113,4 +113,8 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         const string javascript = "openRadWindow('SearchPersons.aspx?personType=652015c3-e389-46b0-9bab-fb016b8abd44','rw1');";
         System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
+    protected void btnDoPostBack_Click(object sender, EventArgs e)
+    {
+
+    }
 }
