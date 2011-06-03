@@ -259,7 +259,34 @@ namespace Dermatologic.Data.Persistence
                         m.NotNullable(true);
                     });
             });
-
+            mapper.Class<MedicalCare>(cm =>
+            {
+                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.ManyToOne(
+                    x => x.Session,
+                    m =>
+                    {
+                        m.Column("IdSession");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                    x => x.Pacient,
+                    m =>
+                    {
+                        m.Column("IdPatient");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                  x => x.Medical,
+                  m =>
+                  {
+                      m.Column("IdMedical");
+                      m.Fetch(FetchMode.Join);
+                      m.NotNullable(true);
+                  });
+            });
             mapper.Class<ItemTable>(cm =>
             {
                 cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
