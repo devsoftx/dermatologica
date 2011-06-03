@@ -49,6 +49,8 @@ public partial class Derma_Admin_EditMedication : PageBase
         ddlDocumentType.SelectedValue = medication.Patient.DocumentType;
         txtDni.Text = medication.Patient.DocumentNumber;
         txtPacient.Text = string.Format("{0} {1}", medication.Patient.FirstName, medication.Patient.LastName);
+        lblCurrency.Text = medication.Service.Currency;
+        if (medication.Service.Id.HasValue) dwService.SelectedValue = medication.Service.Id.Value.ToString();
     }
 
     private void Save()
@@ -76,7 +78,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                 var session = new Session
                                   {
                                       Id = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString()),
-                                      Currency = ddlCurrency.SelectedValue,
+                                      Currency = lblCurrency.Text.Trim().ToUpper(),
                                       Price = Convert.ToDecimal(row.Cells[1].Text),
                                       Account = Convert.ToDecimal(row.Cells[2].Text),
                                       Residue = Convert.ToDecimal(row.Cells[3].Text),
@@ -86,17 +88,16 @@ public partial class Derma_Admin_EditMedication : PageBase
                                       LastModified = LastModified,
                                       CreatedBy = CreatedBy,
                                       CreationDate = CreationDate,
-                                      ModifiedBy = ModifiedBy
+                                      ModifiedBy = ModifiedBy,
+                                      Medication = medication
                                   };
-                session.Medication = medication;
                 medication.Sessions.Add(session);
             }
             var response = BussinessFactory.GetMedicationService().Save(medication);
 
             if (response.OperationResult == OperationResult.Success)
-            {
-                litMensaje.Text = string.Format("Se Guardó Correctamente");
-                // Response.Redirect("~/Derma/Admin/ListMedications.aspx", true);
+            {   
+                Response.Redirect("~/Derma/Admin/ListMedications.aspx", true);
             }
             else
             {
@@ -135,16 +136,16 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
-        //var action = Request.QueryString.Get("action");
-        //switch (action)
-        //{
-        //    case "new":
+        var action = Request.QueryString.Get("action");
+        switch (action)
+        {
+            case "new":
                 Save();
-            //    break;
-            //case "edit":
-            //    Update();
-            //    break;
-       // }
+                break;
+            case "edit":
+                Update();
+                break;
+        }
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)
@@ -182,14 +183,16 @@ public partial class Derma_Admin_EditMedication : PageBase
     protected void btnAddSessions_Click(object sender, EventArgs e)
     {
         var intSession = Convert.ToInt32(txtNumberSessions.Text.Trim());
-        decimal price = (Convert.ToInt32(txtPrice.Text.Trim()) / intSession);
+        var discount = Convert.ToDecimal(txtDiscountT.Text.Trim());
+        var priceService = Convert.ToDecimal(txtPrice.Text.Trim());
+        decimal price = ((priceService - discount)/ intSession);
         IList<Session> sessions = new List<Session>();
         for (var i = 0; i < intSession; i++)
         {
             var session = new Session
                               {
                                   Id = Guid.NewGuid(),
-                                  Currency = ddlCurrency.SelectedValue,
+                                  Currency = lblCurrency.Text.Trim().ToUpper(),
                                   Price = price,
                                   Residue = price,
                                   IsCompleted = false,
@@ -247,5 +250,11 @@ public partial class Derma_Admin_EditMedication : PageBase
             }
         }
     }
-    
+
+    protected void dwService_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue));
+        txtPrice.Value = Convert.ToDouble(service.Price);
+        lblCurrency.Text = service.Currency;
+    }
 }

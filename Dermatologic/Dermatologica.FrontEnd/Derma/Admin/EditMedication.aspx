@@ -89,7 +89,8 @@
                                     <asp:Label ID="Label5" runat="server" Text="Servicio"></asp:Label>
                                 </td>
                                 <td>
-                                    <asp:DropDownList ID="dwService" runat="server">
+                                    <asp:DropDownList ID="dwService" runat="server" AutoPostBack="True" 
+                                        onselectedindexchanged="dwService_SelectedIndexChanged">
                                     </asp:DropDownList>
                                 </td>
                                 <td>
@@ -145,12 +146,7 @@
                                 <td class="style2">
                                     Moneda</td>
                                 <td>
-                                    <asp:DropDownList ID="ddlCurrency" runat="server" AppendDataBoundItems="True" 
-                                        Width="50px">
-                                        <asp:ListItem>USD</asp:ListItem>
-                                        <asp:ListItem Value="PEN">PEN</asp:ListItem>
-                                        <asp:ListItem>EUR</asp:ListItem>
-                                    </asp:DropDownList>
+                                    <asp:Label ID="lblCurrency" runat="server" Width="50px"></asp:Label>
                                 </td>
                                 <td>
                                     &nbsp;</td>
@@ -184,9 +180,12 @@
                             </tr>
                             <tr>
                                 <td class="style2">
-                                    &nbsp;
-                                </td>
+                                    Descuento Total</td>
                                 <td>
+                                    <telerik:RadNumericTextBox ID="txtDiscountT" Runat="server" 
+                                        DataType="System.Decimal" MaxValue="99" MinValue="0" Width="35px">
+                                        <NumberFormat AllowRounding="False" DecimalDigits="0" />
+                                    </telerik:RadNumericTextBox>
                                 </td>
                                 <td>
                                     &nbsp;
@@ -229,7 +228,12 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagar">
                                                 <ItemTemplate>
-                                                    <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?idSession={0}&idMedication={1}",Eval("Id"),Request.QueryString.Get("action")) %>'>Pagar</asp:HyperLink>
+                                                    <asp:HyperLink ID="lnkPay" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakePayments.aspx?idSession={0}&idMedication={1}",Eval("Id"),Request.QueryString.Get("id")) %>'>Pagar</asp:HyperLink>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Atender">
+                                                <ItemTemplate>
+                                                    <asp:HyperLink ID="lnkAtender" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' NavigateUrl='<%# string.Format("MakeMedicalCare.aspx?idSession={0}&idMedication={1}",Eval("Id"),Request.QueryString.Get("id")) %>'>Atender</asp:HyperLink>
                                                 </ItemTemplate>
                                             </asp:TemplateField>                                                                                        
                                             <asp:BoundField DataField="Description" HeaderText="Descripcion" />
