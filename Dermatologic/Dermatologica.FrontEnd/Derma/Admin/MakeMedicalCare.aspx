@@ -63,8 +63,6 @@
                 </td>
                 <td class="style3">
                     <asp:TextBox ID="txtPatient" runat="server" Enabled="False" Width="275px"></asp:TextBox>
-                                                <asp:LinkButton runat="server" ID="lnkSearch" Text="Buscar" 
-                                                    OnClick="lnkSearch_Click" />
                 </td>
                 <td>
                     &nbsp;</td>
@@ -75,6 +73,8 @@
                 </td>
                 <td class="style3">
                     <asp:TextBox ID="txtMedical" runat="server" Width="272px"></asp:TextBox>
+                                                <asp:LinkButton runat="server" ID="lnkSearch" Text="Buscar" 
+                                                    OnClick="lnkSearch_Click" />
                 </td>
                 <td>
                     &nbsp;</td>
@@ -92,7 +92,7 @@
             <tr>
                 <td class="style2">
                                     <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" 
-                                        Text="Registrar Atención" Width="112px" />
+                                        Text="Registrar Atención" Width="123px" />
                                 </td>
                 <td class="style3">
                                     <asp:Button ID="btnCancelar" runat="server" OnClick="btnCancelar_Click" 
