@@ -37,5 +37,22 @@ namespace Dermatologic.Services
                 return response;
             }
         }
+        public MedicationResponse GetMedicationsByPatient(Person example)
+        {
+            var response = new MedicationResponse();
+            try
+            {
+                IMedicationRepository repository = new MedicationRepository();
+                response.Medications = repository.GetMedicationsByPatient(example);
+                response.OperationResult = OperationResult.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Message = e.Message;
+                response.OperationResult = OperationResult.Failed;
+                return response;
+            }
+        }
     }
 }

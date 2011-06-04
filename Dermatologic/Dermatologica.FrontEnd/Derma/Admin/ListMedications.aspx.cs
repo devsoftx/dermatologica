@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
 using Medication = Dermatologic.Domain.Medication;
+using Person = Dermatologic.Domain.Person;
 
 public partial class Derma_Admin_ListMedications : PageBase
 {
@@ -12,6 +13,7 @@ public partial class Derma_Admin_ListMedications : PageBase
     {
         if (Page.IsPostBack) return;
         GetMedications();
+        //SearchPersons();
     }
     protected void gvMedication_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -58,7 +60,27 @@ public partial class Derma_Admin_ListMedications : PageBase
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-        const string javascript = "openRadWindow('SearchPersons.aspx?personType=','rw1');";
-        System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
+        //const string javascript = "openRadWindow('SearchPersons.aspx?personType=','rw1');";
+        //System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
+
+        if (Page.IsPostBack)
+        {
+            SearchPersons();
+        }
+    }
+    private void SearchPersons()
+    {
+       // var personType = Request.QueryString.Get("personType");
+        var example = new Person
+        {
+            //PersonType = { Id = new Guid(personType) },
+            FirstName = txtSearch.Text.Trim().ToLower(),
+            LastName = txtSearch.Text.Trim().ToLower(),
+        };
+        var response = BussinessFactory .GetMedicationService().GetMedicationsByPatient(example);
+        if (response.OperationResult == OperationResult.Success)
+        
+            gvMedications.DataSource = response.Medications;
+            gvMedications.DataBind(); 
     }
 }

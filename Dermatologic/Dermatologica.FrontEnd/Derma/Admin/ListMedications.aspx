@@ -3,6 +3,24 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+    <style type="text/css">
+        .style1
+        {
+            width: 100%;
+        }
+        .style2
+        {
+            width: 132px;
+        }
+        .style3
+        {
+            width: 323px;
+        }
+        .style4
+        {
+            width: 40px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div>
@@ -10,6 +28,30 @@
             <tr>
                 <td>
                     <asp:Literal ID="litMensaje" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="style1">
+                        <tr>
+                            <td class="style2" style="text-align: right">
+                                <asp:Label ID="Label1" runat="server" style="text-align: right" 
+                                    Text="Buscar Por Paciente"></asp:Label>
+                            </td>
+                            <td class="style3">
+                                <asp:TextBox ID="txtSearch" runat="server" Width="386px"></asp:TextBox>
+                            </td>
+                            <td class="style4">
+                            <asp:Button runat="server" ID="btnSearch" Text="Buscar" OnClick="btnSearch_Click" />
+                            </td>
+                            <td>
+                                &nbsp; &nbsp;</td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <tr>                

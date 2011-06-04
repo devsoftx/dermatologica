@@ -5,6 +5,6 @@ namespace Dermatologic.Data
 {
     public interface IMedicationRepository : IRepository<Medication>
     {
-
+        IList<Medication> GetMedicationsByPatient(Person example);
     }
 }
