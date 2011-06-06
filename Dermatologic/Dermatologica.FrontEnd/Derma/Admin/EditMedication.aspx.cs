@@ -69,7 +69,8 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  ModifiedBy = ModifiedBy,
                                  CreatedBy = CreatedBy,
                                  Patient = patient,
-                                 Service = new Service {Id = new Guid(dwService.SelectedValue)}
+                                 Service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue)),
+                                // Service = new Service {Id = new Guid(dwService.SelectedValue)}
                              };
         try
         {
@@ -122,6 +123,9 @@ public partial class Derma_Admin_EditMedication : PageBase
             Medication.IsActive = true;
             Medication.LastModified = LastModified;
             Medication.ModifiedBy = ModifiedBy;
+
+            Medication.Service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue));
+
             var response = BussinessFactory.GetMedicationService().Update(Medication);
             if (response.OperationResult == OperationResult.Success)
             {
