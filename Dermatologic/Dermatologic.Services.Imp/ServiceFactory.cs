@@ -101,5 +101,15 @@ namespace Dermatologic.Services
         {
             return new ExchangeRateService();
         }
+
+        public override IAccountService GetAccountService()
+        {
+            return new AccountService();
+        }
+
+        public override ICostCenterService GetCostCenterService()
+        {
+            return new CostCenterService();
+        }
     }
 }

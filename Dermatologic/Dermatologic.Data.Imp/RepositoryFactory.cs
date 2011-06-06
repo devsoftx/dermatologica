@@ -100,5 +100,15 @@ namespace Dermatologic.Data
             return new ExchangeRateRepository();
            
         }
+
+        public override IAccountRepository GetAccountRepository()
+        {
+            return new AccountRepository();
+        }
+
+        public override ICostCenterRepository GetCostCenterRepository()
+        {
+            return new CostCenterRepository();
+        }
     }
 }

@@ -58,5 +58,9 @@ namespace Dermatologic.Services
         public abstract IPersonTypeService GetPersonTypeService();
 
         public abstract IExchangeRateService GetExchangeRateService();
+
+        public abstract IAccountService GetAccountService();
+
+        public abstract ICostCenterService GetCostCenterService();
     }
 }

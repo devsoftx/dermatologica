@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inter\IAccountService.cs" />
     <Compile Include="Inter\IAppointmentService.cs" />
+    <Compile Include="Inter\ICostCenterService.cs" />
     <Compile Include="Inter\IExchangeRateService.cs" />
     <Compile Include="Inter\IItemTableService.cs" />
     <Compile Include="Inter\IMedicalCareService.cs" />

@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inter\IAccountRepository.cs" />
+    <Compile Include="Inter\ICostCenterRepository.cs" />
     <Compile Include="Inter\IExchangeRateRepository.cs" />
     <Compile Include="Inter\IAppointmentRepository.cs" />
     <Compile Include="Inter\IItemTableRepository.cs" />

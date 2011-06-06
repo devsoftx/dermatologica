@@ -45,10 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
     <Compile Include="Appointment.cs" />
     <Compile Include="Contracts\DataMemeber.cs" />
     <Compile Include="Contracts\Enums.cs" />
     <Compile Include="Contracts\MailRequest.cs" />
+    <Compile Include="CostCenter.cs" />
     <Compile Include="ExchangeRate.cs" />
     <Compile Include="ItemTable.cs" />
     <Compile Include="MedicalCare.cs" />

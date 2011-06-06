@@ -49,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractServiceFactory.cs" />
+    <Compile Include="Imp\AccountService.cs" />
     <Compile Include="Imp\AppointmentService.cs" />
+    <Compile Include="Imp\CostCenterService.cs" />
     <Compile Include="Imp\ExchangeRateService.cs" />
     <Compile Include="Imp\ItemTableService.cs" />
     <Compile Include="Imp\MedicalCareService.cs" />
