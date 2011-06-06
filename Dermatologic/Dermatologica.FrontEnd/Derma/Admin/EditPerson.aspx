@@ -149,6 +149,23 @@
         </tr>
         <tr>
             <td class="style4">
+                &nbsp;</td>
+            <td class="style5">
+                <asp:Label ID="Label12" runat="server" Text="Categoría"></asp:Label>
+            </td>
+            <td class="style8">
+                <asp:DropDownList ID="ddlCategory" runat="server">
+                    <asp:ListItem>Ninguna</asp:ListItem>
+                    <asp:ListItem>Asociado</asp:ListItem>
+                    <asp:ListItem>Auxiliar</asp:ListItem>
+                    <asp:ListItem>Principal</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+            <td class="style6">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td class="style4">
             </td>
             <td class="style5">
                 <asp:Label ID="Label6" runat="server" Text="Teléfono"></asp:Label>

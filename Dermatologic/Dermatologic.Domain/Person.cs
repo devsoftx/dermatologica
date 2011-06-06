@@ -36,6 +36,9 @@ namespace Dermatologic.Domain
         }
 
         [DataMember]
+        public virtual string Category { get; set; }
+
+        [DataMember]
         public virtual string DocumentNumber { get; set; }
 
         [DataMember]
