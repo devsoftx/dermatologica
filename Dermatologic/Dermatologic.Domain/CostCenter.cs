@@ -32,7 +32,7 @@ namespace Dermatologic.Domain
         public virtual Guid? ModifiedBy { set; get; }
 
         [DataMember]
-        public Service Service
+        public virtual Service Service
         {
             get { return _service; }
             set { _service = value; }
