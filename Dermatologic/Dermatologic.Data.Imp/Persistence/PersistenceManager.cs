@@ -596,6 +596,34 @@ namespace Dermatologic.Data.Persistence
                }
                );
 
+            mapper.Class<Account>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.Name, m => m.Column("Name"));
+                   cm.Property(x => x.Description, m => m.Column("Description"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+
+            mapper.Class<CostCenter>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.Name, m => m.Column("Name"));
+                   cm.Property(x => x.Description, m => m.Column("Description"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+
         }
 
         private static IEnumerable<Type> GetEntities()
