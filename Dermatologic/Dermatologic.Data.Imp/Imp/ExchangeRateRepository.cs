@@ -15,5 +15,15 @@ namespace Dermatologic.Data.Imp
                               };
             return Query(query, parameters, values);
         }
+        public IList<ExchangeRate> GetExchangeRateByCurrentRate(DateTime CurrentDate)
+        {
+            const string query = "from ExchangeRate e where e.DateRate = :CurrentDate";
+            string[] parameters = { "CurrentDate" };
+            object[] values = {
+                                  CurrentDate
+                              };
+            return Query(query, parameters, values);
+
+        }
     }
 }
