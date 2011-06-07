@@ -37,14 +37,17 @@ public partial class Derma_SearchPersons : PageBase
     {
 
     }
+
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         SearchPersons();
     }
+
     protected void btnAcept_Click(object sender, EventArgs e)
     {
 
     }
+
     protected void btnCancel_Click(object sender, EventArgs e)
     {
 
