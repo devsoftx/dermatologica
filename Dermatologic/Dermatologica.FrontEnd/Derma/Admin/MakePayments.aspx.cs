@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Payment = Dermatologic.Domain.Payment;
+using ExchangeRate = Dermatologic.Domain.ExchangeRate;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 
@@ -34,6 +36,22 @@ public partial class Derma_Admin_MakePayments : PageBase
         txtAmount.Text = Convert.ToString(Session.Residue);
         txtPrice.Text = Convert.ToString(Session.Price);
         txtResidue.Text = Convert.ToString(Session.Residue);
+
+        var List = BussinessFactory.GetExchangeRateService().GetAll().Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();
+    // p.DateDate.ToShortDate().Equals(Datetime.Now.ToShortDate())
+        // GetAll().Where(p => p.DateRate == currentDate).ToList();
+        
+        var echangeToday = List.OrderBy(p => p.CreationDate).FirstOrDefault();
+        txtCompra.Text = echangeToday.Buy.ToString();
+        txtVenta.Text = echangeToday.Sale.ToString();
+        // var   ExchangeRate1=new ExchangeRate 
+       //  ExchangeRate1=ExchangeRates.ExchangeRates.First<ExchangeRate> 
+
+       // txtCompra.Text=ExchangeRates.ExchangeRates.First
+       //foreach (ExchangeRate ExchangeRate in ExchangeRates)
+       //{
+       
+       //}
     }
 
 
@@ -54,12 +72,16 @@ public partial class Derma_Admin_MakePayments : PageBase
             Name =txtName.Text.Trim(),
             Description = txtName.Text.Trim(),
             DatePayment=Convert.ToDateTime(CreationDate),
-            MPayment=txtName.Text.Trim(),
+            MPayment=ddlMPayment.SelectedValue,
             Invoice=ddlInvoice.SelectedValue,
             NInvoice=txtNInvoice.Text.Trim(),
             Amount=txtAmount.Text.Trim(),
             Currency=ddlCurrency.SelectedValue,
-            ExchangeRate=Convert.ToDecimal(txtExchangeRate.Text.Trim()), 
+            //If( txtVenta.Text=="")
+            //{
+            ExchangeRate=Convert.ToDecimal(txtVenta.Text.Trim()),
+            //}
+            
             IsActive = true,
 
             LastModified = LastModified,

@@ -10,7 +10,8 @@
     <style type="text/css">
         .style1
         {
-            width: 100%;
+            width: 103%;
+            height: 31px;
         }
         .style2
         {
@@ -19,11 +20,44 @@
         }
         .style3
         {
-            width: 368px;
+            width: 499px;
         }
         .style4
         {
             width: 145px;
+        }
+        .style5
+        {
+            width: 73px;
+        }
+        .style6
+        {
+            width: 97px;
+        }
+        .style7
+        {
+            width: 46px;
+        }
+        .style8
+        {
+            width: 79px;
+        }
+        .style10
+        {
+            width: 66px;
+        }
+        .style11
+        {
+            width: 37px;
+            text-align: right;
+        }
+        .style12
+        {
+            width: 100%;
+        }
+        .style13
+        {
+            width: 65px;
         }
     </style>
 </asp:Content>
@@ -56,7 +90,28 @@
                     <asp:Label ID="Label4" runat="server" Text="Fecha"></asp:Label>
                 </td>
                 <td class="style3">
+                    <table class="style1">
+                        <tr>
+                            <td class="style5">
                     <asp:TextBox ID="txtDatePayment" runat="server" Enabled="False" Width="70px"></asp:TextBox>
+                            </td>
+                            <td class="style6">
+                    <asp:Label ID="Label3" runat="server" Text="Tipo de Cambio"></asp:Label>
+                            </td>
+                            <td class="style7">
+                    <asp:Label ID="Label11" runat="server" Text="Compra"></asp:Label>
+                            </td>
+                            <td class="style10">
+                    <asp:TextBox ID="txtCompra" runat="server" Width="69px" Enabled="False"></asp:TextBox>
+                            </td>
+                            <td class="style11">
+                    <asp:Label ID="Label12" runat="server" Text="Venta"></asp:Label>
+                            </td>
+                            <td class="style8">
+                    <asp:TextBox ID="txtVenta" runat="server" Width="69px"></asp:TextBox>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
                 <td class="style4">
                     &nbsp;</td>
@@ -112,12 +167,24 @@
                     <asp:Label ID="Label1" runat="server" Text="Moneda"></asp:Label>
                 </td>
                 <td class="style3">
+                                    <table class="style12">
+                                        <tr>
+                                            <td class="style10">
                                     <asp:DropDownList ID="ddlCurrency" runat="server" AppendDataBoundItems="True" 
                                         Width="50px">
                                         <asp:ListItem>USD</asp:ListItem>
                                         <asp:ListItem Value="PEN">PEN</asp:ListItem>
                                         <asp:ListItem>EUR</asp:ListItem>
                                     </asp:DropDownList>
+                                            </td>
+                                            <td class="style13">
+                    <asp:Label ID="Label2" runat="server" Text="Monto"></asp:Label>
+                                            </td>
+                                            <td>
+                    <asp:TextBox ID="txtAmount" runat="server" Width="92px"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                 <td class="style4">
                     &nbsp;</td>
@@ -126,10 +193,15 @@
             </tr>
             <tr>
                 <td class="style2">
-                    <asp:Label ID="Label2" runat="server" Text="Monto"></asp:Label>
+                    <asp:Label ID="Label13" runat="server" Text="Medio de Pago"></asp:Label>
                 </td>
                 <td class="style3">
-                    <asp:TextBox ID="txtAmount" runat="server" Width="92px"></asp:TextBox>
+                    <asp:DropDownList ID="ddlMPayment" runat="server">
+                        <asp:ListItem>Efectivo</asp:ListItem>
+                        <asp:ListItem>Cheque</asp:ListItem>
+                        <asp:ListItem>Deposito</asp:ListItem>
+                        <asp:ListItem>Tarjeta de Credito</asp:ListItem>
+                    </asp:DropDownList>
                 </td>
                 <td class="style4">
                     &nbsp;</td>
@@ -138,11 +210,9 @@
             </tr>
             <tr>
                 <td class="style2">
-                    <asp:Label ID="Label3" runat="server" Text="Tipo de Cambio"></asp:Label>
-                </td>
+                    &nbsp;</td>
                 <td class="style3">
-                    <asp:TextBox ID="txtExchangeRate" runat="server" Width="69px"></asp:TextBox>
-                </td>
+                    &nbsp;</td>
                 <td class="style4">
                     &nbsp;</td>
                 <td>
