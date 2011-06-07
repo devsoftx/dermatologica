@@ -29,5 +29,22 @@ namespace Dermatologic.Services
                 return response;
             }
         }
+        public ExchangeRateResponse GetExchangeRateByCurrentRate(DateTime CurrentDate)
+        {
+            var response = new ExchangeRateResponse();
+            try
+            {
+                IExchangeRateRepository repository = new ExchangeRateRepository();
+                response.OperationResult = OperationResult.Success;
+                response.Results = repository.GetExchangeRateByCurrentRate(CurrentDate);
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.OperationResult = OperationResult.Failed;
+                response.Message = e.Message;
+                return response;
+            }
+        }
     }
 }
