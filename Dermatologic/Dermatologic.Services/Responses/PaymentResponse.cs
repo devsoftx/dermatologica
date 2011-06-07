@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Dermatologic.Domain;
 
-namespace Dermatologic.Services.Responses
+namespace Dermatologic.Services
 {
-    class PaymentResponse : ResponseBase<Payment>
+    public class PaymentResponse : ResponseBase<Payment>
     {
         public IList<Payment> Payments { set; get; }
     }

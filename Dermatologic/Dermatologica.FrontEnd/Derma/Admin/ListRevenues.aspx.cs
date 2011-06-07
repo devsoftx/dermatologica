@@ -21,6 +21,21 @@ public partial class Derma_Admin_ListRevenues : PageBase
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-
+        SearchPayments();
+    }
+    private void SearchPayments()
+    {
+        //var personType = Request.QueryString.Get("personType");
+        var example = new Payment
+        {
+            MPayment=ddlMPayment.SelectedValue,
+            Currency=ddlCurrency.SelectedValue,
+        };
+        var response = BussinessFactory.GetPaymentService().GetPaymentsByParams(example);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            gvRevenues.DataSource = response.Payments;
+            gvRevenues.DataBind();
+        }
     }
 }
