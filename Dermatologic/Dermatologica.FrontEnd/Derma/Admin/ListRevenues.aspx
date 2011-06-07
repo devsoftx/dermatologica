@@ -8,7 +8,7 @@
         }
         .style2
         {
-            width: 45px;
+            width: 15px;
         }
         .style3
         {
@@ -17,11 +17,15 @@
         }
         .style4
         {
-            width: 193px;
+            width: 108px;
         }
         .style5
         {
             width: 240px;
+        }
+        .style6
+        {
+            width: 195px;
         }
     </style>
 </asp:Content>
@@ -64,6 +68,14 @@
                         <asp:ListItem>Tarjeta de Credito</asp:ListItem>
                     </asp:DropDownList>
                             </td>
+                            <td class="style6">
+                                <asp:Label ID="Label4" runat="server" Text="Documento"></asp:Label>
+                    <asp:DropDownList ID="ddlInvoice" runat="server">
+                        <asp:ListItem>Recibo</asp:ListItem>
+                        <asp:ListItem>Boleta</asp:ListItem>
+                        <asp:ListItem>Factura</asp:ListItem>
+                    </asp:DropDownList>
+                            </td>
                             <td>
                                 <asp:Button ID="btnSearch" runat="server" onclick="btnSearch_Click" 
                                     Text="Buscar" />
@@ -79,7 +91,7 @@
                     &nbsp;</td>
                 <td>
                     <asp:GridView ID="gvRevenues" runat="server" AutoGenerateColumns="False" 
-                        CellPadding="4" ForeColor="#333333" GridLines="None">
+                        CellPadding="4" ForeColor="#333333" GridLines="None" Width="532px">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:BoundField DataField="DatePayment" HeaderText="Fecha" />

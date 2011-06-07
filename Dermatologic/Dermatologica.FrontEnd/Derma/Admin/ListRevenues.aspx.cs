@@ -30,6 +30,7 @@ public partial class Derma_Admin_ListRevenues : PageBase
         {
             MPayment=ddlMPayment.SelectedValue,
             Currency=ddlCurrency.SelectedValue,
+            Invoice=ddlInvoice.SelectedValue,
         };
         var response = BussinessFactory.GetPaymentService().GetPaymentsByParams(example);
         if (response.OperationResult == OperationResult.Success)

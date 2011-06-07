@@ -8,10 +8,10 @@ namespace Dermatologic.Data
     {
         public IList<Payment> GetPaymentsByParams(Payment example)
         {
-            const string query = "from Payment p where p.Currency = :Currency and p.MPayment = :MPayment";
-            string[] parameters = { "Currency", "MPayment"};
+            const string query = "from Payment p where p.Currency = :Currency and p.MPayment = :MPayment and p.Invoice = :Invoice";
+            string[] parameters = { "Currency", "MPayment","Invoice"};
             object[] values = {
-                                  example.Currency, example.MPayment 
+                                  example.Currency, example.MPayment ,example.Invoice
                               };
             return Query(query, parameters, values);
         }
