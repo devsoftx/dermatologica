@@ -70,10 +70,11 @@
                 <asp:Panel runat="server" ID="pnlReport">
     <div id="Main">
         <table class="style1">
-            <tr>
+            <tr style="text-align: center">
                 <td class="style2">
                     &nbsp;</td>
-                <td class="style3">
+                <td class="style3" 
+                    style="font-weight: bold; background-color: #006699; color: #FFFFFF">
                     Atención Medica</td>
                 <td>
                     &nbsp;</td>

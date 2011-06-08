@@ -35,8 +35,8 @@
             <tr>
                 <td class="style2">
                     &nbsp;</td>
-                <td>
-                    &nbsp;</td>
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
+                    Ingresos</td>
                 <td>
                     &nbsp;</td>
             </tr>

@@ -26,13 +26,13 @@
     <div>
         <table>
             <tr>
-                <td>
-                    <asp:Literal ID="litMensaje" runat="server" />
-                </td>
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
+                    Tratamientos</td>
             </tr>
             <tr>
                 <td>
-                    &nbsp;</td>
+                    <asp:Literal ID="litMensaje" runat="server" />
+                </td>
             </tr>
             <tr>
                 <td>

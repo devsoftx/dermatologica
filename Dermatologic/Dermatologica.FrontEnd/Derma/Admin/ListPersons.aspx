@@ -19,6 +19,14 @@
         <tr>
             <td class="style2">
                 &nbsp;</td>
+            <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
+                Personas</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td class="style2">
+                &nbsp;</td>
             <td>
             <asp:Literal ID="litMensaje" runat="server" />
             </td>

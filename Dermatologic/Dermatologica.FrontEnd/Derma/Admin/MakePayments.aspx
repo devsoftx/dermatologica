@@ -67,7 +67,9 @@
             <tr>
                 <td class="style2">
                     &nbsp;</td>
-                <td class="style3">
+                <td class="style3" 
+                
+                    style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
                     Pagos</td>
                 <td class="style4">
                     &nbsp;</td>

@@ -17,9 +17,9 @@
                 <td>
                     &nbsp;
                 </td>
-                <td>
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
                     &nbsp;
-                </td>
+                    Tipo de Cambio</td>
                 <td>
                     &nbsp;
                 </td>
