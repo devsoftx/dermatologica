@@ -76,6 +76,10 @@ public partial class Derma_Admin_EditMedication : PageBase
         {
             foreach (GridViewRow row in gvSessions.Rows)
             {
+
+                if (((CheckBox)row.FindControl("chkIsPaid")).Checked == false)
+                { 
+                }
                 var session = new Session
                                   {
                                       Id = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString()),
@@ -219,7 +223,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         if (response.OperationResult == OperationResult.Success)
         {
             txtPrice.Text = response.Sessions.Sum(p => p.Price).ToString();
-            BindControl<Session>.BindGrid(gvSessions,response.Sessions);
+            BindControl<Session>.BindGrid(gvSessions, response.Sessions.OrderBy(p => p.Residue).ToList());
         }
     }
 
