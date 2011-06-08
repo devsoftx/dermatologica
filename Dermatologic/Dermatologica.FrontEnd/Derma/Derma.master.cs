@@ -20,20 +20,23 @@ public partial class Derma_Derma : MasterPageBase
 
     private void GetMenu(string userName)
     {
-        var padres = BussinessFactory.GetMenuService().GetMenuByUser(userName).Results.Where(p => p.ParentId == null).ToList();
-        var childs = BussinessFactory.GetMenuService().GetMenuByUser(userName).Results.Where(p => p.ParentId != null).ToList();
-        foreach (Menu item in padres)
+        var listmenus = BussinessFactory.GetMenuService().GetMenuByUser(userName).Results.Where(p => p.ParentId == null).ToList();
+        var listmenuchilds = BussinessFactory.GetMenuService().GetMenuByUser(userName).Results.Where(p => p.ParentId != null).ToList();
+        foreach (Menu item in listmenus)
         {
-            var child = new MenuItem(item.Name, item.Id.ToString(), "", item.Url);
-            NavigationMenu.Items.Add(child);
+            var mnuItem = new MenuItem(item.Name, item.Id.ToString(), "", item.Url);
+            NavigationMenu.Items.Add(mnuItem);
+            var childs = listmenuchilds.Where(p => p.ParentId.Value.Equals(item.Id.Value)).ToList();
+            AddChilds(mnuItem, childs);
         }
-        for (int i = 0; i <= NavigationMenu.Items.Count - 1; i++)
+    }
+
+    private void AddChilds(MenuItem item, IEnumerable<Menu> childs)
+    {
+        foreach (var menu in childs)
         {
-            foreach (var menu in childs)
-            {
-                var mnuItemChild = new MenuItem { Value = menu.Id.ToString(), Text = menu.Name, NavigateUrl = menu.Url };
-                NavigationMenu.Items[i].ChildItems.Add(mnuItemChild);
-            }
+            var mnuItemChild = new MenuItem { Value = menu.Id.ToString(), Text = menu.Name, NavigateUrl = menu.Url };
+            item.ChildItems.Add(mnuItemChild);
         }
     }
 }
