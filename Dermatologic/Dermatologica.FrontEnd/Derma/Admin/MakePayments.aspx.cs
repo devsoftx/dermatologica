@@ -26,16 +26,16 @@ public partial class Derma_Admin_MakePayments : PageBase
     private void SetPayment()
     {
         var IdSession = Request.QueryString.Get("idSession");
-        var Session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
 
       //  var IdMedication = Request.QueryString.Get("idMedication");
-        var IdMedication = Session.Medication.Id;
+        var IdMedication = session.Medication.Id;
         var Medication = BussinessFactory.GetMedicationService().Get(IdMedication);
         
-        txtName.Text = "Pago de la Sesión " + Session.Description;
-        txtAmount.Text = Convert.ToString(Session.Residue);
-        txtPrice.Text = Convert.ToString(Session.Price);
-        txtResidue.Text = Convert.ToString(Session.Residue);
+        txtName.Text = "Pago de la Sesión " + session.Description;
+        txtAmount.Text = Convert.ToString(session.Residue);
+        txtPrice.Text = Convert.ToString(session.Price);
+        txtResidue.Text = Convert.ToString(session.Residue);
 
         var List = BussinessFactory.GetExchangeRateService().GetAll().Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();
     // p.DateDate.ToShortDate().Equals(Datetime.Now.ToShortDate())
@@ -60,10 +60,10 @@ public partial class Derma_Admin_MakePayments : PageBase
     {
 
         var IdSession = Request.QueryString.Get("idSession");
-        var Session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
 
         //  var IdMedication = Request.QueryString.Get("idMedication");
-        var IdMedication = Session.Medication.Id;
+        var IdMedication = session.Medication.Id;
         var Medication = BussinessFactory.GetMedicationService().Get(IdMedication);
 
         var Payment = new Payment
@@ -92,10 +92,10 @@ public partial class Derma_Admin_MakePayments : PageBase
        
         };
           Payment.Pacient=Medication.Patient;
-          Payment.Session=Session;
+          Payment.Session=session;
 
-          Session.Account = Convert.ToDecimal(txtAmount.Text.Trim());
-          Session.Residue = Session.Price - Session.Account;
+          session.Account = Convert.ToDecimal(txtAmount.Text.Trim());
+          session.Residue = session.Price - session.Account;
         try
         {
            
@@ -103,7 +103,7 @@ public partial class Derma_Admin_MakePayments : PageBase
 
             if (response.OperationResult == OperationResult.Success)
             {
-                BussinessFactory.GetSessionService().Update(Session);
+                BussinessFactory.GetSessionService().Update(session);
                 Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", IdMedication), true);
             }
             else

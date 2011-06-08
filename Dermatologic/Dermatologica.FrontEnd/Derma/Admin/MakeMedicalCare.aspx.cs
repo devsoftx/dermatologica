@@ -21,14 +21,14 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     private void SetPayment()
     {
         var IdSession = Request.QueryString.Get("idSession");
-        var Session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var currentSession = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
 
         //  var IdMedication = Request.QueryString.Get("idMedication");
-        var IdMedication = Session.Medication.Id;
+        var IdMedication = currentSession.Medication.Id;
         var Medication = BussinessFactory.GetMedicationService().Get(IdMedication);
 
         txtPatient.Text = Medication.Patient.FirstName + " " + Medication.Patient.LastName;
-        txtSession.Text = Session.Description;
+        txtSession.Text = currentSession.Medication.Service.Name;
     }
     private void Save()
     {

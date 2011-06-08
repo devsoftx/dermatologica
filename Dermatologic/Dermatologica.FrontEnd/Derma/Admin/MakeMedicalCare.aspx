@@ -16,6 +16,13 @@
             width: 360px;
         }
     </style>
+        <script type="text/javascript">
+            $(function () {
+                $("#MainContent_txtDateAttention").datepicker();
+                $("#MainContent_txtDateAttention").datepicker($.datepicker.regional['es']);
+            });
+    </script>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
 <telerik:RadCodeBlock ID="rcbInvitation" runat="server">
@@ -93,7 +100,7 @@
                     <asp:Label ID="Label4" runat="server" Text="Fecha"></asp:Label>
                 </td>
                 <td class="style3">
-                    <asp:TextBox ID="txtDateAttention" runat="server" Enabled="False" Width="126px"></asp:TextBox>
+                    <asp:TextBox ID="txtDateAttention" runat="server" Width="126px"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;</td>
@@ -135,7 +142,8 @@
                     <asp:Label ID="Label5" runat="server" Text="Comentario"></asp:Label>
                 </td>
                 <td class="style3">
-                    <asp:TextBox ID="txtDescription" runat="server" Width="502px"></asp:TextBox>
+                    <asp:TextBox ID="txtDescription" runat="server" Width="502px" Rows="5" 
+                        TextMode="MultiLine"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;</td>
