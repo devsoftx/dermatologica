@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
@@ -15,6 +16,10 @@ public partial class Derma_Derma : MasterPageBase
         if (userName != null)
         {
             GetMenu(userName.ToString());
+        }
+        else
+        {
+            FormsAuthentication.RedirectToLoginPage(Request.RawUrl);
         }
     }
 
