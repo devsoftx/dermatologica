@@ -10,6 +10,10 @@
         {
             width: 51px;
         }
+        .style4
+        {
+            width: 370px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
@@ -18,7 +22,16 @@
             <tr>
                 <td class="style2">
                     &nbsp;</td>
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;" 
+                    class="style4">
+                    Tipo de Personas</td>
                 <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    &nbsp;</td>
+                <td class="style4">
             <asp:Literal ID="litMensaje" runat="server" />
                 </td>
                 <td>
@@ -27,7 +40,7 @@
             <tr>
                 <td class="style2">
                     &nbsp;</td>
-                <td>
+                <td class="style4">
                     <asp:GridView ID="gvPersonTypes" runat="server" AutoGenerateColumns="False" 
                         CellPadding="4" ForeColor="#333333" GridLines="None" 
                         onrowcommand="gvPersonTypes_RowCommand">
@@ -67,7 +80,7 @@
             <tr>
                 <td class="style2">
                     &nbsp;</td>
-                <td>
+                <td class="style4">
             <asp:LinkButton ID="lnkNew" runat="server" Text="Nuevo" onclick="lnkNew_Click" />
                 </td>
                 <td>
@@ -76,7 +89,7 @@
             <tr>
                 <td class="style2">
                     &nbsp;</td>
-                <td>
+                <td class="style4">
                     &nbsp;</td>
                 <td>
                     &nbsp;</td>
