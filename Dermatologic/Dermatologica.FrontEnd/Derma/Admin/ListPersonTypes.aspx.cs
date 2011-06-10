@@ -45,7 +45,7 @@ public partial class Derma_Admin_ListPersonTypes : PageBase
             var response = BussinessFactory.GetPersonTypeService().Update(PersonType);
             if (response.OperationResult == OperationResult.Success)
             {
-                litMensaje.Text = string.Format("Se eliminó El Tratamiento");
+                litMensaje.Text = string.Format("Se eliminó El Tipo de Persona");
                 return;
             }
         }

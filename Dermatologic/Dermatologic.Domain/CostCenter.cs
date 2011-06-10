@@ -3,15 +3,15 @@ using System.Runtime.Serialization;
 
 namespace Dermatologic.Domain
 {
-    [DataContract]
+    //[DataContract]
     public class CostCenter : IEquatable<CostCenter>
     {
-        private Service _service;
+        //private Service _service;
 
-        public CostCenter()
-        {
-            _service = new Service();
-        }
+        //public CostCenter()
+        //{
+        //    _service = new Service();
+        //}
 
         [DataMember]
         public virtual Guid? Id { set; get; }
@@ -37,12 +37,12 @@ namespace Dermatologic.Domain
         [DataMember]
         public virtual Guid? ModifiedBy { set; get; }
 
-        [DataMember]
-        public virtual Service Service
-        {
-            get { return _service; }
-            set { _service = value; }
-        }
+        //[DataMember]
+        //public virtual Service Service
+        //{
+        //    get { return _service; }
+        //    set { _service = value; }
+        //}
 
         public virtual bool Equals(CostCenter other)
         {

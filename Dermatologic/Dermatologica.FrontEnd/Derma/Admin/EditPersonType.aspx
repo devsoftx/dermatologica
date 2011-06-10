@@ -8,7 +8,31 @@
         }
         .style2
         {
-            width: 115px;
+            width: 77px;
+            text-align: right;
+        }
+        .style3
+        {
+            width: 521px;
+        }
+        .style6
+        {
+            text-align: right;
+            height: 21px;
+        }
+        .style8
+        {
+            height: 21px;
+        }
+        .style9
+        {
+            width: 38px;
+            text-align: right;
+            height: 21px;
+        }
+        .style10
+        {
+            width: 38px;
             text-align: right;
         }
     </style>
@@ -17,49 +41,66 @@
     <div id="Main">
         <table class="style1">
             <tr>
+                <td class="style9">
+                    </td>
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;" 
+                    colspan="2">
+                    Mantenimiento de Tipo de Persona</td>
+            </tr>
+            <tr>
+                <td class="style10">
+                    &nbsp;</td>
                 <td class="style2">
                     &nbsp;</td>
-                <td>
+                <td class="style3">
         <asp:Literal ID="litMensaje" runat="server" />
                 </td>
                 <td>
                     &nbsp;</td>
             </tr>
             <tr>
+                <td class="style10">
+                    &nbsp;</td>
                 <td class="style2">
                     <asp:Label ID="Label1" runat="server" style="text-align: right" Text="Nombre"></asp:Label>
                 </td>
-                <td>
+                <td class="style3">
                     <asp:TextBox ID="txtName" runat="server" Width="184px"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;</td>
             </tr>
             <tr>
+                <td class="style10">
+                    &nbsp;</td>
                 <td class="style2">
                     <asp:Label ID="Label2" runat="server" style="text-align: right" 
                         Text="Descripcion"></asp:Label>
                 </td>
-                <td>
+                <td class="style3">
                     <asp:TextBox ID="txtDescription" runat="server" Width="499px"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;</td>
             </tr>
             <tr>
+                <td class="style10">
+                    &nbsp;</td>
                 <td class="style2">
                     &nbsp;</td>
-                <td>
+                <td class="style3">
                     &nbsp;</td>
                 <td>
                     &nbsp;</td>
             </tr>
             <tr>
+                <td class="style10">
+                                &nbsp;</td>
                 <td class="style2">
+                                &nbsp;</td>
+                <td class="style3">
                                 <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" 
                                     onclick="btnAceptar_Click" />
-                            </td>
-                <td>
                                 <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" 
                                     onclick="btnCancelar_Click" />
                             </td>

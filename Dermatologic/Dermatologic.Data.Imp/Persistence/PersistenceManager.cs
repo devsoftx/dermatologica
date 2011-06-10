@@ -185,7 +185,7 @@ namespace Dermatologic.Data.Persistence
                     },
                     x => { });
             });
-
+           
 
             mapper.Class<Medication>(cm =>
             {
