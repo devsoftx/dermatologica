@@ -11,4 +11,12 @@ public partial class Derma_Admin_MakePaymentsPersonal : System.Web.UI.Page
     {
 
     }
+    protected void btnAceptar_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void btnCancelar_Click(object sender, EventArgs e)
+    {
+
+    }
 }
