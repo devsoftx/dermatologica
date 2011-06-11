@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
-using MedicalCare = Dermatologic.Domain.MedicalCare;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 public partial class Derma_Admin_MakeMedicalCare : PageBase
@@ -16,8 +15,11 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         {
             SetPayment();
             txtDateAttention.Text = Convert.ToString(CreationDate);
+            LoadPersonType();
         }
+        ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
     }
+
     private void SetPayment()
     {
         var IdSession = Request.QueryString.Get("idSession");
@@ -27,6 +29,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         txtPatient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName,medication.Patient.LastNameP,medication.Patient.LastNameM);
         txtSession.Text = currentSession.Medication.Service.Name;
     }
+
     private void Save()
     {
         var IdSession = Request.QueryString.Get("idSession");
@@ -72,37 +75,23 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
 
     }
 
+    private void LoadPersonType()
+    {
+        var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
+        BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
+    }
+
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
-        //var action = Request.QueryString.Get("action");
-        //switch (action)
-        //{
-        //    case "new":
         Save();
-        //    break;
-        //case "edit":
-        //    Update();
-        //    break;
-        // }
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
         var IdSession = Request.QueryString.Get("idSession");
-        var Session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
-
-        //  var IdMedication = Request.QueryString.Get("idMedication");
-        var IdMedication = Session.Medication.Id;
+        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var IdMedication = session.Medication.Id;
         Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", IdMedication), true);
     }
-    protected void lnkSearch_Click(object sender, EventArgs e)
-    {
 
-        const string javascript = "openRadWindow('SearchPersons.aspx?personType=652015c3-e389-46b0-9bab-fb016b8abd44','rw1');";
-        System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
-    }
-    protected void btnDoPostBack_Click(object sender, EventArgs e)
-    {
-
-    }
 }

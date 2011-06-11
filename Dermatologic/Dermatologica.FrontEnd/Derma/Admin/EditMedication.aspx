@@ -153,7 +153,7 @@
                             </tr>
                             <tr>
                                 <td class="style2">
-                                    Precio Total</td>
+                                    Precio Unitario</td>
                                 <td>
                                     <telerik:RadNumericTextBox ID="txtPrice" Runat="server" 
                                         DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
@@ -177,6 +177,17 @@
                                 <td>
                                     &nbsp;
                                 </td>
+                            </tr>
+                            <tr>
+                                <td class="style2">
+                                    Precio Total</td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="txtPriceT" Runat="server" 
+                                        DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
+                                    </telerik:RadNumericTextBox>
+                                </td>
+                                <td>
+                                    &nbsp;</td>
                             </tr>
                             <tr>
                                 <td class="style2">
@@ -212,6 +223,7 @@
                                         onrowcommand="gvSessions_RowCommand">
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
+                                            <asp:BoundField DataField="RowId" HeaderText="N#" />
                                             <asp:BoundField DataField="Currency" HeaderText="Moneda" />
                                             <asp:BoundField DataField="Price" HeaderText="Precio" />
                                             <asp:BoundField DataField="Account" HeaderText="Acuenta" />

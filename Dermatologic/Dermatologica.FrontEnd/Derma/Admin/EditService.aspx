@@ -50,10 +50,10 @@
             <tr>
                 <td class="style2">
                     <asp:Label ID="Label3" runat="server" style="text-align: right" 
-                        Text="Price"></asp:Label>
+                        Text="Precio Unitario:"></asp:Label>
                 </td>
                 <td>
-                    <telerik:RadNumericTextBox ID="txtPrice" Runat="server" 
+                    <telerik:RadNumericTextBox ID="txtPrice" Runat="server"
                         DataType="System.Decimal" MaxValue="9999" MinValue="0" Width="75px">
                     </telerik:RadNumericTextBox>
                 </td>

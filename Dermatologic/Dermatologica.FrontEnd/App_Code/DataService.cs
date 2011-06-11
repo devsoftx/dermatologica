@@ -18,14 +18,14 @@ namespace ASP.App_Code
 
         private static Guid GetContractCycleIDContext(RadComboBoxContext context)
         {
-            if (string.IsNullOrEmpty(context["EvaluationCycle"].ToString()))
+            if (string.IsNullOrEmpty(context["PersonType"].ToString()))
                 return Guid.Empty;
-            return new Guid((string)context["EvaluationCycle"]);
+            return new Guid((string)context["PersonType"]);
 
         }
 
         [WebMethod(EnableSession = false)]
-        public RadComboBoxData LoadTradePartnerNameByEvaluationCycle(RadComboBoxContext context)
+        public RadComboBoxData LoadPersons(RadComboBoxContext context)
         {
             var result = new RadComboBoxData();
             try

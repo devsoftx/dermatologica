@@ -18,6 +18,8 @@ public partial class Derma_Admin_EditMedication : PageBase
             GetServices();
             SetMedication();
         }
+        txtDiscountT.Value = 0D;
+        btnAceptar.Enabled = false;
     }
 
     private void SetMedication()
@@ -50,6 +52,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         txtDni.Text = medication.Patient.DocumentNumber;
         txtPacient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
         lblCurrency.Text = medication.Service.Currency;
+        txtPriceT.Text = medication.Price.ToString();
         if (medication.Service.Id.HasValue) dwService.SelectedValue = medication.Service.Id.Value.ToString();
     }
 
@@ -62,6 +65,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  Id = Guid.NewGuid(),
                                  Description = txtDescription.Text.Trim(),
                                  NumberSessions = Convert.ToInt32(txtNumberSessions.Text.Trim()),
+                                 Price = Convert.ToDecimal(txtPriceT.Text),
                                  IsCompleted = false,
                                  IsActive = true,
                                  LastModified = LastModified,
@@ -69,8 +73,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  ModifiedBy = ModifiedBy,
                                  CreatedBy = CreatedBy,
                                  Patient = patient,
-                                 Service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue)),
-                                // Service = new Service {Id = new Guid(dwService.SelectedValue)}
+                                 Service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue))
                              };
         try
         {
@@ -190,19 +193,20 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     protected void btnAddSessions_Click(object sender, EventArgs e)
     {
-        var intSession = Convert.ToInt32(txtNumberSessions.Text.Trim());
+        var intSession = Convert.ToInt32(txtNumberSessions.Value);
         var discount = Convert.ToDecimal(txtDiscountT.Text.Trim());
         var priceService = Convert.ToDecimal(txtPrice.Text.Trim());
-        decimal price = ((priceService - discount)/ intSession);
+        decimal price = ((priceService * intSession) - discount);
         IList<Session> sessions = new List<Session>();
         for (var i = 0; i < intSession; i++)
         {
             var session = new Session
                               {
+                                  RowId = i + 1,
                                   Id = Guid.NewGuid(),
                                   Currency = lblCurrency.Text.Trim().ToUpper(),
-                                  Price = price,
-                                  Residue = price,
+                                  Price = price / intSession,
+                                  Residue = 0,
                                   IsCompleted = false,
                                   IsPaid = false,
                                   IsActive = true,
@@ -213,6 +217,8 @@ public partial class Derma_Admin_EditMedication : PageBase
                               };
             sessions.Add(session);
         }
+        txtPriceT.Text = price.ToString();
+        btnAceptar.Enabled = true;
         BindControl<Session>.BindGrid(gvSessions,sessions);
     }
 
@@ -222,7 +228,6 @@ public partial class Derma_Admin_EditMedication : PageBase
         var response = BussinessFactory.GetSessionService().GetSessionByMedication(session);
         if (response.OperationResult == OperationResult.Success)
         {
-            txtPrice.Text = response.Sessions.Sum(p => p.Price).ToString();
             BindControl<Session>.BindGrid(gvSessions, response.Sessions.OrderBy(p => p.Residue).ToList());
         }
     }

@@ -14,6 +14,9 @@ namespace Dermatologic.Domain
         }
 
         [DataMember]
+        public virtual int RowId { set; get; }
+
+        [DataMember]
         public virtual Guid? Id { set; get; }
 
         [DataMember]

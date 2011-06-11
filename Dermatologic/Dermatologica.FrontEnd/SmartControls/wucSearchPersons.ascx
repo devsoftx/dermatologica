@@ -2,17 +2,17 @@
 <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
 	<script language="javascript" type="text/javascript">
 	    function SetContext(sender, args) {
-	        if ("<%= CycleControlName %>" != "") {
-	            var combo = $find("<%= CycleControlName %>");
+	        if ("<%= PersonTypeControlName %>" != "") {
+	            var combo = $find("<%= PersonTypeControlName %>");
 	            if (combo == null) {
-	                args.get_context()["EvaluationCycle"] = "";
+	                args.get_context()["PersonType"] = "";
 	            }
 	            else {
-	                args.get_context()["EvaluationCycle"] = combo._value;
+	                args.get_context()["PersonType"] = combo._value;
 	            }
 	        }
 	        else {
-	            args.get_context()["EvaluationCycle"] = "";
+	            args.get_context()["PersonType"] = "";
 	        }
 	    }
 	    function OnClientItemsRequestFailedHandler(sender, eventArgs) {

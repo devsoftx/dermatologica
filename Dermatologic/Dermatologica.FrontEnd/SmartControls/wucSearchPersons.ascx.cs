@@ -41,7 +41,7 @@ public partial class SmartControls_wucSearchPersons : System.Web.UI.UserControl
         set { ComboBox.EmptyMessage = value; }
     }
 
-    public string CycleControlName { get; set; }
+    public string PersonTypeControlName { get; set; }
 
     public bool EnableLoadOnDemand { set { ComboBox.EnableLoadOnDemand = value; } }
 

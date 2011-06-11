@@ -7,7 +7,7 @@ namespace Dermatologic.Data
     {
         public IList<Session> GetSessionByMedication(Session example)
         {
-            const string query = "from Session s where s.Medication.Id = :medicationId";
+            const string query = "from Session s where s.Medication.Id = :medicationId order by s.RowId";
             string[] parameters = { "medicationId" };
             object[] values = {
                                   example.Medication.Id

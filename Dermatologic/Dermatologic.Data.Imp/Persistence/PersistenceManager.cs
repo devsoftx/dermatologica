@@ -445,6 +445,7 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
+                    cm.Property(x => x.Price, m => m.Column("Price"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.NumberSessions, m => m.Column("NumberSessions"));
                     cm.Property(x => x.IsCompleted, m => m.Column("IsCompleted"));
@@ -490,6 +491,7 @@ namespace Dermatologic.Data.Persistence
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
                     cm.Property(x => x.Currency, m => m.Column("Currency"));
+                    cm.Property(x => x.RowId, m => m.Column("[RowId]"));
                     cm.Property(x => x.Price, m => m.Column("Price"));
                     cm.Property(x => x.Account, m => m.Column("Account"));
                     cm.Property(x => x.Residue, m => m.Column("Residue"));
