@@ -67,7 +67,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Paciente">
                                 <ItemTemplate>
-                                    <asp:Literal ID="litPatient" runat="server" Text='<%# string.Format("{0} {1}", ((Person)Eval("Patient")).FirstName,((Person)Eval("Patient")).LastName) %>'></asp:Literal>
+                                    <asp:Literal ID="litPatient" runat="server" Text='<%# string.Format("{0} {1} {2}", ((Person)Eval("Patient")).FirstName,((Person)Eval("Patient")).LastNameP, ((Person)Eval("Patient")).LastNameM) %>'></asp:Literal>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="Description" HeaderText="Descripción" />

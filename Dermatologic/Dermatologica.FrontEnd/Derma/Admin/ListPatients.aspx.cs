@@ -14,15 +14,16 @@ public partial class Derma_Admin_ListPatients : PageBase
     {
         SearchPatients();
     }
+
     private void SearchPatients()
-    
     {
-        var personType = "c78ca3d8-f0c5-450e-aa64-5afa0a5e2c54";
+        const string personType = "9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68";
         var example = new Person
         {
             PersonType = { Id = new Guid(personType) },
             FirstName = txtSearch.Text.Trim().ToLower(),
-            LastName = txtSearch.Text.Trim().ToLower(),
+            LastNameP = txtSearch.Text.Trim().ToLower(),
+            LastNameM = txtSearch.Text.Trim().ToLower(),
         };
         var response = BussinessFactory.GetPersonService().GetPacients(example);
         if (response.OperationResult == OperationResult.Success)
@@ -35,5 +36,16 @@ public partial class Derma_Admin_ListPatients : PageBase
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         SearchPatients();
+    }
+
+    protected void gvPatients_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        switch (e.CommandName)
+        {
+            case "cmd_editar":
+                var id = new Guid(e.CommandArgument.ToString());
+                Response.Redirect(string.Format("PatientInformation.aspx?id={0}", id), true);
+                break;
+        }
     }
 }

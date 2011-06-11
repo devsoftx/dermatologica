@@ -20,7 +20,10 @@ namespace Dermatologic.Domain
         public virtual string FirstName { set; get; }
 
         [DataMember]
-        public virtual string LastName { set; get; }
+        public virtual string LastNameP { set; get; }
+
+        [DataMember]
+        public virtual string LastNameM { set; get; }
 
         [DataMember]
         public virtual DateTime? DateBirthDay { set; get; }

@@ -48,7 +48,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         txtNumberSessions.Text = Convert.ToString(medication.NumberSessions);
         ddlDocumentType.SelectedValue = medication.Patient.DocumentType;
         txtDni.Text = medication.Patient.DocumentNumber;
-        txtPacient.Text = string.Format("{0} {1}", medication.Patient.FirstName, medication.Patient.LastName);
+        txtPacient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
         lblCurrency.Text = medication.Service.Currency;
         if (medication.Service.Id.HasValue) dwService.SelectedValue = medication.Service.Id.Value.ToString();
     }
@@ -175,7 +175,7 @@ public partial class Derma_Admin_EditMedication : PageBase
             if (examples.Count > 0)
             {
                 var pacient = examples.FirstOrDefault();
-                txtPacient.Text = string.Format("{0} {1}", pacient.FirstName, pacient.LastName);
+                txtPacient.Text = string.Format("{0} {1} {2}", pacient.FirstName, pacient.LastNameP, pacient.LastNameM);
                 return;
             }
         }

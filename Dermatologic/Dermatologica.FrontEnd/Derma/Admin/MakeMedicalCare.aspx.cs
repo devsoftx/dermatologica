@@ -22,54 +22,42 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     {
         var IdSession = Request.QueryString.Get("idSession");
         var currentSession = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
-
-        //  var IdMedication = Request.QueryString.Get("idMedication");
         var IdMedication = currentSession.Medication.Id;
-        var Medication = BussinessFactory.GetMedicationService().Get(IdMedication);
-
-        txtPatient.Text = Medication.Patient.FirstName + " " + Medication.Patient.LastName;
+        var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
+        txtPatient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName,medication.Patient.LastNameP,medication.Patient.LastNameM);
         txtSession.Text = currentSession.Medication.Service.Name;
     }
     private void Save()
     {
-
         var IdSession = Request.QueryString.Get("idSession");
-        var Session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var IdMedication = session.Medication.Id;
+        var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
+        var medical = BussinessFactory.GetPersonService().Get(new Guid("1df97a6d-58a2-4219-8572-68250bfd3b23"));
+        var medicalCare = new MedicalCare
+                              {
+                                  Id = Guid.NewGuid(),
+                                  Description = txtDescription.Text.Trim(),
+                                  DateAttention = Convert.ToDateTime(CreationDate),
+                                  IsActive = true,
+                                  LastModified = LastModified,
+                                  CreationDate = CreationDate,
+                                  ModifiedBy = ModifiedBy,
+                                  CreatedBy = CreatedBy,
+                                  Pacient = medication.Patient,
+                                  Session = session,
+                                  Medical = medical
+                              };
 
-        //  var IdMedication = Request.QueryString.Get("idMedication");
-        var IdMedication = Session.Medication.Id;
-        var Medication = BussinessFactory.GetMedicationService().Get(IdMedication);
-
-        //var IdMedical=
-        var Medical = BussinessFactory.GetPersonService().Get(new Guid("1df97a6d-58a2-4219-8572-68250bfd3b23"));
-
-        var MedicalCare = new MedicalCare
-        {
-            Id = Guid.NewGuid(),
-            Description = txtDescription.Text.Trim(),
-            DateAttention = Convert.ToDateTime(CreationDate),
-            IsActive = true,
-
-            LastModified = LastModified,
-            CreationDate = CreationDate,
-            ModifiedBy = ModifiedBy,
-            CreatedBy = CreatedBy,
-            // Patient = patient,
-
-        };
-        MedicalCare.Pacient = Medication.Patient;
-        MedicalCare.Session = Session;
-        MedicalCare.Medical = Medical;
-
-        Session.IsCompleted = true;
+        session.IsCompleted = true;
         try
         {
 
-            var response = BussinessFactory.GetMedicalCareService().Save(MedicalCare);
+            var response = BussinessFactory.GetMedicalCareService().Save(medicalCare);
 
             if (response.OperationResult == OperationResult.Success)
             {
-                BussinessFactory.GetSessionService().Update(Session);
+                BussinessFactory.GetSessionService().Update(session);
                 Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", IdMedication), true);
             }
             else

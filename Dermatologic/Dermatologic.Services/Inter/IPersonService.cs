@@ -6,7 +6,7 @@ namespace Dermatologic.Services
     public interface IPersonService : IServiceController<Person>
     {
         PersonResponse GetPacients(Person example);
-
         PersonResponse GetPersonByDni(string dni);
+        PersonResponse SearchPersons(Person example);
     }
 }

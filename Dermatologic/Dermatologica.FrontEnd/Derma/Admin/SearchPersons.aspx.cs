@@ -23,7 +23,8 @@ public partial class Derma_SearchPersons : PageBase
                           {
                               PersonType = { Id = new Guid(personType) },
                               FirstName = txtSearch.Text.Trim().ToLower(),
-                              LastName = txtSearch.Text.Trim().ToLower(),
+                              LastNameP = txtSearch.Text.Trim().ToLower(),
+                              LastNameM = txtSearch.Text.Trim().ToLower()
                           };
         var response = BussinessFactory.GetPersonService().GetPacients(example);
         if (response.OperationResult == OperationResult.Success)

@@ -6,5 +6,6 @@ namespace Dermatologic.Data
     public interface IPersonRepository : IRepository<Person>
     {
         IList<Person> GetPacients(Person example);
+        IList<Person> SearchPersons(Person example);
     }
 }

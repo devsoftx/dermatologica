@@ -8,11 +8,24 @@ namespace Dermatologic.Data
     {
         public IList<Person> GetPacients(Person example)
         {
-            const string query = "from Person p where p.PersonType.Id = :personTypeId and ( lower(p.FirstName) like :firstName or lower(p.LastName) like :lastName) ";
-            string[] parameters = { "personTypeId", "firstName", "lastName" };
+            const string query = "from Person p where p.PersonType.Id = :personTypeId and ( lower(p.FirstName) like :firstName or lower(p.LastNameP) like :lastNameP or lower(p.LastNameM) like :lastNameM ) ";
+            string[] parameters = { "personTypeId", "firstName", "lastNameP", "lastNameM" };
             object[] values = {
                                   example.PersonType.Id, string.Format("{0}" + example.FirstName + "{0}", "%"),
-                                  string.Format("{0}" + example.LastName + "{0}", "%")
+                                  string.Format("{0}" + example.LastNameP + "{0}", "%"),
+                                  string.Format("{0}" + example.LastNameM + "{0}", "%")
+                              };
+            return Query(query, parameters, values);
+        }
+
+        public IList<Person> SearchPersons(Person example)
+        {
+            const string query = "from Person p where (lower(p.FirstName) like :firstName or lower(p.LastNameP) like :lastNameP or lower(p.LastNameM) like :lastNameM ) ";
+            string[] parameters = { "firstName", "lastNameP", "lastNameM" };
+            object[] values = {
+                                  string.Format("{0}" + example.FirstName + "{0}", "%"),
+                                  string.Format("{0}" + example.LastNameP + "{0}", "%"),
+                                  string.Format("{0}" + example.LastNameM + "{0}", "%")
                               };
             return Query(query, parameters, values);
         }

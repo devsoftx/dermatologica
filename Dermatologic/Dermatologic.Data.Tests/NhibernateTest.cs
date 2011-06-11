@@ -135,8 +135,8 @@ namespace Dermatologic.Data.Tests
                     cm.Id(x => x.Id, m => m.Column("Id"));
                     cm.Property(x => x.FirstName, m => m.NotNullable(false));
                     cm.Property(x => x.FirstName, m => m.Column("FirstName"));
-                    cm.Property(x => x.LastName, m => m.NotNullable(false));
-                    cm.Property(x => x.LastName, m => m.Column("LastName"));
+                    cm.Property(x => x.LastNameP, m => m.NotNullable(false));
+                    cm.Property(x => x.LastNameP, m => m.Column("LastName"));
                     cm.Property(x => x.DocumentType, m => m.NotNullable(false));
                     cm.Property(x => x.DocumentType, m => m.Column("DocumentType"));
                     cm.Property(x => x.DocumentNumber, m => m.NotNullable(false));

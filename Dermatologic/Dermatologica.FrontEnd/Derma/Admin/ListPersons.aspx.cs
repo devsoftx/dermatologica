@@ -57,16 +57,13 @@ public partial class Derma_Admin_ListPersons : PageBase
     }
     private void SearchPersons()
     {
-        //var personType = "c78ca3d8-f0c5-450e-aa64-5afa0a5e2c54";
-       
         var example = new Person
         {
-           // PersonType = { Id = new Guid(personType) },
-            PersonType =null,
             FirstName = txtSearch.Text.Trim().ToLower(),
-            LastName = txtSearch.Text.Trim().ToLower(),
+            LastNameP = txtSearch.Text.Trim().ToLower(),
+            LastNameM = txtSearch.Text.Trim().ToLower(),
         };
-        var response = BussinessFactory.GetPersonService().GetPacients(example);
+        var response = BussinessFactory.GetPersonService().SearchPersons(example);
         if (response.OperationResult == OperationResult.Success)
         {
             gvPersons.DataSource = response.Pacients;

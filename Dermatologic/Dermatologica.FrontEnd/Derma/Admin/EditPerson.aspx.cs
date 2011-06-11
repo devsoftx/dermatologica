@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Linq.Expressions;
 using ASP.App_Code;
-using Person = Dermatologic.Domain.Person;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 
@@ -41,7 +40,8 @@ public partial class Derma_Admin_EditPerson : PageBase
     {
         var person = BussinessFactory.GetPersonService().Get(id);
         txtNombres.Text = person.FirstName;
-        txtApellidos.Text = person.LastName;
+        txtApellidoMaterno.Text = person.LastNameP;
+        txtApellidoPaterno.Text = person.LastNameM;
         txtTelefono.Text = person.Phone;
         txtTelefonoEmergencia.Text = person.EmergencyPhone;
         txtNumeroDocumento.Text = person.DocumentNumber;
@@ -50,7 +50,6 @@ public partial class Derma_Admin_EditPerson : PageBase
         txtFechaCumpleaños.Text = person.DateBirthDay.Value.ToShortDateString();
         dwTipoPersona.SelectedValue = person.PersonType.Id.ToString();
         dwTipoDocumento.SelectedValue = person.DocumentType;
-        ddlCategory.SelectedValue = person.Category;
         txtDireccion.Text = person.Address;
     }
     
@@ -60,15 +59,14 @@ public partial class Derma_Admin_EditPerson : PageBase
         {
             Id = Guid.NewGuid(),
             FirstName = txtNombres.Text.Trim(),
-            LastName = txtApellidos.Text.Trim(),
+            LastNameP = txtApellidoPaterno.Text.Trim(),
+            LastNameM = txtApellidoMaterno.Text.Trim(),
             DateBirthDay = Convert.ToDateTime(txtFechaCumpleaños.Text.Trim()),
             DocumentType = dwTipoDocumento.SelectedValue,
-            Category=ddlCategory.SelectedValue,
             DocumentNumber = txtNumeroDocumento.Text.Trim(),
             Phone = txtTelefono.Text.Trim(),
             CellPhone = txtCelular.Text.Trim(),
             Email = txtEmail.Text.Trim(),
-           // PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue)),
             EmergencyPhone = txtTelefonoEmergencia.Text.Trim(),
             Address = txtDireccion.Text.Trim(),
             IsActive = true,
@@ -98,35 +96,26 @@ public partial class Derma_Admin_EditPerson : PageBase
 
     private void Update()
     {
-
-
         var id = Request.QueryString.Get("id");
         var person = BussinessFactory.GetPersonService().Get(new Guid(id));
         if (person != null)
         {
             person.FirstName = txtNombres.Text.Trim();
-            person.LastName = txtApellidos.Text.Trim();
+            person.LastNameP = txtApellidoPaterno.Text.Trim();
+            person.LastNameM = txtApellidoMaterno.Text.Trim();
             person.DocumentType = dwTipoDocumento.SelectedValue;
             person.DocumentNumber = txtNumeroDocumento.Text.Trim();
-            person.Category = ddlCategory.SelectedValue;
             person.Phone = txtTelefono.Text.Trim();
             person.EmergencyPhone = txtTelefonoEmergencia.Text.Trim();
             person.CellPhone = txtCelular.Text.Trim();
             person.Address = txtDireccion.Text.Trim();
             person.Email = txtEmail.Text.Trim();
             person.DateBirthDay = Convert.ToDateTime(txtFechaCumpleaños.Text.Trim());
-      
             person.IsActive = true;
             person.LastModified = LastModified;
             person.ModifiedBy = ModifiedBy;
-
             person.PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue));
-
             var response = BussinessFactory.GetPersonService().Update(person);
-
-         
-        //try
-        //{
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListPersons.aspx", true);
@@ -135,14 +124,6 @@ public partial class Derma_Admin_EditPerson : PageBase
             {
                 litMensaje.Text = string.Format("No se puedo actualizar la Persona -> {0} ", response.Message);
             }
-
-        //}
-        //catch (Exception e)
-        //{
-        //    throw e;
-        //}
-        
-        
         }
     }
 

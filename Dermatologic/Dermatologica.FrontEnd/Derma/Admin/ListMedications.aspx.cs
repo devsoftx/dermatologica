@@ -73,9 +73,9 @@ public partial class Derma_Admin_ListMedications : PageBase
        // var personType = Request.QueryString.Get("personType");
         var example = new Person
         {
-            //PersonType = { Id = new Guid(personType) },
             FirstName = txtSearch.Text.Trim().ToLower(),
-            LastName = txtSearch.Text.Trim().ToLower(),
+            LastNameP = txtSearch.Text.Trim().ToLower(),
+            LastNameM = txtSearch.Text.Trim().ToLower(),
         };
         var response = BussinessFactory .GetMedicationService().GetMedicationsByPatient(example);
         if (response.OperationResult == OperationResult.Success)

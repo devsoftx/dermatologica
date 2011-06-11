@@ -32,6 +32,25 @@ namespace Dermatologic.Services
             }
         }
 
+        public PersonResponse SearchPersons(Person example)
+        {
+            var response = new PersonResponse();
+            try
+            {
+                IPersonRepository repository = new PersonRepository();
+                response.Pacients = repository.SearchPersons(example);
+                response.OperationResult = OperationResult.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Message = e.Message;
+                response.OperationResult = OperationResult.Failed;
+                return response;
+            }
+        }
+
+
         public PersonResponse GetPersonByDni(string dni)
         {
             var response = new PersonResponse();
