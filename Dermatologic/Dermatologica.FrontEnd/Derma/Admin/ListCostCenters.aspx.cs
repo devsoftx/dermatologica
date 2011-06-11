@@ -32,8 +32,8 @@ public partial class Derma_Admin_ListCostCenters : PageBase
     
     private void GetCostCenters()
     {
-        //var CostCenters = BussinessFactory.GetCostCenterService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
-        //BindControl<CostCenter>.BindGrid(gvCostCenters, CostCenters);
+        var CostCenters = BussinessFactory.GetCostCenterService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
+        BindControl<CostCenter>.BindGrid(gvCostCenters, CostCenters);
     }
     private void DeleteCostCenter(Guid id)
     {
