@@ -70,7 +70,7 @@
                 <td class="style3" 
                 
                     style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
-                    Pagos</td>
+                    Pagos de Pacientes</td>
                 <td class="style4">
                     &nbsp;</td>
                 <td>
@@ -149,12 +149,12 @@
                                             <asp:TemplateField HeaderText="Completa">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="chkIsCompleted" runat="server" 
-                                                        Checked = '<%# Eval("IsCompleted") %>' />
+                                                        Checked = '<%# Eval("IsCompleted") %>' Enabled=false/>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagada">
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="chkIsPaid" runat="server" Checked = '<%# Eval("IsPaid") %>' />
+                                                    <asp:CheckBox ID="chkIsPaid" runat="server" Checked = '<%# Eval("IsPaid") %>'  Enabled=false />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                          </Columns>

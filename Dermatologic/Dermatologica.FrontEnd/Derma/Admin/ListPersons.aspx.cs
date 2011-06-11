@@ -55,4 +55,26 @@ public partial class Derma_Admin_ListPersons : PageBase
     {
         Response.Redirect("~/Derma/Admin/EditPerson.aspx?action=new");
     }
+    private void SearchPersons()
+    {
+        //var personType = "c78ca3d8-f0c5-450e-aa64-5afa0a5e2c54";
+       
+        var example = new Person
+        {
+           // PersonType = { Id = new Guid(personType) },
+            PersonType =null,
+            FirstName = txtSearch.Text.Trim().ToLower(),
+            LastName = txtSearch.Text.Trim().ToLower(),
+        };
+        var response = BussinessFactory.GetPersonService().GetPacients(example);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            gvPersons.DataSource = response.Pacients;
+            gvPersons.DataBind();
+        }
+    }
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        SearchPersons();
+    }
 }

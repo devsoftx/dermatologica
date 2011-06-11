@@ -49,7 +49,8 @@
                                 <asp:TextBox ID="txtSearch" runat="server" Width="360px"></asp:TextBox>
                             </td>
                             <td>
-                                <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="101px" />
+                                <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="80px" 
+                                    onclick="btnSearch_Click" />
                             </td>
                         </tr>
                     </table>

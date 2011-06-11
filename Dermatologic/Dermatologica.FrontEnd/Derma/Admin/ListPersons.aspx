@@ -11,7 +11,15 @@
         {
             width: 23px;
         }
-    </style>
+        .style4
+        {
+            width: 130px;
+        }
+        .style5
+        {
+            width: 445px;
+        }
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
 <div id="main">
@@ -28,7 +36,21 @@
             <td class="style2">
                 &nbsp;</td>
             <td>
-            <asp:Literal ID="litMensaje" runat="server" />
+                    <table class="style1">
+                        <tr>
+                            <td class="style4" style="text-align: right">
+                                <asp:Label ID="Label1" runat="server" style="text-align: right" 
+                                    Text="Buscar Por Nombres"></asp:Label>
+                            </td>
+                            <td class="style5">
+                                <asp:TextBox ID="txtSearch" runat="server" Width="360px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="80px" 
+                                    onclick="btnSearch_Click" />
+                            </td>
+                        </tr>
+                    </table>
             </td>
             <td>
                 &nbsp;</td>
@@ -88,6 +110,7 @@
                 &nbsp;</td>
             <td>
             <asp:LinkButton ID="lnkNew" runat="server" Text="Nuevo" onclick="lnkNew_Click" />
+            <asp:Literal ID="litMensaje" runat="server" />
             </td>
             <td>
                 &nbsp;</td>

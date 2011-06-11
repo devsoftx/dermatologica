@@ -31,6 +31,7 @@ public partial class Derma_Admin_ListPatients : PageBase
             gvPatients.DataBind();
         }
     }
+  
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         SearchPatients();
