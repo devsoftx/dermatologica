@@ -215,7 +215,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                                   Id = Guid.NewGuid(),
                                   Currency = lblCurrency.Text.Trim().ToUpper(),
                                   Price = price / intSession,
-                                  Residue = 0,
+                                  Residue = price / intSession,
                                   IsCompleted = false,
                                   IsPaid = false,
                                   IsActive = true,
