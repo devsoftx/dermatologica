@@ -1,29 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="EditMedication.aspx.cs"Inherits="Derma_Admin_EditMedication" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
+    CodeFile="EditMedication.aspx.cs" Inherits="Derma_Admin_EditMedication" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
-    <style type="text/css">
-        .style1
-        {
-            width: 100%;
-        }
-        .style3
-        {
-            width: 107px;
-            height: 21px;
-        }
-        .style4
-        {
-            height: 21px;
-        }
-        .style2
-        {
-            width: 107px;
-            text-align: right;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
-    <telerik:RadCodeBlock ID="rcbInvitation" runat="server">
+    <telerik:radcodeblock id="rcbInvitation" runat="server">
         <script type="text/javascript">
             function openRadWindow(url, rw) {
                 var aleatorio = Math.ceil(Math.random() * 1000);
@@ -44,9 +25,19 @@
                 }
             }
         </script>
-    </telerik:RadCodeBlock>
-    <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
+    </telerik:radcodeblock>
+    <telerik:radajaxmanager id="RadAjaxManager" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="btnAceptar">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="btnAddSessions">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnDoPostBack">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
@@ -58,9 +49,9 @@
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
-    </telerik:RadAjaxManager>
-    <telerik:RadAjaxLoadingPanel runat="server" ID="rlpLoading" Transparency="50" Height="100%"
-        Width="100%">
+    </telerik:radajaxmanager>
+    <telerik:radajaxloadingpanel runat="server" id="rlpLoading" transparency="50" height="100%"
+        width="100%">
         <table style="height: 100%; width: 100%;" border="0">
             <tr>
                 <td width="100%" align="center" valign="middle" style="background-color: #F0FFFF">
@@ -68,24 +59,24 @@
                 </td>
             </tr>
         </table>
-    </telerik:RadAjaxLoadingPanel>
-    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" ClientEvents-OnRequestStart="conditionalPostback">
+    </telerik:radajaxloadingpanel>
+    <telerik:radajaxpanel id="RadAjaxPanel1" runat="server" clientevents-onrequeststart="conditionalPostback">
         <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlReport">
                     <div id="Main">
-                        <table class="style1">
+                        <table >
                             <tr>
-                                <td class="style3">
+                                <td >
                                 </td>
-                                <td class="style4">
+                                <td >
                                     <asp:Literal ID="litMensaje" runat="server" />
                                 </td>
-                                <td class="style4">
+                                <td >
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     <asp:Label ID="Label5" runat="server" Text="Servicio"></asp:Label>
                                 </td>
                                 <td>
@@ -98,7 +89,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     <asp:Label ID="Label1" runat="server" Text="Descripción"></asp:Label>
                                 </td>
                                 <td>
@@ -109,7 +100,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     Buscar Paciente
                                 </td>
                                 <td>
@@ -143,7 +134,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     Moneda</td>
                                 <td>
                                     <asp:Label ID="lblCurrency" runat="server" Width="50px"></asp:Label>
@@ -152,7 +143,7 @@
                                     &nbsp;</td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     Precio Unitario</td>
                                 <td>
                                     <telerik:RadNumericTextBox ID="txtPrice" Runat="server" 
@@ -163,7 +154,7 @@
                                     &nbsp;</td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     <asp:Label ID="Label3" runat="server" Text="N° de Sesiones"></asp:Label>
                                 </td>
                                 <td>
@@ -179,18 +170,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
-                                    Precio Total</td>
-                                <td>
-                                    <telerik:RadNumericTextBox ID="txtPriceT" Runat="server" 
-                                        DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
-                                    </telerik:RadNumericTextBox>
-                                </td>
-                                <td>
-                                    &nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="style2">
+                                <td >
                                     Descuento Total</td>
                                 <td>
                                     <telerik:RadNumericTextBox ID="txtDiscountT" Runat="server" 
@@ -203,7 +183,18 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
+                                    Precio Total</td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="txtPriceT" Runat="server" 
+                                        DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
+                                    </telerik:RadNumericTextBox>
+                                </td>
+                                <td>
+                                    &nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td >
                                     &nbsp;
                                 </td>
                                 <td>
@@ -214,7 +205,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     &nbsp;
                                 </td>
                                 <td>
@@ -279,7 +270,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="style2">
+                                <td >
                                     <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" Text="Aceptar" />
                                 </td>
                                 <td>
@@ -297,12 +288,12 @@
                 </asp:Panel>
             </ContentTemplate>
         </asp:UpdatePanel>
-    </telerik:RadAjaxPanel>
+    </telerik:radajaxpanel>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" runat="Server">
     <telerik:radwindowmanager showcontentduringload="false" autosize="false" id="RadWindowManager1"
-			width="650px" height="410px" runat="server" modal="true" behaviors="Close, Resize, Move"
-			destroyonclose="false">
+        width="650px" height="410px" runat="server" modal="true" behaviors="Close, Resize, Move"
+        destroyonclose="false">
 		<Windows>
 			<telerik:RadWindow ID="rw1" runat="server" Height="410px" Width="650px" Modal="true"
 				Title="Busqueda de Pacientes">

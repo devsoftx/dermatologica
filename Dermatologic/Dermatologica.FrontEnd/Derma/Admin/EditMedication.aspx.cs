@@ -15,10 +15,9 @@ public partial class Derma_Admin_EditMedication : PageBase
     {
         if (!Page.IsPostBack)
         {
-            GetServices();
+            LoadServices();
             SetMedication();
         }
-        txtDiscountT.Value = 0D;
         btnAceptar.Enabled = false;
     }
 
@@ -37,10 +36,12 @@ public partial class Derma_Admin_EditMedication : PageBase
         }
     }
 
-    private void GetServices()
+    private void LoadServices()
     {
-        var Services = BussinessFactory.GetServiceService().GetAll();
-        BindControl<Service>.BindDropDownList(dwService, Services);
+        var services = BussinessFactory.GetServiceService().GetAll().OrderBy(p => p.Name).ToList();
+        BindControl<Service>.BindDropDownList(dwService, services);
+        txtPrice.Text = services.FirstOrDefault().Price.ToString();
+        lblCurrency.Text = services.FirstOrDefault().Currency;
     }
 
     private void LoadMedication(Guid id)
@@ -53,7 +54,12 @@ public partial class Derma_Admin_EditMedication : PageBase
         txtPacient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
         lblCurrency.Text = medication.Service.Currency;
         txtPriceT.Text = medication.Price.ToString();
-        if (medication.Service.Id.HasValue) dwService.SelectedValue = medication.Service.Id.Value.ToString();
+        txtDiscountT.Text = medication.DiscountT.ToString();
+        if (medication.Service.Id.HasValue)
+        {
+            dwService.SelectedValue = medication.Service.Id.Value.ToString();
+            txtPrice.Text = medication.Service.Price.ToString();
+        }
     }
 
     private void Save()
@@ -66,6 +72,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  Description = txtDescription.Text.Trim(),
                                  NumberSessions = Convert.ToInt32(txtNumberSessions.Text.Trim()),
                                  Price = Convert.ToDecimal(txtPriceT.Text),
+                                 DiscountT = Convert.ToDecimal(txtDiscountT.Text),
                                  IsCompleted = false,
                                  IsActive = true,
                                  LastModified = LastModified,
@@ -79,17 +86,18 @@ public partial class Derma_Admin_EditMedication : PageBase
         {
             foreach (GridViewRow row in gvSessions.Rows)
             {
-
                 if (((CheckBox)row.FindControl("chkIsPaid")).Checked == false)
                 { 
+
                 }
                 var session = new Session
                                   {
+                                      RowId = Convert.ToInt32(row.Cells[0].Text),
                                       Id = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString()),
                                       Currency = lblCurrency.Text.Trim().ToUpper(),
-                                      Price = Convert.ToDecimal(row.Cells[1].Text),
-                                      Account = Convert.ToDecimal(row.Cells[2].Text),
-                                      Residue = Convert.ToDecimal(row.Cells[3].Text),
+                                      Price = Convert.ToDecimal(row.Cells[2].Text),
+                                      Account = Convert.ToDecimal(row.Cells[3].Text),
+                                      Residue = Convert.ToDecimal(row.Cells[4].Text),
                                       IsCompleted = ((CheckBox) row.FindControl("chkIsCompleted")).Checked,
                                       IsPaid = ((CheckBox) row.FindControl("chkIsPaid")).Checked,
                                       IsActive = true,
@@ -114,6 +122,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         }
         catch (Exception e)
         {
+            litMensaje.Text = string.Format("Error: No se puedo crear El tratamiento {0}", e.Message);
             throw e;
         }
 

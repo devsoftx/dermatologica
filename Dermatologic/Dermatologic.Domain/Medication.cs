@@ -7,7 +7,6 @@ namespace Dermatologic.Domain
     [DataContract]
     public class Medication : IEquatable<Medication>
     {
-
         private Person _patient;
         private Service _service;
         private IList<Session> _sessions;
@@ -24,6 +23,9 @@ namespace Dermatologic.Domain
 
         [DataMember]
         public virtual Decimal Price { set; get; }
+
+        [DataMember]
+        public virtual Decimal? DiscountT { set; get; }
 
         [DataMember]
         public virtual string Description { set; get; }
