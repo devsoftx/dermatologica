@@ -284,11 +284,11 @@
                 <td class="style14">
                     &nbsp;</td>
                 <td class="style15">
-                                    <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" 
+                                    <asp:Button ID="btnAceptar" runat="server"  
                                         Text="Aceptar" />
                                 </td>
                 <td class="style16">
-                                    <asp:Button ID="btnCancelar" runat="server" OnClick="btnCancelar_Click" 
+                                    <asp:Button ID="btnCancelar" runat="server"  
                                         Text="Cancelar" />
                                 </td>
                 <td>
