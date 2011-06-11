@@ -1,5 +1,8 @@
 using System;
+using System.Linq;
 using System.Web.Services;
+using Dermatologic.Domain;
+using Dermatologic.Services;
 using Telerik.Web.UI;
 
 namespace ASP.App_Code
@@ -7,8 +10,15 @@ namespace ASP.App_Code
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.Web.Script.Services.ScriptService]
-    public class DataService : System.Web.Services.WebService
+    public class DataService : WebService
     {
+        private readonly AbstractServiceFactory bussinessFactory = new ServiceFactory();
+
+        private AbstractServiceFactory BussinessFactory
+        {
+            get { return bussinessFactory; }
+        }
+
         public DataService()
         {
             //
@@ -16,7 +26,7 @@ namespace ASP.App_Code
             //
         }
 
-        private static Guid GetContractCycleIDContext(RadComboBoxContext context)
+        private static Guid GetPersonTypeContext(RadComboBoxContext context)
         {
             if (string.IsNullOrEmpty(context["PersonType"].ToString()))
                 return Guid.Empty;
@@ -30,13 +40,23 @@ namespace ASP.App_Code
             var result = new RadComboBoxData();
             try
             {
-
+                var example = new Person
+                                  {
+                                      PersonType = { Id = GetPersonTypeContext(context) }
+                                  };
+                var response = BussinessFactory.GetPersonService().GetPacients(example);
+                var allResult = from c in response.Pacients
+                                select new RadComboBoxItemData
+                                {
+                                    Text = string.Format("{0} {1} {2}",c.FirstName,c.LastNameP,c.LastNameM),
+                                    Value = c.Id.ToString()
+                                };
+                result.Items = allResult.ToArray();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                throw e;
             }
-
             return result;
         }
     }

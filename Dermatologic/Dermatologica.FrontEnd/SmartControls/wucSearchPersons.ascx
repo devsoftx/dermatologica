@@ -23,6 +23,7 @@
 <telerik:RadComboBox ID="ComboBox" runat="server" EnableEmbeddedSkins="false"
 	EnableLoadOnDemand="true" EnableItemCaching="true" OnClientItemsRequesting="SetContext"
 	Filter="Contains" ShowToggleImage="False" ShowDropDownOnTextboxClick="false" SkinID="SmartCombo"
-    OnClientItemsRequestFailed="OnClientItemsRequestFailedHandler">
+    OnClientItemsRequestFailed="OnClientItemsRequestFailedHandler" 
+    BorderColor="#CCCCFF">
 	<WebServiceSettings Path="~/SmartControls/DataService.asmx" Method="LoadPersons"  />
 </telerik:RadComboBox>

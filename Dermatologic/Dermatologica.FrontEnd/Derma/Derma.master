@@ -10,8 +10,8 @@
     <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
 	<link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />
-	<script type="text/javascript" src="../../Scripts/jquery-1.4.4.min.js"></script>
-	<script type="text/javascript" src="../../Scripts/jquery-ui-1.8.9.custom.min.js"></script>
+	<script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-ui-1.8.9.custom.min.js"></script>
     <script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-es.js"></script>    
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>

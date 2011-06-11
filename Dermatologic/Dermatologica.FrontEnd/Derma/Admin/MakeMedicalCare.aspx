@@ -40,7 +40,7 @@
                     <asp:Label ID="Label4" runat="server" Text="Fecha"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtDateAttention" runat="server" Width="126px"></asp:TextBox>
+                    <asp:TextBox ID="txtDateAttention" runat="server" Width="140px"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;
@@ -72,7 +72,8 @@
                 <td>
                     Operador Medico</td>
                 <td>
-                    <asp:DropDownList ID="ddlPersonType" runat="server" Width="150px">
+                    <asp:DropDownList ID="ddlPersonType" runat="server" Width="150px" 
+                        AutoPostBack="True">
                     </asp:DropDownList>
                 </td>
                 <td>
