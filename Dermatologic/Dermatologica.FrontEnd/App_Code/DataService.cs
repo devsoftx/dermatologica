@@ -5,8 +5,7 @@ using Dermatologic.Domain;
 using Dermatologic.Services;
 using Telerik.Web.UI;
 
-namespace ASP.App_Code
-{
+
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.Web.Script.Services.ScriptService]
@@ -60,4 +59,3 @@ namespace ASP.App_Code
             return result;
         }
     }
-}

@@ -3,12 +3,12 @@
 	<script language="javascript" type="text/javascript">
 	    function SetContext(sender, args) {
 	        if ("<%= PersonTypeControlName %>" != "") {
-	            var combo = $find("<%= PersonTypeControlName %>");
+	            var combo = document.getElementById("<%= PersonTypeControlName %>");
 	            if (combo == null) {
 	                args.get_context()["PersonType"] = "";
 	            }
 	            else {
-	                args.get_context()["PersonType"] = combo._value;
+	                args.get_context()["PersonType"] = combo.value;
 	            }
 	        }
 	        else {
@@ -24,6 +24,8 @@
 	EnableLoadOnDemand="true" EnableItemCaching="true" OnClientItemsRequesting="SetContext"
 	Filter="Contains" ShowToggleImage="False" ShowDropDownOnTextboxClick="false" SkinID="SmartCombo"
     OnClientItemsRequestFailed="OnClientItemsRequestFailedHandler" 
-    BorderColor="#CCCCFF">
+    BorderColor="White" BorderStyle="None" LoadingMessage="Buscando..." 
+    Skin="Windows7">
 	<WebServiceSettings Path="~/SmartControls/DataService.asmx" Method="LoadPersons"  />
+<WebServiceSettings Path="~/SmartControls/DataService.asmx" Method="LoadPersons"></WebServiceSettings>
 </telerik:RadComboBox>

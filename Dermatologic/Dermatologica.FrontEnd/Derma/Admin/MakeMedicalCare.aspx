@@ -73,7 +73,8 @@
                     Operador Medico</td>
                 <td>
                     <asp:DropDownList ID="ddlPersonType" runat="server" Width="150px" 
-                        AutoPostBack="True">
+                        AutoPostBack="True" 
+                        onselectedindexchanged="ddlPersonType_SelectedIndexChanged">
                     </asp:DropDownList>
                 </td>
                 <td>
@@ -84,7 +85,15 @@
                     <asp:Label ID="Label3" runat="server" Text="Médico"></asp:Label>
                 </td>
                 <td>
-                    <uc1:wucSearchPersons ID="ucSearchPersonsMedical" runat="server" WebServiceMethod="LoadPersons" />
+                <asp:UpdatePanel ID="upPanel" runat="server">
+                    <ContentTemplate>
+                        <uc1:wucSearchPersons ID="ucSearchPersonsMedical" runat="server" WebServiceMethod="LoadPersons" />
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="ddlPersonType" 
+                            EventName="SelectedIndexChanged" />
+                    </Triggers>
+                </asp:UpdatePanel>                    
                 </td>
                 <td>
                     &nbsp;

@@ -36,7 +36,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
         var IdMedication = session.Medication.Id;
         var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
-        var medical = BussinessFactory.GetPersonService().Get(new Guid("1df97a6d-58a2-4219-8572-68250bfd3b23"));
+        var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
         var medicalCare = new MedicalCare
                               {
                                   Id = Guid.NewGuid(),
@@ -55,9 +55,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         session.IsCompleted = true;
         try
         {
-
             var response = BussinessFactory.GetMedicalCareService().Save(medicalCare);
-
             if (response.OperationResult == OperationResult.Success)
             {
                 BussinessFactory.GetSessionService().Update(session);
@@ -94,4 +92,9 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", IdMedication), true);
     }
 
+    protected void ddlPersonType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        ucSearchPersonsMedical.SelectedValue = string.Empty;
+        ucSearchPersonsMedical.Text = string.Empty;
+    }
 }
