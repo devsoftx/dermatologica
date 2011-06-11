@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="EditService.aspx.cs" Inherits="Derma_Admin_EditService" %>
-
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <style type="text/css">
 
@@ -93,4 +93,3 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
 </asp:Content>
-
