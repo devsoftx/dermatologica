@@ -1,100 +1,100 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="ListRevenues.aspx.cs" Inherits="Derma_Admin_ListRevenues" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
+    CodeFile="ListRevenues.aspx.cs" Inherits="Derma_Admin_ListRevenues" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
-    <style type="text/css">
-        .style1
-        {
-            width: 100%;
-        }
-        .style2
-        {
-            width: 15px;
-        }
-        .style3
-        {
-            width: 72px;
-            text-align: left;
-        }
-        .style4
-        {
-            width: 108px;
-        }
-        .style5
-        {
-            width: 240px;
-        }
-        .style6
-        {
-            width: 195px;
-        }
-    </style>
+<%@ Import Namespace="Dermatologic.Domain" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+<script type="text/javascript">
+    $(function () {
+        $("#MainContent_txtDatePay").datepicker();
+        $("#MainContent_txtDatePay").datepicker($.datepicker.regional['es']);
+    });
+    </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div>
-        <table class="style1">
+        <table width='850px'>
             <tr>
-                <td class="style2">
-                    &nbsp;</td>
-                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
-                    Ingresos</td>
                 <td>
-                    &nbsp;</td>
+                    &nbsp;
+                </td>
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
+                    Ingresos
+                </td>
+                <td>
+                    &nbsp;
+                </td>
             </tr>
             <tr>
-                <td class="style2">
-                    &nbsp;</td>
                 <td>
-                    <table class="style1">
+                    &nbsp;
+                </td>
+                <td>
+                    <table>
                         <tr>
-                            <td class="style3">
-                                <asp:Label ID="Label1" runat="server" style="text-align: left" 
-                                    Text="Buscar Por"></asp:Label>
-                            </td>
-                            <td class="style4">
-                                <asp:Label ID="Label2" runat="server" Text="Moneda"></asp:Label>
-                                    <asp:DropDownList ID="ddlCurrency" runat="server" AppendDataBoundItems="True" 
-                                        Width="50px">
-                                        <asp:ListItem>USD</asp:ListItem>
-                                        <asp:ListItem Value="PEN">PEN</asp:ListItem>
-                                        <asp:ListItem>EUR</asp:ListItem>
-                                    </asp:DropDownList>
-                                            </td>
-                            <td class="style5">
-                                <asp:Label ID="Label3" runat="server" Text="Medio de pago"></asp:Label>
-                    <asp:DropDownList ID="ddlMPayment" runat="server">
-                        <asp:ListItem>Efectivo</asp:ListItem>
-                        <asp:ListItem>Cheque</asp:ListItem>
-                        <asp:ListItem>Deposito</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito</asp:ListItem>
-                    </asp:DropDownList>
-                            </td>
-                            <td class="style6">
-                                <asp:Label ID="Label4" runat="server" Text="Documento"></asp:Label>
-                    <asp:DropDownList ID="ddlInvoice" runat="server">
-                        <asp:ListItem>Recibo</asp:ListItem>
-                        <asp:ListItem>Boleta</asp:ListItem>
-                        <asp:ListItem>Factura</asp:ListItem>
-                    </asp:DropDownList>
+                            <td>
+                                <b><asp:Label ID="Label1" runat="server" Style="text-align: left" Text="Buscador"></asp:Label></b>
                             </td>
                             <td>
-                                <asp:Button ID="btnSearch" runat="server" onclick="btnSearch_Click" 
-                                    Text="Buscar" />
+                                <asp:Label ID="Label5" runat="server" Text="Fecha de Pago:"></asp:Label>
+                                <asp:TextBox ID="txtDatePay" runat="server" Width="80px" />
+                            </td>
+                            <td>
+                                <asp:Label ID="Label2" runat="server" Text="Moneda"></asp:Label>
+                                <asp:DropDownList ID="ddlCurrency" runat="server" AppendDataBoundItems="True" Width="50px">
+                                    <asp:ListItem>USD</asp:ListItem>
+                                    <asp:ListItem Value="PEN">PEN</asp:ListItem>
+                                    <asp:ListItem>EUR</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                            <td>
+                                <asp:Label ID="Label3" runat="server" Text="Medio de pago:"></asp:Label>
+                                <asp:DropDownList ID="ddlMPayment" runat="server">
+                                    <asp:ListItem>Efectivo</asp:ListItem>
+                                    <asp:ListItem>Cheque</asp:ListItem>
+                                    <asp:ListItem>Deposito</asp:ListItem>
+                                    <asp:ListItem>Tarjeta de Credito</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                            <td>
+                                <asp:Label ID="Label4" runat="server" Text="Documento:"></asp:Label>
+                                <asp:DropDownList ID="ddlInvoice" runat="server">
+                                    <asp:ListItem>Recibo</asp:ListItem>
+                                    <asp:ListItem>Boleta</asp:ListItem>
+                                    <asp:ListItem>Factura</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                            <td>
+                                <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Text="Buscar" />
                             </td>
                         </tr>
                     </table>
                 </td>
                 <td>
-                    &nbsp;</td>
+                    &nbsp;
+                </td>
             </tr>
             <tr>
-                <td class="style2">
-                    &nbsp;</td>
                 <td>
-                    <asp:GridView ID="gvRevenues" runat="server" AutoGenerateColumns="False" 
-                        CellPadding="4" ForeColor="#333333" GridLines="None" Width="532px">
+                    &nbsp;
+                </td>
+                <td>
+                    <asp:GridView ID="gvRevenues" runat="server" AutoGenerateColumns="False" CellPadding="4"
+                        ForeColor="#333333" GridLines="None" Width="800px">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:BoundField DataField="DatePayment" HeaderText="Fecha" />
+                            <asp:TemplateField HeaderText="Paciente">
+                                <ItemTemplate>
+                                    <asp:Literal ID="litNombres" Text='<%# string.Format("{0} {1} {2}", ((Person)Eval("Pacient")).FirstName,((Person)Eval("Pacient")).LastNameP,((Person)Eval("Pacient")).LastNameM ) %>'
+                                        runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Tratamiento">
+                                <ItemTemplate>
+                                    <asp:Literal ID="litTratamiento" Text='<%# ((Session)Eval("Session")).Medication.Service.Name %>'
+                                        runat="server" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="MPayment" HeaderText="Medio de pago" />
                             <asp:BoundField DataField="Invoice" HeaderText="Documento" />
                             <asp:BoundField DataField="NInvoice" HeaderText="N°" />
@@ -114,19 +114,22 @@
                     </asp:GridView>
                 </td>
                 <td>
-                    &nbsp;</td>
+                    &nbsp;
+                </td>
             </tr>
             <tr>
-                <td class="style2">
-                    &nbsp;</td>
                 <td>
-                    &nbsp;</td>
+                    &nbsp;
+                </td>
                 <td>
-                    &nbsp;</td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
             </tr>
         </table>
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" runat="Server">
 </asp:Content>
-
