@@ -22,8 +22,7 @@
             <tr>
                 <td class="style2">
                     &nbsp;</td>
-                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;" 
-                    class="style4">
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
                     Tipo de Personas</td>
                 <td>
                     &nbsp;</td>
