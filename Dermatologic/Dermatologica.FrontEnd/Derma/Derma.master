@@ -4,12 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head id="Head1" runat="server">
     <title>Clinica Dermatologica</title>
-    <link rel="shortcut icon" href="../Images/favicon.ico" type="image/x-icon" />
-    <link href="../Images/favicon.ico" rel="icon" type="image/x-icon" />
-    <link rel="image_src" href="../Images/logo.jpg" />
-    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
-	<link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />
+    <link href="http://localhost/dermatologica.com/Images/favicon.ico" rel="icon" type="image/x-icon" />
+    <link rel="image_src" href="http://localhost/dermatologica.com/Images/logo.jpg" />
+    <link href="http://localhost/dermatologica.com/Styles/Site.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="http://localhost/dermatologica.com/Css/ui-lightness/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />
 	<script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-1.4.4.min.js"></script>
 	<script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-ui-1.8.9.custom.min.js"></script>
     <script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-es.js"></script>    
