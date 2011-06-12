@@ -1,23 +1,22 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
 namespace Dermatologic.Domain
 {
     [DataContract]
-
     public class Invoice : IEquatable<Invoice>
     {
-        private Session _session;
-        private Person _pacient;
+        private Person _patient;
         private Person _personal;
-        private CostCenter _costcenter;
+        private Session _session;
+        private CostCenter _costCenter;
 
         public Invoice()
         {
-            _session = new Session();
-            _pacient = new Person();
+            _patient = new Person();
             _personal = new Person();
-            _costcenter = new CostCenter();
+            _session = new Session();
+            _costCenter = new CostCenter();
         }
 
         [DataMember]
@@ -42,17 +41,17 @@ namespace Dermatologic.Domain
         public virtual string NInvoice { set; get; }
 
         [DataMember]
-        public virtual decimal Amount { set; get; }
+        public virtual decimal? Amount { set; get; }
 
         [DataMember]
         public virtual string Currency { set; get; }
 
         [DataMember]
-        public virtual decimal ExchangeRate { set; get; }
-                     
+        public virtual decimal? ExchangeRate { set; get; }
+
         [DataMember]
         public virtual string Movement { set; get; }
-        
+
         [DataMember]
         public virtual bool IsActive { set; get; }
 
@@ -69,17 +68,10 @@ namespace Dermatologic.Domain
         public virtual Guid? ModifiedBy { set; get; }
 
         [DataMember]
-        public virtual Session Session
+        public virtual Person Patient
         {
-            get { return _session; }
-            set { _session = value; }
-        }
-
-        [DataMember]
-        public virtual Person Pacient
-        {
-            get { return _pacient; }
-            set { _pacient = value; }
+            get { return _patient; }
+            set { _patient = value; }
         }
 
         [DataMember]
@@ -90,10 +82,17 @@ namespace Dermatologic.Domain
         }
 
         [DataMember]
+        public virtual Session Session
+        {
+            get { return _session; }
+            set { _session = value; }
+        }
+
+        [DataMember]
         public virtual CostCenter CostCenter
         {
-            get { return _costcenter; }
-            set { _costcenter = value; }
+            get { return _costCenter; }
+            set { _costCenter = value; }
         }
 
         public virtual bool Equals(Invoice other)
