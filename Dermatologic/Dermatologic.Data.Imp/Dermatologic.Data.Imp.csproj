@@ -54,16 +54,20 @@
   <ItemGroup>
     <Compile Include="AbstractRepositoryFactory.cs" />
     <Compile Include="Imp\AccountRepository.cs" />
+    <Compile Include="Imp\CashMovementRepository.cs" />
     <Compile Include="Imp\CostCenterRepository.cs" />
     <Compile Include="Imp\ExchangeRateRepository.cs" />
     <Compile Include="Imp\AppointmentRepository.cs" />
+    <Compile Include="Imp\InvoiceRepository.cs" />
     <Compile Include="Imp\ItemTableRepository.cs" />
     <Compile Include="Imp\MedicalCareRepository.cs" />
+    <Compile Include="Imp\PatientInformationRepository.cs" />
     <Compile Include="Imp\PaymentRepository.cs" />
     <Compile Include="Imp\PersonTypeRepository.cs" />
     <Compile Include="Imp\RoleRepository.cs" />
     <Compile Include="Imp\ServiceRepository.cs" />
     <Compile Include="Imp\SessionRepository.cs" />
+    <Compile Include="Imp\StaffInformationRepository.cs" />
     <Compile Include="Imp\SupplyRepository.cs" />
     <Compile Include="Imp\MenuRoleRepository.cs" />
     <Compile Include="Imp\RateRepository.cs" />

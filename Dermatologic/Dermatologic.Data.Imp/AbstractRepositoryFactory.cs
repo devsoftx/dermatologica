@@ -59,5 +59,13 @@ namespace Dermatologic.Data
         public abstract IAccountRepository GetAccountRepository();
 
         public abstract ICostCenterRepository GetCostCenterRepository();
+
+        public abstract IInvoiceRepository GetInvoiceRepository();
+
+        public abstract ICashMovementRepository GetCashMovementRepository();
+
+        public abstract IPatientInformationRepository GetPatientInformationRepository();
+
+        public abstract IStaffInformationRepository GetStaffInformationRepository();
     }
 }

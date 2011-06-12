@@ -287,6 +287,7 @@ namespace Dermatologic.Data.Persistence
                       m.NotNullable(true);
                   });
             });
+
             mapper.Class<ItemTable>(cm =>
             {
                 cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
@@ -311,6 +312,66 @@ namespace Dermatologic.Data.Persistence
                         x.Lazy(CollectionLazy.Lazy);
                     },
                     x => { });
+            });
+
+            mapper.Class<CashMovement>(cm =>
+            {
+                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.ManyToOne(
+                    x => x.Invoice,
+                    m =>
+                    {
+                        m.Column("IdInvoice");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                    x => x.CostCenter,
+                    m =>
+                    {
+                        m.Column("IdCostCenter");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+            });
+
+            mapper.Class<Invoice>(cm =>
+            {
+                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.ManyToOne(
+                    x => x.Patient,
+                    m =>
+                    {
+                        m.Column("IdPatient");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                    x => x.Session,
+                    m =>
+                    {
+                        m.Column("IdSession");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                    x => x.Personal,
+                    m =>
+                    {
+                        m.Column("IdPersonal");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                    x => x.CostCenter,
+                    m =>
+                    {
+                        m.Column("IdCostCenter");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+
+                
             });
 
         }
@@ -668,6 +729,113 @@ namespace Dermatologic.Data.Persistence
                }
                );
 
+            mapper.Class<Invoice>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.Name, m => m.Column("Name"));
+                   cm.Property(x => x.Description, m => m.Column("Description"));
+                   cm.Property(x => x.DatePayment, m => m.Column("DatePayment"));
+                   cm.Property(x => x.MPayment, m => m.Column("MPayment"));
+                   cm.Property(x => x.InvoiceType, m => m.Column("InvoiceType"));
+                   cm.Property(x => x.NInvoice, m => m.Column("NInvoice"));
+                   cm.Property(x => x.Amount, m => m.Column("Amount"));
+                   cm.Property(x => x.Currency, m => m.Column("Currency"));
+                   cm.Property(x => x.ExchangeRate, m => m.Column("ExchangeRate"));
+                   cm.Property(x => x.Movement, m => m.Column("Movement"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+
+            mapper.Class<CashMovement>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.MPayment, m => m.Column("MPayment"));
+                   cm.Property(x => x.Date, m => m.Column("[Date]"));
+                   cm.Property(x => x.EmissionAmount, m => m.Column("EmissionAmount"));
+                   cm.Property(x => x.Amount, m => m.Column("Amount"));
+                   cm.Property(x => x.Factor, m => m.Column("[Factor]"));
+                   cm.Property(x => x.Currency, m => m.Column("[Currency]"));
+                   cm.Property(x => x.ExchangeRate, m => m.Column("ExchangeRate"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+
+            mapper.Class<StaffInformation>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+
+            mapper.Class<PatientInformation>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.HaveHerpesLabial, m => m.Column("HaveHerpesLabial"));
+                   cm.Property(x => x.DateHerpesLabial, m => m.Column("DateHerpesLabial"));
+                   cm.Property(x => x.IsUseMarcapaso, m => m.Column("IsUseMarcapaso"));
+                   cm.Property(x => x.DateUseMarcapaso, m => m.Column("DateUseMarcapaso"));
+                   cm.Property(x => x.HaveVerrugas, m => m.Column("HaveVerrugas"));
+                   cm.Property(x => x.DateVerrugas, m => m.Column("DateVerrugas"));
+                   cm.Property(x => x.HaveHepatitisB, m => m.Column("HaveHepatitisB"));
+                   cm.Property(x => x.HaveDiabetes, m => m.Column("HaveDiabetes"));
+                   cm.Property(x => x.DateDiabetes, m => m.Column("DateDiabetes"));
+                   cm.Property(x => x.HaveDermatitisAtopica, m => m.Column("HaveDermatitisAtopica"));
+                   cm.Property(x => x.DateDermatitisAtopica, m => m.Column("DateDermatitisAtopica"));
+                   cm.Property(x => x.HaveHipotiroidismo, m => m.Column("HaveHipotiroidismo"));
+                   cm.Property(x => x.DateHipotiroidismo, m => m.Column("DateHipotiroidismo"));
+                   cm.Property(x => x.CommentsAntecedentesEnfermedades, m => m.Column("CommentsAntecedentesEnfermedades"));
+                   cm.Property(x => x.HaveWarfarina, m => m.Column("HaveWarfarina"));
+                   cm.Property(x => x.HaveAntibioticosAcne, m => m.Column("HaveAntibioticosAcne"));
+                   cm.Property(x => x.HaveRoaccuatan, m => m.Column("HaveRoaccuatan"));
+                   cm.Property(x => x.HaveIsotretinoina, m => m.Column("HaveIsotretinoina"));
+                   cm.Property(x => x.HaveVitaminas, m => m.Column("HaveVitaminas"));
+                   cm.Property(x => x.HaveAspirinas, m => m.Column("HaveAspirinas"));
+                   cm.Property(x => x.CommentsMedicacionHabitual, m => m.Column("CommentsMedicacionHabitual"));
+                   cm.Property(x => x.HaveAlergiaAnestesicosHabituales, m => m.Column("HaveAlergiaAnestesicosHabituales"));
+                   cm.Property(x => x.HaveAlergiaAspirinas, m => m.Column("HaveAlergiaAspirinas"));
+                   cm.Property(x => x.HaveAlergiaCorticoides, m => m.Column("HaveAlergiaCorticoides"));
+                   cm.Property(x => x.HaveAlergiaAsma, m => m.Column("HaveAlergiaAsma"));
+                   cm.Property(x => x.HaveAlergiaRinitis, m => m.Column("HaveAlergiaRinitis"));
+                   cm.Property(x => x.CommentsAntecedentesAlergias, m => m.Column("CommentsAntecedentesAlergias"));
+                   cm.Property(x => x.HaveLifting, m => m.Column("HaveLifting"));
+                   cm.Property(x => x.HaveRellenos, m => m.Column("HaveRellenos"));
+                   cm.Property(x => x.HaveBotox, m => m.Column("HaveBotox"));
+                   cm.Property(x => x.HaveLaser, m => m.Column("HaveLaser"));
+                   cm.Property(x => x.CommentsTratamientosCirugiasActAnt, m => m.Column("CommentsTratamientosCirugiasActAnt"));
+                   cm.Property(x => x.IsFumador, m => m.Column("IsFumador"));
+                   cm.Property(x => x.IsHabitoBronceadoSoloVer, m => m.Column("IsHabitoBronceadoSoloVer"));
+                   cm.Property(x => x.IsHabitoBronceadoTodoAno, m => m.Column("IsHabitoBronceadoTodoAno"));
+                   cm.Property(x => x.IsHabitoEvitoBroncearme, m => m.Column("IsHabitoEvitoBroncearme"));
+                   cm.Property(x => x.HaveCicatricesQueloides, m => m.Column("HaveCicatricesQueloides"));
+                   cm.Property(x => x.AreaCicatricesQueloides, m => m.Column("AreaCicatricesQueloides"));
+                   cm.Property(x => x.IsDepilacion, m => m.Column("IsDepilacion"));
+                   cm.Property(x => x.AreaDepilacion, m => m.Column("AreaDepilacion"));
+                   cm.Property(x => x.MetodoDepilacion, m => m.Column("MetodoDepilacion"));
+                   cm.Property(x => x.IsEmbarazada, m => m.Column("IsEmbarazada"));
+                   cm.Property(x => x.DateLastRegla, m => m.Column("DateLastRegla"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
         }
 
         private static IEnumerable<Type> GetEntities()

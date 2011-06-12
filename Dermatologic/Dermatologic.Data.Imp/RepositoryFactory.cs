@@ -110,5 +110,25 @@ namespace Dermatologic.Data
         {
             return new CostCenterRepository();
         }
+
+        public override IInvoiceRepository GetInvoiceRepository()
+        {
+            return new InvoiceRepository();
+        }
+
+        public override ICashMovementRepository GetCashMovementRepository()
+        {
+            return new CashMovementRepository();
+        }
+
+        public override IPatientInformationRepository GetPatientInformationRepository()
+        {
+            return new PatientInformationRepository();
+        }
+
+        public override IStaffInformationRepository GetStaffInformationRepository()
+        {
+            return new StaffInformationRepository();
+        }
     }
 }
