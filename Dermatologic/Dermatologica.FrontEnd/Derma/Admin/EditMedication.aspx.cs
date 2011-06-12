@@ -242,7 +242,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         var response = BussinessFactory.GetSessionService().GetSessionByMedication(session);
         if (response.OperationResult == OperationResult.Success)
         {
-            BindControl<Session>.BindGrid(gvSessions, response.Sessions.OrderBy(p => p.Residue).ToList());
+            BindControl<Session>.BindGrid(gvSessions, response.Sessions);
         }
     }
 
