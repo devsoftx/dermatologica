@@ -46,10 +46,13 @@
   <ItemGroup>
     <Compile Include="Inter\IAccountService.cs" />
     <Compile Include="Inter\IAppointmentService.cs" />
+    <Compile Include="Inter\ICashMovementService.cs" />
     <Compile Include="Inter\ICostCenterService.cs" />
     <Compile Include="Inter\IExchangeRateService.cs" />
+    <Compile Include="Inter\IInvoiceService.cs" />
     <Compile Include="Inter\IItemTableService.cs" />
     <Compile Include="Inter\IMedicalCareService.cs" />
+    <Compile Include="Inter\IPatientInformationService.cs" />
     <Compile Include="Inter\IPaymentService.cs" />
     <Compile Include="Inter\IPersonService.cs" />
     <Compile Include="Inter\IMailerService.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="Inter\IRoleService.cs" />
     <Compile Include="Inter\IServiceService.cs" />
     <Compile Include="Inter\ISessionService.cs" />
+    <Compile Include="Inter\IStaffInformationService.cs" />
     <Compile Include="Inter\ISupplyService.cs" />
     <Compile Include="Inter\IRateService.cs" />
     <Compile Include="Inter\IUbigeoService.cs" />
