@@ -28,6 +28,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         switch (action)
         {
             case "new":
+                Session["personSelected"] = null;
                 break;
             case "edit":
                 LoadMedication(new Guid(id));
@@ -191,13 +192,17 @@ public partial class Derma_Admin_EditMedication : PageBase
                 return;
             }
         }
-        const string javascript = "openRadWindow('SearchPersons.aspx?personType=C78CA3D8-F0C5-450E-AA64-5AFA0A5E2C54','rw1');";
+        const string javascript = "openRadWindow('SearchPersons.aspx?personType=9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68','rw1');";
         System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
 
     protected void btnDoPostBack_Click(object sender, EventArgs e)
     {
-
+        var id = Session["personSelected"];
+        var response = BussinessFactory.GetPersonService().Get(new Guid(id.ToString()));
+        txtPacient.Text = string.Format("{0} {1} {2}", response.FirstName,response.LastNameP, response.LastNameM);
+        txtDni.Text = response.DocumentNumber;
+        ddlDocumentType.SelectedValue = response.DocumentType;
     }
 
     protected void btnAddSessions_Click(object sender, EventArgs e)

@@ -8,11 +8,11 @@ using ASP.App_Code;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 
-public partial class Derma_SearchPersons : PageBase
-{
-    
+public partial class Derma_SearchPersons : PageBase{
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        Session["personSelected"] = null;
         SearchPersons();
     }
 
@@ -29,16 +29,11 @@ public partial class Derma_SearchPersons : PageBase
         var response = BussinessFactory.GetPersonService().GetPacients(example);
         if (response.OperationResult == OperationResult.Success)
         {
-            gvPersons.DataSource = response.Pacients;
+            gvPersons.DataSource = response.Pacients.OrderBy(p => p.LastNameP).ToList();
             gvPersons.DataBind();
         }
     }
-
-    protected void gvPersons_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-
-    }
-
+    
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         SearchPersons();
@@ -46,11 +41,13 @@ public partial class Derma_SearchPersons : PageBase
 
     protected void btnAcept_Click(object sender, EventArgs e)
     {
-
+        if(gvPersons.SelectedValue != null)
+        {
+            var id = new Guid(gvPersons.SelectedValue.ToString());
+            Session.Add("personSelected",id);
+            const string javascript = "onClose()";
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "", javascript, true);
+        }
     }
 
-    protected void btnCancel_Click(object sender, EventArgs e)
-    {
-
-    }
 }

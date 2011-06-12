@@ -6,6 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:radcodeblock id="rcbInvitation" runat="server">
         <script type="text/javascript">
+
             function openRadWindow(url, rw) {
                 var aleatorio = Math.ceil(Math.random() * 1000);
                 var oWnd = radopen(url + '&al=' + aleatorio.toString(), rw);
@@ -24,6 +25,7 @@
                     eventArgs.set_enableAjax(false);
                 }
             }
+
         </script>
     </telerik:radcodeblock>
     <telerik:radajaxmanager id="RadAjaxManager" runat="server">
@@ -243,11 +245,11 @@
                                             <asp:TemplateField HeaderText="Acciones">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                                                        CommandName="cmd_editar">
-                                                        <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>' />
+                                                        CommandName="cmd_editar" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>'>
+                                                        <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />
                                                     </asp:LinkButton>
                                                     <asp:LinkButton ID="lnk_eliminar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                                                        CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tratamiento?');">
+                                                        CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tratamiento?');" Enabled = '<%# Request.QueryString.Get("action") == "new" ? false : true %>'>
                                                         <img id="Img4" src="~/images/action_delete.png" alt="Eliminar" border="0" runat="server" />
                                                     </asp:LinkButton>
                                                 </ItemTemplate>
@@ -274,7 +276,7 @@
                                     <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" Text="Aceptar" />
                                 </td>
                                 <td>
-                                    <asp:Button ID="btnCancelar" runat="server" OnClick="btnCancelar_Click" Text="Cancelar" />
+                                    <asp:Button ID="btnCancelar" runat="server" OnClick="btnCancelar_Click" Text="Cancelar" OnClientClick="onClose();" />
                                 </td>
                                 <td>
                                     &nbsp;
