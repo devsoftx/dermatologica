@@ -13,8 +13,8 @@ public partial class Derma_Admin_ListMedications : PageBase
     {
         if (Page.IsPostBack) return;
         GetMedications();
-        //SearchPersons();
     }
+
     protected void gvMedication_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
@@ -29,11 +29,13 @@ public partial class Derma_Admin_ListMedications : PageBase
                 break;
         }
     }
+
     private void GetMedications()
     {
         var Medications = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
         BindControl<Medication>.BindGrid(gvMedications, Medications);
     }
+
     private void DeleteMedication(Guid id)
     {
         var Medication = BussinessFactory.GetMedicationService().Get(id);
@@ -50,14 +52,12 @@ public partial class Derma_Admin_ListMedications : PageBase
             }
         }
     }
+
     protected void lnkNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/EditMedication.aspx?action=new");
     }
-    protected void btnDoPostBack_Click(object sender, EventArgs e)
-    {
-
-    }
+    
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         //const string javascript = "openRadWindow('SearchPersons.aspx?personType=','rw1');";
@@ -68,9 +68,9 @@ public partial class Derma_Admin_ListMedications : PageBase
             SearchPersons();
         }
     }
+
     private void SearchPersons()
     {
-       // var personType = Request.QueryString.Get("personType");
         var example = new Person
         {
             FirstName = txtSearch.Text.Trim().ToLower(),
@@ -79,8 +79,9 @@ public partial class Derma_Admin_ListMedications : PageBase
         };
         var response = BussinessFactory .GetMedicationService().GetMedicationsByPatient(example);
         if (response.OperationResult == OperationResult.Success)
-        
-            gvMedications.DataSource = response.Medications;
+        {
+            gvMedications.DataSource = response.Medications.Where(p => p.IsCompleted == false).OrderBy(p => p.Patient.LastNameP).ToList();
             gvMedications.DataBind(); 
+        }
     }
 }
