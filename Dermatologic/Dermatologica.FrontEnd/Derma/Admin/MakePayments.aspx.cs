@@ -44,15 +44,17 @@ public partial class Derma_Admin_MakePayments : PageBase
 
         var List = BussinessFactory.GetExchangeRateService().GetAll().Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();     
         var echangeToday = List.OrderBy(p => p.CreationDate).FirstOrDefault();
-        if (echangeToday==null)
-        {
-        }
-          
-        else
+        if (echangeToday!=null)
         {
             txtCompra.Text = echangeToday.Buy.ToString();
-            txtVenta.Text = echangeToday.Sale.ToString();    
+            txtVenta.Text = echangeToday.Sale.ToString(); 
         }
+          
+        //else
+        //{
+        //    txtCompra.Text = echangeToday.Buy.ToString();
+        //    txtVenta.Text = echangeToday.Sale.ToString();    
+        //}
         
        
        

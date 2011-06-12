@@ -16,11 +16,13 @@
         }
         .style6
         {
-            width: 457px;
+            width: 410px;
+            text-align: right;
         }
         .style7
         {
-            width: 46px;
+            width: 73px;
+            text-align: right;
         }
         .style10
         {
@@ -45,7 +47,7 @@
         }
         .style14
         {
-            width: 38px;
+            width: 56px;
         }
         .style15
         {
@@ -110,7 +112,7 @@
                     <asp:Label ID="Label16" runat="server" Text="Centro de Costo"></asp:Label>
                 </td>
                 <td class="style16">
-                    <asp:DropDownList ID="DropDownList1" runat="server">
+                    <asp:DropDownList ID="ddlCostCenter" runat="server">
                     </asp:DropDownList>
                 </td>
                 <td>

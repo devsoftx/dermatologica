@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Dermatologic.Domain
 {
-    //[DataContract]
+    [DataContract]
     public class CostCenter : IEquatable<CostCenter>
     {
         //private Service _service;

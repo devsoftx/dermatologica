@@ -476,9 +476,9 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
-                    cm.Property(x => x.Description, m => m.Column("Description"));
+                    cm.Property(x => x.Currency, m => m.Column("Currency"));
                     cm.Property(x => x.UnitCost, m => m.Column("UnitCost"));
+                    cm.Property(x => x.Observation, m => m.Column("Observation"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));
@@ -621,6 +621,45 @@ namespace Dermatologic.Data.Persistence
                    cm.Id(x => x.Id, m => m.Column("Id"));
                    cm.Property(x => x.Name, m => m.Column("Name"));
                    cm.Property(x => x.Description, m => m.Column("Description"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+            mapper.Class<Invoice>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.Name, m => m.Column("[Name]"));
+                   cm.Property(x => x.Description, m => m.Column("Description"));
+                   cm.Property(x => x.DatePayment, m => m.Column("DatePayment"));
+                   cm.Property(x => x.MPayment, m => m.Column("MPayment"));
+                   cm.Property(x => x.InvoiceType, m => m.Column("InvoiceType"));
+                   cm.Property(x => x.NInvoice, m => m.Column("NInvoice"));
+                   cm.Property(x => x.Amount, m => m.Column("Amount"));
+                   cm.Property(x => x.Currency, m => m.Column("Currency"));
+                   cm.Property(x => x.ExchangeRate, m => m.Column("ExchangeRate"));
+                   cm.Property(x => x.Movement, m => m.Column("Movement"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+            mapper.Class<CashMovement>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.MPayment, m => m.Column("MPayment"));
+                   cm.Property(x => x.Date, m => m.Column("Date"));
+                   cm.Property(x => x.EmissionAmount, m => m.Column("EmissionAmount"));
+                   cm.Property(x => x.Amount, m => m.Column("Amount"));
+                   cm.Property(x => x.Factor, m => m.Column("Factor"));
+                   cm.Property(x => x.Currency, m => m.Column("Currency"));
+                   cm.Property(x => x.ExchangeRate, m => m.Column("ExchangeRate"));                 
                    cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                    cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                    cm.Property(x => x.LastModified, m => m.Column("LastModified"));
