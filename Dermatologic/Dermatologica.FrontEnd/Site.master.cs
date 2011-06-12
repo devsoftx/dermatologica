@@ -13,6 +13,7 @@ public partial class SiteMaster : MasterPageBase
     {
 
     }
+
     protected void HeadLoginView_ViewChanged(object sender, EventArgs e)
     {
         var returnUrl = Request.QueryString.Get("ReturnUrl");

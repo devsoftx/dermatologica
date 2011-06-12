@@ -19,6 +19,8 @@ public partial class Derma_Derma : MasterPageBase
         }
         else
         {
+            Session["userName"] = null;
+            FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage(Request.RawUrl);
         }
     }
