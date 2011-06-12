@@ -45,16 +45,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Inter\IAccountRepository.cs" />
+    <Compile Include="Inter\ICashMovementRepository.cs" />
     <Compile Include="Inter\ICostCenterRepository.cs" />
     <Compile Include="Inter\IExchangeRateRepository.cs" />
     <Compile Include="Inter\IAppointmentRepository.cs" />
+    <Compile Include="Inter\IInvoiceRepository.cs" />
     <Compile Include="Inter\IItemTableRepository.cs" />
     <Compile Include="Inter\IMedicalCareRepository.cs" />
+    <Compile Include="Inter\IPatientInformationRepository.cs" />
     <Compile Include="Inter\IPaymentRepository.cs" />
     <Compile Include="Inter\IPersonTypeRepository.cs" />
     <Compile Include="Inter\IRoleRepository.cs" />
     <Compile Include="Inter\IServiceRepository.cs" />
     <Compile Include="Inter\ISessionRepository.cs" />
+    <Compile Include="Inter\IStaffInformationRepository.cs" />
     <Compile Include="Inter\ISupplyRepository.cs" />
     <Compile Include="Inter\IMenuRoleRepository.cs" />
     <Compile Include="Inter\IMedicationRepository.cs" />
