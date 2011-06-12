@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
     CodeFile="EditMedication.aspx.cs" Inherits="Derma_Admin_EditMedication" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
@@ -30,7 +29,17 @@
     </telerik:radcodeblock>
     <telerik:radajaxmanager id="RadAjaxManager" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="dwService">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnAceptar">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="btnCancelar">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
                 </UpdatedControls>
@@ -189,7 +198,8 @@
                                     Precio Total</td>
                                 <td>
                                     <telerik:RadNumericTextBox ID="txtPriceT" Runat="server" 
-                                        DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
+                                        DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px" 
+                                        ReadOnly="True">
                                     </telerik:RadNumericTextBox>
                                 </td>
                                 <td>
@@ -276,15 +286,14 @@
                                     <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" Text="Aceptar" />
                                 </td>
                                 <td>
-                                    <asp:Button ID="btnCancelar" runat="server" OnClick="btnCancelar_Click" Text="Cancelar" OnClientClick="onClose();" />
+                                    <asp:Button ID="btnCancelar" runat="server" OnClick="btnCancelar_Click" Text="Cancelar" />
                                 </td>
                                 <td>
                                     &nbsp;
                                 </td>
                             </tr>
                         </table>
-                    </div>
-                    <asp:HiddenField ID="hdnValue" runat="server" />
+                    </div>                    
                     <asp:Button ID="btnDoPostBack" runat="server" BorderStyle="None" Height="0" Width="0"
                         OnClick="btnDoPostBack_Click" />
                 </asp:Panel>
