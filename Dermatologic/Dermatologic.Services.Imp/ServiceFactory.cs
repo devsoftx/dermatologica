@@ -111,5 +111,25 @@ namespace Dermatologic.Services
         {
             return new CostCenterService();
         }
+
+        public override IInvoiceService GetInvoiceService()
+        {
+            return new InvoiceService();
+        }
+
+        public override ICashMovementService GetCashMovementService()
+        {
+            return new CashMovementService();
+        }
+
+        public override IPatientInformationService GetPatientInformationService()
+        {
+            return new PatientInformationService();
+        }
+
+        public override IStaffInformationService GetStaffInformationService()
+        {
+            return new StaffInformationService();
+        }
     }
 }

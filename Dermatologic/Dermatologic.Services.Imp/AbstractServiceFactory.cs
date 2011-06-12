@@ -62,5 +62,13 @@ namespace Dermatologic.Services
         public abstract IAccountService GetAccountService();
 
         public abstract ICostCenterService GetCostCenterService();
+
+        public abstract IInvoiceService GetInvoiceService();
+
+        public abstract ICashMovementService GetCashMovementService();
+
+        public abstract IPatientInformationService GetPatientInformationService();
+
+        public abstract IStaffInformationService GetStaffInformationService();
     }
 }

@@ -50,10 +50,13 @@
     <Compile Include="AbstractServiceFactory.cs" />
     <Compile Include="Imp\AccountService.cs" />
     <Compile Include="Imp\AppointmentService.cs" />
+    <Compile Include="Imp\CashMovementService.cs" />
     <Compile Include="Imp\CostCenterService.cs" />
     <Compile Include="Imp\ExchangeRateService.cs" />
+    <Compile Include="Imp\InvoiceService.cs" />
     <Compile Include="Imp\ItemTableService.cs" />
     <Compile Include="Imp\MedicalCareService.cs" />
+    <Compile Include="Imp\PatientInformationService.cs" />
     <Compile Include="Imp\PaymentService.cs" />
     <Compile Include="Imp\PersonService.cs" />
     <Compile Include="Imp\MailerService.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="Imp\RoleService.cs" />
     <Compile Include="Imp\ServiceService.cs" />
     <Compile Include="Imp\SessionService.cs" />
+    <Compile Include="Imp\StaffInformationService.cs" />
     <Compile Include="Imp\SupplyService.cs" />
     <Compile Include="Imp\TableService.cs" />
     <Compile Include="Imp\UbigeoService.cs" />
