@@ -122,12 +122,10 @@
                 <td class="style14">
                     &nbsp;</td>
                 <td class="style15">
-                    <asp:Label ID="Label15" runat="server" Text="Personal"></asp:Label>
+                    <asp:Label ID="Label17" runat="server" Text="Tratante"></asp:Label>
                 </td>
                 <td class="style16">
-                    <asp:TextBox ID="TextBox1" runat="server" Width="363px"></asp:TextBox>
-                    <asp:Button ID="Button2" runat="server" Text="Buscar Empleado" Width="110px" />
-                </td>
+                    &nbsp;</td>
                 <td>
                     &nbsp;</td>
             </tr>

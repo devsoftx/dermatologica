@@ -53,7 +53,7 @@
                                 <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />
                             </asp:LinkButton>
                             <asp:LinkButton ID="lnk_eliminar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                            CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Servicio?');">
+                            CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tratamiento?');">
                                 <img id="Img4" src="~/images/action_delete.png" alt="Eliminar" border="0" runat="server" />
                             </asp:LinkButton>
                              </ItemTemplate>

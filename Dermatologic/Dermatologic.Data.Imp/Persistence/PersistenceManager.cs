@@ -237,6 +237,22 @@ namespace Dermatologic.Data.Persistence
             mapper.Class<Rate>(cm =>
             {
                 cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.ManyToOne(
+                    x => x.Service,
+                    m =>
+                    {
+                        m.Column("IdService");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);  
+                    });
+                cm.ManyToOne(
+                   x => x.Person,
+                   m =>
+                   {
+                       m.Column("IdPerson");
+                       m.Fetch(FetchMode.Join);
+                       m.NotNullable(true);
+                   });
             });
 
             mapper.Class<Payment>(cm =>
