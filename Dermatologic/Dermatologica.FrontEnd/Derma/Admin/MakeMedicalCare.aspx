@@ -40,7 +40,7 @@
                     <asp:Label ID="Label4" runat="server" Text="Fecha"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtDateAttention" runat="server" Width="140px"></asp:TextBox>
+                    <asp:TextBox ID="txtDateAttention" runat="server" Width="70px"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;
