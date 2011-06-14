@@ -54,10 +54,8 @@ public partial class Derma_Admin_ListRates : PageBase
     
     private void SearchRatesByPerson()
     {
-        //var example = new Person
-        //{
-            var example = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-        //};
+       var example = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        
        var response = BussinessFactory.GetRateService().GetRatesByPerson(example);
         if (response.OperationResult == OperationResult.Success)
         {

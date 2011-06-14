@@ -37,6 +37,22 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         var IdMedication = session.Medication.Id;
         var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
         var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        
+
+        var example1 = medical;
+        var example2=medication.Service;
+
+        var response1 = BussinessFactory.GetRateService().GetRatesByPersonService(example1,example2);
+        var rate= new Rate();
+        if (response1.OperationResult == OperationResult.Success)
+        {
+           var List = response1.Rates;
+           rate = List.FirstOrDefault();  
+        }
+
+       
+
+
         var medicalCare = new MedicalCare
                               {
                                   Id = Guid.NewGuid(),
@@ -49,7 +65,8 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
                                   CreatedBy = CreatedBy,
                                   Pacient = medication.Patient,
                                   Session = session,
-                                  Medical = medical
+                                  Medical = medical,
+                                  Rate=rate,                                                                           
                               };
 
         session.IsCompleted = true;

@@ -302,6 +302,14 @@ namespace Dermatologic.Data.Persistence
                       m.Fetch(FetchMode.Join);
                       m.NotNullable(true);
                   });
+                cm.ManyToOne(
+                 x => x.Rate,
+                 m =>
+                 {
+                     m.Column("IdRate");
+                     m.Fetch(FetchMode.Join);
+                     m.NotNullable(true);
+                 });
             });
 
             mapper.Class<ItemTable>(cm =>
