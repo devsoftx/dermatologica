@@ -193,11 +193,7 @@ public partial class Derma_Admin_MakePayments : PageBase
         }
 
         Save();
-        //    break;
-        //case "edit":
-        //    Update();
-        //    break;
-        // }
+       
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)

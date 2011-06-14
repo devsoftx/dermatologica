@@ -61,6 +61,9 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
         {
             gvMedicalCares.DataSource = response.MedicalCares;
             gvMedicalCares.DataBind();
+            txtResidue.Text = response.MedicalCares.Sum(p => p.Rate.UnitCost).ToString();
+            txtAmount.Text = txtResidue.Text;
+           // BindControl<Session>.BindGrid(gvSessions, response.Sessions.OrderBy(p => p.Residue).ToList());
         }
     }
     protected void btnSearch_Click(object sender, EventArgs e)
@@ -73,13 +76,126 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
         ucSearchPersonsMedical.SelectedValue = string.Empty;
         ucSearchPersonsMedical.Text = string.Empty;
     }
+
+    private void Save()
+    {
+        var Pago = Convert.ToDecimal(txtAmount.Text.Trim());
+       
+
+        foreach (GridViewRow row in gvMedicalCares.Rows)
+        {
+            if (Pago == 0)
+            {
+                break;
+            }
+
+            if (((CheckBox)row.FindControl("chkIsPaid")).Checked == false)
+            {
+
+
+              //  var Medication = BussinessFactory.GetMedicationService().Get(new Guid(MedicationId));
+
+
+                var IdMedicalCare = new Guid(gvMedicalCares.DataKeys[row.RowIndex][0].ToString());
+
+               // var session = BussinessFactory.GetSessionService().Get(IdSession);
+                var medicalCare = BussinessFactory.GetMedicalCareService().Get(IdMedicalCare);
+                var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+               
+                var Invoice = new Invoice
+                {
+                    Id = Guid.NewGuid(),
+                    Name = txtName.Text.Trim(),
+                    Description = txtName.Text.Trim(),
+                    DatePayment = Convert.ToDateTime(CreationDate),
+                    MPayment = ddlMPayment.SelectedValue,
+                    InvoiceType = ddlInvoice.SelectedValue,
+                    NInvoice = txtNInvoice.Text.Trim(),
+                    Amount = Convert.ToDecimal(row.Cells[5].Text),
+                    Currency = ddlCurrency.SelectedValue,
+                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+                    IsActive = true,
+                    Movement="Ingreso",
+
+                    LastModified = LastModified,
+                    CreationDate = CreationDate,
+                    ModifiedBy = ModifiedBy,
+                    CreatedBy = CreatedBy,
+                    
+                    Personal=medical,
+                   
+
+                };
+
+                medicalCare.IsPaid = true;
+                Invoice.MedicalCare = medicalCare;
+                Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+
+                                              
+
+                //session.Account = session.Account + Convert.ToDecimal(Payment.Amount);
+                //session.Residue = session.Price - session.Account;
+                //if (session.Residue == 0)
+                //{
+                //    session.IsPaid = true;
+                //}
+
+                try
+                {
+
+                    var response = BussinessFactory.GetInvoiceService().Save(Invoice);
+
+                    if (response.OperationResult == OperationResult.Success)
+                    {
+                        BussinessFactory.GetMedicalCareService().Update(medicalCare);
+                        //Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", MedicationId), true);
+                        litMensaje.Text = string.Format("Se Guardó Correctamente");
+                    }
+                    else
+                    {
+                        litMensaje.Text = string.Format("No se pudo Guardar el Pago");
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+
+
+            }
+
+        }
+    }
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
+        if (ddlCurrency.SelectedValue == "USD" & txtVenta.Text == "")
+        {
+            litMensaje.Text = string.Format("No se ha Ingresado el Tipo de Cambio del día");
+            Response.Redirect("~/Derma/Admin/EditExchangeRate.aspx?action=new");
+            //return;
+        }
+        if (Convert.ToDecimal(txtAmount.Text) == 0)
+        {
+            litMensaje.Text = string.Format("El Monto a Pagar No puede Ser Cero");
+            return;
+        }
+        if (txtAmount.Text == "")
+        {
+            litMensaje.Text = string.Format("Debe Ingresar Una Cantidad a Pagar");
+            return;
+        }
+        if (Convert.ToDecimal(txtAmount.Text.Trim()) > Convert.ToDecimal(txtResidue.Text))
+        {
+            litMensaje.Text = string.Format("El Monto a Pagar es mayor que el Saldo");
+            return;
+        }
 
+        Save();
     }
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
 
     }
-    
+
+   
 }

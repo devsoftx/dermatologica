@@ -53,7 +53,7 @@
         }
         .style15
         {
-            width: 112px;
+            width: 110px;
             text-align: right;
         }
         .style16
@@ -176,6 +176,16 @@
                 <td class="style15">
                     &nbsp;</td>
                 <td class="style16">
+                    Atenciones no Canceladas</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style14">
+                    &nbsp;</td>
+                <td class="style15">
+                    &nbsp;</td>
+                <td class="style16">
                                     <asp:GridView ID="gvMedicalCares" runat="server" 
                         AutoGenerateColumns="False" CellPadding="4"
                                         ForeColor="#333333" GridLines="None" DataKeyNames="Id" > 
@@ -197,22 +207,16 @@
                                                 <asp:Literal ID="litPrice" runat="server" Text='<%# ((Session)Eval("Session")).Price %>'></asp:Literal>
                                             </ItemTemplate>
                                              </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Acuenta">
-                                            <ItemTemplate>
-                                                <asp:Literal ID="litAccount" runat="server" Text='<%# ((Session)Eval("Session")).Account %>'></asp:Literal>
-                                            </ItemTemplate>
-                                             </asp:TemplateField>
-                                           <asp:TemplateField HeaderText="Saldo">
-                                            <ItemTemplate>
-                                                <asp:Literal ID="litResidue" runat="server" Text='<%# ((Session)Eval("Session")).Residue %>'></asp:Literal>
-                                            </ItemTemplate>
-                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagada">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="chkIsPaid" runat="server" Checked = '<%# ((Session)Eval("Session")).IsPaid %>'  Enabled=false />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
+                                            <asp:TemplateField HeaderText="Tarifa">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="litRate" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCost %>'></asp:Literal>
+                                            </ItemTemplate>
+                                             </asp:TemplateField>
                                          </Columns>
                                         <EditRowStyle BackColor="#999999" />
                                         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -238,7 +242,7 @@
                 <td class="style16">
                                     <asp:Label ID="lblCurrency" runat="server" Width="50px" 
                         Height="16px"></asp:Label>
-                    <asp:TextBox ID="txtResidue" runat="server" Enabled="False" Width="105px"></asp:TextBox>
+                    <asp:TextBox ID="txtResidue" runat="server" Width="105px" Enabled="False"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;</td>
@@ -315,6 +319,7 @@
                         <asp:ListItem>Deposito</asp:ListItem>
                         <asp:ListItem>Tarjeta de Credito</asp:ListItem>
                     </asp:DropDownList>
+                                    <asp:Literal ID="litMensaje" runat="server"/>
                 </td>
                 <td>
                     &nbsp;</td>
@@ -324,7 +329,7 @@
                     &nbsp;</td>
                 <td class="style15">
                                     <asp:Button ID="btnAceptar" runat="server"  
-                                        Text="Aceptar" />
+                                        Text="Aceptar" onclick="btnAceptar_Click" />
                                 </td>
                 <td class="style16">
                                     <asp:Button ID="btnCancelar" runat="server"  

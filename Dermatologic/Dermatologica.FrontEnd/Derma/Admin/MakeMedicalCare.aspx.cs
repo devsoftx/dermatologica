@@ -47,7 +47,16 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         if (response1.OperationResult == OperationResult.Success)
         {
            var List = response1.Rates;
-           rate = List.FirstOrDefault();  
+
+           if (List != null)
+           {
+               rate = List.FirstOrDefault();
+           }
+           else
+           {
+            litMensaje.Text = string.Format("Falta Agregar la Tarifa de este Servicio para este Medico");
+            return;
+           }
         }
 
        
