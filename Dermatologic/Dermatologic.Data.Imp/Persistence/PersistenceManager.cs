@@ -368,7 +368,7 @@ namespace Dermatologic.Data.Persistence
                     {
                         m.Column("IdPatient");
                         m.Fetch(FetchMode.Join);
-                        m.NotNullable(true);
+                        m.NotNullable(false);
                     });
                 cm.ManyToOne(
                     x => x.Session,
@@ -376,7 +376,7 @@ namespace Dermatologic.Data.Persistence
                     {
                         m.Column("IdSession");
                         m.Fetch(FetchMode.Join);
-                        m.NotNullable(true);
+                        m.NotNullable(false);
                     });
                 cm.ManyToOne(
                     x => x.Personal,
@@ -384,8 +384,16 @@ namespace Dermatologic.Data.Persistence
                     {
                         m.Column("IdPersonal");
                         m.Fetch(FetchMode.Join);
-                        m.NotNullable(true);
+                        m.NotNullable(false);
                     });
+                cm.ManyToOne(
+                   x => x.MedicalCare,
+                   m =>
+                   {
+                       m.Column("IdMedicalCare");
+                       m.Fetch(FetchMode.Join);
+                       m.NotNullable(false);
+                   });
                 cm.ManyToOne(
                     x => x.CostCenter,
                     m =>
@@ -549,6 +557,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Id(x => x.Id, m => m.Column("Id"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.DateAttention, m => m.Column("DateAttention"));
+                    cm.Property(x => x.IsPaid, m => m.Column("IsPaid"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));

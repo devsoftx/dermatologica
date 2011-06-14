@@ -10,7 +10,7 @@ namespace Dermatologic.Domain
         private Person _medical = new Person();
         private Person _pacient = new Person();
         private Rate _rate= new Rate();
-
+        
         public MedicalCare()
         {
             _session = new Session();
@@ -27,6 +27,9 @@ namespace Dermatologic.Domain
         [DataMember]
         public virtual DateTime? DateAttention { set; get; }
 
+        [DataMember]
+        public virtual bool IsPaid { set; get; }
+        
         [DataMember]
         public virtual bool IsActive { set; get; }
 

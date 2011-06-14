@@ -10,6 +10,7 @@ namespace Dermatologic.Domain
         private Person _personal;
         private Session _session;
         private CostCenter _costCenter;
+        private MedicalCare _medicalcare;
 
         public Invoice()
         {
@@ -17,6 +18,7 @@ namespace Dermatologic.Domain
             _personal = new Person();
             _session = new Session();
             _costCenter = new CostCenter();
+            _medicalcare = new MedicalCare();
         }
 
         [DataMember]
@@ -95,6 +97,13 @@ namespace Dermatologic.Domain
             set { _costCenter = value; }
         }
 
+        [DataMember]
+        public virtual MedicalCare MedicalCare
+        {
+            get { return _medicalcare; }
+            set { _medicalcare = value; }
+        }
+    
         public virtual bool Equals(Invoice other)
         {
             return Id.Equals(other.Id);
