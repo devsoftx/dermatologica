@@ -1,4 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="MakePaymentsPersonal.aspx.cs" Inherits="Derma_Admin_MakePaymentsPersonal" %>
+<%@ Import Namespace="Dermatologic.Domain" %>
+<%@ Register src="../../SmartControls/wucSearchPersons.ascx" tagname="wucsearchpersons" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <style type="text/css">
@@ -125,7 +127,33 @@
                     <asp:Label ID="Label17" runat="server" Text="Tratante"></asp:Label>
                 </td>
                 <td class="style16">
-                    &nbsp;</td>
+                    <table class="style1">
+                        <tr>
+                            <td class="style4" style="text-align: left">
+                                <asp:Label ID="Label18" runat="server" style="text-align: left" Text="Tipo"></asp:Label>
+                            </td>
+                            <td class="style5">
+                    <asp:DropDownList ID="ddlPersonType" runat="server" Width="150px" 
+                        AutoPostBack="True" 
+                        onselectedindexchanged="ddlPersonType_SelectedIndexChanged">
+                    </asp:DropDownList>
+                            </td>
+                            <td>
+                            <asp:UpdatePanel ID="upPanel" runat="server">
+                            <ContentTemplate>
+                                <uc1:wucSearchPersons ID="ucSearchPersonsMedical" runat="server" WebServiceMethod="LoadPersons" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="ddlPersonType" 
+                                    EventName="SelectedIndexChanged" />
+                            </Triggers>
+                            </asp:UpdatePanel>
+                            </td>
+                            <td>
+                                &nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
                 <td>
                     &nbsp;</td>
             </tr>
@@ -136,7 +164,8 @@
                     <asp:Label ID="Label14" runat="server" Text="Buscar Atenciones"></asp:Label>
                 </td>
                 <td class="style16">
-                    <asp:Button ID="Button1" runat="server" Text="Buscar" />
+                    <asp:Button ID="btnSearch" runat="server" Text="Buscar" 
+                        onclick="btnSearch_Click" />
                 </td>
                 <td>
                     &nbsp;</td>
@@ -147,30 +176,40 @@
                 <td class="style15">
                     &nbsp;</td>
                 <td class="style16">
-                                    <asp:GridView ID="gvSessions" runat="server" 
+                                    <asp:GridView ID="gvMedicalCares" runat="server" 
                         AutoGenerateColumns="False" CellPadding="4"
                                         ForeColor="#333333" GridLines="None" DataKeyNames="Id" > 
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
-                                            <asp:BoundField DataField="Description" HeaderText="Descripcion" />
-                                            <asp:BoundField DataField="Currency" HeaderText="Moneda" />
-                                            <asp:BoundField DataField="Price" HeaderText="Precio" />
-                                            <asp:BoundField DataField="Account" HeaderText="Acuenta" />
-                                            <asp:BoundField DataField="Residue" HeaderText="Saldo" />
-                                            <asp:TemplateField HeaderText="Atendida">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="chkIsCompleted" runat="server" 
-                                                        Checked = '<%# Eval("IsCompleted") %>' Enabled=false/>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="Sesión">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="litSession" runat="server" Text='<%# ((Session)Eval("Session")).Description %>'></asp:Literal>
+                                            </ItemTemplate>
+                                             </asp:TemplateField>
+                                            <asp:BoundField HeaderText="Fecha de Atencion" DataField="DateAttention" />
+                                            <asp:TemplateField HeaderText="Sesión">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="litCurrency" runat="server" Text='<%# ((Session)Eval("Session")).Currency %>'></asp:Literal>
+                                            </ItemTemplate>
+                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Precio">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="litPrice" runat="server" Text='<%# ((Session)Eval("Session")).Price %>'></asp:Literal>
+                                            </ItemTemplate>
+                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Acuenta">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="litAccount" runat="server" Text='<%# ((Session)Eval("Session")).Account %>'></asp:Literal>
+                                            </ItemTemplate>
+                                             </asp:TemplateField>
+                                           <asp:TemplateField HeaderText="Saldo">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="litResidue" runat="server" Text='<%# ((Session)Eval("Session")).Residue %>'></asp:Literal>
+                                            </ItemTemplate>
+                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagada">
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="chkIsPaid" runat="server" Checked = '<%# Eval("IsPaid") %>'  Enabled=false />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                           <asp:TemplateField HeaderText="Abonada">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="chkIsPaidPersonal" runat="server" Checked = '<%# Eval("IsPaidPersonal") %>'  Enabled=false />
+                                                    <asp:CheckBox ID="chkIsPaid" runat="server" Checked = '<%# ((Session)Eval("Session")).IsPaid %>'  Enabled=false />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 

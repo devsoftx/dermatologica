@@ -75,6 +75,7 @@
     <Compile Include="ResponseBase.cs" />
     <Compile Include="Responses\ExchangeRateResponse.cs" />
     <Compile Include="Responses\MailResponse.cs" />
+    <Compile Include="Responses\MedicalCareResponse.cs" />
     <Compile Include="Responses\MedicationResponse.cs" />
     <Compile Include="Responses\MenuResponse.cs" />
     <Compile Include="Responses\PaymentResponse.cs" />

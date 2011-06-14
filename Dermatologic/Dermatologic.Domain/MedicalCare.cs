@@ -9,7 +9,15 @@ namespace Dermatologic.Domain
         private Session _session = new Session();
         private Person _medical = new Person();
         private Person _pacient = new Person();
+        private Rate _rate= new Rate();
 
+        public MedicalCare()
+        {
+            _session = new Session();
+            _medical = new Person();
+             _pacient = new Person();
+             _rate = new Rate();
+        }
         [DataMember]
         public virtual Guid? Id { set; get; }
 
@@ -53,6 +61,11 @@ namespace Dermatologic.Domain
         {
             get { return _pacient; }
             set { _pacient = value; }
+        }
+        public virtual Rate Rate
+        {
+            get { return _rate; }
+            set { _rate = value; }
         }
 
         public virtual bool Equals(MedicalCare other)
