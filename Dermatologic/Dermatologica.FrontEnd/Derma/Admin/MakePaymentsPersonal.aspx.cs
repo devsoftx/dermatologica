@@ -28,6 +28,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
         {
             txtCompra.Text = echangeToday.Buy.ToString();
             txtVenta.Text = echangeToday.Sale.ToString();
+            txtName.Text = "Pago de Honorarios";
         }
     }
 
@@ -53,8 +54,14 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
             {
                 gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
                 gvMedicalCares.DataBind();
-                txtResidue.Text = response.MedicalCares.Sum(p => p.Rate.UnitCost).ToString();
-                txtAmount.Text = txtResidue.Text;
+                var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD");
+                var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN");
+
+                txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCost).ToString();
+                txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();
+
+
+                var List = BussinessFactory.GetExchangeRateService().GetAll().Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();  
             }
         }
     }
@@ -72,15 +79,15 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
 
     private void Save()
     {
-        var Pago = Convert.ToDecimal(txtAmount.Text.Trim());
+       // var Pago = Convert.ToDecimal(txtAmount.Text.Trim());
         foreach (GridViewRow row in gvMedicalCares.Rows)
         {
-            if (Pago == 0)
+            if (Convert.ToDecimal(txtPayPEN.Text) == 0 & Convert.ToDecimal(txtPayUSD.Text) == 0)
             {
                 break;
             }
 
-            if (((CheckBox)row.FindControl("chkIsPaid")).Checked)
+            if (((CheckBox)row.FindControl("chkIsPaid")).Checked & ((CheckBox)row.FindControl("chkPay")).Checked)
             {
                 var IdMedicalCare = new Guid(gvMedicalCares.DataKeys[row.RowIndex][0].ToString());
                 var medicalCare = BussinessFactory.GetMedicalCareService().Get(IdMedicalCare);
@@ -94,7 +101,8 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                                       MPayment = ddlMPayment.SelectedValue,
                                       InvoiceType = ddlInvoice.SelectedValue,
                                       NInvoice = txtNInvoice.Text.Trim(),
-                                      Currency = ddlCurrency.SelectedValue,
+                                      Currency = ((Literal)row.FindControl("litCurrency")).Text,
+                                      Amount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
                                       ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
                                       IsActive = true,
                                       Movement = "Ingreso",
@@ -102,14 +110,22 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                                       CreationDate = CreationDate,
                                       ModifiedBy = ModifiedBy,
                                       CreatedBy = CreatedBy,
-                                      Personal = medical,
-                                      Amount = Convert.ToDecimal(((Literal) row.FindControl("litRate")).Text),
+                                      
+                                      
                                   };
 
                 medicalCare.IsPaid = true;
 
                 Invoice.MedicalCare = medicalCare;
                 Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+                Invoice.Personal = medical;
+
+                var patient = BussinessFactory.GetPersonService().Get(medicalCare.Pacient.Id);
+                Invoice.Patient = patient;
+
+                var session = BussinessFactory.GetSessionService().Get(medicalCare.Session.Id);
+                Invoice.Session = session;
+
                 try
                 {
                     var response = BussinessFactory.GetInvoiceService().Save(Invoice);
@@ -133,26 +149,22 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
 
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
-        if (ddlCurrency.SelectedValue == "USD" & string.IsNullOrEmpty(txtVenta.Text))
+        if (Convert.ToDecimal(txtPayUSD.Text) != 0 & string.IsNullOrEmpty(txtVenta.Text))
         {
             litMensaje.Text = string.Format("No se ha Ingresado el Tipo de Cambio del día");
             Response.Redirect("~/Derma/Admin/EditExchangeRate.aspx?action=new");
         }
-        if (Convert.ToDecimal(txtAmount.Text) == 0)
+        if (Convert.ToDecimal(txtPayUSD.Text) == 0 & Convert.ToDecimal(txtPayPEN.Text) == 0)
         {
             litMensaje.Text = string.Format("El Monto a Pagar No puede Ser Cero");
             return;
         }
-        if (string.IsNullOrEmpty(txtAmount.Text))
-        {
-            litMensaje.Text = string.Format("Debe Ingresar Una Cantidad a Pagar");
-            return;
-        }
-        if (Convert.ToDecimal(txtAmount.Text.Trim()) > Convert.ToDecimal(txtResidue.Text))
-        {
-            litMensaje.Text = string.Format("El Monto a Pagar es mayor que el Saldo");
-            return;
-        }
+        //if (string.IsNullOrEmpty(txtAmount.Text))
+        //{
+        //    litMensaje.Text = string.Format("Debe Ingresar Una Cantidad a Pagar");
+        //    return;
+        //}
+       
         Save();
     }
 }

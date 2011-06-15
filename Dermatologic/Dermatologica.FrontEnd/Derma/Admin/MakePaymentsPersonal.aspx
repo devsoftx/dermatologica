@@ -4,6 +4,28 @@
 <%@ Register Src="../../SmartControls/wucSearchPersons.ascx" TagName="wucsearchpersons"
     TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+    <style type="text/css">
+        .style2
+        {
+            width: 160px;
+        }
+        .style3
+        {
+            width: 100%;
+        }
+        .style4
+        {
+            width: 29px;
+        }
+        .style5
+        {
+            width: 111px;
+        }
+        .style6
+        {
+            width: 27px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
@@ -121,7 +143,7 @@
                                                     OnSelectedIndexChanged="ddlPersonType_SelectedIndexChanged">
                                                 </asp:DropDownList>
                                             </td>
-                                            <td>
+                                            <td class="style2">
                                                 <uc1:wucsearchpersons ID="ucSearchPersonsMedical" runat="server" WebServiceMethod="LoadPersons" />
                                             </td>
                                             <td>
@@ -136,17 +158,15 @@
                             </tr>
                             <tr>
                                 <td>
-                                    &nbsp;
+                                    &nbsp;</td>
+                                <td>
+                                    &nbsp;</td>
+                                <td>
+                                    <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" 
+                                        Text="Buscar Atenciones" Width="124px" />
                                 </td>
                                 <td>
-                                    <asp:Label ID="Label14" runat="server" Text="Buscar Atenciones"></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:Button ID="btnSearch" runat="server" Text="Buscar" OnClick="btnSearch_Click" />
-                                </td>
-                                <td>
-                                    &nbsp;
-                                </td>
+                                    &nbsp;</td>
                             </tr>
                             <tr>
                                 <td>
@@ -185,7 +205,7 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField HeaderText="Fecha de Atencion" DataField="DateAttention" DataFormatString="{0:dd-MM-yyyy}" />
-                                            <asp:TemplateField HeaderText="Sesión">
+                                            <asp:TemplateField HeaderText="Moneda">
                                                 <ItemTemplate>
                                                     <asp:Literal ID="litCurrency" runat="server" Text='<%# ((Session)Eval("Session")).Currency %>'></asp:Literal>
                                                 </ItemTemplate>
@@ -195,7 +215,7 @@
                                                     <asp:Literal ID="litPrice" runat="server" Text='<%# ((Session)Eval("Session")).Price %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Pagada">
+                                            <asp:TemplateField HeaderText="Sesión Pagada">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="chkIsPaid" runat="server" Checked='<%# ((Session)Eval("Session")).IsPaid %>'
                                                         Enabled="false" />
@@ -204,6 +224,12 @@
                                             <asp:TemplateField HeaderText="Tarifa">
                                                 <ItemTemplate>
                                                     <asp:Literal ID="litRate" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCost %>'></asp:Literal>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Pagar">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="chkPay" runat="server" Checked="false"
+                                                        Enabled="true" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -231,8 +257,22 @@
                                     <asp:Label ID="Label10" runat="server" Text="Saldo"></asp:Label>
                                 </td>
                                 <td>
-                                    <asp:Label ID="lblCurrency" runat="server" Width="50px" Height="16px"></asp:Label>
-                                    <asp:TextBox ID="txtResidue" runat="server" Width="105px" Enabled="False"></asp:TextBox>
+                                    <table class="style3">
+                                        <tr>
+                                            <td class="style4">
+                                                <asp:Label ID="lblUSD" runat="server" Height="16px" Width="50px">USD</asp:Label>
+                                            </td>
+                                            <td class="style5">
+                                                <asp:TextBox ID="txtPayUSD" runat="server" Enabled="False" Width="105px"></asp:TextBox>
+                                            </td>
+                                            <td class="style6">
+                                                <asp:Label ID="lblPEN" runat="server" Height="16px" Width="50px">S/.</asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtPayPEN" runat="server" Enabled="False" Width="105px"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <td>
                                     &nbsp;
@@ -267,36 +307,6 @@
                                     </asp:DropDownList>
                                     <asp:Label ID="Label7" runat="server" Text="N°"></asp:Label>
                                     <asp:TextBox ID="txtNInvoice" runat="server" Width="110px"></asp:TextBox>
-                                </td>
-                                <td>
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    <asp:Label ID="Label1" runat="server" Text="Moneda"></asp:Label>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <asp:DropDownList ID="ddlCurrency" runat="server" AppendDataBoundItems="True" Width="50px">
-                                                    <asp:ListItem>USD</asp:ListItem>
-                                                    <asp:ListItem Value="PEN">PEN</asp:ListItem>
-                                                    <asp:ListItem>EUR</asp:ListItem>
-                                                </asp:DropDownList>
-                                            </td>
-                                            <td>
-                                                <asp:Label ID="Label2" runat="server" Text="Monto"></asp:Label>
-                                            </td>
-                                            <td>
-                                                <asp:TextBox ID="txtAmount" runat="server" Width="92px"></asp:TextBox>
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </td>
                                 <td>
                                     &nbsp;

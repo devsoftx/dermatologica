@@ -508,7 +508,7 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
+                    cm.Property(x => x.Name, m => m.Column("[Name]"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
@@ -642,7 +642,7 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("Name"));
+                    cm.Property(x => x.Name, m => m.Column("[Name]"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
@@ -699,7 +699,7 @@ namespace Dermatologic.Data.Persistence
                cm =>
                {
                    cm.Id(x => x.Id, m => m.Column("Id"));
-                   cm.Property(x => x.Name, m => m.Column("Name"));
+                   cm.Property(x => x.Name, m => m.Column("[Name]"));
                    cm.Property(x => x.Description, m => m.Column("Description"));
                    cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                    cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
@@ -713,7 +713,7 @@ namespace Dermatologic.Data.Persistence
                cm =>
                {
                    cm.Id(x => x.Id, m => m.Column("Id"));
-                   cm.Property(x => x.Name, m => m.Column("Name"));
+                   cm.Property(x => x.Name, m => m.Column("[Name]"));
                    cm.Property(x => x.Description, m => m.Column("Description"));
                    cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                    cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));

@@ -43,7 +43,7 @@ namespace Dermatologic.Domain
         public virtual string NInvoice { set; get; }
 
         [DataMember]
-        public virtual decimal? Amount { set; get; }
+        public virtual decimal Amount { set; get; }
 
         [DataMember]
         public virtual string Currency { set; get; }
