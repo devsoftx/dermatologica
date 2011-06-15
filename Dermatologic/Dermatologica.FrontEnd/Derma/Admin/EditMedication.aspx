@@ -231,7 +231,7 @@
                                             <asp:BoundField DataField="Price" HeaderText="Precio" />
                                             <asp:BoundField DataField="Account" HeaderText="Acuenta" />
                                             <asp:BoundField DataField="Residue" HeaderText="Saldo" />
-                                            <asp:TemplateField HeaderText="Completa">
+                                            <asp:TemplateField HeaderText="Atentida">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="chkIsCompleted" runat="server" Checked = '<%# Eval("IsCompleted") %>' />
                                                 </ItemTemplate>

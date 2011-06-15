@@ -107,6 +107,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                                   };
 
                 medicalCare.IsPaid = true;
+
                 Invoice.MedicalCare = medicalCare;
                 Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
                 try
@@ -119,7 +120,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                     }
                     else
                     {
-                        litMensaje.Text = string.Format("No se pudo Guardar el Pago");
+                        litMensaje.Text = string.Format("No se pudo Guardar el Pago {0}", response.Message);
                     }
                 }
                 catch (Exception e)
