@@ -23,8 +23,8 @@
 <telerik:RadComboBox ID="ComboBox" runat="server" EnableEmbeddedSkins="false"
 	EnableLoadOnDemand="true" EnableItemCaching="true" OnClientItemsRequesting="SetContext"
 	Filter="Contains" ShowToggleImage="False" ShowDropDownOnTextboxClick="false" SkinID="SmartCombo"
-    OnClientItemsRequestFailed="OnClientItemsRequestFailedHandler" 
-    BorderColor="White" BorderStyle="None" LoadingMessage="Buscando..." 
+    OnClientItemsRequestFailed="OnClientItemsRequestFailedHandler" EmptyMessage="Ingrese aquí para buscar..." BackColor="#f0f0f0"
+    BorderColor="#ABADB3" BorderStyle="None" LoadingMessage="Buscando..." 
     Skin="Windows7">
 	<WebServiceSettings Path="~/SmartControls/DataService.asmx" Method="LoadPersons"  />
 <WebServiceSettings Path="~/SmartControls/DataService.asmx" Method="LoadPersons"></WebServiceSettings>
