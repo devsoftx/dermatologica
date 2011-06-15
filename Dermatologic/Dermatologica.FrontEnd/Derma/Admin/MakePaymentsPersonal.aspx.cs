@@ -89,7 +89,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                 break;
             }
 
-            if (((CheckBox)row.FindControl("chkIsPaid")).Checked == false)
+            if (((CheckBox)row.FindControl("chkIsPaid")).Checked == true)
             {
 
 
@@ -101,7 +101,10 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                // var session = BussinessFactory.GetSessionService().Get(IdSession);
                 var medicalCare = BussinessFactory.GetMedicalCareService().Get(IdMedicalCare);
                 var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-               
+
+                              
+
+
                 var Invoice = new Invoice
                 {
                     Id = Guid.NewGuid(),
@@ -111,7 +114,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                     MPayment = ddlMPayment.SelectedValue,
                     InvoiceType = ddlInvoice.SelectedValue,
                     NInvoice = txtNInvoice.Text.Trim(),
-                    Amount = Convert.ToDecimal(row.Cells[5].Text),
+                     //Amount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
                     Currency = ddlCurrency.SelectedValue,
                     ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
                     IsActive = true,
@@ -127,6 +130,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
 
                 };
 
+                Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text);
                 medicalCare.IsPaid = true;
                 Invoice.MedicalCare = medicalCare;
                 Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
