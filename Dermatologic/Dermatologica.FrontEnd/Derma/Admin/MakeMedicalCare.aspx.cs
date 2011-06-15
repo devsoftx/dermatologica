@@ -48,7 +48,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         {
            var List = response1.Rates;
 
-           if (List != null)
+           if (List.Count != 0)
            {
                rate = List.FirstOrDefault();
            }
