@@ -35,8 +35,11 @@
                                 <b><asp:Label ID="Label1" runat="server" Style="text-align: left" Text="Buscador"></asp:Label></b>
                             </td>
                             <td>
-                                <asp:Label ID="Label5" runat="server" Text="Fecha de Pago:"></asp:Label>
-                                <asp:TextBox ID="txtDatePay" runat="server" Width="80px" />
+                                    <asp:Label ID="Label16" runat="server" Text="Centro de Costo"></asp:Label>
+                            </td>
+                            <td>
+                                    <asp:DropDownList ID="ddlCostCenter" runat="server">
+                                    </asp:DropDownList>
                             </td>
                             <td>
                                 <asp:Label ID="Label2" runat="server" Text="Moneda"></asp:Label>
@@ -85,7 +88,7 @@
                             <asp:BoundField DataField="DatePayment" HeaderText="Fecha" />
                             <asp:TemplateField HeaderText="Paciente">
                                 <ItemTemplate>
-                                    <asp:Literal ID="litNombres" Text='<%# string.Format("{0} {1} {2}", ((Person)Eval("Pacient")).FirstName,((Person)Eval("Pacient")).LastNameP,((Person)Eval("Pacient")).LastNameM ) %>'
+                                    <asp:Literal ID="litNombres" Text='<%# string.Format("{0} {1} {2}", ((Person)Eval("Patient")).FirstName,((Person)Eval("Patient")).LastNameP,((Person)Eval("Patient")).LastNameM ) %>'
                                         runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
@@ -96,7 +99,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="MPayment" HeaderText="Medio de pago" />
-                            <asp:BoundField DataField="Invoice" HeaderText="Documento" />
+                            <asp:BoundField DataField="InvoiceType" HeaderText="Documento" />
                             <asp:BoundField DataField="NInvoice" HeaderText="N°" />
                             <asp:BoundField DataField="Currency" HeaderText="Moneda" />
                             <asp:BoundField DataField="Amount" HeaderText="Monto" />
