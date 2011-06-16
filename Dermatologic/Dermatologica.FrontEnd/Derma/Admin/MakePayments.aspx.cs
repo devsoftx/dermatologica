@@ -19,6 +19,7 @@ public partial class Derma_Admin_MakePayments : PageBase
         if (!Page.IsPostBack)
         {
             SetPayment();
+            LoadCostCenter();
         txtDatePayment.Text = Convert.ToString(CreationDate);
         }
     }
@@ -59,6 +60,11 @@ public partial class Derma_Admin_MakePayments : PageBase
        
        
     }
+    private void LoadCostCenter()
+    {
+        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
+    }
     private void LoadSessions(Guid medicationId)
     {
         var session = new Session { Medication = { Id = medicationId } };
@@ -98,19 +104,22 @@ public partial class Derma_Admin_MakePayments : PageBase
                 
                 var session = BussinessFactory.GetSessionService().Get(IdSession);
 
-                var Payment = new Payment
+                var Invoice = new Invoice
                 {
                     Id = Guid.NewGuid(),
                     Name = txtName.Text.Trim(),
                     Description = txtName.Text.Trim(),
                     DatePayment = Convert.ToDateTime(CreationDate),
                     MPayment = ddlMPayment.SelectedValue,
-                    Invoice = ddlInvoice.SelectedValue,
+                    InvoiceType = ddlInvoice.SelectedValue,
                     NInvoice = txtNInvoice.Text.Trim(),
                     Currency = ddlCurrency.SelectedValue,
                     ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
-                    IsActive = true,
+                    Movement="Ingreso",
 
+             
+                   
+                    IsActive = true,
                     LastModified = LastModified,
                     CreationDate = CreationDate,
                     ModifiedBy = ModifiedBy,
@@ -122,19 +131,22 @@ public partial class Derma_Admin_MakePayments : PageBase
 
                 if (Pago > session.Residue)
                 {
-                    Payment.Amount = Convert.ToString(session.Residue);
+                    Invoice.Amount = session.Residue;
                     Pago = Pago - session.Residue;
                 }
                 else
                 {
-                    Payment.Amount = Pago.ToString();
+                    Invoice.Amount = Pago;
                     Pago = Convert.ToDecimal(0);
                 }
 
-                Payment.Pacient = Medication.Patient;
-                Payment.Session = session;
+                Invoice.Patient = Medication.Patient;
+                Invoice.Session = session;
+                Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+                Invoice.Personal = null;
+                Invoice.MedicalCare = null;
 
-                session.Account = session.Account + Convert.ToDecimal(Payment.Amount);
+                session.Account = session.Account + Invoice.Amount;
                 session.Residue = session.Price - session.Account;
                 if (session.Residue == 0)
                 {
@@ -144,7 +156,7 @@ public partial class Derma_Admin_MakePayments : PageBase
                 try
                 {
 
-                    var response = BussinessFactory.GetPaymentService().Save(Payment);
+                    var response = BussinessFactory.GetInvoiceService().Save(Invoice);
 
                     if (response.OperationResult == OperationResult.Success)
                     {

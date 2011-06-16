@@ -164,23 +164,30 @@
                                 <td>
                                     <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" 
                                         Text="Buscar Atenciones" Width="124px" />
-                                </td>
+                                    SSA</td>
                                 <td>
                                     &nbsp;</td>
                             </tr>
                             <tr>
                                 <td>
-                                    &nbsp;
-                                </td>
+                                    &nbsp;</td>
                                 <td>
-                                    &nbsp;
-                                </td>
+                                    &nbsp;</td>
+                                <td style="color: #CC3300">
+                                    Elija las atenciones a pagar haciendo un Check en la columna pagar</td>
                                 <td>
+                                    &nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;</td>
+                                <td>
+                                    &nbsp;</td>
+                                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
                                     Atenciones no Canceladas
                                 </td>
                                 <td>
-                                    &nbsp;
-                                </td>
+                                    &nbsp;</td>
                             </tr>
                             <tr>
                                 <td>
@@ -254,7 +261,7 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <asp:Label ID="Label10" runat="server" Text="Saldo"></asp:Label>
+                                    <asp:Label ID="Label10" runat="server" Text="Monto Adeudado"></asp:Label>
                                 </td>
                                 <td>
                                     <table class="style3">

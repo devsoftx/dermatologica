@@ -18,7 +18,7 @@
         }
         .style4
         {
-            width: 224px;
+            width: 211px;
         }
         .style5
         {

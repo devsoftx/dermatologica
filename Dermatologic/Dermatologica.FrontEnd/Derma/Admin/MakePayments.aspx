@@ -61,7 +61,7 @@
         .style14
         {
             text-align: right;
-            width: 93px;
+            width: 105px;
         }
     </style>
 </asp:Content>
@@ -86,6 +86,21 @@
                 <td class="style3">
                                     <asp:Literal ID="litMensaje" runat="server"/>
                                 </td>
+                <td class="style4">
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    &nbsp;</td>
+                <td class="style14">
+                                    <asp:Label ID="Label16" runat="server" Text="Centro de Costo"></asp:Label>
+                </td>
+                <td class="style3">
+                                    <asp:DropDownList ID="ddlCostCenter" runat="server">
+                                    </asp:DropDownList>
+                </td>
                 <td class="style4">
                     &nbsp;</td>
                 <td>
