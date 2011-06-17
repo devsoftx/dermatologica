@@ -48,14 +48,30 @@ public partial class Derma_Admin_ListRevenues : PageBase
                               Currency = ddlCurrency.SelectedValue,
                               InvoiceType = ddlInvoice.SelectedValue,
                               CostCenter =
-                                  BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)),
+                                  BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue))
                           };
 
-        var response = BussinessFactory.GetInvoiceService().GetRevenuesByParams(example);
-        if (response.OperationResult == OperationResult.Success)
+        var movement = Request.QueryString.Get("Movement");
+        var response = new InvoiceResponse();
+        if (!string.IsNullOrEmpty(movement))
         {
-            gvRevenues.DataSource = response.Invoices;
-            gvRevenues.DataBind();
+            switch (movement)
+            {
+                case "Ingreso":
+                    response = BussinessFactory.GetInvoiceService().GetRevenuesByParams(example);
+                    break;
+                case "Egreso":
+                    response = BussinessFactory.GetInvoiceService().GetExpensesByParams(example);
+                    break;
+                default:
+                    break;
+
+            }
+            if (response.OperationResult == OperationResult.Success)
+            {
+                gvRevenues.DataSource = response.Invoices;
+                gvRevenues.DataBind();
+            }
         }
     }
 
