@@ -19,6 +19,7 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
             SetExchangeRate();
         }
     }
+
     private void SetExchangeRate()
     {
         var action = Request.QueryString.Get("action");
@@ -32,7 +33,8 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
                 break;
         }
     }
-    void LoadExchangeRate(Guid id)
+
+    public void LoadExchangeRate(Guid id)
     {
         var ExchangeRate = BussinessFactory.GetExchangeRateService().Get(id);
         txtDateRate.Text = Convert.ToString(ExchangeRate.DateRate);
@@ -63,7 +65,8 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
 
             if (response.OperationResult == OperationResult.Success)
             {
-                Response.Redirect("~/Derma/Admin/ListExchangeRates.aspx", true);
+                var returnUrl = Request.QueryString.Get("returnUrl");
+                Response.Redirect(string.IsNullOrEmpty(returnUrl) ? "~/Derma/Admin/ListExchangeRates.aspx" : returnUrl, true);
             }
             else
             {
@@ -76,6 +79,7 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
         }
 
     }
+
     private void Update()
     {
         var Id = Request.QueryString.Get("id");
@@ -120,6 +124,7 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
 
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Derma/Admin/ListExchangeRates.aspx", true);
+        var returnUrl = Request.QueryString.Get("returnUrl");
+        Response.Redirect(string.IsNullOrEmpty(returnUrl) ? "~/Derma/Admin/ListExchangeRates.aspx" : returnUrl, true);
     }
 }

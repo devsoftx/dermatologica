@@ -152,19 +152,14 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
         if (Convert.ToDecimal(txtPayUSD.Text) != 0 & string.IsNullOrEmpty(txtVenta.Text))
         {
             litMensaje.Text = string.Format("No se ha Ingresado el Tipo de Cambio del día");
-            Response.Redirect("~/Derma/Admin/EditExchangeRate.aspx?action=new");
+            Response.Redirect(string.Format("~/Derma/Admin/EditExchangeRate.aspx?action=new&returnUrl={0}",
+                                            Page.Request.RawUrl));
         }
         if (Convert.ToDecimal(txtPayUSD.Text) == 0 & Convert.ToDecimal(txtPayPEN.Text) == 0)
         {
             litMensaje.Text = string.Format("El Monto a Pagar No puede Ser Cero");
             return;
         }
-        //if (string.IsNullOrEmpty(txtAmount.Text))
-        //{
-        //    litMensaje.Text = string.Format("Debe Ingresar Una Cantidad a Pagar");
-        //    return;
-        //}
-       
         Save();
     }
 }
