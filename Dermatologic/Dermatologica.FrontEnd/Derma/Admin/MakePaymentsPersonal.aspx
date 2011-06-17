@@ -164,7 +164,7 @@
                                 <td>
                                     <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" 
                                         Text="Buscar Atenciones" Width="124px" />
-                                    SSA</td>
+                                    </td>
                                 <td>
                                     &nbsp;</td>
                             </tr>

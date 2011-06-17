@@ -120,11 +120,11 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                 Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
                 Invoice.Personal = medical;
 
-                var patient = BussinessFactory.GetPersonService().Get(medicalCare.Pacient.Id);
-                Invoice.Patient = patient;
+                //var patient = BussinessFactory.GetPersonService().Get(medicalCare.Pacient.Id);
+                Invoice.Patient =null;
 
-                var session = BussinessFactory.GetSessionService().Get(medicalCare.Session.Id);
-                Invoice.Session = session;
+               // var session = BussinessFactory.GetSessionService().Get(medicalCare.Session.Id);
+                Invoice.Session = null; ;
 
                 try
                 {
