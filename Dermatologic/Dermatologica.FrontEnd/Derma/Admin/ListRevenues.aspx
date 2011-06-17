@@ -1,13 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
-    CodeFile="ListRevenues.aspx.cs" Inherits="Derma_Admin_ListRevenues" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListRevenues.aspx.cs"Inherits="Derma_Admin_ListRevenues" %>
 
 <%@ Import Namespace="Dermatologic.Domain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
-<script type="text/javascript">
-    $(function () {
-        $("#MainContent_txtDatePay").datepicker();
-        $("#MainContent_txtDatePay").datepicker($.datepicker.regional['es']);
-    });
+    <script type="text/javascript">
+        $(function () {
+            $("#MainContent_txtDatePay").datepicker();
+            $("#MainContent_txtDatePay").datepicker($.datepicker.regional['es']);
+        });
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
@@ -18,7 +17,7 @@
                     &nbsp;
                 </td>
                 <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
-                    Ingresos
+                    <asp:Label ID="lblTitle" runat="server" ></asp:Label>
                 </td>
                 <td>
                     &nbsp;
@@ -32,14 +31,15 @@
                     <table>
                         <tr>
                             <td>
-                                <b><asp:Label ID="Label1" runat="server" Style="text-align: left" Text="Buscador"></asp:Label></b>
+                                <b>
+                                    <asp:Label ID="Label1" runat="server" Style="text-align: left" Text="Buscador"></asp:Label></b>
                             </td>
                             <td>
-                                    <asp:Label ID="Label16" runat="server" Text="Centro de Costo"></asp:Label>
+                                <asp:Label ID="Label16" runat="server" Text="Centro de Costo"></asp:Label>
                             </td>
                             <td>
-                                    <asp:DropDownList ID="ddlCostCenter" runat="server">
-                                    </asp:DropDownList>
+                                <asp:DropDownList ID="ddlCostCenter" runat="server">
+                                </asp:DropDownList>
                             </td>
                             <td>
                                 <asp:Label ID="Label2" runat="server" Text="Moneda"></asp:Label>
@@ -82,16 +82,16 @@
                 </td>
                 <td>
                     <asp:GridView ID="gvRevenues" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                        ForeColor="#333333" GridLines="None" Width="800px">
+                        ForeColor="#333333" GridLines="None" Width="800px" 
+                        onrowdatabound="gvRevenues_RowDataBound">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:BoundField DataField="DatePayment" HeaderText="Fecha" />
-                            <asp:TemplateField HeaderText="Paciente">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litNombres" Text='<%# string.Format("{0} {1} {2}", ((Person)Eval("Patient")).FirstName,((Person)Eval("Patient")).LastNameP,((Person)Eval("Patient")).LastNameM ) %>'
-                                        runat="server" />
+                            <asp:TemplateField HeaderText="Persona">
+                                <ItemTemplate>                                    
+                                    <asp:Literal ID="litPersona" runat="server" />
                                 </ItemTemplate>
-                            </asp:TemplateField>
+                            </asp:TemplateField>                            
                             <asp:TemplateField HeaderText="Tratamiento">
                                 <ItemTemplate>
                                     <asp:Literal ID="litTratamiento" Text='<%# ((Session)Eval("Session")).Medication.Service.Name %>'
