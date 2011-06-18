@@ -75,6 +75,12 @@ namespace Dermatologic.Domain
         public virtual Guid? CreatedBy { set; get; }
 
         [DataMember]
+        public virtual String CompleteName
+        {
+            get { return string.Format("{0} {1} {2}", FirstName, LastNameP, LastNameM); }
+        }
+
+        [DataMember]
         public virtual Guid? ModifiedBy { set; get; }
 
         public virtual bool Equals(Person other)

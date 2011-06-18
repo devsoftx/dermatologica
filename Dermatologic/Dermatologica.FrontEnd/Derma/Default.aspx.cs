@@ -55,13 +55,13 @@ public partial class Derma_Default : PageBase
                           {
                               PersonType = {Id = new Guid("DA913E86-1EB8-41E1-8DA0-81ABD6195254")}
                           };
-        var medicals = BussinessFactory.GetPersonService().GetPacients(example).Pacients;
+        var response = BussinessFactory.GetPersonService().GetPacients(example).Pacients;
         var rtTipo = new ResourceType
         {
             Name = "Medical",
-            DataSource = medicals,
+            DataSource = response,
             KeyField = "Id",
-            TextField = "LastNameP",
+            TextField = "CompleteName",
             ForeignKeyField = "Medical"
         };
         radCalendar.ResourceTypes.Add(rtTipo);
