@@ -35,6 +35,9 @@
                 <asp:Panel runat="server" ID="pnlReport">
                     <table border="0" cellspacing="0" cellpadding="0" width="100%">
                         <tr>
+                            <td><asp:Literal ID="litMessage" runat="server" /></td>
+                        </tr>
+                        <tr>
                             <td>Bienvenido <asp:Literal ID="litUser" runat="server" /></td>
                         </tr>
                         <tr>

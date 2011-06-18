@@ -34,7 +34,7 @@ namespace Dermatologic.Domain
         public virtual string RecurrenceRule { set; get; }
 
         [DataMember]
-        public virtual Guid RecurrenceParentID { set; get; }
+        public virtual Guid? RecurrenceParentID { set; get; }
 
         [DataMember]
         public virtual string Patient { set; get; }
