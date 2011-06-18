@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
+using Dermatologic.Services;
 using Appointment = Dermatologic.Domain.Appointment;
 using Telerik.Web.UI;
 
@@ -19,7 +20,6 @@ public partial class Derma_Default : PageBase
         var date = DateTime.Now.ToShortDateString();
         if (!string.IsNullOrEmpty(date))
             radCalendar.SelectedDate = DateTime.ParseExact(date, "dd/MM/yyyy", new CultureInfo("ES-pe"));
-        GetAppointments(new Guid(ddlOffices.SelectedValue));
     }
 
     private void GetOffices()
@@ -31,14 +31,14 @@ public partial class Derma_Default : PageBase
     private void ConfigureRadCalendar()
     {
         radCalendar.DataKeyField = "ID";
-        radCalendar.DataStartField = "Start";
+        radCalendar.DataStartField = "StartDate";
         radCalendar.DataDescriptionField = "Descripcion";
-        radCalendar.DataEndField = "End";
+        radCalendar.DataEndField = "EndDate";
         radCalendar.DataSubjectField = "Subject";
         radCalendar.DataRecurrenceField = "RecurrenceRule";
         radCalendar.DataRecurrenceParentKeyField = "RecurrenceParentID";
         radCalendar.Culture = new CultureInfo("es-PE");
-        radCalendar.CustomAttributeNames = new string[] { "Lugar", "NotificarCada" };
+        radCalendar.CustomAttributeNames = new string[] { "Place", "NotifyEach" };
         
         var frecuencias = BussinessFactory.GetItemTableService().GetAll();
         var rtFrecuencias = new ResourceType
@@ -65,7 +65,7 @@ public partial class Derma_Default : PageBase
     protected void radCalendar_AppointmentClick(object sender, SchedulerEventArgs e)
     {
         if (e.Appointment.Description == "Cita")
-            Response.Redirect("Appointment.aspx?Id=" + e.Appointment.ID, true);
+            Response.Redirect("Appointment.aspx?id=" + e.Appointment.ID, true);
     }
 
     protected void radCalendar_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
@@ -75,7 +75,7 @@ public partial class Derma_Default : PageBase
 
     protected void radCalendar_AppointmentInsert(object sender, SchedulerCancelEventArgs e)
     {
-
+        
     }
 
     protected void radCalendar_AppointmentUpdate(object sender, AppointmentUpdateEventArgs e)
@@ -104,8 +104,7 @@ public partial class Derma_Default : PageBase
                 e.Command == SchedulerNavigationCommand.NavigateToPreviousPeriod ||
                 e.Command == SchedulerNavigationCommand.NavigateToSelectedDate)
         {
-            //var idSede = Convert.ToInt32(Session["idSede"]);
-            GetAppointments(new Guid());
+            var idOffice = ddlOffices.SelectedValue;
         }
     }
 
@@ -123,26 +122,5 @@ public partial class Derma_Default : PageBase
             popupCalendar.SpecialDays.Add(dayWithAppointment);
         }
     }
-
-    private void GetAppointments(Guid? idOffice)
-    {
-        var fecha = new DateTime(radCalendar.SelectedDate.Year, radCalendar.SelectedDate.Month, 1);
-        var appointments = BussinessFactory.GetAppointmentService().GetByOffices(idOffice, fecha.AddMonths(-1), fecha.AddMonths(1));
-        appointments.AddRange(LoadAppointments(idOffice, fecha));
-        radCalendar.DataSource = appointments;
-        radCalendar.DataBind();
-    }
-
-    private IEnumerable<Appointment> LoadAppointments(Guid? idSede, DateTime? fecha)
-    {
-        var obligaciones = BussinessFactory.GetAppointmentService().GetByMonth(fecha, idSede);
-        return obligaciones.Select(obligacionSede => new Appointment
-        {
-            Id = obligacionSede.Id,
-            Subject = obligacionSede.Subject,
-            StartDate = obligacionSede.StartDate,
-            EndDate = obligacionSede.EndDate.AddDays(1),
-            Description = "Cita"
-        }).ToList();
-    }
+    
 }
