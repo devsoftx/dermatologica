@@ -19,6 +19,8 @@ namespace Dermatologic.Services
             }
         }
 
+        public abstract IOfficeService GetOfficeService();
+
         public abstract IAppointmentService GetAppointmentService();
 
         public abstract ITableService GetTableService();
@@ -28,8 +30,6 @@ namespace Dermatologic.Services
         public abstract IServiceService GetServiceService();
 
         public abstract IMedicalCareService GetMedicalCareService();
-
-        public abstract IPaymentService GetPaymentService();
 
         public abstract IMenuService GetMenuService();
 

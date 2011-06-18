@@ -18,6 +18,8 @@ namespace Dermatologic.Data
             }
         }
 
+        public abstract IOfficeRepository GetOfficeRepository();
+
         public abstract IAppointmentRepository GetAppointmentRepository();
 
         public abstract ITableRepository GetTableRepository();
@@ -27,8 +29,6 @@ namespace Dermatologic.Data
         public abstract IMedicalCareRepository GetMedicalCareRepository();
 
         public abstract IServiceRepository GetServiceRepository();
-
-        public abstract IPaymentRepository GetPaymentRepository();
 
         public abstract IMenuRepository GetMenuRepository();
 

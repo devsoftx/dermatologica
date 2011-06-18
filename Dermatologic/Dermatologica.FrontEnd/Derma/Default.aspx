@@ -31,7 +31,8 @@
         </tr>
         <tr>
             <td>
-                &nbsp;
+                <asp:DropDownList ID="ddlOffices" runat="server">
+                </asp:DropDownList>                
             </td>
         </tr>
         <tr>

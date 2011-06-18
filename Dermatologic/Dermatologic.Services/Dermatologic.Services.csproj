@@ -52,8 +52,8 @@
     <Compile Include="Inter\IInvoiceService.cs" />
     <Compile Include="Inter\IItemTableService.cs" />
     <Compile Include="Inter\IMedicalCareService.cs" />
+    <Compile Include="Inter\IOfficeService.cs" />
     <Compile Include="Inter\IPatientInformationService.cs" />
-    <Compile Include="Inter\IPaymentService.cs" />
     <Compile Include="Inter\IPersonService.cs" />
     <Compile Include="Inter\IMailerService.cs" />
     <Compile Include="Inter\IMedicationService.cs" />
@@ -79,7 +79,6 @@
     <Compile Include="Responses\MedicalCareResponse.cs" />
     <Compile Include="Responses\MedicationResponse.cs" />
     <Compile Include="Responses\MenuResponse.cs" />
-    <Compile Include="Responses\PaymentResponse.cs" />
     <Compile Include="Responses\PersonResponse.cs" />
     <Compile Include="Responses\RateResponse.cs" />
     <Compile Include="Responses\RoleResponse.cs" />

@@ -61,8 +61,8 @@
     <Compile Include="Imp\InvoiceRepository.cs" />
     <Compile Include="Imp\ItemTableRepository.cs" />
     <Compile Include="Imp\MedicalCareRepository.cs" />
+    <Compile Include="Imp\OfficeRepository.cs" />
     <Compile Include="Imp\PatientInformationRepository.cs" />
-    <Compile Include="Imp\PaymentRepository.cs" />
     <Compile Include="Imp\PersonTypeRepository.cs" />
     <Compile Include="Imp\RoleRepository.cs" />
     <Compile Include="Imp\ServiceRepository.cs" />

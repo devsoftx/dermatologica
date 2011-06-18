@@ -4,6 +4,11 @@ namespace Dermatologic.Services
 {
     public class ServiceFactory : AbstractServiceFactory
     {
+        public override IOfficeService GetOfficeService()
+        {
+            return new OfficeService();
+        }
+
         public override IAppointmentService GetAppointmentService()
         {
             return new AppointmentService();
@@ -27,11 +32,6 @@ namespace Dermatologic.Services
         public override IMedicalCareService GetMedicalCareService()
         {
             return  new MedicalCareService();
-        }
-
-        public override IPaymentService GetPaymentService()
-        {
-            return new PaymentService();
         }
 
         public override ISessionService GetSessionService()

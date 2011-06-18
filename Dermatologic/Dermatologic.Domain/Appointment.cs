@@ -6,6 +6,13 @@ namespace Dermatologic.Domain
     [DataContract]
     public class Appointment : IEquatable<Appointment>
     {
+        private Office _office;
+
+        public Appointment()
+        {
+            _office = new Office();
+        }
+
         [DataMember]
         public virtual Guid? Id { set; get; }
 
@@ -37,7 +44,7 @@ namespace Dermatologic.Domain
         public virtual int NotifyEach { set; get; }
             
         [DataMember]
-        public virtual int Frencuence { set; get; }
+        public virtual int Frecuence { set; get; }
             
         [DataMember]
         public virtual bool IsActive { set; get; }
@@ -53,6 +60,13 @@ namespace Dermatologic.Domain
 
         [DataMember]
         public virtual Guid? ModifiedBy { set; get; }
+
+        [DataMember]
+        public virtual Office Office
+        {
+            set { _office = value; }
+            get { return _office; }
+        }
 
         public virtual bool Equals(Appointment other)
         {

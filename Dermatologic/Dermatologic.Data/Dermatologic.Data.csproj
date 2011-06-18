@@ -52,8 +52,8 @@
     <Compile Include="Inter\IInvoiceRepository.cs" />
     <Compile Include="Inter\IItemTableRepository.cs" />
     <Compile Include="Inter\IMedicalCareRepository.cs" />
+    <Compile Include="Inter\IOfficeRepository.cs" />
     <Compile Include="Inter\IPatientInformationRepository.cs" />
-    <Compile Include="Inter\IPaymentRepository.cs" />
     <Compile Include="Inter\IPersonTypeRepository.cs" />
     <Compile Include="Inter\IRoleRepository.cs" />
     <Compile Include="Inter\IServiceRepository.cs" />

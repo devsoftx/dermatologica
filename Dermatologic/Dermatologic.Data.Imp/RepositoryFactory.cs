@@ -5,6 +5,11 @@ namespace Dermatologic.Data
 {
     public class RepositoryFactory : AbstractRepositoryFactory
     {
+        public override IOfficeRepository GetOfficeRepository()
+        {
+            return new OfficeRepository();
+        }
+
         public override IAppointmentRepository GetAppointmentRepository()
         {
             return new AppointmentRepository();
@@ -28,11 +33,6 @@ namespace Dermatologic.Data
         public override IServiceRepository GetServiceRepository()
         {
             return new ServiceRepository();
-        }
-
-        public override IPaymentRepository GetPaymentRepository()
-        {
-            return new PaymentRepository();
         }
 
         public override ISessionRepository GetSessionRepository()

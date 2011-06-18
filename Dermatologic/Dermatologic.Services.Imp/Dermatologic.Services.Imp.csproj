@@ -56,8 +56,8 @@
     <Compile Include="Imp\InvoiceService.cs" />
     <Compile Include="Imp\ItemTableService.cs" />
     <Compile Include="Imp\MedicalCareService.cs" />
+    <Compile Include="Imp\OfficeService.cs" />
     <Compile Include="Imp\PatientInformationService.cs" />
-    <Compile Include="Imp\PaymentService.cs" />
     <Compile Include="Imp\PersonService.cs" />
     <Compile Include="Imp\MailerService.cs" />
     <Compile Include="Imp\MedicationService.cs" />

@@ -55,8 +55,8 @@
     <Compile Include="Invoice.cs" />
     <Compile Include="ItemTable.cs" />
     <Compile Include="MedicalCare.cs" />
+    <Compile Include="Office.cs" />
     <Compile Include="PatientInformation.cs" />
-    <Compile Include="Payment.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Medication.cs" />
     <Compile Include="Menu.cs" />
