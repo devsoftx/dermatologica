@@ -292,32 +292,6 @@ namespace Dermatologic.Data.Persistence
                  });
             });
 
-            mapper.Class<ItemTable>(cm =>
-            {
-                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
-                cm.ManyToOne(
-                    x => x.Table,
-                    m =>
-                    {
-                        m.Column("IdTable");
-                        m.Fetch(FetchMode.Join);
-                        m.NotNullable(true);
-                    });
-            });
-
-            mapper.Class<Table>(cm =>
-            {
-                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
-                cm.Bag(
-                    o => o.ItemTables,
-                    x =>
-                    {
-                        x.Key(k => k.Column("Id"));
-                        x.Lazy(CollectionLazy.Lazy);
-                    },
-                    x => { });
-            });
-
             mapper.Class<CashMovement>(cm =>
             {
                 cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
@@ -403,7 +377,6 @@ namespace Dermatologic.Data.Persistence
             mapper.Class<Role>(x => x.Table("aspnet_Roles"));
             mapper.Class<UsersInRoles>(x => x.Table("aspnet_UsersInRoles"));
             mapper.Class<Users>(x => x.Table("aspnet_Users"));
-            mapper.Class<Table>(x => x.Table("[Table]"));
             mapper.Class<Session>(x => x.Table("[Session]"));
             mapper.Class<Service>(x => x.Table("[Service]"));
         }
@@ -621,33 +594,6 @@ namespace Dermatologic.Data.Persistence
                 }
                 );
 
-            mapper.Class<Table>(
-                cm =>
-                {
-                    cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("[Name]"));
-                    cm.Property(x => x.IsActive, m => m.Column("IsActive"));
-                    cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
-                    cm.Property(x => x.LastModified, m => m.Column("LastModified"));
-                    cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
-                    cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
-                }
-                );
-
-            mapper.Class<ItemTable>(
-                cm =>
-                {
-                    cm.Id(x => x.Id, m => m.Column("Id"));
-                    cm.Property(x => x.Name, m => m.Column("[Name]"));
-                    cm.Property(x => x.Value1, m => m.Column("Value1"));
-                    cm.Property(x => x.Value2, m => m.Column("Value2"));
-                    cm.Property(x => x.IsActive, m => m.Column("IsActive"));
-                    cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
-                    cm.Property(x => x.LastModified, m => m.Column("LastModified"));
-                    cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
-                    cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
-                }
-                );
             mapper.Class<ExchangeRate>(
                cm =>
                {

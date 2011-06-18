@@ -23,10 +23,6 @@ namespace Dermatologic.Services
 
         public abstract IAppointmentService GetAppointmentService();
 
-        public abstract ITableService GetTableService();
-
-        public abstract IItemTableService GetItemTableService();
-
         public abstract IServiceService GetServiceService();
 
         public abstract IMedicalCareService GetMedicalCareService();

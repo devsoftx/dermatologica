@@ -39,25 +39,30 @@ public partial class Derma_Default : PageBase
         radCalendar.DataRecurrenceParentKeyField = "RecurrenceParentID";
         radCalendar.Culture = new CultureInfo("es-PE");
         radCalendar.CustomAttributeNames = new string[] { "Place", "NotifyEach" };
-        
-        var frecuencias = BussinessFactory.GetItemTableService().GetAll();
+
+        var frecuencias = EnumHelper.ToList(typeof(Frecuence));
         var rtFrecuencias = new ResourceType
         {
-            Name = "Frecuencia",
+            Name = "Frecuence",
             DataSource = frecuencias,
-            KeyField = "Id",
-            ForeignKeyField = "Frecuencia",
-            TextField = "Descripcion"
+            KeyField = "Key",
+            TextField = "Value",
+            ForeignKeyField = "Frecuence"
         };
         radCalendar.ResourceTypes.Add(rtFrecuencias);
-        var tipos = BussinessFactory.GetItemTableService().GetAll();
+
+        var example = new Person
+                          {
+                              PersonType = {Id = new Guid("DA913E86-1EB8-41E1-8DA0-81ABD6195254")}
+                          };
+        var medicals = BussinessFactory.GetPersonService().GetPacients(example).Pacients;
         var rtTipo = new ResourceType
         {
-            Name = "Tipo",
-            DataSource = tipos,
+            Name = "Medical",
+            DataSource = medicals,
             KeyField = "Id",
-            ForeignKeyField = "Tipo",
-            TextField = "Descripcion"
+            TextField = "LastNameP",
+            ForeignKeyField = "Medical"
         };
         radCalendar.ResourceTypes.Add(rtTipo);
     }
@@ -87,14 +92,14 @@ public partial class Derma_Default : PageBase
     {
         if (e.Container.Mode == SchedulerFormMode.AdvancedEdit || e.Container.Mode == SchedulerFormMode.AdvancedInsert)
         {
-            var notificarCadaText = (RadTextBox)e.Container.FindControl("AttrNotificarCada");
+            var notificarCadaText = (RadTextBox)e.Container.FindControl("AttrNotifyEach");
             notificarCadaText.ToolTip = @"Ingresar número de veces.";
             notificarCadaText.Width = 150;
 
-            var recurrentAppointment = (CheckBox)e.Container.FindControl("RecurrentAppointment");
-            recurrentAppointment.Enabled = false;
-            recurrentAppointment.Text = string.Empty;
-            recurrentAppointment.Width = 0;
+            //var recurrentAppointment = (CheckBox)e.Container.FindControl("RecurrentAppointment");
+            //recurrentAppointment.Enabled = false;
+            //recurrentAppointment.Text = string.Empty;
+            //recurrentAppointment.Width = 0;
         }
     }
 

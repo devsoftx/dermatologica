@@ -51,7 +51,8 @@ public partial class Derma_Admin_EditMenu : PageBase
                            LastModified = LastModified,
                            CreationDate = CreationDate,
                            ModifiedBy = ModifiedBy,
-                           CreatedBy = CreatedBy
+                           CreatedBy = CreatedBy,
+                           Description = txtDescription.Text.Trim()
                            
                        };
         Menu.ParentId = !CheckBox1.Checked ? new Guid(ddlMenuPadre.SelectedValue) : (Guid?) null;
@@ -79,6 +80,7 @@ public partial class Derma_Admin_EditMenu : PageBase
             Menu.IsActive = true;
             Menu.LastModified = LastModified;
             Menu.ModifiedBy = ModifiedBy;
+            Menu.Description = txtDescription.Text.Trim();
             var response = BussinessFactory.GetMenuService().Update(Menu);
             if (response.OperationResult == OperationResult.Success)
             {
@@ -97,6 +99,7 @@ public partial class Derma_Admin_EditMenu : PageBase
         txtNombre.Text = Menu.Name;
         txtUrl.Text = Menu.Url;
         txtOrder.Text = Menu.Orden.HasValue ? Menu.Orden.Value.ToString(): string.Empty;
+        txtDescription.Text = Menu.Description;
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)

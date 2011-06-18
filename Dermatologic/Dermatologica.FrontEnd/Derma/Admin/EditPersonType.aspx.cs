@@ -17,6 +17,7 @@ public partial class Derma_Admin_EditPersonType : PageBase
             SetPersonType();
         }
     }
+
     private void SetPersonType()
     {
         var action = Request.QueryString.Get("action");
@@ -30,6 +31,7 @@ public partial class Derma_Admin_EditPersonType : PageBase
                 break;
         }
     }
+
     void LoadPersonType(Guid id)
     {
         var PersonType = BussinessFactory.GetPersonTypeService().Get(id);
@@ -70,6 +72,7 @@ public partial class Derma_Admin_EditPersonType : PageBase
         }
 
     }
+
     private void Update()
     {
         var Id = Request.QueryString.Get("id");
@@ -112,4 +115,5 @@ public partial class Derma_Admin_EditPersonType : PageBase
     {
         Response.Redirect("~/Derma/Admin/ListPersonTypes.aspx", true);
     }
+
 }

@@ -7,10 +7,12 @@ namespace Dermatologic.Domain
     public class Appointment : IEquatable<Appointment>
     {
         private Office _office;
+        private Person _medical;
 
         public Appointment()
         {
             _office = new Office();
+            _medical = new Person();
         }
 
         [DataMember]
@@ -66,6 +68,13 @@ namespace Dermatologic.Domain
         {
             set { _office = value; }
             get { return _office; }
+        }
+
+        [DataMember]
+        public virtual Person Medical
+        {
+            set { _medical = value; }
+            get { return _medical; }
         }
 
         public virtual bool Equals(Appointment other)

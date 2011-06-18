@@ -83,7 +83,7 @@
                                 <appointmenttemplate>
                                     <div>
                                         <b style="font-size: 10px;"><%# Eval("Subject") %></b>
-                                        <div style="font-style: italic; font-size: 9px;"><%# Eval("Tipo.Text") %></div>
+                                        <div style="font-style: italic; font-size: 9px;"><%# Eval("Medical.Text") %></div>
                                     </div>
                                 </appointmenttemplate>
                             </telerik:RadScheduler>

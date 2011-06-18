@@ -14,16 +14,6 @@ namespace Dermatologic.Services
             return new AppointmentService();
         }
 
-        public override ITableService GetTableService()
-        {
-            return new TableService();
-        }
-
-        public override IItemTableService GetItemTableService()
-        {
-            return new ItemTableService();
-        }
-
         public override IServiceService GetServiceService()
         {
             return new ServiceService();

@@ -22,10 +22,6 @@ namespace Dermatologic.Data
 
         public abstract IAppointmentRepository GetAppointmentRepository();
 
-        public abstract ITableRepository GetTableRepository();
-
-        public abstract IItemTableRepository GetItemTableRepository();
-
         public abstract IMedicalCareRepository GetMedicalCareRepository();
 
         public abstract IServiceRepository GetServiceRepository();

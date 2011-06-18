@@ -59,7 +59,6 @@
     <Compile Include="Imp\ExchangeRateRepository.cs" />
     <Compile Include="Imp\AppointmentRepository.cs" />
     <Compile Include="Imp\InvoiceRepository.cs" />
-    <Compile Include="Imp\ItemTableRepository.cs" />
     <Compile Include="Imp\MedicalCareRepository.cs" />
     <Compile Include="Imp\OfficeRepository.cs" />
     <Compile Include="Imp\PatientInformationRepository.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="Imp\MedicationRepository.cs" />
     <Compile Include="Imp\PersonRepository.cs" />
     <Compile Include="Imp\MenuRepository.cs" />
-    <Compile Include="Imp\TableRepository.cs" />
     <Compile Include="Imp\UbigeoRepository.cs" />
     <Compile Include="Imp\UsersInRolesRepository.cs" />
     <Compile Include="Imp\UsersRepository.cs" />

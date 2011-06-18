@@ -49,8 +49,7 @@
                                         <asp:Label ID="lblPadre" runat="server" Text='<%# Eval("ParentId") == null ? string.Empty : BussinessFactory.GetMenuService().Get(new Guid(Eval("ParentId").ToString())).Name %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Url" HeaderText="Url" />
-                                <asp:BoundField DataField="IsActive" HeaderText="Activo" />
+                                <asp:BoundField DataField="Url" HeaderText="Url" />                                                                
                                 <asp:BoundField DataField="LastModified" DataFormatString="{0:dd-MM-yyyy}" HeaderText="Última Modificación" />
                                 <asp:TemplateField HeaderText="Acciones">
                                     <ItemTemplate>

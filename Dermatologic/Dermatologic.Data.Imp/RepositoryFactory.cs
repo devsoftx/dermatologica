@@ -15,16 +15,6 @@ namespace Dermatologic.Data
             return new AppointmentRepository();
         }
 
-        public override ITableRepository GetTableRepository()
-        {
-            return new TableRepository();
-        }
-
-        public override IItemTableRepository GetItemTableRepository()
-        {
-            return new ItemTableRepository();
-        }
-
         public override IMedicalCareRepository GetMedicalCareRepository()
         {
             return new MedicalCareRepository();

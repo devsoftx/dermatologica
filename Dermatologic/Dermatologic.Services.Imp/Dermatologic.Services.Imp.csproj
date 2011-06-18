@@ -54,7 +54,6 @@
     <Compile Include="Imp\CostCenterService.cs" />
     <Compile Include="Imp\ExchangeRateService.cs" />
     <Compile Include="Imp\InvoiceService.cs" />
-    <Compile Include="Imp\ItemTableService.cs" />
     <Compile Include="Imp\MedicalCareService.cs" />
     <Compile Include="Imp\OfficeService.cs" />
     <Compile Include="Imp\PatientInformationService.cs" />
@@ -70,7 +69,6 @@
     <Compile Include="Imp\SessionService.cs" />
     <Compile Include="Imp\StaffInformationService.cs" />
     <Compile Include="Imp\SupplyService.cs" />
-    <Compile Include="Imp\TableService.cs" />
     <Compile Include="Imp\UbigeoService.cs" />
     <Compile Include="Imp\UsersInRolesService.cs" />
     <Compile Include="Imp\UsersService.cs" />

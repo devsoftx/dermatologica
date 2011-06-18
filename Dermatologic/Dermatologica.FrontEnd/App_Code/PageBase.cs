@@ -1,5 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dermatologic.Domain;
@@ -82,4 +86,109 @@ namespace ASP.App_Code
         }
     }
     
+    [DataContract]
+    public enum Frecuence : int
+    {
+        [DataMember]
+        [EnumDescription("Minutos")]
+        Minutos = 0,
+
+        [DataMember]
+        [EnumDescription("Horas")]
+        Horas = 1,
+
+        [DataMember]
+        [EnumDescription("Dias")]
+        Dias = 2,
+
+        [DataMember]
+        [EnumDescription("Semanas")]
+        Semanas = 3,
+    }
+
+    [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Field, AllowMultiple = false)]
+    public sealed class EnumDescriptionAttribute : Attribute
+    {
+        private readonly string description;
+
+        /// <summary>
+        /// Gets the description stored in this attribute.
+        /// </summary>
+        /// <value>The description stored in the attribute.</value>
+        public string Description
+        {
+            get
+            {
+                return this.description;
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="EnumDescriptionAttribute"/> class.
+        /// </summary>
+        /// <param name="description">The description to store in this attribute.
+        /// </param>
+        public EnumDescriptionAttribute(string description)
+            : base()
+        {
+            this.description = description;
+        }
+    }
+
+    public static class EnumHelper
+    {
+        /// <summary>
+        /// Gets the <see cref="DescriptionAttribute" /> of an <see cref="Enum" />
+        /// type value.
+        /// </summary>
+        /// <param name="value">The <see cref="Enum" /> type value.</param>
+        /// <returns>A string containing the text of the
+        /// <see cref="DescriptionAttribute"/>.</returns>
+        public static string GetDescription(Enum value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            string description = value.ToString();
+            FieldInfo fieldInfo = value.GetType().GetField(description);
+            EnumDescriptionAttribute[] attributes =
+               (EnumDescriptionAttribute[])
+             fieldInfo.GetCustomAttributes(typeof(EnumDescriptionAttribute), false);
+
+            if (attributes != null && attributes.Length > 0)
+            {
+                description = attributes[0].Description;
+            }
+            return description;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="Enum" /> type to an <see cref="IList{T}" /> 
+        /// compatible object.
+        /// </summary>
+        /// <param name="type">The <see cref="Enum"/> type.</param>
+        /// <returns>An <see cref="IList{T}"/> containing the enumerated
+        /// type value and description.</returns>
+        public static IList ToList(Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+
+            ArrayList list = new ArrayList();
+            Array enumValues = Enum.GetValues(type);
+
+            foreach (Enum value in enumValues)
+            {
+                list.Add(new KeyValuePair<Enum, string>(value, GetDescription(value)));
+            }
+
+            return list;
+        }
+    }
+
 }

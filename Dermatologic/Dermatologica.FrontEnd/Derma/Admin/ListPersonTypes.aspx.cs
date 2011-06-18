@@ -15,6 +15,7 @@ public partial class Derma_Admin_ListPersonTypes : PageBase
         if (Page.IsPostBack) return;
         GetPersonTypes();
     }
+
     protected void gvPersonTypes_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
@@ -29,11 +30,13 @@ public partial class Derma_Admin_ListPersonTypes : PageBase
                 break;
         }
     }
+
     private void GetPersonTypes()
     {
         var personTypes = BussinessFactory.GetPersonTypeService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
         BindControl<PersonType>.BindGrid(gvPersonTypes, personTypes);
     }
+
     private void DeletePersonType(Guid id)
     {
         var PersonType = BussinessFactory.GetPersonTypeService().Get(id);
@@ -50,6 +53,7 @@ public partial class Derma_Admin_ListPersonTypes : PageBase
             }
         }
     }
+
     protected void lnkNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/EditPersonType.aspx?action=new");

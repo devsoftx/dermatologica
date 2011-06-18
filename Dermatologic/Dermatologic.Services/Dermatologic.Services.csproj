@@ -50,7 +50,6 @@
     <Compile Include="Inter\ICostCenterService.cs" />
     <Compile Include="Inter\IExchangeRateService.cs" />
     <Compile Include="Inter\IInvoiceService.cs" />
-    <Compile Include="Inter\IItemTableService.cs" />
     <Compile Include="Inter\IMedicalCareService.cs" />
     <Compile Include="Inter\IOfficeService.cs" />
     <Compile Include="Inter\IPatientInformationService.cs" />
@@ -69,7 +68,6 @@
     <Compile Include="Inter\IUbigeoService.cs" />
     <Compile Include="Inter\IUsersInRolesService.cs" />
     <Compile Include="Inter\IUsersService.cs" />
-    <Compile Include="Inter\ITableService.cs" />
     <Compile Include="IServiceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseBase.cs" />
