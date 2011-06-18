@@ -1,105 +1,105 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Derma_Default" %>
-<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
+    CodeFile="Default.aspx.cs" Inherits="Derma_Default" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;                
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:DropDownList ID="ddlOffices" runat="server">
-                </asp:DropDownList>                
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:UpdatePanel runat="server" ID="upCalendar">
-                    <ContentTemplate>
-                        <asp:Panel runat="Server" ID="panContainer">
-                            <telerik:RadScheduler ID="radCalendar" runat="server" Skin="Simple" Culture="Spanish (Peru)"
-                                SelectedView="MonthView" DayEndTime="18:30:00" DayStartTime="09:00:00" OnAppointmentDelete="radCalendar_AppointmentDelete"
-                                OnAppointmentInsert="radCalendar_AppointmentInsert" OnAppointmentUpdate="radCalendar_AppointmentUpdate"
-                                OverflowBehavior="Expand" WorkDayEndTime="18:30:00" WorkDayStartTime="09:00:00"
-                                EnableCustomAttributeEditing="true" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
-                                onformcreated="radCalendar_FormCreated" 
-                                onnavigationcomplete="radCalendar_NavigationComplete" RowHeight="35px" 
-                                onappointmentclick="radCalendar_AppointmentClick">
-                                <weekview dayendtime="18:30:00" daystarttime="09:00:00" workdayendtime="18:30:00"
-                                    workdaystarttime="09:00:00" />
-                                <dayview dayendtime="18:30:00" daystarttime="09:00:00" />
-                                <advancedform modal="True" enablecustomattributeediting="True" />
-                                <timelineview userselectable="false" />
-                                <localization allday="Todo el dia" advancedalldayevent="Todo el día" advancedcalendarcancel="Cancelar"
-                                    advancedcalendartoday="Hoy" advancedclose="Cerrar" advanceddaily="Diario" advancedday="Día"
-                                    advanceddays="dias" advanceddescription="Descripción" advanceddone="OK" advancededitappointment="Editar Evento"
-                                    advancedendafter="Fin despues de" advancedendbythisdate="Fin de" advancedenddaterequired="Fecha final es necesario"
-                                    advancedendtimerequired="Hoa final es necesario" advancedevery="Cada" advancedeveryweekday="Cada día de semana"
-                                    advancedfirst="primero" advancedfourth="cuarto" advancedfrom="Hora inicial" advancedhourly="Cada hora"
-                                    advancedhours="horas" advancedinvalidnumber="número no válido" advancedlast="último"
-                                    advancedmaskday="día" advancedmaskweekday="día entre semana" advancedmaskweekendday="día de fin de semana"
-                                    advancedmonthly="Mensual" advancedmonths="meses" advancednewappointment="Nuevo Evento"
-                                    advancednoenddate="sin fecha de fin" advancedoccurrences="ocurrencias" advancedof="de"
-                                    advancedofevery="de cada" advancedrecurevery="repetir cada" advancedrecurrence="repetir"
-                                    advancedreset="restablecer excepciones" advancedsecond="segundo" advancedstartdaterequired="Fecha inicial es necesaria"
-                                    advancedstarttimebeforeendtime="Fecha Final debe ser mayor que la fecha inicial"
-                                    advancedstarttimerequired="Hora inicial es necesaria" advancedsubject="Título"
-                                    advancedsubjectrequired="Debe ingresar una descripción su cita" advancedthe="El"
-                                    advancedthird="tercero" advancedto="Fecha Final" advancedweekly="Semanal" advancedweeks="semanas en"
-                                    advancedworking="trabajando..." advancedyearly="Anual" cancel="Cancelar" confirmcancel="Cancelar"
-                                    confirmdeletetext="¿Esta seguro de eliminar esta cita?" confirmdeletetitle="Confirmar eliminación"
-                                    confirmrecurrencedeleteoccurrence="Eliminar solo esta cita" confirmrecurrencedeleteseries="Eliminar la serie de citas"
-                                    confirmrecurrencedeletetitle="Eliminación de una cita periodica" confirmrecurrenceeditoccurrence="Editar solo esta cita"
-                                    confirmrecurrenceeditseries="Editar la seria de citas" confirmrecurrenceedittitle="Edición de una cita periodica"
-                                    contextmenuaddappointment="Nueva cita" contextmenuaddrecurringappointment="Nueva cita periodica"
-                                    contextmenudelete="Eliminar" contextmenuedit="Editar" contextmenugototoday="Ir a Hoy"
-                                    headerday="Día" headermonth="Mes" headermultiday="multi-día" headernextday="día siguiente"
-                                    headerprevday="día anterior" headertimeline="Linea de Tiempo" headertoday="hoy"
-                                    headerweek="Semana" save="Guardar" show24hours="Mostrar todas las horas" showadvancedform="Detalle"
-                                    showbusinesshours="Mostrar horas laborales" showmore="más..." />
-                                <appointmenttemplate>
-                                    <div>
-                                        <b style="font-size: 10px;"><%# Eval("Subject") %></b>
-                                        <div style="font-style: italic; font-size: 9px;"><%# Eval("Medical.Text") %></div>
-                                    </div>
-                                </appointmenttemplate>
-                            </telerik:RadScheduler>
-                        </asp:Panel>
-                    </ContentTemplate>
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="AppointmentInsert" />
-                        <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="AppointmentUpdate" />
-                        <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="AppointmentDelete" />
-                        <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="PreRender" />
-                        <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="FormCreated" />
-                        <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="Navigationcomplete" />
-                        <asp:AsyncPostBackTrigger ControlID="radCalendar" EventName="Appointmentclick" />
-                    </Triggers>
-                </asp:UpdatePanel>
-            </td>
-        </tr>        
-    </table>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+    <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="ddlOffices">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="radCalendar">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
+    <telerik:RadAjaxLoadingPanel runat="server" ID="rlpLoading" Transparency="50" Height="100%"
+        Width="100%">
+        <table style="height: 100%; width: 100%;" border="0">
+            <tr>
+                <td width="100%" align="center" valign="middle" style="background-color: #F0FFFF">
+                    <img src="../Images/loading.gif" alt="Loading..." style="border: 0px;" />
+                </td>
+            </tr>
+        </table>
+    </telerik:RadAjaxLoadingPanel>
+    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" Width="100%">
+        <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:Panel runat="server" ID="pnlReport">
+                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                        <tr>
+                            <td>Bienvenido <asp:Literal ID="litUser" runat="server" /></td>
+                        </tr>
+                        <tr>
+                            <td>                                
+                                <asp:DropDownList ID="ddlOffices" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlOffices_SelectedIndexChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px;"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <telerik:RadScheduler ID="radCalendar" runat="server" Skin="Simple" Culture="es-PE"
+                                    SelectedView="MonthView" DayEndTime="18:30:00" DayStartTime="09:00:00" OnAppointmentDelete="radCalendar_AppointmentDelete"
+                                    OnAppointmentInsert="radCalendar_AppointmentInsert" OnAppointmentUpdate="radCalendar_AppointmentUpdate"
+                                    OverflowBehavior="Expand" WorkDayEndTime="18:30:00" WorkDayStartTime="09:00:00"
+                                    EnableCustomAttributeEditing="True" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
+                                    OnFormCreated="radCalendar_FormCreated" OnNavigationComplete="radCalendar_NavigationComplete"
+                                    RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%">
+                                    <WeekView DayEndTime="18:30:00" DayStartTime="09:00:00" WorkDayEndTime="18:30:00"
+                                        WorkDayStartTime="09:00:00" />
+                                    <DayView DayEndTime="18:30:00" DayStartTime="09:00:00" />
+                                    <AdvancedForm Modal="True" EnableCustomAttributeEditing="True" />
+                                    <TimelineView UserSelectable="false" />
+                                    <Localization AllDay="Todo el dia" AdvancedAllDayEvent="Todo el día" AdvancedCalendarCancel="Cancelar"
+                                        AdvancedCalendarToday="Hoy" AdvancedClose="Cerrar" AdvancedDaily="Diario" AdvancedDay="Día"
+                                        AdvancedDays="dias" AdvancedDescription="Descripción" AdvancedDone="OK" AdvancedEditAppointment="Editar Evento"
+                                        AdvancedEndAfter="Fin despues de" AdvancedEndByThisDate="Fin de" AdvancedEndDateRequired="Fecha final es necesario"
+                                        AdvancedEndTimeRequired="Hoa final es necesario" AdvancedEvery="Cada" AdvancedEveryWeekday="Cada día de semana"
+                                        AdvancedFirst="primero" AdvancedFourth="cuarto" AdvancedFrom="Hora inicial" AdvancedHourly="Cada hora"
+                                        AdvancedHours="horas" AdvancedInvalidNumber="número no válido" AdvancedLast="último"
+                                        AdvancedMaskDay="día" AdvancedMaskWeekday="día entre semana" AdvancedMaskWeekendDay="día de fin de semana"
+                                        AdvancedMonthly="Mensual" AdvancedMonths="meses" AdvancedNewAppointment="Nuevo Evento"
+                                        AdvancedNoEndDate="sin fecha de fin" AdvancedOccurrences="ocurrencias" AdvancedOf="de"
+                                        AdvancedOfEvery="de cada" AdvancedRecurEvery="repetir cada" AdvancedRecurrence="repetir"
+                                        AdvancedReset="restablecer excepciones" AdvancedSecond="segundo" AdvancedStartDateRequired="Fecha inicial es necesaria"
+                                        AdvancedStartTimeBeforeEndTime="Fecha Final debe ser mayor que la fecha inicial"
+                                        AdvancedStartTimeRequired="Hora inicial es necesaria" AdvancedSubject="Título"
+                                        AdvancedSubjectRequired="Debe ingresar una descripción su cita" AdvancedThe="El"
+                                        AdvancedThird="tercero" AdvancedTo="Fecha Final" AdvancedWeekly="Semanal" AdvancedWeeks="semanas en"
+                                        AdvancedWorking="trabajando..." AdvancedYearly="Anual" Cancel="Cancelar" ConfirmCancel="Cancelar"
+                                        ConfirmDeleteText="¿Esta seguro de eliminar esta cita?" ConfirmDeleteTitle="Confirmar eliminación"
+                                        ConfirmRecurrenceDeleteOccurrence="Eliminar solo esta cita" ConfirmRecurrenceDeleteSeries="Eliminar la serie de citas"
+                                        ConfirmRecurrenceDeleteTitle="Eliminación de una cita periodica" ConfirmRecurrenceEditOccurrence="Editar solo esta cita"
+                                        ConfirmRecurrenceEditSeries="Editar la seria de citas" ConfirmRecurrenceEditTitle="Edición de una cita periodica"
+                                        ContextMenuAddAppointment="Nueva cita" ContextMenuAddRecurringAppointment="Nueva cita periodica"
+                                        ContextMenuDelete="Eliminar" ContextMenuEdit="Editar" ContextMenuGoToToday="Ir a Hoy"
+                                        HeaderDay="Día" HeaderMonth="Mes" HeaderMultiDay="multi-día" HeaderNextDay="día siguiente"
+                                        HeaderPrevDay="día anterior" HeaderTimeline="Linea de Tiempo" HeaderToday="hoy"
+                                        HeaderWeek="Semana" Save="Guardar" Show24Hours="Mostrar todas las horas" ShowAdvancedForm="Detalle"
+                                        ShowBusinessHours="Mostrar horas laborales" ShowMore="más..." />
+                                    <AppointmentTemplate>
+                                        <div>
+                                            <b style="font-size: 10px;">
+                                                <%# Eval("Subject") %></b>
+                                            <div style="font-style: italic; font-size: 9px;">
+                                                <%# Eval("Medical.Text") %></div>
+                                        </div>
+                                    </AppointmentTemplate>
+                                </telerik:RadScheduler>
+                            </td>
+                        </tr>
+                    </table>
+                </asp:Panel>
+            </ContentTemplate>            
+        </asp:UpdatePanel>
+    </telerik:RadAjaxPanel>
 </asp:Content>

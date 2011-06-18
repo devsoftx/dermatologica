@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
-using Dermatologic.Services;
-using Appointment = Dermatologic.Domain.Appointment;
 using Telerik.Web.UI;
 
 public partial class Derma_Default : PageBase
@@ -20,6 +16,11 @@ public partial class Derma_Default : PageBase
         var date = DateTime.Now.ToShortDateString();
         if (!string.IsNullOrEmpty(date))
             radCalendar.SelectedDate = DateTime.ParseExact(date, "dd/MM/yyyy", new CultureInfo("ES-pe"));
+        var userName = Session["userName"];
+        if (userName != null)
+        {
+            litUser.Text = string.Format("{0} {1} {2}", "Jose","Rojas","Quiroz");
+        }
     }
 
     private void GetOffices()
@@ -32,18 +33,18 @@ public partial class Derma_Default : PageBase
     {
         radCalendar.DataKeyField = "ID";
         radCalendar.DataStartField = "StartDate";
-        radCalendar.DataDescriptionField = "Descripcion";
+        radCalendar.DataDescriptionField = "Description";
         radCalendar.DataEndField = "EndDate";
         radCalendar.DataSubjectField = "Subject";
         radCalendar.DataRecurrenceField = "RecurrenceRule";
         radCalendar.DataRecurrenceParentKeyField = "RecurrenceParentID";
         radCalendar.Culture = new CultureInfo("es-PE");
-        radCalendar.CustomAttributeNames = new string[] { "Place", "NotifyEach" };
+        radCalendar.CustomAttributeNames = new string[] { "Paciente", "Notificar cada" };
 
         var frecuencias = EnumHelper.ToList(typeof(Frecuence));
         var rtFrecuencias = new ResourceType
         {
-            Name = "Frecuence",
+            Name = "Frecuencia",
             DataSource = frecuencias,
             KeyField = "Key",
             TextField = "Value",
@@ -58,7 +59,7 @@ public partial class Derma_Default : PageBase
         var response = BussinessFactory.GetPersonService().GetPacients(example).Pacients;
         var rtTipo = new ResourceType
         {
-            Name = "Medical",
+            Name = "Medico",
             DataSource = response,
             KeyField = "Id",
             TextField = "CompleteName",
@@ -127,5 +128,14 @@ public partial class Derma_Default : PageBase
             popupCalendar.SpecialDays.Add(dayWithAppointment);
         }
     }
-    
+
+    protected void ddlOffices_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var idOfficce = ddlOffices.SelectedValue;
+        if (!string.IsNullOrEmpty(idOfficce))
+        {
+           
+        }
+    }
+
 }

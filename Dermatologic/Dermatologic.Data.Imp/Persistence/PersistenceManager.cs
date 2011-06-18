@@ -359,24 +359,32 @@ namespace Dermatologic.Data.Persistence
             });
 
             mapper.Class<Appointment>(cm =>
-                                      {
-                                          cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
-                                          cm.ManyToOne(
-                                              x => x.Office,
-                                              m =>
-                                                  {
-                                                      m.Column("IdOffice");
-                                                      m.Fetch(FetchMode.Join);
-                                                      m.NotNullable(false);
-                                                  });
-                                      });
+            {
+                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.ManyToOne(
+                    x => x.Office,
+                    m =>
+                        {
+                            m.Column("IdOffice");
+                            m.Fetch(FetchMode.Join);
+                            m.NotNullable(false);
+                        });
+                cm.ManyToOne(
+                    x => x.Patient,
+                    m =>
+                    {
+                        m.Column("IdPerson");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(false);
+                    });
+            });
         }
 
         private static void CustomizeTables(Mapper mapper)
         {
-            mapper.Class<Role>(x => x.Table("aspnet_Roles"));
-            mapper.Class<UsersInRoles>(x => x.Table("aspnet_UsersInRoles"));
-            mapper.Class<Users>(x => x.Table("aspnet_Users"));
+            mapper.Class<Role>(x => x.Table("[aspnet_Roles]"));
+            mapper.Class<UsersInRoles>(x => x.Table("[aspnet_UsersInRoles]"));
+            mapper.Class<Users>(x => x.Table("[aspnet_Users"));
             mapper.Class<Session>(x => x.Table("[Session]"));
             mapper.Class<Service>(x => x.Table("[Service]"));
         }
@@ -749,7 +757,15 @@ namespace Dermatologic.Data.Persistence
                 cm =>
                 {
                     cm.Id(x => x.Id, m => m.Column("Id"));
+                    cm.Property(x => x.Subject, m => m.Column("Subject"));
+                    cm.Property(x => x.StartDate, m => m.Column("StartDate"));
+                    cm.Property(x => x.EndDate, m => m.Column("EndDate"));
+                    cm.Property(x => x.RecurrenceRule, m => m.Column("RecurrenceRule"));
+                    cm.Property(x => x.RecurrenceParentID, m => m.Column("RecurrenceParentID"));
+                    cm.Property(x => x.Patient, m => m.Column("Patient"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
+                    cm.Property(x => x.NotifyEach, m => m.Column("NotifyEach"));
+                    cm.Property(x => x.Frecuence, m => m.Column("Frecuence"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));
