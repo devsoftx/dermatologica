@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Dermatologic.Domain
@@ -6,6 +7,13 @@ namespace Dermatologic.Domain
     [DataContract]
     public class Office : IEquatable<Office>
     {
+        private IList<Appointment> _appointments;
+
+        public Office()
+        {
+            _appointments = new List<Appointment>();
+        }
+
         [DataMember]
         public virtual Guid? Id { set; get; }
 
@@ -29,6 +37,13 @@ namespace Dermatologic.Domain
 
         [DataMember]
         public virtual Guid? ModifiedBy { set; get; }
+
+        [DataMember]
+        public virtual IList<Appointment> Appointments
+        {
+            get { return _appointments; }
+            set { _appointments = value; }
+        }
 
         public virtual bool Equals(Office other)
         {

@@ -87,7 +87,7 @@ namespace ASP.App_Code
     }
     
     [DataContract]
-    public enum Frecuence : int
+    public enum Frecuence
     {
         [DataMember]
         [EnumDescription("Minutos")]
@@ -145,7 +145,7 @@ namespace ASP.App_Code
         /// <param name="value">The <see cref="Enum" /> type value.</param>
         /// <returns>A string containing the text of the
         /// <see cref="DescriptionAttribute"/>.</returns>
-        public static string GetDescription(Enum value)
+        private static string GetDescription(Enum value)
         {
             if (value == null)
             {
@@ -154,11 +154,10 @@ namespace ASP.App_Code
 
             string description = value.ToString();
             FieldInfo fieldInfo = value.GetType().GetField(description);
-            EnumDescriptionAttribute[] attributes =
-               (EnumDescriptionAttribute[])
+            var attributes = (EnumDescriptionAttribute[])
              fieldInfo.GetCustomAttributes(typeof(EnumDescriptionAttribute), false);
 
-            if (attributes != null && attributes.Length > 0)
+            if (attributes.Length > 0)
             {
                 description = attributes[0].Description;
             }
@@ -172,23 +171,18 @@ namespace ASP.App_Code
         /// <param name="type">The <see cref="Enum"/> type.</param>
         /// <returns>An <see cref="IList{T}"/> containing the enumerated
         /// type value and description.</returns>
-        public static IList ToList(Type type)
+        public static IList ToList<T>()
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
 
-            ArrayList list = new ArrayList();
-            Array enumValues = Enum.GetValues(type);
-
+            var list = new ArrayList();
+            Array enumValues = Enum.GetValues(typeof(T));
+            int i = 0;
             foreach (Enum value in enumValues)
             {
-                list.Add(new KeyValuePair<Enum, string>(value, GetDescription(value)));
+                i = i + 1;
+                list.Add(new KeyValuePair<int, string>(i, GetDescription(value)));
             }
-
             return list;
         }
     }
-
 }

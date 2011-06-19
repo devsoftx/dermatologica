@@ -370,13 +370,26 @@ namespace Dermatologic.Data.Persistence
                             m.NotNullable(true);
                         });
                 cm.ManyToOne(
-                    x => x.Patient,
+                    x => x.Medical,
                     m =>
                     {
                         m.Column("IdPerson");
                         m.Fetch(FetchMode.Join);
                         m.NotNullable(true);
                     });
+            });
+
+            mapper.Class<Office>(cm =>
+            {
+                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.Bag(
+                    o => o.Appointments,
+                    x =>
+                    {
+                        x.Key(k => k.Column("Id"));
+                        x.Lazy(CollectionLazy.Lazy);
+                    },
+                    x => { });
             });
         }
 

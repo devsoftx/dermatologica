@@ -56,7 +56,8 @@
                                     OverflowBehavior="Expand" WorkDayEndTime="18:30:00" WorkDayStartTime="09:00:00"
                                     EnableCustomAttributeEditing="True" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
                                     OnFormCreated="radCalendar_FormCreated" OnNavigationComplete="radCalendar_NavigationComplete"
-                                    RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%">
+                                    RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" 
+                                    Width="100%" onappointmentdatabound="radCalendar_AppointmentDataBound">
                                     <WeekView DayEndTime="18:30:00" DayStartTime="09:00:00" WorkDayEndTime="18:30:00"
                                         WorkDayStartTime="09:00:00" />
                                     <DayView DayEndTime="18:30:00" DayStartTime="09:00:00" />
@@ -94,7 +95,7 @@
                                             <b style="font-size: 10px;">
                                                 <%# Eval("Subject") %></b>
                                             <div style="font-style: italic; font-size: 9px;">
-                                                <%# Eval("Medical.Text") %></div>
+                                                <%# Eval("Paciente") %></div>                                            
                                         </div>
                                     </AppointmentTemplate>
                                 </telerik:RadScheduler>

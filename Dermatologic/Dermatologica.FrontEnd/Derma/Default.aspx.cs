@@ -24,6 +24,8 @@ public partial class Derma_Default : PageBase
         if (userName != null)
         {
             litUser.Text = string.Format("{0} {1} {2}", "Jose","Rojas","Quiroz");
+            var idOffice = ddlOffices.SelectedValue;
+            LoadAppointments(new Guid(idOffice));
         }
     }
 
@@ -45,7 +47,7 @@ public partial class Derma_Default : PageBase
         radCalendar.Culture = new CultureInfo("es-PE");
         radCalendar.CustomAttributeNames = new[] { "Paciente", "NotifyEach" };
 
-        var frecuencias = EnumHelper.ToList(typeof(Frecuence));
+        var frecuencias = EnumHelper.ToList<Frecuence>();
         var rtFrecuencias = new ResourceType
         {
             Name = "Frecuencia",
@@ -79,8 +81,7 @@ public partial class Derma_Default : PageBase
 
     protected void radCalendar_AppointmentClick(object sender, SchedulerEventArgs e)
     {
-        if (e.Appointment.Description == "Cita")
-            Response.Redirect("Appointment.aspx?id=" + e.Appointment.ID, true);
+
     }
 
     protected void radCalendar_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
@@ -93,21 +94,21 @@ public partial class Derma_Default : PageBase
         var idOfficce = ddlOffices.SelectedValue;
         if (!string.IsNullOrEmpty(idOfficce))
         {
-            IList<Person> medicals = GetMedicals();
-            var medical = e.Appointment.Resources.Count == 0
-                           ? medicals.Count == 0 ? null : medicals.First().Id
-                           : e.Appointment.Resources[1].Key == null
-                                 ? medicals.Count == 0 ? null : medicals.First().Id
-                                 : new Guid(e.Appointment.Resources[1].Key.ToString());
+            int frecuence = 0;
+            Guid? medical = null;
+            if (e.Appointment.Resources.Count > 0)
+            {
+                if (e.Appointment.Resources[0].Key != null)
+                {
+                    frecuence = Convert.ToInt32(e.Appointment.Resources[0].Key);
+                }
 
-            int frecuence = e.Appointment.Resources.Count == 0
-                                 ? 0
-                                 : e.Appointment.Resources[0].Key == null
-                                       ? 0
-                                       : Convert.ToInt32(e.Appointment.Resources[0].Key);
-
-            var notificarCada = string.IsNullOrEmpty(e.Appointment.Attributes["NotifyEach"])
-                                    ? 0 : Convert.ToInt32(e.Appointment.Attributes["NotifyEach"]);
+                if (e.Appointment.Resources[1].Key != null)
+                {
+                    medical = new Guid(e.Appointment.Resources[1].Key.ToString());
+                }
+            }
+            var notificarCada = string.IsNullOrEmpty(e.Appointment.Attributes["NotifyEach"]) ? 0 : Convert.ToInt32(e.Appointment.Attributes["NotifyEach"]);
             
                 var appointment = new Appointment
                                       {
@@ -115,8 +116,6 @@ public partial class Derma_Default : PageBase
                                           Subject = e.Appointment.Subject,
                                           StartDate = e.Appointment.Start,
                                           EndDate = e.Appointment.End,
-                                          CreationDate = CreationDate,
-                                          CreatedBy = CreatedBy,
                                           RecurrenceParentID = (Guid?) e.Appointment.RecurrenceParentID,
                                           RecurrenceRule = e.Appointment.RecurrenceRule,
                                           Description = e.Appointment.Description,
@@ -124,17 +123,15 @@ public partial class Derma_Default : PageBase
                                           Patient = e.Appointment.Attributes["Paciente"],
                                           NotifyEach = notificarCada,
                                           Medical = BussinessFactory.GetPersonService().Get(medical),
-                                          Office = BussinessFactory.GetOfficeService().Get(new Guid(idOfficce))
+                                          Office = BussinessFactory.GetOfficeService().Get(new Guid(idOfficce)),
+                                          CreationDate = CreationDate,
+                                          CreatedBy = CreatedBy,
+                                          IsActive = true,
+                                          ModifiedBy = ModifiedBy,
+                                          LastModified = LastModified
                                       };
             var response = BussinessFactory.GetAppointmentService().Save(appointment);
-            if (response.OperationResult == OperationResult.Success)
-            {
-                litMessage.Text = string.Format("Se realizó la cita para el día: {0}",e.Appointment.Start.ToShortDateString());
-            }
-            else
-            {
-                litMessage.Text = string.Format("No se puedo guardar - Error: {0}", response.Message);
-            }
+            litMessage.Text = response.OperationResult == OperationResult.Success ? string.Format("Se realizó la cita para Sr(a) {0} el día {1}",e.Appointment.Attributes["Paciente"],e.Appointment.Start.ToShortDateString()) : string.Format("No se puedo guardar - Error: {0}", response.Message);
         }
     }
 
@@ -175,7 +172,7 @@ public partial class Derma_Default : PageBase
         if (popupCalendar == null) return;
         foreach (var dayWithAppointment in radCalendar.Appointments.Select(a => new RadCalendarDay
         {
-            ToolTip = a.Subject,
+            ToolTip = string.Format("Sr(a) {0}, Motivo: {1} ", a.Attributes["Paciente"],a.Subject),
             Date = a.Start
         }))
         {
@@ -201,4 +198,9 @@ public partial class Derma_Default : PageBase
         radCalendar.DataBind();
     }
 
+    protected void radCalendar_AppointmentDataBound(object sender, SchedulerEventArgs e)
+    {
+        var entity = (Appointment) e.Appointment.DataItem;
+        e.Appointment.Attributes["Paciente"] = entity.Patient;
+    }
 }
