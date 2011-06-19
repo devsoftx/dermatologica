@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dermatologic.Data;
 using Dermatologic.Domain;
 
 namespace Dermatologic.Services
@@ -26,7 +27,7 @@ namespace Dermatologic.Services
         {
             var appointments = Repository.GetAll(p => p.Office.Id == idOffice);
             var query = from appointment in appointments
-                        where (appointment.StartDate.Month == dateTime.Value.Month || appointment.EndDate.Month == dateTime.Value.Month)
+                        where (appointment.StartDate.Value.Month == dateTime.Value.Month || appointment.EndDate.Value.Month == dateTime.Value.Month)
                         select appointment;
             return new List<Appointment>(query);
         }
@@ -34,7 +35,7 @@ namespace Dermatologic.Services
         public List<Appointment> GetByDay(DateTime? dateTime, Guid? idOffice)
         {
             var appointments = Repository.GetAll(p => p.Office.Id == idOffice);
-            return new List<Appointment>(appointments.Where(p => p.StartDate.Date <= dateTime.Value.Date && p.EndDate.Date > dateTime.Value.Date));
+            return new List<Appointment>(appointments.Where(p => p.StartDate.Value.Date <= dateTime.Value.Date && p.EndDate.Value.Date > dateTime.Value.Date));
         }
 
         public List<Appointment> GetByWeek(DateTime dateTime, Guid? idOffice)
@@ -42,7 +43,7 @@ namespace Dermatologic.Services
             var appointments = Repository.GetAll(p => p.Office.Id == idOffice);
             var datetimes = GetDatesNearby(dateTime);
             var query = from appointment in appointments
-                        where (appointment.StartDate.Date >= datetimes[0].Date && datetimes[1].Date >= appointment.EndDate.Date)
+                        where (appointment.StartDate.Value.Date >= datetimes[0].Date && datetimes[1].Date >= appointment.EndDate.Value.Date)
                         select appointment;
             return new List<Appointment>(query);
         }
@@ -83,6 +84,23 @@ namespace Dermatologic.Services
                     break;
             }
             return dateTimes;
+        }
+
+        public AppointmentResponse GetByOpMedical(Appointment example)
+        {
+            var response = new AppointmentResponse();
+            try
+            {
+                IAppointmentRepository _repository = new AppointmentRepository();
+                response.Appointments = _repository.GetByOpMedical(example);
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.OperationResult = OperationResult.Failed;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
         private static int GetNroDayFromDay(DayOfWeek dayOfWeek)

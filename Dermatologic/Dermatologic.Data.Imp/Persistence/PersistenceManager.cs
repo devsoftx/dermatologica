@@ -367,7 +367,7 @@ namespace Dermatologic.Data.Persistence
                         {
                             m.Column("IdOffice");
                             m.Fetch(FetchMode.Join);
-                            m.NotNullable(true);
+                            m.NotNullable(false);
                         });
                 cm.ManyToOne(
                     x => x.Medical,
@@ -375,7 +375,7 @@ namespace Dermatologic.Data.Persistence
                     {
                         m.Column("IdPerson");
                         m.Fetch(FetchMode.Join);
-                        m.NotNullable(true);
+                        m.NotNullable(false);
                     });
             });
 

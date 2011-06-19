@@ -22,10 +22,10 @@ namespace Dermatologic.Domain
         public virtual string Subject { set; get; }
 
         [DataMember]
-        public virtual DateTime StartDate { set; get; }
+        public virtual DateTime? StartDate { set; get; }
 
         [DataMember]
-        public virtual DateTime EndDate { set; get; }
+        public virtual DateTime? EndDate { set; get; }
 
         [DataMember]
         public virtual Person Medical
@@ -47,10 +47,10 @@ namespace Dermatologic.Domain
         public virtual string Description { set; get; }
 
         [DataMember]
-        public virtual int NotifyEach { set; get; }
+        public virtual int? NotifyEach { set; get; }
             
         [DataMember]
-        public virtual int Frecuence { set; get; }
+        public virtual int? Frecuence { set; get; }
 
         [DataMember]
         public virtual Office Office

@@ -28,13 +28,13 @@ public partial class Derma_Admin_ListPersons : PageBase
                 break;
         }
     }
-
   
     private void GetPersons()
     {
         var persons = BussinessFactory.GetPersonService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
         BindControl<Person>.BindGrid(gvPersons, persons);
     }
+
     private void DeletePerson(Guid id)
     {
         var Person = BussinessFactory.GetPersonService().Get(id);
@@ -51,10 +51,12 @@ public partial class Derma_Admin_ListPersons : PageBase
             }
         }
     }
+
     protected void lnkNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/EditPerson.aspx?action=new");
     }
+
     private void SearchPersons()
     {
         var example = new Person
@@ -70,8 +72,10 @@ public partial class Derma_Admin_ListPersons : PageBase
             gvPersons.DataBind();
         }
     }
+
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         SearchPersons();
     }
+
 }

@@ -17,5 +17,7 @@ namespace Dermatologic.Services
         List<Appointment> GetByMonth(DateTime? dateTime, Guid? idOffice);
 
         DateTime[] GetDatesNearby(DateTime dateTime);
+
+        AppointmentResponse GetByOpMedical(Appointment example);
     }
 }
