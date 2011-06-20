@@ -92,7 +92,12 @@ public partial class Derma_Default : PageBase
         {
             var idAppointment = new Guid(e.Appointment.ID.ToString());
             var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment);
-            var response = BussinessFactory.GetAppointmentService().Delete(appoinment);
+            appoinment.IsActive = false;
+            appoinment.LastModified = LastModified;
+            appoinment.ModifiedBy = ModifiedBy;
+            appoinment.CreatedBy = CreatedBy;
+            appoinment.CreationDate = CreationDate;
+            var response = BussinessFactory.GetAppointmentService().Update(appoinment);
             if (response.OperationResult == OperationResult.Success)
             {
                 LoadAppointments(new Guid(idOfficce));

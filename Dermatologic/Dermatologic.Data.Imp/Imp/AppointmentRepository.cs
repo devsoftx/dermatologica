@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Dermatologic.Domain;
 
@@ -8,7 +7,7 @@ namespace Dermatologic.Data
     {
         public IList<Appointment> GetByOpMedical(Appointment example)
         {
-            const string query = "from Appointment a where ( lower(a.Medical.FirstName) like :firstName or lower(a.Medical.LastNameP) like :lastNameP or lower(a.Medical.LastNameM) like :lastNameM ) ";
+            const string query = "from Appointment a where ( lower(a.Medical.FirstName) like :firstName or lower(a.Medical.LastNameP) like :lastNameP or lower(a.Medical.LastNameM) like :lastNameM ) and a.IsActive = true order by a.StartDate desc";
             string[] parameters = { "firstName", "lastNameP", "lastNameM" };
             object[] values = {
                                   string.Format("{0}" + example.Medical.FirstName + "{0}", "%"),

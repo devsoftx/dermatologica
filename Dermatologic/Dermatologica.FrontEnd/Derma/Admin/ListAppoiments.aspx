@@ -59,7 +59,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Op. Medico">
                                 <ItemTemplate>
-                                    <asp:Literal ID="litNombres" runat="server" Text='<%# ((Person)Eval("Medical")).CompleteName %>' />
+                                    <asp:Literal ID="litNombres" runat="server" Text='<%# Eval("Medical") != null ? ((Person)Eval("Medical")).CompleteName : string.Empty  %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>                            
                             <asp:TemplateField HeaderText="Acciones">

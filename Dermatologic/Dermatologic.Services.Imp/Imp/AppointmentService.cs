@@ -15,12 +15,12 @@ namespace Dermatologic.Services
 
         public List<Appointment> GetByOffices(Guid? idOffice)
         {
-            return new List<Appointment>(Repository.GetAll(p => p.Office.Id == idOffice));
+            return new List<Appointment>(Repository.GetAll(p => p.Office.Id == idOffice)).Where(p => p.IsActive == true).ToList();
         }
 
-        public List<Appointment> GetByOffices(Guid? idOffice, DateTime? fechaInicio, DateTime? fechaFin)
+        public IEnumerable<Appointment> GetByOffices(Guid? idOffice, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            return new List<Appointment>(Repository.GetAll(p => p.Office.Id == idOffice && (p.StartDate >= fechaInicio || p.EndDate <= fechaFin)));
+            return new List<Appointment>(Repository.GetAll(p => p.Office.Id == idOffice && (p.StartDate >= fechaInicio || p.EndDate <= fechaFin))).Where(p => p.IsActive == true).ToList();
         }
 
         public List<Appointment> GetByMonth(DateTime? dateTime, Guid? idOffice)
@@ -29,13 +29,13 @@ namespace Dermatologic.Services
             var query = from appointment in appointments
                         where (appointment.StartDate.Value.Month == dateTime.Value.Month || appointment.EndDate.Value.Month == dateTime.Value.Month)
                         select appointment;
-            return new List<Appointment>(query);
+            return new List<Appointment>(query).Where(p => p.IsActive == true).ToList();
         }
 
         public List<Appointment> GetByDay(DateTime? dateTime, Guid? idOffice)
         {
             var appointments = Repository.GetAll(p => p.Office.Id == idOffice);
-            return new List<Appointment>(appointments.Where(p => p.StartDate.Value.Date <= dateTime.Value.Date && p.EndDate.Value.Date > dateTime.Value.Date));
+            return new List<Appointment>(appointments.Where(p => p.StartDate.Value.Date <= dateTime.Value.Date && p.EndDate.Value.Date > dateTime.Value.Date)).Where(p => p.IsActive == true).ToList();
         }
 
         public List<Appointment> GetByWeek(DateTime dateTime, Guid? idOffice)
@@ -45,7 +45,7 @@ namespace Dermatologic.Services
             var query = from appointment in appointments
                         where (appointment.StartDate.Value.Date >= datetimes[0].Date && datetimes[1].Date >= appointment.EndDate.Value.Date)
                         select appointment;
-            return new List<Appointment>(query);
+            return new List<Appointment>(query).Where(p => p.IsActive == true).ToList();
         }
 
         public DateTime[] GetDatesNearby(DateTime dateTime)
