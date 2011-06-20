@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
 
 namespace Dermatologic.Domain
 {
@@ -11,6 +12,7 @@ namespace Dermatologic.Domain
         private Session _session;
         private CostCenter _costCenter;
         private MedicalCare _medicalcare;
+        private CashMovement _cashmovement;
 
         public Invoice()
         {
@@ -19,6 +21,7 @@ namespace Dermatologic.Domain
             _session = new Session();
             _costCenter = new CostCenter();
             _medicalcare = new MedicalCare();
+            _cashmovement =new CashMovement();
         }
 
         [DataMember]
@@ -103,7 +106,13 @@ namespace Dermatologic.Domain
             get { return _medicalcare; }
             set { _medicalcare = value; }
         }
-    
+        [DataMember]
+        public virtual CashMovement CashMovement
+        {
+            get { return _cashmovement; }
+            set { _cashmovement = value; }
+        }
+       
         public virtual bool Equals(Invoice other)
         {
             return Id.Equals(other.Id);

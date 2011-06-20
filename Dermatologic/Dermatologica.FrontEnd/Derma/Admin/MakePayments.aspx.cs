@@ -81,10 +81,18 @@ public partial class Derma_Admin_MakePayments : PageBase
                     ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
                     Movement="Ingreso",
                     IsActive = true,
+
+                    Patient = Medication.Patient,
+                    Session = session,
+                    CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)),
+                    Personal = null,
+                    MedicalCare = null,
+                    CashMovement = null,
+
                     LastModified = LastModified,
                     CreationDate = CreationDate,
                     ModifiedBy = ModifiedBy,
-                    CreatedBy = CreatedBy
+                    CreatedBy = CreatedBy,
                 };
 
                 if (Pago > session.Residue)
@@ -98,11 +106,12 @@ public partial class Derma_Admin_MakePayments : PageBase
                     Pago = Convert.ToDecimal(0);
                 }
 
-                Invoice.Patient = Medication.Patient;
-                Invoice.Session = session;
-                Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
-                Invoice.Personal = null;
-                Invoice.MedicalCare = null;
+                //Invoice.Patient = Medication.Patient;
+                //Invoice.Session = session;
+                //Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+                //Invoice.Personal = null;
+                //Invoice.MedicalCare = null;
+                //Invoice.CashMovement = null;
                 session.Account = session.Account + Invoice.Amount;
                 session.Residue = session.Price - session.Account;
                 if (session.Residue == 0)

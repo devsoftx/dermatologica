@@ -37,7 +37,7 @@ namespace Dermatologic.Domain
         public virtual string Currency { set; get; }
 
         [DataMember]
-        public virtual DateTime? ExchangeRate { set; get; }
+        public virtual decimal ExchangeRate { set; get; }
 
         [DataMember]
         public virtual bool IsActive { set; get; }

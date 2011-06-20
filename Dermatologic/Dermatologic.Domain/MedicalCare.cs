@@ -6,10 +6,10 @@ namespace Dermatologic.Domain
     [DataContract]
     public class MedicalCare : IEquatable<MedicalCare>
     {
-        private Session _session = new Session();
-        private Person _medical = new Person();
-        private Person _pacient = new Person();
-        private Rate _rate= new Rate();
+        private Session _session ;
+        private Person _medical ;
+        private Person _pacient;
+        private Rate _rate;
         
         public MedicalCare()
         {
