@@ -81,14 +81,7 @@ public partial class Derma_Admin_MakePayments : PageBase
                     ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
                     Movement="Ingreso",
                     IsActive = true,
-
-                    Patient = Medication.Patient,
-                    Session = session,
-                    CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)),
-                    Personal = null,
-                    MedicalCare = null,
-                    CashMovement = null,
-
+                                             
                     LastModified = LastModified,
                     CreationDate = CreationDate,
                     ModifiedBy = ModifiedBy,
@@ -106,18 +99,42 @@ public partial class Derma_Admin_MakePayments : PageBase
                     Pago = Convert.ToDecimal(0);
                 }
 
-                //Invoice.Patient = Medication.Patient;
-                //Invoice.Session = session;
-                //Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
-                //Invoice.Personal = null;
-                //Invoice.MedicalCare = null;
-                //Invoice.CashMovement = null;
+                Invoice.Patient = Medication.Patient;
+                Invoice.Session = session;
+                Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+                Invoice.Personal = null;
+                Invoice.MedicalCare = null;
+
                 session.Account = session.Account + Invoice.Amount;
                 session.Residue = session.Price - session.Account;
                 if (session.Residue == 0)
                 {
                     session.IsPaid = true;
                 }
+
+
+                var CashMovement = new CashMovement
+                {
+                    Id = Guid.NewGuid(),
+                    CostCenter = Invoice.CostCenter,
+                    Invoice = Invoice,
+                    MPayment = ddlMPayment.SelectedValue,
+                    Date = Convert.ToDateTime(CreationDate),
+                    EmissionAmount = Invoice.Amount,
+                    Amount = Invoice.Amount,
+                    Factor = 1,
+                    Currency = ddlCurrency.SelectedValue,
+                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+                    IsActive = true,
+                    LastModified = LastModified,
+                    CreationDate = CreationDate,
+                    ModifiedBy = ModifiedBy,
+                    CreatedBy = CreatedBy,
+                };
+
+                Invoice.CashMovements.Add(CashMovement);
+
+                
                 try
                 {
 

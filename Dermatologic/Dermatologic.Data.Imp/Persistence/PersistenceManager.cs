@@ -302,6 +302,7 @@ namespace Dermatologic.Data.Persistence
                         m.Column("IdInvoice");
                         m.Fetch(FetchMode.Join);
                         m.NotNullable(true);
+                        m.Cascade(Cascade.Persist | Cascade.Remove);
                     });
                 cm.ManyToOne(
                     x => x.CostCenter,
@@ -311,6 +312,7 @@ namespace Dermatologic.Data.Persistence
                         m.Fetch(FetchMode.Join);
                         m.NotNullable(true);
                     });
+               
             });
 
             mapper.Class<Invoice>(cm =>
@@ -355,6 +357,19 @@ namespace Dermatologic.Data.Persistence
                         m.Column("IdCostCenter");
                         m.Fetch(FetchMode.Join);
                         m.NotNullable(true);
+                    });
+                cm.Bag(
+                    o => o.CashMovements,
+                    x =>
+                    {
+                        x.Key(k => k.Column("Id"));
+                        x.Cascade(Cascade.All);
+                        x.Table("CashMovement");
+                    },
+                    x =>
+                    {
+                        x.ManyToMany(k => k.Column("Id"));
+                        x.ManyToMany(g => g.Class(typeof(CashMovement)));
                     });
             });
 

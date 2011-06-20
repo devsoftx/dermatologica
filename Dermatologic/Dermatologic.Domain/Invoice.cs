@@ -12,7 +12,7 @@ namespace Dermatologic.Domain
         private Session _session;
         private CostCenter _costCenter;
         private MedicalCare _medicalcare;
-        private CashMovement _cashmovement;
+        private IList<CashMovement> _cashmovements;
 
         public Invoice()
         {
@@ -21,7 +21,7 @@ namespace Dermatologic.Domain
             _session = new Session();
             _costCenter = new CostCenter();
             _medicalcare = new MedicalCare();
-            _cashmovement =new CashMovement();
+            _cashmovements =new List<CashMovement>();
         }
 
         [DataMember]
@@ -107,10 +107,10 @@ namespace Dermatologic.Domain
             set { _medicalcare = value; }
         }
         [DataMember]
-        public virtual CashMovement CashMovement
+        public virtual IList<CashMovement> CashMovements
         {
-            get { return _cashmovement; }
-            set { _cashmovement = value; }
+            get { return _cashmovements; }
+            set { _cashmovements = value; }
         }
        
         public virtual bool Equals(Invoice other)

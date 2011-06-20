@@ -119,33 +119,29 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                 Invoice.MedicalCare = medicalCare;
                 Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
                 Invoice.Personal = medical;
-
-                //var patient = BussinessFactory.GetPersonService().Get(medicalCare.Pacient.Id);
                 Invoice.Patient =null;
+                Invoice.Session = null; 
 
-               // var session = BussinessFactory.GetSessionService().Get(medicalCare.Session.Id);
-                Invoice.Session = null; ;
-
-                //var CashMovement = new CashMovement 
-                //{
-                //Id=new Guid(),
-                //CostCenter=Invoice.CostCenter,
-                //Invoice=Invoice,
-                //MPayment = ddlMPayment.SelectedValue,
-                //Date = Convert.ToDateTime(CreationDate),
-                //EmissionAmount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
-                //Amount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
-                //Factor=-1,
-                //Currency = ((Literal)row.FindControl("litCurrency")).Text,
-                //ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
-                //IsActive = true,
-                //LastModified = LastModified,
-                //CreationDate = CreationDate,
-                //ModifiedBy = ModifiedBy,
-                //CreatedBy = CreatedBy,
-                //};
-
-                //Invoice.CashMovement = CashMovement;
+                var CashMovement = new CashMovement
+                {
+                    Id = Guid.NewGuid(),
+                    CostCenter = Invoice.CostCenter,
+                    Invoice = Invoice,
+                    MPayment = ddlMPayment.SelectedValue,
+                    Date = Convert.ToDateTime(CreationDate),
+                    EmissionAmount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
+                    Amount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
+                    Factor = -1,
+                    Currency = ((Literal)row.FindControl("litCurrency")).Text,
+                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+                    IsActive = true,
+                    LastModified = LastModified,
+                    CreationDate = CreationDate,
+                    ModifiedBy = ModifiedBy,
+                    CreatedBy = CreatedBy,
+                };
+               
+                Invoice.CashMovements.Add(CashMovement);
                 try
                 {
                     var response = BussinessFactory.GetInvoiceService().Save(Invoice);
