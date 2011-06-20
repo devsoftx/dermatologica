@@ -29,7 +29,7 @@ namespace Dermatologic.Domain
         public virtual DateTime? DateBirthDay { set; get; }
 
         [DataMember]
-        public virtual string DocumentType { get; set; }
+        public virtual int? DocumentType { get; set; }
 
         [DataMember]
         public virtual PersonType PersonType

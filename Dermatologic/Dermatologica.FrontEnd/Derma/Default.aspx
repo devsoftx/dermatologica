@@ -36,10 +36,7 @@
                     <table border="0" cellspacing="0" cellpadding="0" width="100%">
                         <tr>
                             <td><asp:Literal ID="litMessage" runat="server" /></td>
-                        </tr>
-                        <tr>
-                            <td>Bienvenido <asp:Literal ID="litUser" runat="server" /></td>
-                        </tr>
+                        </tr>                        
                         <tr>
                             <td>                                
                                 <asp:DropDownList ID="ddlOffices" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlOffices_SelectedIndexChanged" />

@@ -12,6 +12,7 @@ public partial class Derma_Admin_EditPerson : PageBase
         if (!Page.IsPostBack)
         {
             GetPersonTypes();
+            GetDocumentTypes();
             SetPerson();
         }
     }
@@ -36,6 +37,11 @@ public partial class Derma_Admin_EditPerson : PageBase
         BindControl<PersonType>.BindDropDownList(dwTipoPersona,personTypes);
     }
 
+    private void GetDocumentTypes()
+    {
+        BindControl<DocumentType>.BindDropDownListToEnum(dwTipoDocumento,typeof(DocumentType));
+    }
+
     private void LoadPerson(Guid id)
     {
         var person = BussinessFactory.GetPersonService().Get(id);
@@ -47,9 +53,9 @@ public partial class Derma_Admin_EditPerson : PageBase
         txtNumeroDocumento.Text = person.DocumentNumber;
         txtCelular.Text = person.CellPhone;
         txtEmail.Text = person.Email;
-        txtFechaCumpleaños.Text = person.DateBirthDay.Value.ToShortDateString();
+        if (person.DateBirthDay != null) txtFechaCumpleaños.Text = person.DateBirthDay.Value.ToShortDateString();
         dwTipoPersona.SelectedValue = person.PersonType.Id.ToString();
-        dwTipoDocumento.SelectedValue = person.DocumentType;
+        if (person.DocumentType != null) dwTipoDocumento.SelectedValue = person.DocumentType.Value.ToString();
         txtDireccion.Text = person.Address;
     }
     
@@ -62,7 +68,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             LastNameP = txtApellidoPaterno.Text.Trim(),
             LastNameM = txtApellidoMaterno.Text.Trim(),
             DateBirthDay = Convert.ToDateTime(txtFechaCumpleaños.Text.Trim()),
-            DocumentType = dwTipoDocumento.SelectedValue,
+            DocumentType = Convert.ToInt32(dwTipoDocumento.SelectedValue),
             DocumentNumber = txtNumeroDocumento.Text.Trim(),
             Phone = txtTelefono.Text.Trim(),
             CellPhone = txtCelular.Text.Trim(),
@@ -103,7 +109,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             person.FirstName = txtNombres.Text.Trim();
             person.LastNameP = txtApellidoPaterno.Text.Trim();
             person.LastNameM = txtApellidoMaterno.Text.Trim();
-            person.DocumentType = dwTipoDocumento.SelectedValue;
+            person.DocumentType = Convert.ToInt32(dwTipoDocumento.SelectedValue);
             person.DocumentNumber = txtNumeroDocumento.Text.Trim();
             person.Phone = txtTelefono.Text.Trim();
             person.EmergencyPhone = txtTelefonoEmergencia.Text.Trim();

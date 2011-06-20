@@ -23,7 +23,6 @@ public partial class Derma_Default : PageBase
             var userName = Session["userName"];
             if (userName != null)
             {
-                litUser.Text = string.Format("{0} {1} {2}", "Jose", "Rojas", "Quiroz");
                 var idOffice = ddlOffices.SelectedValue;
                 LoadAppointments(new Guid(idOffice));
             }   

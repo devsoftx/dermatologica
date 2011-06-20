@@ -50,7 +50,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         var medication = BussinessFactory.GetMedicationService().Get(id);
         txtDescription.Text = medication.Description;
         txtNumberSessions.Text = Convert.ToString(medication.NumberSessions);
-        ddlDocumentType.SelectedValue = medication.Patient.DocumentType;
+        ddlDocumentType.SelectedValue = medication.Patient.DocumentType.HasValue ? medication.Patient.DocumentType.Value.ToString() : "0";
         txtDni.Text = medication.Patient.DocumentNumber;
         txtPacient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
         lblCurrency.Text = medication.Service.Currency;
@@ -182,7 +182,7 @@ public partial class Derma_Admin_EditMedication : PageBase
             var example = new Person
                               {
                                   DocumentNumber = txtDni.Text.Trim(),
-                                  DocumentType = ddlDocumentType.SelectedValue
+                                  DocumentType = Convert.ToInt32(ddlDocumentType.SelectedValue)
                               };
             var examples = BussinessFactory.GetPersonService().GetByExample(example);
             if (examples.Count > 0)
@@ -202,7 +202,7 @@ public partial class Derma_Admin_EditMedication : PageBase
         var response = BussinessFactory.GetPersonService().Get(new Guid(id.ToString()));
         txtPacient.Text = string.Format("{0} {1} {2}", response.FirstName,response.LastNameP, response.LastNameM);
         txtDni.Text = response.DocumentNumber;
-        ddlDocumentType.SelectedValue = response.DocumentType;
+        if (response.DocumentType != null) ddlDocumentType.SelectedValue = response.DocumentType.Value.ToString();
     }
 
     protected void btnAddSessions_Click(object sender, EventArgs e)

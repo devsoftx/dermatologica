@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListPersons.aspx.cs"Inherits="Derma_Admin_ListPersons" %>
+<%@ Import Namespace="ASP.App_Code" %>
 <%@ Import Namespace="Dermatologic.Domain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
@@ -58,7 +59,11 @@
                                     <asp:Literal ID="litNombres" runat="server" Text='<%# ((PersonType)Eval("PersonType")).Name %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="DocumentType" HeaderText="Tipo de Documento" />
+                            <asp:TemplateField HeaderText="Tipo de Doc.">
+                                <ItemTemplate>
+                                    <asp:Literal ID="litDocType" runat="server" Text='<%#  Enum.GetName(typeof(DocumentType),Eval("DocumentType"))  %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>                            
                             <asp:BoundField DataField="DocumentNumber" HeaderText="N° Documento" />
                             <asp:BoundField DataField="Email" HeaderText="Correo Electronico" />
                             <asp:BoundField DataField="CellPhone" HeaderText="Celular" />

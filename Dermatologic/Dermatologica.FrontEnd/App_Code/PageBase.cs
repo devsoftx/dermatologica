@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Dermatologic.Domain;
 using Dermatologic.Services;
 
 namespace ASP.App_Code
@@ -21,12 +20,16 @@ namespace ASP.App_Code
             list.DataBind();
         }
 
-        public static void BindDropDownListToEnum(DropDownList list, IDictionary<int,string> source)
+        public static void BindDropDownListToEnum(DropDownList list, Type t)
         {
-            list.DataValueField = "Key";
-            list.DataTextField = "Value";
-            list.DataSource = source;
-            list.DataBind();
+            if (t == typeof(T))
+            {
+                var source = EnumHelper.ToList<T>();
+                list.DataValueField = "Key";
+                list.DataTextField = "Value";
+                list.DataSource = source;
+                list.DataBind();
+            }
         }
 
         public static void BindGrid(GridView grid, IList<T> source)
@@ -35,11 +38,6 @@ namespace ASP.App_Code
             grid.DataBind();
         }
 
-        public static void BindRepeater(Repeater rep, List<T> source)
-        {
-            rep.DataSource = source;
-            rep.DataBind();
-        }
     }
 
     public class PageBase : Page
@@ -87,7 +85,7 @@ namespace ASP.App_Code
     }
     
     [DataContract]
-    public enum Frecuence
+    public enum Frecuence : int
     {
         [DataMember]
         [EnumDescription("Minutos")]
@@ -104,6 +102,76 @@ namespace ASP.App_Code
         [DataMember]
         [EnumDescription("Semanas")]
         Semanas = 3,
+    }
+
+    [DataContract]
+    public enum DocumentType : int
+    {
+        [DataMember]
+        [EnumDescription("DNI")]
+        DNI = 0,
+
+        [DataMember]
+        [EnumDescription("Pasaporte")]
+        Passporte = 1,
+
+        [DataMember]
+        [EnumDescription("Carnet de Extranjeria")]
+        Carnet = 2
+        
+    }
+
+    [DataContract]
+    public enum InvoiceType : int
+    {
+        [DataMember]
+        [EnumDescription("Recibo")]
+        Recibo = 0,
+
+        [DataMember]
+        [EnumDescription("Boleta")]
+        Boleta = 1,
+
+        [DataMember]
+        [EnumDescription("Factura")]
+        Factura = 2
+
+    }
+
+    [DataContract]
+    public enum PaymentType : int
+    {
+        [DataMember]
+        [EnumDescription("Efectivo")]
+        Efectivo = 0,
+
+        [DataMember]
+        [EnumDescription("Cheque en Banco")]
+        Cheque = 1,
+
+        [DataMember]
+        [EnumDescription("Deposito en Cuenta")]
+        Deposito = 2,
+
+        [DataMember]
+        [EnumDescription("Tarjeta de Credito/Debito")]
+        Tarjeta = 2
+    }
+
+    [DataContract]
+    public enum CurrencyType : int
+    {
+        [DataMember]
+        [EnumDescription("Soles")]
+        PEN = 0,
+
+        [DataMember]
+        [EnumDescription("Dolares")]
+        USD = 1,
+
+        [DataMember]
+        [EnumDescription("Euros")]
+        EUR = 2
     }
 
     [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Field, AllowMultiple = false)]
@@ -145,7 +213,7 @@ namespace ASP.App_Code
         /// <param name="value">The <see cref="Enum" /> type value.</param>
         /// <returns>A string containing the text of the
         /// <see cref="DescriptionAttribute"/>.</returns>
-        private static string GetDescription(Enum value)
+        public static string GetDescription(Enum value)
         {
             if (value == null)
             {
@@ -176,11 +244,9 @@ namespace ASP.App_Code
 
             var list = new ArrayList();
             Array enumValues = Enum.GetValues(typeof(T));
-            int i = 0;
             foreach (Enum value in enumValues)
             {
-                i = i + 1;
-                list.Add(new KeyValuePair<int, string>(i, GetDescription(value)));
+                list.Add(new KeyValuePair<int, string>(Convert.ToInt32(Enum.Parse(typeof(T), value.ToString())), GetDescription(value)));
             }
             return list;
         }

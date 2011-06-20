@@ -75,11 +75,7 @@
                 <asp:Label ID="Label3" runat="server" Text="Tipo de Documento"></asp:Label>
             </td>
             <td>
-                <asp:DropDownList ID="dwTipoDocumento" runat="server" AppendDataBoundItems="True">
-                    <asp:ListItem>Dni</asp:ListItem>
-                    <asp:ListItem Value="PAS">Pasaporte</asp:ListItem>
-                    <asp:ListItem Value="CEX">Carnet de Extranjería</asp:ListItem>
-                </asp:DropDownList>
+                <asp:DropDownList ID="dwTipoDocumento" runat="server"/>                    
             </td>
             <td>
                 &nbsp;
