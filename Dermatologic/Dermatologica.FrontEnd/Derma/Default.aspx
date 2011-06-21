@@ -1,5 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
-    CodeFile="Default.aspx.cs" Inherits="Derma_Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="Default.aspx.cs"Inherits="Derma_Default" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
@@ -7,11 +6,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
         <AjaxSettings>
-            <telerik:AjaxSetting AjaxControlID="ddlOffices">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="radCalendar">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
@@ -35,15 +29,17 @@
                 <asp:Panel runat="server" ID="pnlReport">
                     <table border="0" cellspacing="0" cellpadding="0" width="100%">
                         <tr>
-                            <td><asp:Literal ID="litMessage" runat="server" /></td>
-                        </tr>                        
-                        <tr>
-                            <td>                                
-                                <asp:DropDownList ID="ddlOffices" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlOffices_SelectedIndexChanged" />
+                            <td>
+                                <asp:Literal ID="litMessage" runat="server" />
                             </td>
                         </tr>
                         <tr>
-                            <td style="height:30px;"></td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 30px;">
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -53,8 +49,8 @@
                                     OverflowBehavior="Expand" WorkDayEndTime="18:30:00" WorkDayStartTime="09:00:00"
                                     EnableCustomAttributeEditing="True" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
                                     OnFormCreated="radCalendar_FormCreated" OnNavigationComplete="radCalendar_NavigationComplete"
-                                    RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" 
-                                    Width="100%" onappointmentdatabound="radCalendar_AppointmentDataBound">
+                                    RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%"
+                                    OnAppointmentDataBound="radCalendar_AppointmentDataBound">
                                     <WeekView DayEndTime="18:30:00" DayStartTime="09:00:00" WorkDayEndTime="18:30:00"
                                         WorkDayStartTime="09:00:00" />
                                     <DayView DayEndTime="18:30:00" DayStartTime="09:00:00" />
@@ -92,7 +88,7 @@
                                             <b style="font-size: 10px;">
                                                 <%# Eval("Subject") %></b>
                                             <div style="font-style: italic; font-size: 9px;">
-                                                <%# Eval("Paciente") %></div>                                            
+                                                <%# Eval("Paciente") %></div>
                                         </div>
                                     </AppointmentTemplate>
                                 </telerik:RadScheduler>
@@ -100,7 +96,7 @@
                         </tr>
                     </table>
                 </asp:Panel>
-            </ContentTemplate>            
+            </ContentTemplate>
         </asp:UpdatePanel>
     </telerik:RadAjaxPanel>
 </asp:Content>

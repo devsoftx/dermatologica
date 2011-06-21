@@ -23,6 +23,11 @@ namespace Dermatologic.Services
             return new List<Appointment>(Repository.GetAll(p => p.Office.Id == idOffice && (p.StartDate >= fechaInicio || p.EndDate <= fechaFin))).Where(p => p.IsActive == true).ToList();
         }
 
+        public IEnumerable<Appointment> GetByOffices(DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            return new List<Appointment>(Repository.GetAll( p => p.StartDate >= fechaInicio || p.EndDate <= fechaFin)).Where(p => p.IsActive == true).ToList();
+        }
+
         public List<Appointment> GetByMonth(DateTime? dateTime, Guid? idOffice)
         {
             var appointments = Repository.GetAll(p => p.Office.Id == idOffice);

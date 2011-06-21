@@ -10,6 +10,8 @@ namespace Dermatologic.Services
 
         IEnumerable<Appointment> GetByOffices(Guid? idOffice, DateTime? fechaInicio, DateTime? fechaFin);
 
+        IEnumerable<Appointment> GetByOffices(DateTime? fechaInicio, DateTime? fechaFin);
+
         List<Appointment> GetByDay(DateTime? dateTime, Guid? idOffice);
 
         List<Appointment> GetByWeek(DateTime dateTime, Guid? idOffice);

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
 using Dermatologic.Services;
@@ -15,7 +17,6 @@ public partial class Derma_Default : PageBase
     {
         if (!IsPostBack)
         {
-            GetOffices();
             ConfigureRadCalendar();
             var date = DateTime.Now.ToShortDateString();
             if (!string.IsNullOrEmpty(date))
@@ -23,16 +24,9 @@ public partial class Derma_Default : PageBase
             var userName = Session["userName"];
             if (userName != null)
             {
-                var idOffice = ddlOffices.SelectedValue;
-                LoadAppointments(new Guid(idOffice));
+                LoadAppointments(radCalendar.SelectedDate);
             }   
         }
-    }
-
-    private void GetOffices()
-    {
-        var offices = BussinessFactory.GetOfficeService().GetAll(p => p.IsActive);
-        BindControl<Office>.BindDropDownList(ddlOffices,offices);
     }
 
     private void ConfigureRadCalendar()
@@ -50,7 +44,7 @@ public partial class Derma_Default : PageBase
         var frecuencias = EnumHelper.ToList<Frecuence>();
         var rtFrecuencias = new ResourceType
         {
-            Name = "Frecuence",
+            Name = "Frecuencia",
             DataSource = frecuencias,
             KeyField = "Key",
             TextField = "Value",
@@ -58,25 +52,49 @@ public partial class Derma_Default : PageBase
         };
         radCalendar.ResourceTypes.Add(rtFrecuencias);
 
-        IList<Person> response = GetMedicals();
-        var rtMedical = new ResourceType
+        IEnumerable<Person> medicals = GetMedicals();
+        IEnumerable<Person> cosmeatras = GetCosmeatras();
+        var response = medicals.Union(cosmeatras).OrderBy(p => p.CompleteName).ToList();
+        var rtMedical = new ResourceType()
         {
-            Name = "Medical",
+            Name = "Medico",
             DataSource = response,
             KeyField = "Id",
             TextField = "CompleteName",
             ForeignKeyField = "Medical",
+            
         };
         radCalendar.ResourceTypes.Add(rtMedical);
+
+        var offices = BussinessFactory.GetOfficeService().GetAll(p => p.IsActive).OrderBy(u => u.Name).ToList();
+
+        var rtOffice = new ResourceType
+        {
+            Name = "Consultorio",
+            DataSource = offices,
+            KeyField = "Id",
+            TextField = "Name",
+            ForeignKeyField = "Office",
+        };
+        radCalendar.ResourceTypes.Add(rtOffice);
     }
 
-    private IList<Person> GetMedicals()
+    private IEnumerable<Person> GetMedicals()
     {
         var example = new Person
                           {
                               PersonType = {Id = new Guid("DA913E86-1EB8-41E1-8DA0-81ABD6195254")}
                           };
-        return BussinessFactory.GetPersonService().GetPacients(example).Pacients;
+        return BussinessFactory.GetPersonService().GetPacients(example).Pacients.OrderBy(p => p.CompleteName).ToList();
+    }
+
+    private IEnumerable<Person> GetCosmeatras()
+    {
+        var example = new Person
+        {
+            PersonType = { Id = new Guid("FB546D8B-898C-4E19-8937-ADA8FC10F744") }
+        };
+        return BussinessFactory.GetPersonService().GetPacients(example).Pacients.OrderBy(p => p.CompleteName).ToList();
     }
 
     protected void radCalendar_AppointmentClick(object sender, SchedulerEventArgs e)
@@ -86,111 +104,117 @@ public partial class Derma_Default : PageBase
 
     protected void radCalendar_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
     {
-        var idOfficce = ddlOffices.SelectedValue;
-        if (!string.IsNullOrEmpty(idOfficce))
+        var idAppointment = new Guid(e.Appointment.ID.ToString());
+        var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment);
+        appoinment.IsActive = false;
+        appoinment.LastModified = LastModified;
+        appoinment.ModifiedBy = ModifiedBy;
+        appoinment.CreatedBy = CreatedBy;
+        appoinment.CreationDate = CreationDate;
+        var response = BussinessFactory.GetAppointmentService().Update(appoinment);
+        if (response.OperationResult == OperationResult.Success)
         {
-            var idAppointment = new Guid(e.Appointment.ID.ToString());
-            var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment);
-            appoinment.IsActive = false;
-            appoinment.LastModified = LastModified;
-            appoinment.ModifiedBy = ModifiedBy;
-            appoinment.CreatedBy = CreatedBy;
-            appoinment.CreationDate = CreationDate;
-            var response = BussinessFactory.GetAppointmentService().Update(appoinment);
-            if (response.OperationResult == OperationResult.Success)
-            {
-                LoadAppointments(new Guid(idOfficce));
-            }
+            LoadAppointments(radCalendar.SelectedDate);
         }
     }
 
     protected void radCalendar_AppointmentInsert(object sender, SchedulerCancelEventArgs e)
     {
-        var idOfficce = ddlOffices.SelectedValue;
-        if (!string.IsNullOrEmpty(idOfficce))
+        int? frecuence = null;
+        Guid? medical = null;
+        Guid? idOfficce = null;
+        if (e.Appointment.Resources.Count > 0)
         {
-            int? frecuence = null;
-            Guid? medical = null;
-            if (e.Appointment.Resources.Count > 0)
+            if (e.Appointment.Resources[0].Key != null)
             {
-                if (e.Appointment.Resources[0].Key != null)
-                {
-                    frecuence = Convert.ToInt32(e.Appointment.Resources[0].Key);
-                }
-                if (e.Appointment.Resources[1].Key != null)
-                {
-                    medical = new Guid(e.Appointment.Resources[1].Key.ToString());
-                }
+                frecuence = Convert.ToInt32(e.Appointment.Resources[0].Key);
             }
-            var notificarCada = string.IsNullOrEmpty(e.Appointment.Attributes["NotifyEach"]) ? 0 : Convert.ToInt32(e.Appointment.Attributes["NotifyEach"]);
-            var appointment = new Appointment
-                                    {
-                                        Id = Guid.NewGuid(),
-                                        Subject = e.Appointment.Subject,
-                                        StartDate = e.Appointment.Start,
-                                        EndDate = e.Appointment.End,
-                                        RecurrenceParentID = (Guid?) e.Appointment.RecurrenceParentID,
-                                        RecurrenceRule = e.Appointment.RecurrenceRule,
-                                        Description = e.Appointment.Description,
-                                        Patient = e.Appointment.Attributes["Paciente"],
-                                        NotifyEach = notificarCada,
-                                        Frecuence = frecuence.HasValue ? frecuence.Value : (int?) null,
-                                        Office = BussinessFactory.GetOfficeService().Get(new Guid(idOfficce)),
-                                        CreationDate = CreationDate,
-                                        CreatedBy = CreatedBy,
-                                        IsActive = true,
-                                        ModifiedBy = ModifiedBy,
-                                        LastModified = LastModified,
-                                        Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null
-                                    };
-            var response = BussinessFactory.GetAppointmentService().Save(appointment);
-            if(response.OperationResult == OperationResult.Success)
+            if (e.Appointment.Resources[1].Key != null)
             {
-                LoadAppointments(new Guid(idOfficce));
+                medical = new Guid(e.Appointment.Resources[1].Key.ToString());
             }
+            if (e.Appointment.Resources[2].Key != null)
+            {
+                idOfficce = new Guid(e.Appointment.Resources[2].Key.ToString());
+            }
+        }
+        var notificarCada = string.IsNullOrEmpty(e.Appointment.Attributes["NotifyEach"]) ? 0 : Convert.ToInt32(e.Appointment.Attributes["NotifyEach"]);
+        var appointment = new Appointment
+                                {
+                                    Id = Guid.NewGuid(),
+                                    Subject = e.Appointment.Subject,
+                                    StartDate = e.Appointment.Start,
+                                    EndDate = e.Appointment.End,
+                                    RecurrenceParentID = (Guid?) e.Appointment.RecurrenceParentID,
+                                    RecurrenceRule = e.Appointment.RecurrenceRule,
+                                    Description = e.Appointment.Description,
+                                    Patient = e.Appointment.Attributes["Paciente"],
+                                    NotifyEach = notificarCada,
+                                    Frecuence = frecuence.HasValue ? frecuence.Value : (int?) null,
+                                    Office = BussinessFactory.GetOfficeService().Get(idOfficce),
+                                    CreationDate = CreationDate,
+                                    CreatedBy = CreatedBy,
+                                    IsActive = true,
+                                    ModifiedBy = ModifiedBy,
+                                    LastModified = LastModified,
+                                    Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null
+                                };
+        var response = BussinessFactory.GetAppointmentService().Save(appointment);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            LoadAppointments(radCalendar.SelectedDate);
+        }
+        else
+        {
+            litMessage.Text = string.Format("No se pudo guardar la cita, Error: {0}", response.Message);
         }
     }
 
     protected void radCalendar_AppointmentUpdate(object sender, AppointmentUpdateEventArgs e)
     {
-        var idOfficce = ddlOffices.SelectedValue;
-        if (!string.IsNullOrEmpty(idOfficce))
+        int? frecuence = null;
+        Guid? medical = null;
+        Guid? idOfficce = null;
+        if (e.ModifiedAppointment.Resources.Count > 0)
         {
-            int? frecuence = null;
-            Guid? medical = null;
-            if (e.ModifiedAppointment.Resources.Count > 0)
+            if (e.ModifiedAppointment.Resources[0].Key != null)
             {
-                if (e.ModifiedAppointment.Resources[0].Key != null)
-                {
-                    frecuence = Convert.ToInt32(e.ModifiedAppointment.Resources[0].Key);
-                }
-                if (e.ModifiedAppointment.Resources[1].Key != null)
-                {
-                    medical = new Guid(e.ModifiedAppointment.Resources[1].Key.ToString());
-                }
+                frecuence = Convert.ToInt32(e.ModifiedAppointment.Resources[0].Key);
             }
-            var idAppointment = new Guid(e.Appointment.ID.ToString());
-            var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment);
-            appoinment.Subject = e.ModifiedAppointment.Subject;
-            appoinment.StartDate = e.ModifiedAppointment.Start;
-            appoinment.EndDate = e.ModifiedAppointment.End;
-            appoinment.Patient = e.ModifiedAppointment.Attributes["Paciente"];
-            if (!string.IsNullOrEmpty(e.ModifiedAppointment.Attributes["NotifyEach"]))
-                appoinment.NotifyEach = Convert.ToInt32(e.ModifiedAppointment.Attributes["NotifyEach"]);
-            appoinment.Frecuence = frecuence.HasValue ? frecuence.Value : (int?)null;
-            appoinment.Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null;
-            appoinment.Description = e.ModifiedAppointment.Description;
-            appoinment.Office = BussinessFactory.GetOfficeService().Get(new Guid(idOfficce));
-            appoinment.CreationDate = CreationDate;
-            appoinment.CreatedBy = CreatedBy;
-            appoinment.IsActive = true;
-            appoinment.ModifiedBy = ModifiedBy;
-            appoinment.LastModified = LastModified;
-            var response = BussinessFactory.GetAppointmentService().Update(appoinment);
-            if (response.OperationResult == OperationResult.Success)
+            if (e.ModifiedAppointment.Resources[1].Key != null)
             {
-                LoadAppointments(new Guid(idOfficce));
+                medical = new Guid(e.ModifiedAppointment.Resources[1].Key.ToString());
             }
+            if (e.ModifiedAppointment.Resources[2].Key != null)
+            {
+                idOfficce = new Guid(e.Appointment.Resources[2].Key.ToString());
+            }
+        }
+        var idAppointment = new Guid(e.Appointment.ID.ToString());
+        var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment);
+        appoinment.Subject = e.ModifiedAppointment.Subject;
+        appoinment.StartDate = e.ModifiedAppointment.Start;
+        appoinment.EndDate = e.ModifiedAppointment.End;
+        appoinment.Patient = e.ModifiedAppointment.Attributes["Paciente"];
+        if (!string.IsNullOrEmpty(e.ModifiedAppointment.Attributes["NotifyEach"]))
+            appoinment.NotifyEach = Convert.ToInt32(e.ModifiedAppointment.Attributes["NotifyEach"]);
+        appoinment.Frecuence = frecuence.HasValue ? frecuence.Value : (int?)null;
+        appoinment.Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null;
+        appoinment.Description = e.ModifiedAppointment.Description;
+        appoinment.Office = BussinessFactory.GetOfficeService().Get(idOfficce);
+        appoinment.CreationDate = CreationDate;
+        appoinment.CreatedBy = CreatedBy;
+        appoinment.IsActive = true;
+        appoinment.ModifiedBy = ModifiedBy;
+        appoinment.LastModified = LastModified;
+        var response = BussinessFactory.GetAppointmentService().Update(appoinment);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            LoadAppointments(radCalendar.SelectedDate);
+        }
+        else
+        {
+            litMessage.Text = string.Format("No se pudo guardar la cita, Error: {0}", response.Message);
         }
     }
 
@@ -203,11 +227,7 @@ public partial class Derma_Default : PageBase
         if (e.Container.Mode == SchedulerFormMode.AdvancedEdit)
         {
             ConfigureNotifityEach(e);
-            var idOfficce = ddlOffices.SelectedValue;
-            if (!string.IsNullOrEmpty(idOfficce))
-            {
-                var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(e.Appointment.ID.ToString()));
-            }
+            var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(e.Appointment.ID.ToString()));
         }
     }
 
@@ -217,6 +237,9 @@ public partial class Derma_Default : PageBase
         notificarCadaText.Label = "Notificar cada";
         notificarCadaText.ToolTip = @"Ingresar número de veces.";
         notificarCadaText.Width = 150;
+
+        var checkBox = (CheckBox)e.Container.FindControl("AllDayEvent");
+        checkBox.Checked = false;
     }
 
     protected void radCalendar_NavigationComplete(object sender, SchedulerNavigationCompleteEventArgs e)
@@ -225,19 +248,19 @@ public partial class Derma_Default : PageBase
                 e.Command == SchedulerNavigationCommand.NavigateToPreviousPeriod ||
                 e.Command == SchedulerNavigationCommand.NavigateToSelectedDate)
         {
-            var idOffice = ddlOffices.SelectedValue;
             switch (e.Command)
             {
                 case SchedulerNavigationCommand.SwitchToDayView:
 
                     break;
                 case SchedulerNavigationCommand.SwitchToMonthView:
+
                     break;
                 case SchedulerNavigationCommand.SwitchToWeekView:
 
                     break;
                 default:
-                    LoadAppointments(new Guid(idOffice));
+                    LoadAppointments(radCalendar.SelectedDate);
                     break;
             }
         }
@@ -258,20 +281,14 @@ public partial class Derma_Default : PageBase
         }
     }
 
-    protected void ddlOffices_SelectedIndexChanged(object sender, EventArgs e)
+    private void LoadAppointments(DateTime? dateTime)
     {
-        var idOfficce = ddlOffices.SelectedValue;
-        if (!string.IsNullOrEmpty(idOfficce))
+        if (dateTime.HasValue)
         {
-           LoadAppointments(new Guid(idOfficce));
+            var fecha = new DateTime(radCalendar.SelectedDate.Year, radCalendar.SelectedDate.Month, 1);
+            var appointments = BussinessFactory.GetAppointmentService().GetByOffices(fecha.AddMonths(-1), fecha.AddMonths(1));
+            BindAppointments(appointments);
         }
-    }
-
-    private void LoadAppointments(Guid? idOffice)
-    {
-        var fecha = new DateTime(radCalendar.SelectedDate.Year, radCalendar.SelectedDate.Month, 1);
-        var appointments = BussinessFactory.GetAppointmentService().GetByOffices(idOffice, fecha.AddMonths(-1), fecha.AddMonths(1));
-        BindAppointments(appointments);
     }
 
     private void BindAppointments(IEnumerable<Appointment> appointments)

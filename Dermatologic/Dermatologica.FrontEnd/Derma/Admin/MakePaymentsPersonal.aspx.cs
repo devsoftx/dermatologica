@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
-using Invoice = Dermatologic.Domain.Invoice;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 
@@ -79,7 +78,6 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
 
     private void Save()
     {
-       // var Pago = Convert.ToDecimal(txtAmount.Text.Trim());
         foreach (GridViewRow row in gvMedicalCares.Rows)
         {
             if (Convert.ToDecimal(txtPayPEN.Text) == 0 & Convert.ToDecimal(txtPayUSD.Text) == 0)
@@ -109,13 +107,10 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                                       LastModified = LastModified,
                                       CreationDate = CreationDate,
                                       ModifiedBy = ModifiedBy,
-                                      CreatedBy = CreatedBy,
-                                      
-                                      
+                                      CreatedBy = CreatedBy
                                   };
 
                 medicalCare.IsPaid = true;
-
                 Invoice.MedicalCare = medicalCare;
                 Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
                 Invoice.Personal = medical;
@@ -157,7 +152,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    litMensaje.Text = string.Format("No se pudo Guardar el Pago, Error : {0}", e.Message);
                 }
             }
         }
