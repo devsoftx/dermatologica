@@ -94,8 +94,7 @@
                             </asp:TemplateField>                            
                             <asp:TemplateField HeaderText="Tratamiento">
                                 <ItemTemplate>
-                                    <asp:Literal ID="litTratamiento" Text='<%# ((MedicalCare)Eval("MedicalCare")).Session.Medication.Service.Name %>'
-                                        runat="server" />
+                                    <asp:Literal ID="litTratamiento" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField DataField="MPayment" HeaderText="Medio de pago" />

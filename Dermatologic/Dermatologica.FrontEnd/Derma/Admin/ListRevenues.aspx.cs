@@ -86,13 +86,16 @@ public partial class Derma_Admin_ListRevenues : PageBase
                 if (!string.IsNullOrEmpty(movement))
                 {
                     var literal = ((Literal) e.Row.FindControl("litPersona"));
+                    var litMedication = ((Literal)e.Row.FindControl("litTratamiento"));
                     switch (movement)
                     {
                         case "Ingreso":
                             literal.Text = string.Format("{0} {1} {2}", entity.Patient.FirstName, entity.Patient.LastNameP, entity.Patient.LastNameM);
+                            litMedication.Text = entity.Session.Medication.Service.Name;
                             break;
                         case "Egreso":
                             literal.Text = string.Format("{0} {1} {2}", entity.Personal.FirstName, entity.Personal.LastNameP, entity.Personal.LastNameM);
+                            litMedication.Text = entity.MedicalCare.Session.Medication.Service.Name;
                             break;
                         default:
                             literal.Text = string.Empty;
