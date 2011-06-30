@@ -497,7 +497,6 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.FirstName, m => m.Column("FirstName"));
                     cm.Property(x => x.LastNameP, m => m.Column("LastNameP"));
                     cm.Property(x => x.LastNameM, m => m.Column("LastNameM"));
-                    cm.Property(x => x.Category, m => m.Column("Category"));
                     cm.Property(x => x.DocumentType, m => m.Column("DocumentType"));
                     cm.Property(x => x.DocumentNumber, m => m.Column("DocumentNumber"));
                     cm.Property(x => x.Picture, m => m.Column("Picture"));
@@ -820,6 +819,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Id(x => x.Id, m => m.Column("Id"));
                     cm.Property(x => x.Name, m => m.Column("Name"));
                     cm.Property(x => x.Description, m => m.Column("Description"));
+                    cm.Property(x => x.ColorId, m => m.Column("ColorId"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));

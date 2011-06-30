@@ -303,6 +303,8 @@ public partial class Derma_Default : PageBase
         if (entity != null)
         {
             e.Appointment.Attributes["Paciente"] = entity.Patient;
+            e.Appointment.BackColor = Color.FromName(entity.Office.ColorId);
+            e.Appointment.ToolTip = string.Format("Medico/Cosmeatra: {0}", entity.Medical.CompleteName);
         }
     }
 }

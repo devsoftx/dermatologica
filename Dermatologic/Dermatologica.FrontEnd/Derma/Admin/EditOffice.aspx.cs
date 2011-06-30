@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,11 +15,11 @@ public partial class Derma_Admin_EditOffice : PageBase
     {
         if (!Page.IsPostBack)
         {
-            SetPersonType();
+            SetOffice();
         }
     }
 
-    private void SetPersonType()
+    private void SetOffice()
     {
         var action = Request.QueryString.Get("action");
         string id = Request.QueryString.Get("id");
@@ -27,25 +28,27 @@ public partial class Derma_Admin_EditOffice : PageBase
             case "new":
                 break;
             case "edit":
-                LoadPersonType(new Guid(id));
+                LoadOffice(new Guid(id));
                 break;
         }
     }
 
-    void LoadPersonType(Guid id)
+    void LoadOffice(Guid id)
     {
         var office = BussinessFactory.GetOfficeService().Get(id);
         txtName.Text = office.Name;
         txtDescription.Text = office.Description;
+        txtColor.BackColor = Color.FromName(office.ColorId);
     }
 
     private void Save()
     {
-        var PersonType = new Office()
+        var office = new Office()
         {
             Id = Guid.NewGuid(),
             Name = txtName.Text.Trim(),
             Description = txtDescription.Text.Trim(),
+            ColorId = txtColor.Text.Trim(),
             IsActive = true,
             LastModified = LastModified,
             CreationDate = CreationDate,
@@ -55,8 +58,7 @@ public partial class Derma_Admin_EditOffice : PageBase
 
         try
         {
-            var response = BussinessFactory.GetOfficeService().Save(PersonType);
-
+            var response = BussinessFactory.GetOfficeService().Save(office);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListOffices.aspx", true);
@@ -70,7 +72,6 @@ public partial class Derma_Admin_EditOffice : PageBase
         {
             throw e;
         }
-
     }
 
     private void Update()
@@ -84,7 +85,6 @@ public partial class Derma_Admin_EditOffice : PageBase
             office.IsActive = true;
             office.LastModified = LastModified;
             office.ModifiedBy = ModifiedBy;
-
             var response = BussinessFactory.GetOfficeService().Update(office);
             if (response.OperationResult == OperationResult.Success)
             {
@@ -92,7 +92,7 @@ public partial class Derma_Admin_EditOffice : PageBase
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo actualizar el Tipo de Persona");
+                litMensaje.Text = string.Format("No se puedo actualizar la oficina");
             }
         }
     }

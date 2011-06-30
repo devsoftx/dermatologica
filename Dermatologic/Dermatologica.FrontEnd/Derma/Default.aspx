@@ -60,8 +60,8 @@
                                         AdvancedCalendarToday="Hoy" AdvancedClose="Cerrar" AdvancedDaily="Diario" AdvancedDay="Día"
                                         AdvancedDays="dias" AdvancedDescription="Descripción" AdvancedDone="OK" AdvancedEditAppointment="Editar Evento"
                                         AdvancedEndAfter="Fin despues de" AdvancedEndByThisDate="Fin de" AdvancedEndDateRequired="Fecha final es necesario"
-                                        AdvancedEndTimeRequired="Hoa final es necesario" AdvancedEvery="Cada" AdvancedEveryWeekday="Cada día de semana"
-                                        AdvancedFirst="primero" AdvancedFourth="cuarto" AdvancedFrom="Hora inicial" AdvancedHourly="Cada hora"
+                                        AdvancedEndTimeRequired="Hora final es necesario" AdvancedEvery="Cada" AdvancedEveryWeekday="Cada día de semana"
+                                        AdvancedFirst="primero" AdvancedFourth="cuarto" AdvancedFrom="Fecha y hora iniciales" AdvancedHourly="Cada hora"
                                         AdvancedHours="horas" AdvancedInvalidNumber="número no válido" AdvancedLast="último"
                                         AdvancedMaskDay="día" AdvancedMaskWeekday="día entre semana" AdvancedMaskWeekendDay="día de fin de semana"
                                         AdvancedMonthly="Mensual" AdvancedMonths="meses" AdvancedNewAppointment="Nuevo Evento"
@@ -71,7 +71,7 @@
                                         AdvancedStartTimeBeforeEndTime="Fecha Final debe ser mayor que la fecha inicial"
                                         AdvancedStartTimeRequired="Hora inicial es necesaria" AdvancedSubject="Título"
                                         AdvancedSubjectRequired="Debe ingresar una descripción su cita" AdvancedThe="El"
-                                        AdvancedThird="tercero" AdvancedTo="Fecha Final" AdvancedWeekly="Semanal" AdvancedWeeks="semanas en"
+                                        AdvancedThird="tercero" AdvancedTo="Fecha y hora finales" AdvancedWeekly="Semanal" AdvancedWeeks="semanas en"
                                         AdvancedWorking="trabajando..." AdvancedYearly="Anual" Cancel="Cancelar" ConfirmCancel="Cancelar"
                                         ConfirmDeleteText="¿Esta seguro de eliminar esta cita?" ConfirmDeleteTitle="Confirmar eliminación"
                                         ConfirmRecurrenceDeleteOccurrence="Eliminar solo esta cita" ConfirmRecurrenceDeleteSeries="Eliminar la serie de citas"
@@ -86,9 +86,9 @@
                                     <AppointmentTemplate>
                                         <div>
                                             <b style="font-size: 10px;">
-                                                <%# Eval("Subject") %></b>
+                                                <%# Eval("Paciente")%></b>
                                             <div style="font-style: italic; font-size: 9px;">
-                                                <%# Eval("Paciente") %></div>
+                                                <%# Eval("Description")%></div>
                                         </div>
                                     </AppointmentTemplate>
                                 </telerik:RadScheduler>

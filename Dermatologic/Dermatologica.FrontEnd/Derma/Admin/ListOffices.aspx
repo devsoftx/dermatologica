@@ -32,12 +32,18 @@
                 </td>
                 <td>
                     <asp:GridView ID="gvOffices" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                        ForeColor="#333333" GridLines="None" OnRowCommand="gvOffices_RowCommand">
+                        ForeColor="#333333" GridLines="None" OnRowCommand="gvOffices_RowCommand" 
+                        onrowdatabound="gvOffices_RowDataBound">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" Width="600px" />
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Nombre" />
                             <asp:BoundField DataField="Description" HeaderText="Descripción" />
                             <asp:BoundField DataField="LastModified" DataFormatString="{0:dd-MM-yyyy}" HeaderText="Última Modificación" />
+                            <asp:TemplateField HeaderText="Color">
+                                <ItemTemplate>
+                                    <asp:TextBox ID="lblColor" runat="server" Width="20px" ReadOnly="true"/>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'

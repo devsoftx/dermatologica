@@ -24,6 +24,9 @@ namespace Dermatologic.Domain
         public virtual string Description { set; get; }
 
         [DataMember]
+        public virtual string ColorId { set; get; }
+
+        [DataMember]
         public virtual bool IsActive { set; get; }
 
         [DataMember]

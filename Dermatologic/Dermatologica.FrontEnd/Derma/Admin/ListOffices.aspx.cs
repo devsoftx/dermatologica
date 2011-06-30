@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,7 +14,7 @@ public partial class Derma_Admin_ListOffices : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Page.IsPostBack) return;
-        GetPersonTypes();
+        GetOffices();
     }
 
     protected void gvOffices_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -25,30 +26,30 @@ public partial class Derma_Admin_ListOffices : PageBase
                 Response.Redirect(string.Format("EditOffice.aspx?id={0}&action=edit", id), true);
                 break;
             case "cmd_eliminar":
-                DeletePersonType(new Guid(e.CommandArgument.ToString()));
-                GetPersonTypes();
+                DeleteOffice(new Guid(e.CommandArgument.ToString()));
+                GetOffices();
                 break;
         }
     }
 
-    private void GetPersonTypes()
+    private void GetOffices()
     {
         var offices = BussinessFactory.GetOfficeService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
         BindControl<Office>.BindGrid(gvOffices, offices);
     }
 
-    private void DeletePersonType(Guid id)
+    private void DeleteOffice(Guid id)
     {
-        var PersonType = BussinessFactory.GetPersonTypeService().Get(id);
-        if (PersonType != null)
+        var office = BussinessFactory.GetPersonTypeService().Get(id);
+        if (office != null)
         {
-            PersonType.IsActive = false;
-            PersonType.LastModified = LastModified;
-            PersonType.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetPersonTypeService().Update(PersonType);
+            office.IsActive = false;
+            office.LastModified = LastModified;
+            office.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetPersonTypeService().Update(office);
             if (response.OperationResult == OperationResult.Success)
             {
-                litMensaje.Text = string.Format("Se eliminó El Tipo de Persona");
+                litMensaje.Text = string.Format("Se eliminó la oficina");
                 return;
             }
         }
@@ -57,5 +58,18 @@ public partial class Derma_Admin_ListOffices : PageBase
     protected void lnkNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/EditOffice.aspx?action=new");
+    }
+
+    protected void gvOffices_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            var entity = e.Row.DataItem as Office;
+            if (entity != null)
+            {
+                var input = ((TextBox) e.Row.FindControl("lblColor"));
+                input.BackColor = Color.FromName(entity.ColorId);
+            }
+        }
     }
 }
