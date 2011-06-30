@@ -11,7 +11,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
     {
         if (!Page.IsPostBack)
         {
-            LoadCostCenter();
+           
             SetPayment();
             LoadPersonType();
         }
@@ -31,11 +31,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
         }
     }
 
-    private void LoadCostCenter()
-    {
-        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
-    }
+  
 
     private void LoadPersonType()
     {
@@ -112,7 +108,8 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
 
                 medicalCare.IsPaid = true;
                 Invoice.MedicalCare = medicalCare;
-                Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+                Invoice.CostCenter = medicalCare.Session.Medication.Service.CostCenter;
+                //Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
                 Invoice.Personal = medical;
                 Invoice.Patient =null;
                 Invoice.Session = null; 

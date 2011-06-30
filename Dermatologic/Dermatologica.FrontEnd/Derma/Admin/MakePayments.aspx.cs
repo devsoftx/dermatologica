@@ -12,7 +12,7 @@ public partial class Derma_Admin_MakePayments : PageBase
         if (!Page.IsPostBack)
         {
             SetPayment();
-            LoadCostCenter();
+           
             txtDatePayment.Text = Convert.ToString(CreationDate);
         }
     }
@@ -35,11 +35,7 @@ public partial class Derma_Admin_MakePayments : PageBase
         }
     }
 
-    private void LoadCostCenter()
-    {
-        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
-    }
+   
 
     private void LoadSessions(Guid medicationId)
     {
@@ -65,7 +61,7 @@ public partial class Derma_Admin_MakePayments : PageBase
             }
             if (((CheckBox)row.FindControl("chkIsPaid")).Checked == false)
             {
-                var Medication = BussinessFactory.GetMedicationService().Get(new Guid(MedicationId));
+                var medication = BussinessFactory.GetMedicationService().Get(new Guid(MedicationId));
                 var IdSession = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString());
                 var session = BussinessFactory.GetSessionService().Get(IdSession);
                 var Invoice = new Invoice
@@ -99,9 +95,10 @@ public partial class Derma_Admin_MakePayments : PageBase
                     Pago = Convert.ToDecimal(0);
                 }
 
-                Invoice.Patient = Medication.Patient;
+                Invoice.Patient = medication.Patient;
                 Invoice.Session = session;
-                Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+                Invoice.CostCenter = medication.Service.CostCenter;
+                //Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
                 Invoice.Personal = null;
                 Invoice.MedicalCare = null;
 

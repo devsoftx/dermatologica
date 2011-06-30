@@ -115,21 +115,6 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <asp:Label ID="Label16" runat="server" Text="Centro de Costo"></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="ddlCostCenter" runat="server">
-                                    </asp:DropDownList>
-                                </td>
-                                <td>
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td>
                                     <asp:Label ID="Label17" runat="server" Text="Tratante"></asp:Label>
                                 </td>
                                 <td>

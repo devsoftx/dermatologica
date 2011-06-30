@@ -95,21 +95,6 @@
                 <td class="style2">
                     &nbsp;</td>
                 <td class="style14">
-                                    <asp:Label ID="Label16" runat="server" Text="Centro de Costo"></asp:Label>
-                </td>
-                <td class="style3">
-                                    <asp:DropDownList ID="ddlCostCenter" runat="server">
-                                    </asp:DropDownList>
-                </td>
-                <td class="style4">
-                    &nbsp;</td>
-                <td>
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td class="style2">
-                    &nbsp;</td>
-                <td class="style14">
                     <asp:Label ID="Label4" runat="server" Text="Fecha"></asp:Label>
                 </td>
                 <td class="style3">
