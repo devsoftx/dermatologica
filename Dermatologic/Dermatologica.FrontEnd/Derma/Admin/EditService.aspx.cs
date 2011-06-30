@@ -1,7 +1,9 @@
 ﻿using System;
 using ASP.App_Code;
+using Dermatologic.Domain;
 using Service = Dermatologic.Domain.Service;
 using Dermatologic.Services;
+
 
 public partial class Derma_Admin_EditService : PageBase
 {
@@ -9,10 +11,16 @@ public partial class Derma_Admin_EditService : PageBase
     {
         if (!Page.IsPostBack)
         {
+            LoadCostCenter();
             SetService();
+           
         }
     }
-
+    private void LoadCostCenter()
+    {
+        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
+    }
     private void SetService()
     {
         var action = Request.QueryString.Get("action");
@@ -34,6 +42,7 @@ public partial class Derma_Admin_EditService : PageBase
         txtDescription.Text = service.Description;
         txtPrice.Text = service.Price.ToString();
         ddlCurrency.SelectedValue = service.Currency;
+        ddlCostCenter.SelectedValue = service.CostCenter.Name;
     }
 
     private void Save()
@@ -49,9 +58,10 @@ public partial class Derma_Admin_EditService : PageBase
             LastModified = LastModified,
             CreationDate = CreationDate,
             ModifiedBy = ModifiedBy,
-            CreatedBy = CreatedBy
+            CreatedBy = CreatedBy,
+            CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue))
         };
-
+        //Service.CostCenter = costcenter;
         try
         {
             var response = BussinessFactory.GetServiceService().Save(Service);
@@ -62,7 +72,7 @@ public partial class Derma_Admin_EditService : PageBase
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo crear El Tipo de Persona");
+                litMensaje.Text = string.Format("No se pudo crear El Servicio");
             }
         }
         catch (Exception e)
@@ -76,6 +86,8 @@ public partial class Derma_Admin_EditService : PageBase
     {
         var id = Request.QueryString.Get("id");
         var service = BussinessFactory.GetServiceService().Get(new Guid(id));
+       
+
         if (service != null)
         {
             service.Name = txtName.Text.Trim();
@@ -85,6 +97,8 @@ public partial class Derma_Admin_EditService : PageBase
             service.ModifiedBy = ModifiedBy;
             service.Price = Convert.ToDecimal(txtPrice.Text.Trim());
             service.Currency = ddlCurrency.SelectedValue;
+            service.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
+
             var response = BussinessFactory.GetServiceService().Update(service);
             if (response.OperationResult == OperationResult.Success)
             {
@@ -95,6 +109,7 @@ public partial class Derma_Admin_EditService : PageBase
                 litMensaje.Text = string.Format("No se puedo actualizar el tipo de tratamiento");
             }
         }
+
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)

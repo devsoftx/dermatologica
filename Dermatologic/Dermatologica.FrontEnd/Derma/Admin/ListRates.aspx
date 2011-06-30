@@ -106,7 +106,8 @@
                     &nbsp;</td>
                 <td>
                     <asp:GridView ID="gvRates" runat="server" AutoGenerateColumns="False" 
-                        CellPadding="4" ForeColor="#333333" GridLines="None">
+                        CellPadding="4" ForeColor="#333333" GridLines="None" 
+                        onrowcommand="gvRates_RowCommand">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:TemplateField HeaderText="Tratamiento">

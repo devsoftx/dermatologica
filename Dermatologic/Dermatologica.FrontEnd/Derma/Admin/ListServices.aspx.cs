@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
+using Dermatologic.Domain;
 using Dermatologic.Services;
 using Service = Dermatologic.Domain.Service;
 
@@ -12,8 +13,12 @@ public partial class Derma_Admin_ListServices :PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Page.IsPostBack) return;
-        GetServices();
+        if (!Page.IsPostBack)
+        {
+            LoadCostCenter();
+            GetServices();
+           
+        }
     }
     protected void gvServices_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -29,10 +34,20 @@ public partial class Derma_Admin_ListServices :PageBase
                 break;
         }
     }
+    private void LoadCostCenter()
+    {
+        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
+    }
     private void GetServices()
     {
-        var Services = BussinessFactory.GetServiceService().GetAll(u => u.IsActive == true);
-        BindControl<Service>.BindGrid(gvServices, Services);
+        var example = BussinessFactory.GetCostCenterService().Get(new Guid (ddlCostCenter.SelectedValue));
+        var response = BussinessFactory.GetServiceService().GetServicesByCostCenter(example);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            gvServices.DataSource = response.Services;
+            gvServices.DataBind();
+        }
     }
     private void DeleteService(Guid id)
     {
@@ -56,5 +71,9 @@ public partial class Derma_Admin_ListServices :PageBase
     }
 
 
-   
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        GetServices();
+    }
 }

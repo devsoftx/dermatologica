@@ -88,4 +88,5 @@ public partial class Derma_Admin_ListRates : PageBase
     {
         Response.Redirect("~/Derma/Admin/EditRate.aspx?action=new");
     }
+   
 }

@@ -5,6 +5,13 @@ namespace Dermatologic.Domain
 {
     public class Service : IEquatable<Service>
     {
+        private CostCenter _costcenter;
+
+        public Service()
+        { 
+            _costcenter=new CostCenter();
+        }
+
         [DataMember]
         public virtual Guid? Id { set; get; }
 
@@ -19,6 +26,13 @@ namespace Dermatologic.Domain
 
         [DataMember]
         public virtual string Name { set; get; }
+
+        [DataMember]
+        public virtual CostCenter CostCenter
+        {
+            set { _costcenter = value; }
+            get { return _costcenter; }
+        }
 
         [DataMember]
         public virtual bool IsActive { set; get; }

@@ -10,6 +10,14 @@
         {
             width: 53px;
         }
+        .style3
+        {
+            width: 181px;
+        }
+        .style4
+        {
+            width: 98px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
@@ -28,6 +36,30 @@
                     &nbsp;</td>
                 <td>
             <asp:Literal ID="litMensaje" runat="server" />
+                </td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    &nbsp;</td>
+                <td>
+                    <table class="style1">
+                        <tr>
+                            <td class="style4" style="text-align: left">
+                                <asp:Label ID="Label1" runat="server" style="text-align: right" 
+                                    Text="Centro de Costo"></asp:Label>
+                            </td>
+                            <td class="style3">
+                                    <asp:DropDownList ID="ddlCostCenter" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                            <td>
+                                <asp:Button ID="btnSearch" runat="server" onclick="btnSearch_Click" 
+                                    Text="Buscar" />
+                            </td>
+                        </tr>
+                    </table>
                 </td>
                 <td>
                     &nbsp;</td>

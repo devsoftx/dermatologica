@@ -49,6 +49,18 @@
             </tr>
             <tr>
                 <td class="style2">
+                    <asp:Label ID="Label4" runat="server" style="text-align: right" 
+                        Text="Centro de Costo"></asp:Label>
+                </td>
+                <td>
+                                    <asp:DropDownList ID="ddlCostCenter" runat="server">
+                                    </asp:DropDownList>
+                </td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
                     <asp:Label ID="Label3" runat="server" style="text-align: right" 
                         Text="Precio Unitario:"></asp:Label>
                 </td>

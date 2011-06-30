@@ -185,8 +185,20 @@ namespace Dermatologic.Data.Persistence
                     },
                     x => { });
             });
-           
 
+            mapper.Class<Service>(cm =>
+            {
+                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.ManyToOne(
+                    x => x.CostCenter,
+                    m =>
+                    {
+                        m.Column("IdCostCenter");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+               
+            });
             mapper.Class<Medication>(cm =>
             {
                 cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
