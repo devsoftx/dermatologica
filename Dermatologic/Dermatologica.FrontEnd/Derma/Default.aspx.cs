@@ -57,7 +57,7 @@ public partial class Derma_Default : PageBase
         var response = medicals.Union(cosmeatras).OrderBy(p => p.CompleteName).ToList();
         var rtMedical = new ResourceType()
         {
-            Name = "Medico",
+            Name = "Medico/Cosmeatra",
             DataSource = response,
             KeyField = "Id",
             TextField = "CompleteName",
@@ -125,17 +125,20 @@ public partial class Derma_Default : PageBase
         Guid? idOfficce = null;
         if (e.Appointment.Resources.Count > 0)
         {
-            if (e.Appointment.Resources[0].Key != null)
+            var resFrecuence = e.Appointment.Resources.GetResourceByType("Frecuencia");
+            if (resFrecuence != null)
             {
-                frecuence = Convert.ToInt32(e.Appointment.Resources[0].Key);
+                frecuence = Convert.ToInt32(resFrecuence.Key);
             }
-            if (e.Appointment.Resources[1].Key != null)
+            var resMedical = e.Appointment.Resources.GetResourceByType("Medico/Cosmeatra");
+            if (resMedical != null)
             {
-                medical = new Guid(e.Appointment.Resources[1].Key.ToString());
+                medical = new Guid(resMedical.ToString());
             }
-            if (e.Appointment.Resources[2].Key != null)
+            var resConsultorio = e.Appointment.Resources.GetResourceByType("Consultorio");
+            if (resConsultorio != null)
             {
-                idOfficce = new Guid(e.Appointment.Resources[2].Key.ToString());
+                idOfficce = new Guid(resConsultorio.Key.ToString());
             }
         }
         var notificarCada = string.IsNullOrEmpty(e.Appointment.Attributes["NotifyEach"]) ? 0 : Convert.ToInt32(e.Appointment.Attributes["NotifyEach"]);
@@ -151,7 +154,7 @@ public partial class Derma_Default : PageBase
                                     Patient = e.Appointment.Attributes["Paciente"],
                                     NotifyEach = notificarCada,
                                     Frecuence = frecuence.HasValue ? frecuence.Value : (int?) null,
-                                    Office = BussinessFactory.GetOfficeService().Get(idOfficce),
+                                    Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce) : null,
                                     CreationDate = CreationDate,
                                     CreatedBy = CreatedBy,
                                     IsActive = true,
@@ -177,17 +180,20 @@ public partial class Derma_Default : PageBase
         Guid? idOfficce = null;
         if (e.ModifiedAppointment.Resources.Count > 0)
         {
-            if (e.ModifiedAppointment.Resources[0].Key != null)
+            var resFrecuence = e.ModifiedAppointment.Resources.GetResourceByType("Frecuencia");
+            if (resFrecuence != null)
             {
-                frecuence = Convert.ToInt32(e.ModifiedAppointment.Resources[0].Key);
+                frecuence = Convert.ToInt32(resFrecuence.Key);
             }
-            if (e.ModifiedAppointment.Resources[1].Key != null)
+            var resMedical = e.ModifiedAppointment.Resources.GetResourceByType("Medico/Cosmeatra");
+            if (resMedical != null)
             {
-                medical = new Guid(e.ModifiedAppointment.Resources[1].Key.ToString());
+                medical = new Guid(resMedical.ToString());
             }
-            if (e.ModifiedAppointment.Resources[2].Key != null)
+            var resConsultorio = e.ModifiedAppointment.Resources.GetResourceByType("Consultorio");
+            if (resConsultorio != null)
             {
-                idOfficce = new Guid(e.Appointment.Resources[2].Key.ToString());
+                idOfficce = new Guid(resConsultorio.Key.ToString());
             }
         }
         var idAppointment = new Guid(e.Appointment.ID.ToString());
@@ -303,8 +309,16 @@ public partial class Derma_Default : PageBase
         if (entity != null)
         {
             e.Appointment.Attributes["Paciente"] = entity.Patient;
-            e.Appointment.BackColor = Color.FromName(entity.Office.ColorId);
-            e.Appointment.ToolTip = string.Format("Medico/Cosmeatra: {0}", entity.Medical.CompleteName);
+            if (entity.Office != null)
+            {
+                var color = entity.Office.ColorId;
+                if (!string.IsNullOrEmpty(color))
+                    e.Appointment.BackColor = Color.FromName(color);
+            }
+            if (entity.Medical != null)
+            {
+                e.Appointment.ToolTip = string.Format("Medico/Cosmeatra: {0}", entity.Medical.CompleteName);
+            }
         }
     }
 }
