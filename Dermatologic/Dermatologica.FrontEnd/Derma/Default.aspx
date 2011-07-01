@@ -89,6 +89,8 @@
                                                 <%# Eval("Paciente")%></b>
                                             <div style="font-style: italic; font-size: 9px;">
                                                 <%# Eval("Description")%></div>
+                                                <div style="font-size: 9px;">
+                                                <%# Eval("Subject")%></div>
                                         </div>
                                     </AppointmentTemplate>
                                 </telerik:RadScheduler>

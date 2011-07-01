@@ -133,7 +133,7 @@ public partial class Derma_Default : PageBase
             var resMedical = e.Appointment.Resources.GetResourceByType("Medico/Cosmeatra");
             if (resMedical != null)
             {
-                medical = new Guid(resMedical.ToString());
+                medical = new Guid(resMedical.Key.ToString());
             }
             var resConsultorio = e.Appointment.Resources.GetResourceByType("Consultorio");
             if (resConsultorio != null)
@@ -204,13 +204,16 @@ public partial class Derma_Default : PageBase
         appoinment.Patient = e.ModifiedAppointment.Attributes["Paciente"];
         if (!string.IsNullOrEmpty(e.ModifiedAppointment.Attributes["NotifyEach"]))
             appoinment.NotifyEach = Convert.ToInt32(e.ModifiedAppointment.Attributes["NotifyEach"]);
-        appoinment.Frecuence = frecuence.HasValue ? frecuence.Value : (int?)null;
-        appoinment.Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null;
+        if (appoinment.Frecuence == null)
+            appoinment.Frecuence = frecuence.HasValue ? frecuence.Value : (int?) null;
+        if (appoinment.Medical == null)
+            appoinment.Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null;
+        if (appoinment.Office == null)
+            appoinment.Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce) : null;
         appoinment.Description = e.ModifiedAppointment.Description;
-        appoinment.Office = BussinessFactory.GetOfficeService().Get(idOfficce);
+        appoinment.IsActive = true;
         appoinment.CreationDate = CreationDate;
         appoinment.CreatedBy = CreatedBy;
-        appoinment.IsActive = true;
         appoinment.ModifiedBy = ModifiedBy;
         appoinment.LastModified = LastModified;
         var response = BussinessFactory.GetAppointmentService().Update(appoinment);
