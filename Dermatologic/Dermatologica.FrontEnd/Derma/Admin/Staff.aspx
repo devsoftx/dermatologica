@@ -1,17 +1,16 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListPatients.aspx.cs"Inherits="Derma_Admin_ListPatients" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="Staff.aspx.cs" Inherits="Derma_Admin_Staff" %>
 <%@ Import Namespace="ASP.App_Code" %>
-
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
-    <div>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
+<div>
         <table>
             <tr>
                 <td>
                     &nbsp;
                 </td>
                 <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
-                    Buscador de Pacientes
+                    Buscador de Personal de Clinica
                 </td>
                 <td>
                     &nbsp;
@@ -45,9 +44,9 @@
                     &nbsp;
                 </td>
                 <td>
-                    <asp:GridView ID="gvPatients" runat="server" AutoGenerateColumns="False" CellPadding="4"
+                    <asp:GridView ID="gvStaff" runat="server" AutoGenerateColumns="False" CellPadding="4"
                         ForeColor="#333333" GridLines="None" Width="735px" 
-                        onrowcommand="gvPatients_RowCommand">
+                        onrowcommand="gvStaff_RowCommand">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:TemplateField HeaderText="Nombres">
@@ -104,5 +103,5 @@
         </table>
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
 </asp:Content>

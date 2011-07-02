@@ -7,5 +7,6 @@ namespace Dermatologic.Data
     {
         IList<Person> GetPacients(Person example);
         IList<Person> SearchPersons(Person example);
+        IList<Person> GetStaff(Person example);
     }
 }

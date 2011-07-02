@@ -260,13 +260,13 @@ public partial class Derma_Default : PageBase
             switch (e.Command)
             {
                 case SchedulerNavigationCommand.SwitchToDayView:
-
+                    LoadAppointments(radCalendar.SelectedDate);
                     break;
                 case SchedulerNavigationCommand.SwitchToMonthView:
-
+                    LoadAppointments(radCalendar.SelectedDate);
                     break;
                 case SchedulerNavigationCommand.SwitchToWeekView:
-
+                    LoadAppointments(radCalendar.SelectedDate);
                     break;
                 default:
                     LoadAppointments(radCalendar.SelectedDate);

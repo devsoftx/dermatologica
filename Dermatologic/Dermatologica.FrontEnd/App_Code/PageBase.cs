@@ -113,7 +113,7 @@ namespace ASP.App_Code
 
         [DataMember]
         [EnumDescription("Pasaporte")]
-        Passporte = 1,
+        Pasaporte = 1,
 
         [DataMember]
         [EnumDescription("Carnet de Extranjeria")]

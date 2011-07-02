@@ -8,19 +8,19 @@ using ASP.App_Code;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 
-public partial class Derma_Admin_ListPatients : PageBase
+public partial class Derma_Admin_Staff : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
         {
-            SearchPatients();
+            Search();
         }
     }
 
-    private void SearchPatients()
+    private void Search()
     {
-        const string personType = "9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68";
+        const string personType = "9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68"; // not in with Patient Id
         var example = new Person
         {
             PersonType = { Id = new Guid(personType) },
@@ -28,26 +28,26 @@ public partial class Derma_Admin_ListPatients : PageBase
             LastNameP = txtSearch.Text.Trim().ToLower(),
             LastNameM = txtSearch.Text.Trim().ToLower(),
         };
-        var response = BussinessFactory.GetPersonService().GetPacients(example);
+        var response = BussinessFactory.GetPersonService().GetStaff(example);
         if (response.OperationResult == OperationResult.Success)
         {
-            gvPatients.DataSource = response.Pacients;
-            gvPatients.DataBind();
+            var staff = response.Staff;
+            BindControl<Person>.BindGrid(gvStaff,staff);
         }
     }
-  
+
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-        SearchPatients();
+        Search();
     }
 
-    protected void gvPatients_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void gvStaff_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
         {
             case "cmd_editar":
                 var id = new Guid(e.CommandArgument.ToString());
-                Response.Redirect(string.Format("PatientInformation.aspx?id={0}", id), true);
+                Response.Redirect(string.Format("StaffInformation.aspx?id={0}", id), true);
                 break;
         }
     }
