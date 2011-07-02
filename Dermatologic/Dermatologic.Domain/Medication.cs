@@ -37,6 +37,9 @@ namespace Dermatologic.Domain
         public virtual bool IsCompleted { set; get; }
 
         [DataMember]
+        public virtual bool Unpaid { set; get; }
+
+        [DataMember]
         public virtual bool IsActive { set; get; }
 
         [DataMember]

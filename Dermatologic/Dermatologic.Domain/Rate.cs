@@ -40,6 +40,9 @@ namespace Dermatologic.Domain
         public virtual decimal UnitCost { set; get; }
 
         [DataMember]
+        public virtual decimal  UnitCostPartner { set; get; }
+
+        [DataMember]
         public virtual String Observation { set; get; }
 
         [DataMember]

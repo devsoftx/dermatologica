@@ -9,6 +9,7 @@ namespace Dermatologic.Domain
         private Session _session ;
         private Person _medical ;
         private Person _pacient;
+        private Person _partner;
         private Rate _rate;
         
         public MedicalCare()
@@ -16,8 +17,10 @@ namespace Dermatologic.Domain
             _session = new Session();
             _medical = new Person();
              _pacient = new Person();
+             _partner = new Person();
              _rate = new Rate();
         }
+
         [DataMember]
         public virtual Guid? Id { set; get; }
 
@@ -64,6 +67,13 @@ namespace Dermatologic.Domain
         {
             get { return _pacient; }
             set { _pacient = value; }
+        }
+
+        [DataMember]
+        public virtual Person Partner
+        {
+            get { return _partner; }
+            set { _partner = value; }
         }
         public virtual Rate Rate
         {

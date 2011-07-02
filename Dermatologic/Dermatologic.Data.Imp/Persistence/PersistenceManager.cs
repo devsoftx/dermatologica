@@ -295,6 +295,14 @@ namespace Dermatologic.Data.Persistence
                       m.NotNullable(true);
                   });
                 cm.ManyToOne(
+                x => x.Partner,
+                m =>
+                {
+                    m.Column("IdPartner");
+                    m.Fetch(FetchMode.Join);
+                    m.NotNullable(false);
+                });
+                cm.ManyToOne(
                  x => x.Rate,
                  m =>
                  {
@@ -553,6 +561,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.NumberSessions, m => m.Column("NumberSessions"));
                     cm.Property(x => x.IsCompleted, m => m.Column("IsCompleted"));
+                    cm.Property(x => x.Unpaid, m => m.Column("Unpaid"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));
@@ -582,6 +591,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Id(x => x.Id, m => m.Column("Id"));
                     cm.Property(x => x.Currency, m => m.Column("Currency"));
                     cm.Property(x => x.UnitCost, m => m.Column("UnitCost"));
+                    cm.Property(x => x.UnitCostPartner, m => m.Column("UnitCostPartner"));
                     cm.Property(x => x.Observation, m => m.Column("Observation"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
@@ -603,6 +613,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.IsCompleted, m => m.Column("IsCompleted"));
                     cm.Property(x => x.IsPaid, m => m.Column("IsPaid"));
+                    cm.Property(x => x.Unpaid, m => m.Column("Unpaid"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));
