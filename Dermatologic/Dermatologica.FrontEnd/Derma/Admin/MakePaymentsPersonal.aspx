@@ -250,12 +250,12 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Tarifa">
                                                 <ItemTemplate>
-                                                    <asp:Literal ID="litRate" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCost %>'></asp:Literal>
+                                                    <asp:Literal ID="litUnitCost" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCost %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                              <asp:TemplateField HeaderText="Tarifa Titular">
                                                 <ItemTemplate>
-                                                    <asp:Literal ID="litRate" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCostPartner %>'></asp:Literal>
+                                                    <asp:Literal ID="litUnitCostPartner" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCostPartner %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagar">

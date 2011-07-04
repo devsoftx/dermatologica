@@ -75,18 +75,8 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                  }
             }
          
+                   
            
-            
-            if (response.OperationResult == OperationResult.Success)
-            {
-                gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
-                gvMedicalCares.DataBind();
-                var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" &  p.Session.IsPaid ==true);
-                var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" &  p.Session.IsPaid == true);
-
-                txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCost).ToString();
-                txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();              
-            }
         }
     }
 
@@ -114,7 +104,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
             {
                 var IdMedicalCare = new Guid(gvMedicalCares.DataKeys[row.RowIndex][0].ToString());
                 var medicalCare = BussinessFactory.GetMedicalCareService().Get(IdMedicalCare);
-                var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+                
                 var Invoice = new Invoice
                                   {
                                       Id = Guid.NewGuid(),
@@ -125,7 +115,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                                       InvoiceType = ddlInvoice.SelectedValue,
                                       NInvoice = txtNInvoice.Text.Trim(),
                                       Currency = ((Literal)row.FindControl("litCurrency")).Text,
-                                      Amount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
+                       
                                       ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
                                       Movement = "Egreso",
                                       IsActive = true,
@@ -134,12 +124,25 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                                       ModifiedBy = ModifiedBy,
                                       CreatedBy = CreatedBy
                                   };
+                if (ddlMedicalCareType.SelectedValue == "Normales")
+                {
+                    Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCost")).Text);
+                    medicalCare.IsPaid = true;
+                  
+                }
+                else
+                {
+                    Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCostPartner")).Text);
+                    medicalCare.IsPaidPartner = true;
+                   
+                }
 
-                medicalCare.IsPaid = true;
+                var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+                Invoice.Personal = medical;
+
                 Invoice.MedicalCare = medicalCare;
                 Invoice.CostCenter = medicalCare.Session.Medication.Service.CostCenter;
-                //Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
-                Invoice.Personal = medical;
+               
                 Invoice.Patient =null;
                 Invoice.Session = null; 
 
@@ -150,8 +153,8 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                     Invoice = Invoice,
                     MPayment = ddlMPayment.SelectedValue,
                     Date = Convert.ToDateTime(CreationDate),
-                    EmissionAmount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
-                    Amount = Convert.ToDecimal(((Literal)row.FindControl("litRate")).Text),
+                    EmissionAmount = Invoice.Amount,
+                    Amount = Invoice.Amount,
                     Factor = -1,
                     Currency = ((Literal)row.FindControl("litCurrency")).Text,
                     ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
