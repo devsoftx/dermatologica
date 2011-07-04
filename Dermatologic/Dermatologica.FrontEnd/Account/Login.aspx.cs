@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ASP.App_Code;
 
-public partial class Account_Login : System.Web.UI.Page
+public partial class Account_Login : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
