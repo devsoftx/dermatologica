@@ -72,9 +72,11 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  Id = Guid.NewGuid(),
                                  Description = txtDescription.Text.Trim(),
                                  NumberSessions = Convert.ToInt32(txtNumberSessions.Text.Trim()),
+                                 Currency=lblCurrency.Text,
                                  Price = Convert.ToDecimal(txtPriceT.Text),
                                  DiscountT = Convert.ToDecimal(txtDiscountT.Text),
                                  IsCompleted = false,
+                                 Unpaid=chkUnpaid.Checked,
                                  IsActive = true,
                                  LastModified = LastModified,
                                  CreationDate = CreationDate,
@@ -100,6 +102,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                                       Account = Convert.ToDecimal(row.Cells[3].Text),
                                       Residue = Convert.ToDecimal(row.Cells[4].Text),
                                       IsCompleted = ((CheckBox) row.FindControl("chkIsCompleted")).Checked,
+                                      Unpaid = ((CheckBox) row.FindControl("chkUnpaid")).Checked,
                                       IsPaid = ((CheckBox) row.FindControl("chkIsPaid")).Checked,
                                       IsActive = true,
                                       LastModified = LastModified,
@@ -118,7 +121,7 @@ public partial class Derma_Admin_EditMedication : PageBase
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo crear El tratamiento");
+                litMensaje.Text = string.Format("No se pudo crear El tratamiento");
             }
         }
         catch (Exception e)
@@ -208,8 +211,27 @@ public partial class Derma_Admin_EditMedication : PageBase
     protected void btnAddSessions_Click(object sender, EventArgs e)
     {
         var intSession = Convert.ToInt32(txtNumberSessions.Value);
-        var discount = Convert.ToDecimal(txtDiscountT.Text.Trim());
-        var priceService = Convert.ToDecimal(txtPrice.Text.Trim());
+
+        
+         if (txtDiscountT.Text == "")
+         {
+             txtDiscountT.Text = "0";
+         }
+         var discount = Convert.ToDecimal(txtDiscountT.Text.Trim());
+
+
+
+        decimal priceService;
+        if (chkUnpaid.Checked == true)
+        {
+            priceService = 0;
+        }
+        else
+        {
+            priceService = Convert.ToDecimal(txtPrice.Text.Trim());
+        }
+      
+
         decimal price = ((priceService * intSession) - discount);
         IList<Session> sessions = new List<Session>();
         for (var i = 0; i < intSession; i++)
@@ -222,6 +244,7 @@ public partial class Derma_Admin_EditMedication : PageBase
                                   Price = price / intSession,
                                   Residue = price / intSession,
                                   IsCompleted = false,
+                                  Unpaid = false,
                                   IsPaid = false,
                                   IsActive = true,
                                   LastModified = LastModified,
@@ -229,6 +252,10 @@ public partial class Derma_Admin_EditMedication : PageBase
                                   CreationDate = CreationDate,
                                   ModifiedBy = ModifiedBy
                               };
+            if (chkUnpaid.Checked == true)
+            {
+                session.Unpaid = true;
+            }
             sessions.Add(session);
         }
         txtPriceT.Text = price.ToString();

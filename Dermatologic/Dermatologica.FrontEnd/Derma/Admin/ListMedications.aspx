@@ -57,6 +57,7 @@
                             <asp:BoundField DataField="NumberSessions" HeaderText="N° de Sesiones" />
                             <asp:BoundField DataField="LastModified" DataFormatString="{0:dd-MM-yyyy}" HeaderText="Inicio de Tratamiento" />
                             <asp:CheckBoxField DataField="IsCompleted" HeaderText="Completo" />
+                             <asp:CheckBoxField DataField="UnPaid" HeaderText="Gratuito" />
                             <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'

@@ -1,6 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
 	CodeFile="EditMedication.aspx.cs" Inherits="Derma_Admin_EditMedication" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+    <style type="text/css">
+        .style1
+        {
+            width: 100%;
+        }
+        .style2
+        {
+            width: 53px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
 	<telerik:radcodeblock id="rcbInvitation" runat="server">
@@ -157,9 +167,18 @@
 								<td >
 									Precio Unitario</td>
 								<td>
-									<telerik:RadNumericTextBox ID="txtPrice" Runat="server" 
-										DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
-									</telerik:RadNumericTextBox>
+									<table class="style1">
+                                        <tr>
+                                            <td class="style2">
+                                                <telerik:RadNumericTextBox ID="txtPrice" Runat="server" 
+                                                    DataType="System.Decimal" MaxValue="9999" MinValue="1" Width="50px">
+                                                </telerik:RadNumericTextBox>
+                                            </td>
+                                            <td>
+                                                <asp:CheckBox ID="chkUnpaid" runat="server" Text="Tratamiento Gratis" />
+                                            </td>
+                                        </tr>
+                                    </table>
 								</td>
 								<td>
 									&nbsp;</td>
@@ -234,6 +253,11 @@
 											<asp:TemplateField HeaderText="Atentida">
 												<ItemTemplate>
 													<asp:CheckBox ID="chkIsCompleted" runat="server" Checked = '<%# Eval("IsCompleted") %>' />
+												</ItemTemplate>
+											</asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Gratis">
+												<ItemTemplate>
+													<asp:CheckBox ID="chkUnpaid" runat="server" Checked = '<%# Eval("Unpaid") %>' />
 												</ItemTemplate>
 											</asp:TemplateField>
 											<asp:TemplateField HeaderText="Pagada">
