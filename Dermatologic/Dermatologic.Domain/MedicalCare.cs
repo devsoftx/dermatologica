@@ -32,6 +32,9 @@ namespace Dermatologic.Domain
 
         [DataMember]
         public virtual bool IsPaid { set; get; }
+
+        [DataMember]
+        public virtual bool IsPaidPartner { set; get; }
         
         [DataMember]
         public virtual bool IsActive { set; get; }

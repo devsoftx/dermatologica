@@ -70,6 +70,7 @@ public partial class Derma_Admin_EditRatet : PageBase
             Id = Guid.NewGuid(),
             Currency = ddlCurrency.SelectedValue,
             UnitCost = Convert.ToDecimal(txtUnitCost.Text.Trim()),
+            UnitCostPartner = Convert.ToDecimal(txtUnitCostPartner.Text.Trim()),
             Observation = txtObservation.Text.Trim(),
             Person=medical,
             Service = BussinessFactory.GetServiceService().Get(new Guid(ddlService.SelectedValue)),
@@ -107,6 +108,7 @@ public partial class Derma_Admin_EditRatet : PageBase
         {
             Rate.Currency = ddlCurrency.SelectedValue;
             Rate.UnitCost = Convert.ToDecimal(txtUnitCost.Text.Trim());
+            Rate.UnitCostPartner = Convert.ToDecimal(txtUnitCostPartner.Text.Trim());
             Rate.Observation = txtObservation.Text.Trim();
             Rate.IsActive = true;
             Rate.LastModified = LastModified;

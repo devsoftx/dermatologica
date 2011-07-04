@@ -25,6 +25,26 @@
         {
             width: 27px;
         }
+        .style7
+        {
+            width: 132px;
+        }
+        .style15
+        {
+            width: 490px;
+        }
+        .style16
+        {
+            width: 16px;
+        }
+        .style17
+        {
+            text-align: right;
+        }
+        .style18
+        {
+            width: 4px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
@@ -57,7 +77,8 @@
             </tr>
         </table>
     </telerik:RadAjaxLoadingPanel>
-    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
+    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" 
+        style="margin-right: 73px">
         <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlReport">
@@ -71,7 +92,7 @@
                                     colspan="2">
                                     Pagos al Personal
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -79,10 +100,10 @@
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
-                                    <asp:Label ID="Label4" runat="server" Text="Fecha"></asp:Label>
+                                <td class="style17">
+                                    <asp:Label ID="Label4" runat="server" Text="Fecha" style="text-align: right"></asp:Label>
                                 </td>
-                                <td>
+                                <td class="style15">
                                     <table>
                                         <tr>
                                             <td>
@@ -106,7 +127,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -114,10 +135,10 @@
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style17">
                                     <asp:Label ID="Label17" runat="server" Text="Tratante"></asp:Label>
                                 </td>
-                                <td>
+                                <td class="style15">
                                     <table>
                                         <tr>
                                             <td style="text-align: left">
@@ -137,53 +158,67 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     &nbsp;</td>
-                                <td>
+                                <td class="style17">
                                     &nbsp;</td>
-                                <td>
-                                    <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" 
-                                        Text="Buscar Atenciones" Width="124px" />
+                                <td class="style15">
+                                    <table class="style3">
+                                        <tr>
+                                            <td class="style7">
+                                                <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" 
+                                                    Text="Buscar Atenciones" Width="124px" />
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlMedicalCareType" runat="server">
+                                                    <asp:ListItem>Normales</asp:ListItem>
+                                                    <asp:ListItem>Por Titularidad</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+                                    </table>
                                     </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;</td>
                             </tr>
                             <tr>
                                 <td>
-                                    &nbsp;</td>
-                                <td>
-                                    &nbsp;</td>
-                                <td style="color: #CC3300">
-                                    Elija las atenciones a pagar haciendo un Check en la columna pagar</td>
-                                <td>
-                                    &nbsp;</td>
+                                    </td>
+                                <td class="style17">
+                                    </td>
+                                <td style="color: #CC3300" class="style15">
+                                    Elija las atenciones a pagar haciendo un Check en la columna pagar
+                                </td>
+                                <td class="style18">
+                                    </td>
                             </tr>
                             <tr>
                                 <td>
                                     &nbsp;</td>
-                                <td>
+                                <td class="style17">
                                     &nbsp;</td>
-                                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
+                                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;" 
+                                    class="style15">
                                     Atenciones no Canceladas
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;</td>
                             </tr>
                             <tr>
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style17">
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style15">
                                     <asp:GridView ID="gvMedicalCares" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                        ForeColor="#333333" GridLines="None" DataKeyNames="Id">
+                                        ForeColor="#333333" GridLines="None" DataKeyNames="Id" Width="650px">
                                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="N#">
@@ -218,6 +253,11 @@
                                                     <asp:Literal ID="litRate" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCost %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="Tarifa Titular">
+                                                <ItemTemplate>
+                                                    <asp:Literal ID="litRate" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCostPartner %>'></asp:Literal>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagar">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="chkPay" runat="server" Checked="false"
@@ -237,7 +277,7 @@
                                         <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
                                     </asp:GridView>
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -245,10 +285,10 @@
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style17">
                                     <asp:Label ID="Label10" runat="server" Text="Monto Adeudado"></asp:Label>
                                 </td>
-                                <td>
+                                <td class="style15">
                                     <table class="style3">
                                         <tr>
                                             <td class="style4">
@@ -266,7 +306,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -274,13 +314,13 @@
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style17">
                                     <asp:Label ID="Label8" runat="server" Text="Concepto"></asp:Label>
                                 </td>
-                                <td>
+                                <td class="style15">
                                     <asp:TextBox ID="txtName" runat="server" Width="400px"></asp:TextBox>
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -288,10 +328,10 @@
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style17">
                                     <asp:Label ID="Label5" runat="server" Text="Documento"></asp:Label>
                                 </td>
-                                <td>
+                                <td class="style15">
                                     <asp:DropDownList ID="ddlInvoice" runat="server">
                                         <asp:ListItem>Recibo</asp:ListItem>
                                         <asp:ListItem>Boleta</asp:ListItem>
@@ -300,7 +340,7 @@
                                     <asp:Label ID="Label7" runat="server" Text="N°"></asp:Label>
                                     <asp:TextBox ID="txtNInvoice" runat="server" Width="110px"></asp:TextBox>
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -308,10 +348,10 @@
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style17">
                                     <asp:Label ID="Label13" runat="server" Text="Medio de Pago"></asp:Label>
                                 </td>
-                                <td>
+                                <td class="style15">
                                     <asp:DropDownList ID="ddlMPayment" runat="server">
                                         <asp:ListItem>Efectivo</asp:ListItem>
                                         <asp:ListItem>Cheque</asp:ListItem>
@@ -320,7 +360,7 @@
                                     </asp:DropDownList>
                                     <asp:Literal ID="litMensaje" runat="server" />
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -331,9 +371,9 @@
                                 <td>
                                     <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
                                 </td>
-                                <td>
+                                <td class="style15">
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>
@@ -344,10 +384,10 @@
                                 <td>
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style15">
                                     &nbsp;
                                 </td>
-                                <td>
+                                <td class="style18">
                                     &nbsp;
                                 </td>
                             </tr>

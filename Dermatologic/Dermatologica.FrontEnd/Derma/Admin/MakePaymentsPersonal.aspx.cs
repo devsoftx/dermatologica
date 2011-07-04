@@ -44,19 +44,48 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
         if (!string.IsNullOrEmpty(ucSearchPersonsMedical.SelectedValue))
         {
             var example = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-            var response = BussinessFactory.GetMedicalCareService().GetMedicalCaresByPerson(example);
+
+            var response = new MedicalCareResponse();
+            if (ddlMedicalCareType.SelectedValue == "Normales")
+            {
+                 response = BussinessFactory.GetMedicalCareService().GetMedicalCaresByPerson(example);
+                 if (response.OperationResult == OperationResult.Success)
+                 {
+                     gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
+                     gvMedicalCares.DataBind();
+                     var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" & p.Session.IsPaid == true);
+                     var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" & p.Session.IsPaid == true);
+
+                     txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCost).ToString();
+                     txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();
+                 }
+            }
+            else//Por titularidad
+            {
+                 response = BussinessFactory.GetMedicalCareService().GetTitularidadByPerson(example);
+                 if (response.OperationResult == OperationResult.Success)
+                 {
+                     gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
+                     gvMedicalCares.DataBind();
+                     var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" & p.Session.IsPaid == true);
+                     var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" & p.Session.IsPaid == true);
+
+                     txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCostPartner).ToString();
+                     txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCostPartner).ToString();
+                 }
+            }
+         
+           
+            
             if (response.OperationResult == OperationResult.Success)
             {
                 gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
                 gvMedicalCares.DataBind();
-                var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD");
-                var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN");
+                var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" &  p.Session.IsPaid ==true);
+                var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" &  p.Session.IsPaid == true);
 
                 txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCost).ToString();
-                txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();
-
-
-                
+                txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();              
             }
         }
     }

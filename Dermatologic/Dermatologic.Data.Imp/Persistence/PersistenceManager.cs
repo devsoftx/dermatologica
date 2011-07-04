@@ -578,6 +578,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.Description, m => m.Column("Description"));
                     cm.Property(x => x.DateAttention, m => m.Column("DateAttention"));
                     cm.Property(x => x.IsPaid, m => m.Column("IsPaid"));
+                    cm.Property(x => x.IsPaidPartner, m => m.Column("IsPaidPartner"));
                     cm.Property(x => x.IsActive, m => m.Column("IsActive"));
                     cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));

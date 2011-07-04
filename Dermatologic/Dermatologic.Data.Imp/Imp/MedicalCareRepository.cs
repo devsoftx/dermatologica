@@ -16,6 +16,15 @@ namespace Dermatologic.Data
                               };
             return Query(query, parameters, values);
         }
+        public IList<MedicalCare> GetTitularidadByPerson(Person example)
+        {
+            const string query = "from MedicalCare m where m.Partner.Id = :personId and m.IsPaidPartner=0";
+            string[] parameters = { "personId" };
+            object[] values = {
+                                  example.Id, 
+                              };
+            return Query(query, parameters, values);
+        }
         
     }
 }

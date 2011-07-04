@@ -9,12 +9,12 @@
         }
         .style2
         {
-            width: 85px;
+            width: 127px;
             text-align: right;
         }
         .style3
         {
-            width: 140px;
+            width: 60px;
         }
         .style4
         {
@@ -113,6 +113,27 @@
                                     </asp:DropDownList>
                     <telerik:RadNumericTextBox ID="txtUnitCost" Runat="server"
                         DataType="System.Decimal" MaxValue="9999" MinValue="0" Width="75px">
+                    </telerik:RadNumericTextBox>
+                </td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style3">
+                    &nbsp;</td>
+                <td class="style2">
+                    <asp:Label ID="Label6" runat="server" Text="Tarifa Por Titularidad"></asp:Label>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ddlCurrency1" runat="server" AppendDataBoundItems="True" 
+                                        Width="50px">
+                                        <asp:ListItem>USD</asp:ListItem>
+                                        <asp:ListItem Value="PEN">PEN</asp:ListItem>
+                                        <asp:ListItem>EUR</asp:ListItem>
+                                    </asp:DropDownList>
+                    <telerik:RadNumericTextBox ID="txtUnitCostPartner" Runat="server"
+                        DataType="System.Decimal" MaxValue="9999" MinValue="0" Width="75px" 
+                        Value="0">
                     </telerik:RadNumericTextBox>
                 </td>
                 <td>

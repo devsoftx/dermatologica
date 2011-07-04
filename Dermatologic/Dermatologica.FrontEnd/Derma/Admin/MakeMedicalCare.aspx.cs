@@ -18,6 +18,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
             LoadPersonType();
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
+        ucSearchPersonsMedical1.PersonTypeControlName = ddlPersonType1.ClientID;
     }
 
     private void SetPayment()
@@ -37,6 +38,16 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         var IdMedication = session.Medication.Id;
         var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
         var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        var partner = new Person();
+
+        if (ucSearchPersonsMedical1.Text != "")
+        {
+            partner = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical1.SelectedValue));
+        }
+        else
+        {
+            partner = null;
+        }
         
 
         var example1 = medical;
@@ -75,6 +86,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
                                   Pacient = medication.Patient,
                                   Session = session,
                                   Medical = medical,
+                                  Partner=partner,
                                   Rate=rate,                                                                           
                               };
 
@@ -103,6 +115,8 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     {
         var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
         BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
+        BindControl<PersonType>.BindDropDownList(ddlPersonType1, types);
+
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)
@@ -119,6 +133,11 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     }
 
     protected void ddlPersonType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        ucSearchPersonsMedical.SelectedValue = string.Empty;
+        ucSearchPersonsMedical.Text = string.Empty;
+    }
+    protected void ddlPersonType1_SelectedIndexChanged(object sender, EventArgs e)
     {
         ucSearchPersonsMedical.SelectedValue = string.Empty;
         ucSearchPersonsMedical.Text = string.Empty;

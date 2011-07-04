@@ -29,5 +29,22 @@ namespace Dermatologic.Services
                 return response;
             }
         }
+        public MedicalCareResponse GetTitularidadByPerson(Person example)
+        {
+            var response = new MedicalCareResponse();
+            try
+            {
+                IMedicalCareRepository repository = new MedicalCareRepository();
+                response.MedicalCares = repository.GetTitularidadByPerson(example);
+                response.OperationResult = OperationResult.Success;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Message = e.Message;
+                response.OperationResult = OperationResult.Failed;
+                return response;
+            }
+        }
     }
 }
