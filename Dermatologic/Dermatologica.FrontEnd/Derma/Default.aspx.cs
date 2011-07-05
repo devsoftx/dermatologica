@@ -236,7 +236,6 @@ public partial class Derma_Default : PageBase
         if (e.Container.Mode == SchedulerFormMode.AdvancedEdit)
         {
             ConfigureNotifityEach(e);
-            var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(e.Appointment.ID.ToString()));
         }
     }
 

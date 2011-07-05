@@ -69,7 +69,7 @@
                                         AdvancedOfEvery="de cada" AdvancedRecurEvery="repetir cada" AdvancedRecurrence="repetir"
                                         AdvancedReset="restablecer excepciones" AdvancedSecond="segundo" AdvancedStartDateRequired="Fecha inicial es necesaria"
                                         AdvancedStartTimeBeforeEndTime="Fecha Final debe ser mayor que la fecha inicial"
-                                        AdvancedStartTimeRequired="Hora inicial es necesaria" AdvancedSubject="Título"
+                                        AdvancedStartTimeRequired="Hora inicial es necesaria" AdvancedSubject="Tratamiento"
                                         AdvancedSubjectRequired="Debe ingresar una descripción su cita" AdvancedThe="El"
                                         AdvancedThird="tercero" AdvancedTo="Fecha y hora finales" AdvancedWeekly="Semanal" AdvancedWeeks="semanas en"
                                         AdvancedWorking="trabajando..." AdvancedYearly="Anual" Cancel="Cancelar" ConfirmCancel="Cancelar"

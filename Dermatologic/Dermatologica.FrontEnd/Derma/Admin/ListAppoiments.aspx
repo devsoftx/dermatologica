@@ -24,10 +24,10 @@
                     <table>
                         <tr>
                             <td style="text-align: right">
-                                <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar por Medico"></asp:Label>
+                                <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar por Medico/Cosmeatra"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtSearch" runat="server" Width="360px"></asp:TextBox>
+                                <asp:TextBox ID="txtSearch" runat="server" Width="450px"></asp:TextBox>
                             </td>
                             <td>
                                 <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="80px" OnClick="btnSearch_Click" />
@@ -51,10 +51,10 @@
                             <asp:BoundField DataField="StartDate" HeaderText="Fecha" />
                             <asp:BoundField DataField="Patient" HeaderText="Paciente" />
                             <asp:BoundField DataField="Description" HeaderText="Descripción" />
-                            <asp:BoundField DataField="Subject" HeaderText="Motivo" />
+                            <asp:BoundField DataField="Subject" HeaderText="Tratamiento" />
                             <asp:TemplateField HeaderText="Oficina/Consultorio">
                                 <ItemTemplate>
-                                    <asp:Literal ID="litOffice" runat="server" Text='<%# ((Office)Eval("Office")).Name %>' />
+                                    <asp:Literal ID="litOffice" runat="server" Text='<%# Eval("Office") != null ? ((Office)Eval("Office")).Name : string.Empty %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Op. Medico">
