@@ -100,7 +100,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                 break;
             }
 
-            if (((CheckBox)row.FindControl("chkIsPaid")).Checked & ((CheckBox)row.FindControl("chkPay")).Checked)
+            if ((((CheckBox)row.FindControl("chkIsPaid")).Checked & ((CheckBox)row.FindControl("chkPay")).Checked) | Convert.ToDecimal(((Literal)row.FindControl("litPrice")).Text)==0)
             {
                 var IdMedicalCare = new Guid(gvMedicalCares.DataKeys[row.RowIndex][0].ToString());
                 var medicalCare = BussinessFactory.GetMedicalCareService().Get(IdMedicalCare);
@@ -184,7 +184,12 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                     litMensaje.Text = string.Format("No se pudo Guardar el Pago, Error : {0}", e.Message);
                 }
             }
-        }
+            else
+            {
+                litMensaje.Text = string.Format("Falta Cancelar las sesiones por el Paciente");
+            }
+       
+        }      
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)

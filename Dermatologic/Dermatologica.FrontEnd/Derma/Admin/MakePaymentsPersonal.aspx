@@ -253,7 +253,7 @@
                                                     <asp:Literal ID="litUnitCost" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCost %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                             <asp:TemplateField HeaderText="Tarifa Titular">
+                                             <asp:TemplateField HeaderText="Titularidad">
                                                 <ItemTemplate>
                                                     <asp:Literal ID="litUnitCostPartner" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCostPartner %>'></asp:Literal>
                                                 </ItemTemplate>
