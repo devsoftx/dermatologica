@@ -118,7 +118,7 @@
                             <asp:BoundField DataField="Currency" HeaderText="Moneda" />
                             <asp:BoundField DataField="UnitCost" HeaderText="Tarifa" />
                                <asp:BoundField DataField="UnitCostPartner" 
-                                HeaderText="Tarifa Por Titularidad" />
+                                HeaderText="Tarifa Partner" />
                              <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                            <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'

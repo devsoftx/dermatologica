@@ -18,7 +18,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
             LoadPersonType();
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
-        ucSearchPersonsMedical1.PersonTypeControlName = ddlPersonType1.ClientID;
+       // ucSearchPersonsMedical1.PersonTypeControlName = ddlPersonType1.ClientID;
     }
 
     private void SetPayment()
@@ -38,16 +38,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         var IdMedication = session.Medication.Id;
         var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
         var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-        var partner = new Person();
-
-        if (ucSearchPersonsMedical1.Text != "")
-        {
-            partner = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical1.SelectedValue));
-        }
-        else
-        {
-            partner = null;
-        }
+       
         
 
         var example1 = medical;
@@ -70,6 +61,17 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
            }
         }
 
+        var partner = new Person();
+
+        if (rate.UnitCostPartner != 0)
+        {
+        partner = BussinessFactory.GetPersonService().Get(new Guid("754124e0-7551-4e32-8dc4-5c4b80bad8e2"));
+        }
+        else
+        {
+            partner = null;
+        }
+
        
 
 
@@ -78,6 +80,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
                                   Id = Guid.NewGuid(),
                                   Description = txtDescription.Text.Trim(),
                                   DateAttention = Convert.ToDateTime(CreationDate),
+                                  IsReplacement=chkIsReplacement.Checked,
                                   IsActive = true,
                                   LastModified = LastModified,
                                   CreationDate = CreationDate,
@@ -115,7 +118,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     {
         var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
         BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
-        BindControl<PersonType>.BindDropDownList(ddlPersonType1, types);
+        //BindControl<PersonType>.BindDropDownList(ddlPersonType1, types);
 
     }
 
@@ -137,9 +140,9 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         ucSearchPersonsMedical.SelectedValue = string.Empty;
         ucSearchPersonsMedical.Text = string.Empty;
     }
-    protected void ddlPersonType1_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        ucSearchPersonsMedical.SelectedValue = string.Empty;
-        ucSearchPersonsMedical.Text = string.Empty;
-    }
+    //protected void ddlPersonType1_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    ucSearchPersonsMedical1.SelectedValue = string.Empty;
+    //    ucSearchPersonsMedical1.Text = string.Empty;
+    //}
 }

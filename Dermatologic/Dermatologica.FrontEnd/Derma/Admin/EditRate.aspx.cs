@@ -63,6 +63,10 @@ public partial class Derma_Admin_EditRatet : PageBase
     }
     private void Save()
     {
+        if (txtUnitCostPartner.Text == "")
+        {
+            txtUnitCostPartner.Text = "0";
+        }
         var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
 
         var Rate = new Rate

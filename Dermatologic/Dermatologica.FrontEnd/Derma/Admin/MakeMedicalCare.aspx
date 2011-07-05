@@ -44,6 +44,10 @@
         {
             width: 112px;
         }
+        .style9
+        {
+            width: 373px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
@@ -126,7 +130,7 @@
                         onselectedindexchanged="ddlPersonType_SelectedIndexChanged">
                     </asp:DropDownList>
                             </td>
-                            <td>
+                            <td class="style9">
                 <asp:UpdatePanel ID="upPanel" runat="server">
                     <ContentTemplate>
                         <uc1:wucSearchPersons ID="ucSearchPersonsMedical" runat="server" WebServiceMethod="LoadPersons" />
@@ -137,45 +141,14 @@
                     </Triggers>
                 </asp:UpdatePanel>                    
                             </td>
-                        </tr>
-                    </table>
-                </td>
-                <td class="style1">
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td class="style7">
-                    &nbsp;</td>
-                <td class="style5">
-                    <asp:Label ID="Label3" runat="server" Text="Partner"></asp:Label>
-                </td>
-                <td class="style2">
-                    <table class="style3">
-                        <tr>
-                            <td class="style4">
-                    <asp:DropDownList ID="ddlPersonType1" runat="server" Width="150px" 
-                        AutoPostBack="True" 
-                        onselectedindexchanged="ddlPersonType1_SelectedIndexChanged">
-                    </asp:DropDownList>
-                            </td>
-                            <td>
-                <asp:UpdatePanel ID="upPanel1" runat="server">
-                    <ContentTemplate>
-                        <uc1:wucSearchPersons ID="ucSearchPersonsMedical1" runat="server" 
-                            WebServiceMethod="LoadPersons" />
-                    </ContentTemplate>
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="ddlPersonType1" 
-                            EventName="SelectedIndexChanged" />
-                    </Triggers>
-                </asp:UpdatePanel>                    
+                            <td class="style9">
+                                <asp:CheckBox ID="chkIsReplacement" runat="server" Text="Reemplaza" />
                             </td>
                         </tr>
                     </table>
                 </td>
                 <td class="style1">
-                    &nbsp;
-                </td>
+                    &nbsp;</td>
             </tr>
             <tr>
                 <td class="style7">

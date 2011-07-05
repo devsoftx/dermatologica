@@ -177,7 +177,7 @@
                                             <td>
                                                 <asp:DropDownList ID="ddlMedicalCareType" runat="server">
                                                     <asp:ListItem>Normales</asp:ListItem>
-                                                    <asp:ListItem>Por Titularidad</asp:ListItem>
+                                                    <asp:ListItem>Partner</asp:ListItem>
                                                 </asp:DropDownList>
                                             </td>
                                         </tr>
@@ -253,7 +253,7 @@
                                                     <asp:Literal ID="litUnitCost" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCost %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                             <asp:TemplateField HeaderText="Titularidad">
+                                             <asp:TemplateField HeaderText="Partner">
                                                 <ItemTemplate>
                                                     <asp:Literal ID="litUnitCostPartner" runat="server" Text='<%# ((Rate)Eval("Rate")).UnitCostPartner %>'></asp:Literal>
                                                 </ItemTemplate>

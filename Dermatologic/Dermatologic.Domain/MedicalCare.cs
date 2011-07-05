@@ -31,6 +31,9 @@ namespace Dermatologic.Domain
         public virtual DateTime? DateAttention { set; get; }
 
         [DataMember]
+        public virtual bool IsReplacement { set; get; }
+
+        [DataMember]
         public virtual bool IsPaid { set; get; }
 
         [DataMember]

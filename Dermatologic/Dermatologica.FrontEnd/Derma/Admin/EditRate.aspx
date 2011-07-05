@@ -122,7 +122,7 @@
                 <td class="style3">
                     &nbsp;</td>
                 <td class="style2">
-                    <asp:Label ID="Label6" runat="server" Text="Tarifa Por Titularidad"></asp:Label>
+                    <asp:Label ID="Label6" runat="server" Text="Tarifa Partner"></asp:Label>
                 </td>
                 <td>
                     <asp:DropDownList ID="ddlCurrency1" runat="server" AppendDataBoundItems="True" 
