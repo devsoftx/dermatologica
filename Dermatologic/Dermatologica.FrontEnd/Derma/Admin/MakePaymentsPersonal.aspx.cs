@@ -46,35 +46,49 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
             var example = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
 
             var response = new MedicalCareResponse();
-            if (ddlMedicalCareType.SelectedValue == "Normales")
-            {
-                 response = BussinessFactory.GetMedicalCareService().GetMedicalCaresByPerson(example);
-                 if (response.OperationResult == OperationResult.Success)
-                 {
-                     gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
-                     gvMedicalCares.DataBind();
-                     var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" & p.Session.IsPaid == true);
-                     var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" & p.Session.IsPaid == true);
 
-                     txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCost).ToString();
-                     txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();
-                 }
-            }
-            else//Por titularidad
-            {
-                 response = BussinessFactory.GetMedicalCareService().GetTitularidadByPerson(example);
-                 if (response.OperationResult == OperationResult.Success)
-                 {
-                     gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
-                     gvMedicalCares.DataBind();
-                     var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" & p.Session.IsPaid == true);
-                     var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" & p.Session.IsPaid == true);
+            switch (ddlMedicalCareType.SelectedValue)
+            { 
+                case "Normales":
+                    response = BussinessFactory.GetMedicalCareService().GetMedicalCaresByPerson(example);
+                     if (response.OperationResult == OperationResult.Success)
+                     {
+                         gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
+                         gvMedicalCares.DataBind();
+                         var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" & p.Session.IsPaid == true);
+                         var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" & p.Session.IsPaid == true);
 
-                     txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCostPartner).ToString();
-                     txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCostPartner).ToString();
-                 }
-            }
-         
+                         txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCost).ToString();
+                         txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();
+                     }
+                    break;
+                case "Por Partner":
+                     response = BussinessFactory.GetMedicalCareService().GetTitularidadByPerson(example);
+                     if (response.OperationResult == OperationResult.Success)
+                     {
+                         gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
+                         gvMedicalCares.DataBind();
+                         var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" & p.Session.IsPaid == true);
+                         var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" & p.Session.IsPaid == true);
+
+                         txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCostPartner).ToString();
+                         txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCostPartner).ToString();
+                     }
+                    break;
+                case "Por Reemplazo":
+                     response = BussinessFactory.GetMedicalCareService().GetReemplazosByPerson(example);
+                     if (response.OperationResult == OperationResult.Success)
+                     {
+                         gvMedicalCares.DataSource = response.MedicalCares.OrderBy(p => p.Session.RowId).ToList();
+                         gvMedicalCares.DataBind();
+                         var MedicalCareUSD = response.MedicalCares.Where(p => p.Rate.Currency == "USD" & p.Session.IsPaid == true);
+                         var MedicalCarePEN = response.MedicalCares.Where(p => p.Rate.Currency == "PEN" & p.Session.IsPaid == true);
+
+                         txtPayUSD.Text = MedicalCareUSD.Sum(p => p.Rate.UnitCost).ToString();
+                         txtPayPEN.Text = MedicalCarePEN.Sum(p => p.Rate.UnitCost).ToString();
+                     }
+                    break;
+            }        
                    
            
         }
@@ -124,19 +138,25 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                                       ModifiedBy = ModifiedBy,
                                       CreatedBy = CreatedBy
                                   };
-                if (ddlMedicalCareType.SelectedValue == "Normales")
-                {
-                    Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCost")).Text);
-                    medicalCare.IsPaid = true;
-                  
-                }
-                else
-                {
-                    Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCostPartner")).Text);
-                    medicalCare.IsPaidPartner = true;
-                   
+               
+                switch (ddlMedicalCareType.SelectedValue)
+                 { 
+                    case "Normales":
+                         Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCost")).Text);
+                         medicalCare.IsPaid = true;
+                        break;
+                    case "Por Partner":
+                         Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCostPartner")).Text);
+                         medicalCare.IsPaidPartner = true;
+                        break;
+                    case "Por Reemplazo":
+                         Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCost")).Text);
+                         medicalCare.IsPaid = true;
+                        break;
+
                 }
 
+                   
                 var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
                 Invoice.Personal = medical;
 

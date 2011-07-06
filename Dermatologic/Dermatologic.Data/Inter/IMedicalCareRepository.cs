@@ -7,5 +7,6 @@ namespace Dermatologic.Data
     {
         IList<MedicalCare> GetMedicalCaresByPerson(Person example);
         IList<MedicalCare> GetTitularidadByPerson(Person example);
+        IList<MedicalCare> GetReemplazosByPerson(Person example);
     }
 }

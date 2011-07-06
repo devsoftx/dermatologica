@@ -7,6 +7,7 @@ namespace Dermatologic.Services
     {
         MedicalCareResponse GetMedicalCaresByPerson(Person example);
         MedicalCareResponse GetTitularidadByPerson(Person example);
+        MedicalCareResponse GetReemplazosByPerson(Person example);
     }
 }
 

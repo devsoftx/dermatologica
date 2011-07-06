@@ -177,7 +177,8 @@
                                             <td>
                                                 <asp:DropDownList ID="ddlMedicalCareType" runat="server">
                                                     <asp:ListItem>Normales</asp:ListItem>
-                                                    <asp:ListItem>Partner</asp:ListItem>
+                                                    <asp:ListItem>Por Partner</asp:ListItem>
+                                                    <asp:ListItem>Por Reemplazo</asp:ListItem>
                                                 </asp:DropDownList>
                                             </td>
                                         </tr>
