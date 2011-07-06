@@ -95,12 +95,12 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
     {
         foreach (GridViewRow row in gvMedicalCares.Rows)
         {
-            if (Convert.ToDecimal(txtPayPEN.Text) == 0 & Convert.ToDecimal(txtPayUSD.Text) == 0)
-            {
-                break;
-            }
+            //if (Convert.ToDecimal(txtPayPEN.Text) == 0 & Convert.ToDecimal(txtPayUSD.Text) == 0)
+            //{
+            //    break;
+            //}
 
-            if ((((CheckBox)row.FindControl("chkIsPaid")).Checked & ((CheckBox)row.FindControl("chkPay")).Checked) | Convert.ToDecimal(((Literal)row.FindControl("litPrice")).Text)==0)
+            if ((((CheckBox)row.FindControl("chkIsPaid")).Checked | Convert.ToDecimal(((Literal)row.FindControl("litPrice")).Text) == 0) & ((CheckBox)row.FindControl("chkPay")).Checked)
             {
                 var IdMedicalCare = new Guid(gvMedicalCares.DataKeys[row.RowIndex][0].ToString());
                 var medicalCare = BussinessFactory.GetMedicalCareService().Get(IdMedicalCare);
@@ -200,11 +200,11 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
             Response.Redirect(string.Format("~/Derma/Admin/EditExchangeRate.aspx?action=new&returnUrl={0}",
                                             Page.Request.RawUrl));
         }
-        if (Convert.ToDecimal(txtPayUSD.Text) == 0 & Convert.ToDecimal(txtPayPEN.Text) == 0)
-        {
-            litMensaje.Text = string.Format("El Monto a Pagar No puede Ser Cero");
-            return;
-        }
+        //if (Convert.ToDecimal(txtPayUSD.Text) == 0 & Convert.ToDecimal(txtPayPEN.Text) == 0)
+        //{
+        //    litMensaje.Text = string.Format("El Monto a Pagar No puede Ser Cero");
+        //    return;
+        //}
         Save();
     }
 }

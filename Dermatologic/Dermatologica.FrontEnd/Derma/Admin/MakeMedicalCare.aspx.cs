@@ -65,7 +65,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
 
         if (rate.UnitCostPartner != 0)
         {
-        partner = BussinessFactory.GetPersonService().Get(new Guid("754124e0-7551-4e32-8dc4-5c4b80bad8e2"));
+        partner = BussinessFactory.GetPersonService().Get(new Guid("754124e0-7551-4e32-8dc4-5c4b80bad8e2"));//Ursula dueña
         }
         else
         {
