@@ -46,8 +46,8 @@ public partial class Derma_Admin_EditPerson : PageBase
     {
         var person = BussinessFactory.GetPersonService().Get(id);
         txtNombres.Text = person.FirstName;
-        txtApellidoMaterno.Text = person.LastNameP;
-        txtApellidoPaterno.Text = person.LastNameM;
+        txtApellidoPaterno.Text = person.LastNameP;
+        txtApellidoMaterno.Text = person.LastNameM;
         txtTelefono.Text = person.Phone;
         txtTelefonoEmergencia.Text = person.EmergencyPhone;
         txtNumeroDocumento.Text = person.DocumentNumber;

@@ -21,6 +21,7 @@ public partial class Derma_Admin_ListRates : PageBase
            
             LoadPersonType();
            
+           
         }
        // GetRates();
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
@@ -31,7 +32,10 @@ public partial class Derma_Admin_ListRates : PageBase
         {
             case "cmd_editar":
                 var id = new Guid(e.CommandArgument.ToString());
+                //var idpersontype=new Guid(ucSearchPersonsMedical.SelectedValue);
+                //Response.Redirect(string.Format("EditRate.aspx?id={0}&idpersontype={1}&action=edit", id), true);
                 Response.Redirect(string.Format("EditRate.aspx?id={0}&action=edit", id), true);
+                //idSession={0}&idMedication={1}
                 break;
             case "cmd_eliminar":
                 DeleteRate(new Guid(e.CommandArgument.ToString()));

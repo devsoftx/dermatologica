@@ -42,6 +42,9 @@ public partial class Derma_Admin_EditRatet : PageBase
         ddlCurrency.SelectedValue = Rate.Currency;
         txtUnitCost.Text = Rate.UnitCost.ToString();
         txtObservation.Text = Rate.Observation;
+        ucSearchPersonsMedical.SelectedValue = Convert.ToString(Rate.Person.PersonType.Id);
+        ddlPersonType.SelectedValue = Convert.ToString(Rate.Person.PersonType.Id);
+        ucSearchPersonsMedical.Text=Rate.Person.CompleteName;
 
     }
     private void LoadPersonType()

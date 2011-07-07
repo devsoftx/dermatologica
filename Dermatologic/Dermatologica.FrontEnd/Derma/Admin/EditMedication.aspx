@@ -192,8 +192,6 @@
 										DataType="System.Int32" MaxValue="99" MinValue="1" Width="35px">
 										<NumberFormat AllowRounding="False" DecimalDigits="0" />
 									</telerik:RadNumericTextBox>
-									<asp:Button ID="btnAddSessions" runat="server" onclick="btnAddSessions_Click" 
-										Text="Agregar" />
 								</td>
 								<td>
 									&nbsp;
@@ -207,6 +205,8 @@
 										DataType="System.Decimal" MaxValue="99" MinValue="0" Width="35px">
 										<NumberFormat AllowRounding="False" DecimalDigits="0" />
 									</telerik:RadNumericTextBox>
+								    <asp:Button ID="btnAddSessions" runat="server" onclick="btnAddSessions_Click" 
+                                        Text="Agregar" />
 								</td>
 								<td>
 									&nbsp;

@@ -52,7 +52,7 @@
                 <td class="style3">
                     &nbsp;</td>
                 <td class="style2">
-                    <asp:Label ID="Label5" runat="server" Text="Tratante"></asp:Label>
+                    <asp:Label ID="Label5" runat="server" Text="Tratamiento"></asp:Label>
                 </td>
                 <td>
                     <asp:DropDownList ID="ddlService" runat="server">
@@ -147,7 +147,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtObservation" runat="server" Width="502px" Rows="5" 
-                        TextMode="MultiLine"></asp:TextBox>
+                        TextMode="MultiLine" Height="48px"></asp:TextBox>
                 </td>
                 <td>
                     &nbsp;</td>
