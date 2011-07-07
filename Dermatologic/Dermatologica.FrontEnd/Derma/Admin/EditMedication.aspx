@@ -98,7 +98,7 @@
 							</tr>
 							<tr>
 								<td >
-									<asp:Label ID="Label5" runat="server" Text="Servicio"></asp:Label>
+									<asp:Label ID="Label5" runat="server" Text="Tratamiento"></asp:Label>
 								</td>
 								<td>
 									<asp:DropDownList ID="dwService" runat="server" AutoPostBack="True" 
@@ -307,9 +307,10 @@
 							</tr>
 							<tr>
 								<td >
-									<asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" Text="Aceptar" />
-								</td>
+									&nbsp;</td>
 								<td>
+									<asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" 
+                                        Text="Aceptar" />
 									<asp:Button ID="btnCancelar" runat="server" OnClick="btnCancelar_Click" Text="Cancelar" />
 								</td>
 								<td>

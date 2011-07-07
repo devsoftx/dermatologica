@@ -185,7 +185,7 @@ public partial class Derma_Admin_EditMedication : PageBase
             var example = new Person
                               {
                                   DocumentNumber = txtDni.Text.Trim(),
-                                  DocumentType = Convert.ToInt32(ddlDocumentType.SelectedValue)
+                                  DocumentType = Convert.ToInt32(ddlDocumentType.SelectedIndex)
                               };
             var examples = BussinessFactory.GetPersonService().GetByExample(example);
             if (examples.Count > 0)
