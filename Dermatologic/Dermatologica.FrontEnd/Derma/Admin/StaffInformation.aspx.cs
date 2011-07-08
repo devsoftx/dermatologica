@@ -15,17 +15,21 @@ public partial class Derma_Admin_StaffInformation : PageBase
             var idPerson = Request.QueryString.Get("id");
             if (!string.IsNullOrEmpty(idPerson))
             {
-                LoadEmployee(new Guid(idPerson));
+                LoadStaffInformation(new Guid(idPerson));
             }
         }
     }
 
-    private void LoadEmployee(Guid? idPerson)
+    private void LoadStaffInformation(Guid? idPerson)
     {
-        var employee = BussinessFactory.GetPersonService().Get(idPerson);
+        var employee = BussinessFactory.GetStaffInformationService().Get(idPerson);
         if (employee != null)
         {
-
+            //Update
+        }
+        else
+        {
+            //Save
         }
     }
 }

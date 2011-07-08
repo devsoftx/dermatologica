@@ -26,7 +26,7 @@ namespace Dermatologic.Domain
 
         public virtual bool Equals(StaffInformation other)
         {
-            throw new NotImplementedException();
+            return Id.Equals(other.Id);
         }
     }
 }
