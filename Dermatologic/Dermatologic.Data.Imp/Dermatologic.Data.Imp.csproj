@@ -92,7 +92,9 @@
       <Name>Dermatologic.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\Castle.Core.dll" />
     <Content Include="Lib\ConfOrm.dll" />

@@ -6,8 +6,23 @@ namespace Dermatologic.Domain
     [DataContract]
     public class StaffInformation : IEquatable<StaffInformation>
     {
+        private CostCenter _costCenter;
+
+        public StaffInformation()
+        {
+            _costCenter = new CostCenter();
+        
+        }
+                
         [DataMember]
         public virtual Guid? Id { set; get; }
+
+        [DataMember]
+        public virtual CostCenter CostCenter
+        {
+            get { return _costCenter; }
+            set { _costCenter = value; }
+        }
 
         [DataMember]
         public virtual bool IsActive { set; get; }
@@ -23,6 +38,8 @@ namespace Dermatologic.Domain
 
         [DataMember]
         public virtual Guid? ModifiedBy { set; get; }
+
+      
 
         public virtual bool Equals(StaffInformation other)
         {

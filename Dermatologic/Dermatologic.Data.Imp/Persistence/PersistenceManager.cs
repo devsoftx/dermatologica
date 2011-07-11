@@ -392,6 +392,20 @@ namespace Dermatologic.Data.Persistence
                         x.ManyToMany(g => g.Class(typeof(CashMovement)));
                     });
             });
+            mapper.Class<StaffInformation>(cm =>
+            {
+                cm.Id(o => o.Id, im => im.Generator(Generators.Assigned));
+                cm.ManyToOne(
+                    x => x.CostCenter,
+                    m =>
+                    {
+                        m.Column("IdCostCenter");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+               
+
+            });
 
             mapper.Class<Appointment>(cm =>
             {
