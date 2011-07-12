@@ -95,6 +95,12 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
                               };
 
         session.IsCompleted = true;
+
+        if (chkIsReplacement.Checked == true)
+        { 
+             var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+             medicalCare.CostCenter = StaffInformation.CostCenter;
+        }
         try
         {
             var response = BussinessFactory.GetMedicalCareService().Save(medicalCare);
@@ -124,9 +130,21 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     }
     private void LoadCostCenterR()
     {
-        var costCenters = BussinessFactory.GetCostCenterService().GetAll().Where(p => p.Id.ToString() != "ae46c412-bebf-4e3a-8351-1d5f755002b9").ToList();
-       // .Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenterR, costCenters);
+       
+        //var costcenterId=Convert.ToString(StaffInformations.CostCenter.Id);
+
+      //  var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+
+        if (StaffInformation.CostCenter.Id.HasValue)
+        {
+              var CostCenterId=StaffInformation.CostCenter.Id.Value.ToString();
+              var costCenters = BussinessFactory.GetCostCenterService().GetAll().Where(p => p.Id.ToString() != CostCenterId).ToList();
+              BindControl<CostCenter>.BindDropDownList(ddlCostCenterR, costCenters);
+        }
+       
+        //devuelve los centros de costo en los cuales el no trabaja
+       
 
     }
 
@@ -148,11 +166,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         ucSearchPersonsMedical.SelectedValue = string.Empty;
         ucSearchPersonsMedical.Text = string.Empty;
     }
-    //protected void ddlPersonType1_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    ucSearchPersonsMedical1.SelectedValue = string.Empty;
-    //    ucSearchPersonsMedical1.Text = string.Empty;
-    //}
+  
     protected void chkIsReplacement_CheckedChanged(object sender, EventArgs e)
     {
         if (chkIsReplacement.Checked == true)
