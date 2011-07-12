@@ -11,6 +11,7 @@ namespace Dermatologic.Domain
         private Person _pacient;
         private Person _partner;
         private Rate _rate;
+        private CostCenter _costcenter;
         
         public MedicalCare()
         {
@@ -19,6 +20,7 @@ namespace Dermatologic.Domain
              _pacient = new Person();
              _partner = new Person();
              _rate = new Rate();
+             _costcenter = new CostCenter();
         }
 
         [DataMember]
@@ -86,7 +88,11 @@ namespace Dermatologic.Domain
             get { return _rate; }
             set { _rate = value; }
         }
-
+        public virtual CostCenter CostCenter
+        {
+            get { return _costcenter; }
+            set { _costcenter = value; }
+        }
         public virtual bool Equals(MedicalCare other)
         {
             return Id.Equals(other.Id);

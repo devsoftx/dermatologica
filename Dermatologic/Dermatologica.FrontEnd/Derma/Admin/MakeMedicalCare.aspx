@@ -17,6 +17,7 @@
         .style2
         {
             width: 568px;
+            margin-left: 80px;
         }
         .style3
         {
@@ -47,6 +48,14 @@
         .style9
         {
             width: 373px;
+        }
+        .style10
+        {
+            width: 86px;
+        }
+        .style11
+        {
+            width: 17px;
         }
     </style>
 </asp:Content>
@@ -142,10 +151,36 @@
                 </asp:UpdatePanel>                    
                             </td>
                             <td class="style9">
-                                <asp:CheckBox ID="chkIsReplacement" runat="server" Text="Reemplaza" />
-                            </td>
+                                &nbsp;</td>
                         </tr>
                     </table>
+                </td>
+                <td class="style1">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style7">
+                    &nbsp;</td>
+                <td class="style5">
+                    &nbsp;</td>
+                <td class="style2">
+                       <table class="style3">
+                           <tr>
+                               <td class="style10">
+                       <asp:CheckBox ID="chkIsReplacement" runat="server" Text="Reemplaza" 
+                        AutoPostBack="True" oncheckedchanged="chkIsReplacement_CheckedChanged" TextAlign="Left" />
+                                                 
+                               </td>
+                               <td class="style11">
+                                   <asp:Label ID="Label6" runat="server" Text="En"></asp:Label>
+                               </td>
+                               <td>
+                                                 
+                    <asp:DropDownList ID="ddlCostCenterR" runat="server" Width="83px">
+                    </asp:DropDownList>
+                               </td>
+                           </tr>
+                       </table>
                 </td>
                 <td class="style1">
                     &nbsp;</td>

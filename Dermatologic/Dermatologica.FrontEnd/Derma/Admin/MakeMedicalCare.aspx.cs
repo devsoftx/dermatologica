@@ -16,6 +16,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
             SetPayment();
             txtDateAttention.Text = Convert.ToString(CreationDate);
             LoadPersonType();
+           
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
        // ucSearchPersonsMedical1.PersonTypeControlName = ddlPersonType1.ClientID;
@@ -121,6 +122,13 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         //BindControl<PersonType>.BindDropDownList(ddlPersonType1, types);
 
     }
+    private void LoadCostCenterR()
+    {
+        var costCenters = BussinessFactory.GetCostCenterService().GetAll().Where(p => p.Id.ToString() != "ae46c412-bebf-4e3a-8351-1d5f755002b9").ToList();
+       // .Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();
+        BindControl<CostCenter>.BindDropDownList(ddlCostCenterR, costCenters);
+
+    }
 
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
@@ -145,4 +153,27 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     //    ucSearchPersonsMedical1.SelectedValue = string.Empty;
     //    ucSearchPersonsMedical1.Text = string.Empty;
     //}
+    protected void chkIsReplacement_CheckedChanged(object sender, EventArgs e)
+    {
+        if (chkIsReplacement.Checked == true)
+        {
+
+            if (ucSearchPersonsMedical.Text == "")
+            {
+                litMensaje.Text = ("Falta Ingresar el Operador Medico");
+                chkIsReplacement.Checked = false;
+            }
+            else
+            {
+                LoadCostCenterR();
+            }
+
+
+        }
+        else
+        {
+            ddlCostCenterR.DataSource = null;
+        }
+
+    }
 }

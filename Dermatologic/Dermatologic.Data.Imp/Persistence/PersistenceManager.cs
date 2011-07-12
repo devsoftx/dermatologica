@@ -310,6 +310,14 @@ namespace Dermatologic.Data.Persistence
                      m.Fetch(FetchMode.Join);
                      m.NotNullable(true);
                  });
+                cm.ManyToOne(
+                 x => x.CostCenter,
+                 m =>
+                 {
+                     m.Column("IdCostCenterR");
+                     m.Fetch(FetchMode.Join);
+                     m.NotNullable(false);
+                 });
             });
 
             mapper.Class<CashMovement>(cm =>
