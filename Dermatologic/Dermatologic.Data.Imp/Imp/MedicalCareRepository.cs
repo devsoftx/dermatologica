@@ -9,7 +9,7 @@ namespace Dermatologic.Data
                
         public IList<MedicalCare> GetMedicalCaresByPerson(Person example)
         {
-            const string query = "from MedicalCare m where m.Medical.Id = :personId and m.IsPaid=0";
+            const string query = "from MedicalCare m where m.Medical.Id = :personId and m.IsPaid=0 and m.IsReplacement=0";
             string[] parameters = { "personId" };
             object[] values = {
                                   example.Id, 

@@ -370,9 +370,10 @@
                                     &nbsp;
                                 </td>
                                 <td>
-                                    <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
-                                </td>
+                                    &nbsp;</td>
                                 <td class="style15">
+                                    <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" 
+                                        Text="Aceptar" />
                                 </td>
                                 <td class="style18">
                                     &nbsp;
