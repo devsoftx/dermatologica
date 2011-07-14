@@ -163,20 +163,23 @@
                         Text="Alergia Analgesicos" />
                 </td>
                 <td>
-                    <asp:CheckBox ID="Label17" runat="server" Text="Alergia Med. Asma" />
+                    <asp:CheckBox ID="HaveAlergiaAsma" runat="server" Text="Alergia Med. Asma" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:CheckBox ID="Label15" runat="server" Text="Alergia Aspirinas" />
+                    <asp:CheckBox ID="HaveAlergiaAspirinas" runat="server" 
+                        Text="Alergia Aspirinas" />
                 </td>
                 <td>
-                    <asp:CheckBox ID="Label18" runat="server" Text="Alergia Med. Rinitis" />
+                    <asp:CheckBox ID="HaveAlergiaRinitis" runat="server" 
+                        Text="Alergia Med. Rinitis" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:CheckBox ID="Label16" runat="server" Text="Alergia Corticoides" />
+                    <asp:CheckBox ID="HaveAlergiaCorticoides" runat="server" 
+                        Text="Alergia Corticoides" />
                 </td>
                 <td>
                     &nbsp;
@@ -200,7 +203,7 @@
             </tr>
             <tr>
                 <td>
-                    <asp:CheckBox ID="HaveListing" runat="server" Text="Lifting" />
+                    <asp:CheckBox ID="HaveLifting" runat="server" Text="Lifting" />
                 </td>
                 <td>
                     <asp:CheckBox ID="HaveRellenos" runat="server" Text="Rellenos" />
@@ -276,6 +279,16 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtDateLastRegla" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">
+                                <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" 
+                                    onclick="btnAceptar_Click" />
+                </td>
+                <td>
+                                <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" 
+                                    onclick="btnCancelar_Click" />
                 </td>
             </tr>
         </table>

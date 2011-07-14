@@ -21,9 +21,21 @@ public partial class Derma_Admin_PatientInformation : PageBase
             }
         }
     }
-
     private void LoadPatientInformation(Guid? idPerson)
     {
+
+    }
+    protected void btnAceptar_Click(object sender, EventArgs e)
+    {
+        Save();
+    }
+    protected void btnCancelar_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Derma/Admin/ListPatients.aspx", true);
+    }
+    private void Save()
+    {
+        var idPerson = Request.QueryString.Get("id");
         var entity = BussinessFactory.GetPatientInformationService().Get(idPerson);
         if (entity != null)
         {
@@ -64,6 +76,30 @@ public partial class Derma_Admin_PatientInformation : PageBase
             entity.HaveVitaminas = HaveVitaminas.Checked;
             entity.CommentsMedicacionHabitual = txtComentariosMedicacionHabitual.Text.Trim();
             entity.HaveAlergiaAnestesicosHabituales = HaveAlergiaAnestesicosHabituales.Checked;
+            entity. HaveAlergiaAspirinas = HaveAlergiaAspirinas.Checked;              
+            entity.HaveAlergiaCorticoides = HaveAlergiaCorticoides.Checked;
+            entity.HaveAlergiaAsma = HaveAlergiaAsma.Checked;
+            entity.HaveAlergiaRinitis=HaveAlergiaRinitis.Checked;
+            entity.CommentsAntecedentesAlergias=txtComentariosAntecedentesAlergias.Text.Trim();
+            entity.HaveLifting = HaveLifting.Checked;
+            entity.HaveBotox = HaveBotox.Checked;
+            entity.HaveRellenos = HaveRellenos.Checked;
+            entity.HaveLaser=HaveLaser.Checked;
+            entity.CommentsTratamientosCirugiasActAnt=txtComentariosTratamientos.Text.Trim();
+            entity.IsFumador=IsFumador.Checked;
+            entity.IsHabitoBronceadoSoloVer=IsHabitoBronceadoSoloVer.Checked;
+            entity.IsHabitoBronceadoTodoAno = IsHabitoBronceadoTodoAno.Checked;
+            entity.IsHabitoEvitoBroncearme = IsHabitoEvitoBroncearme.Checked;
+            entity.HaveCicatricesQueloides=HaveCicatricesQueloides.Checked;
+            entity.AreaCicatricesQueloides=txtAreaQueloides.Text.Trim();
+            entity.IsDepilacion=IsDepilacion.Checked;
+            entity.AreaDepilacion=txtAreaDepilacion.Text.Trim();
+            entity.MetodoDepilacion=txtMetodoDepilacion.Text.Trim();
+            entity.IsEmbarazada=IsEmbarazada.Checked;
+            entity.DateLastRegla = !string.IsNullOrEmpty(txtDateLastRegla.Text) ? Convert.ToDateTime(txtDateLastRegla.Text) : (DateTime?)null;
+
+
+
             var response = BussinessFactory.GetPatientInformationService().Update(entity);
             if (response.OperationResult == OperationResult.Success)
             {
@@ -78,7 +114,7 @@ public partial class Derma_Admin_PatientInformation : PageBase
         {
             var info = new PatientInformation
                            {
-                               Id = Guid.NewGuid(),
+                               Id =entity.Id,
                                HaveHerpesLabial = HaveHerpesLabial.Checked,
                                DateHerpesLabial = !string.IsNullOrEmpty(txtDateHerpesLabial.Text) ? Convert.ToDateTime(txtDateHerpesLabial.Text) : (DateTime?)null,
                                IsUseMarcapaso = IsUseMarcapaso.Checked,
@@ -102,7 +138,33 @@ public partial class Derma_Admin_PatientInformation : PageBase
                                HaveVitaminas = HaveVitaminas.Checked,
                                CommentsMedicacionHabitual = txtComentariosMedicacionHabitual.Text.Trim(),
                                HaveAlergiaAnestesicosHabituales = HaveAlergiaAnestesicosHabituales.Checked,
+                               HaveAlergiaAspirinas = HaveAlergiaAspirinas.Checked,
+                               HaveAlergiaCorticoides = HaveAlergiaCorticoides.Checked,
+                               HaveAlergiaAsma = HaveAlergiaAsma.Checked,
+                               HaveAlergiaRinitis=HaveAlergiaRinitis.Checked,
+                               CommentsAntecedentesAlergias=txtComentariosAntecedentesAlergias.Text.Trim(),
+                               HaveLifting = HaveLifting.Checked,
+                               HaveBotox = HaveBotox.Checked,
+                               HaveRellenos = HaveRellenos.Checked,
+                               HaveLaser=HaveLaser.Checked,
+                               CommentsTratamientosCirugiasActAnt=txtComentariosTratamientos.Text.Trim(),
+                               IsFumador=IsFumador.Checked,
+                               IsHabitoBronceadoSoloVer=IsHabitoBronceadoSoloVer.Checked,
+                               IsHabitoBronceadoTodoAno = IsHabitoBronceadoTodoAno.Checked,
+                               IsHabitoEvitoBroncearme = IsHabitoEvitoBroncearme.Checked,
+                               HaveCicatricesQueloides=HaveCicatricesQueloides.Checked,
+                               AreaCicatricesQueloides=txtAreaQueloides.Text.Trim(),
+                               IsDepilacion=IsDepilacion.Checked,
+                               AreaDepilacion=txtAreaDepilacion.Text.Trim(),
+                               MetodoDepilacion=txtMetodoDepilacion.Text.Trim(),
+                               IsEmbarazada=IsEmbarazada.Checked,
+                               DateLastRegla = !string.IsNullOrEmpty(txtDateLastRegla.Text) ? Convert.ToDateTime(txtDateLastRegla.Text) : (DateTime?)null,
 
+                               IsActive = true,
+                               LastModified = LastModified,
+                               CreationDate = CreationDate,
+                               ModifiedBy = ModifiedBy,
+                               CreatedBy = CreatedBy
                            };
             var response = BussinessFactory.GetPatientInformationService().Save(info);
             if (response.OperationResult == OperationResult.Success)
@@ -115,4 +177,5 @@ public partial class Derma_Admin_PatientInformation : PageBase
             }
         }
     }
+    
 }
