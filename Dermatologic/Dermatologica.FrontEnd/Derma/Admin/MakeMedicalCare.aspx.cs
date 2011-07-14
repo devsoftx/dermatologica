@@ -19,7 +19,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
            
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
-       // ucSearchPersonsMedical1.PersonTypeControlName = ddlPersonType1.ClientID;
+       
     }
 
     private void SetPayment()
@@ -97,9 +97,13 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         session.IsCompleted = true;
 
         if (chkIsReplacement.Checked == true)
-        { 
-             var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-             medicalCare.CostCenter = StaffInformation.CostCenter;
+        {
+
+            medicalCare.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenterR.SelectedValue));
+        }
+        else
+        {
+            medicalCare.CostCenter = null;
         }
         try
         {
@@ -131,9 +135,6 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     private void LoadCostCenterR()
     {
        
-        //var costcenterId=Convert.ToString(StaffInformations.CostCenter.Id);
-
-      //  var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
         var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
 
         if (StaffInformation.CostCenter.Id.HasValue)

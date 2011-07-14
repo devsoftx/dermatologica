@@ -107,12 +107,18 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
 
     private void Save()
     {
+
+        var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+
+        var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+
         foreach (GridViewRow row in gvMedicalCares.Rows)
         {
-            //if (Convert.ToDecimal(txtPayPEN.Text) == 0 & Convert.ToDecimal(txtPayUSD.Text) == 0)
-            //{
-            //    break;
-            //}
+            if (!((CheckBox)row.FindControl("chkIsPaid")).Checked  & ((CheckBox)row.FindControl("chkPay")).Checked)
+            {
+                litMensaje.Text = string.Format("Falta Cancelar las sesiones por el Paciente");
+                return;
+            }
 
             if ((((CheckBox)row.FindControl("chkIsPaid")).Checked | Convert.ToDecimal(((Literal)row.FindControl("litPrice")).Text) == 0) & ((CheckBox)row.FindControl("chkPay")).Checked)
             {
@@ -150,14 +156,128 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                          medicalCare.IsPaidPartner = true;
                         break;
                     case "Por Reemplazo":
-                         Invoice.Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCost")).Text);
-                         medicalCare.IsPaid = true;
-                        break;
 
+                      
+                    
+
+                         var Invoice1 = new Invoice
+                            {
+                                Id = Guid.NewGuid(),
+                                Name = txtName.Text.Trim(),
+                                Description = txtName.Text.Trim(),
+                                DatePayment = Convert.ToDateTime(CreationDate),
+                                MPayment = ddlMPayment.SelectedValue,
+                                InvoiceType = ddlInvoice.SelectedValue,
+                                NInvoice = txtNInvoice.Text.Trim(),
+                                Currency = ((Literal)row.FindControl("litCurrency")).Text,
+                                Amount =  Convert.ToDecimal(((Literal)row.FindControl("litUnitCost")).Text),
+                                ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+                                Movement = "Egreso",
+                                IsActive = true,
+
+                                MedicalCare = null,
+                                CostCenter =medicalCare.CostCenter,
+                                Personal = null,
+                                Patient = null,
+                                Session = null,
+
+                                LastModified = LastModified,
+                                CreationDate = CreationDate,
+                                ModifiedBy = ModifiedBy,
+                                CreatedBy = CreatedBy,
+                            };           
+
+                var CashMovement1 = new CashMovement
+                {
+                    Id = Guid.NewGuid(),
+                    CostCenter = Invoice1.CostCenter,
+                    Invoice = Invoice1,
+                    MPayment = ddlMPayment.SelectedValue,
+                    Date = Convert.ToDateTime(CreationDate),
+                    EmissionAmount = Invoice1.Amount,
+                    Amount = Invoice1.Amount,
+                    Factor = -1,
+                    Currency = Invoice1.Currency,
+                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+                    IsActive = true,
+                    LastModified = LastModified,
+                    CreationDate = CreationDate,
+                    ModifiedBy = ModifiedBy,
+                    CreatedBy = CreatedBy,
+                };
+                var Invoice2 = new Invoice
+                {
+                    Id = Guid.NewGuid(),
+                    Name = txtName.Text.Trim(),
+                    Description = txtName.Text.Trim(),
+                    DatePayment = Convert.ToDateTime(CreationDate),
+                    MPayment = ddlMPayment.SelectedValue,
+                    InvoiceType = ddlInvoice.SelectedValue,
+                    NInvoice = txtNInvoice.Text.Trim(),
+                    Currency = ((Literal)row.FindControl("litCurrency")).Text,
+                    Amount = Convert.ToDecimal(((Literal)row.FindControl("litUnitCost")).Text),
+                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+                    Movement = "Ingreso",
+                    IsActive = true,
+
+                    MedicalCare = null,
+                    CostCenter = StaffInformation.CostCenter,
+                    Personal = null,
+                    Patient = null,
+                    Session = null,
+
+                    LastModified = LastModified,
+                    CreationDate = CreationDate,
+                    ModifiedBy = ModifiedBy,
+                    CreatedBy = CreatedBy,
+                };
+                var CashMovement2 = new CashMovement
+                {
+                    Id = Guid.NewGuid(),
+                    CostCenter = Invoice2.CostCenter,
+                    Invoice = Invoice2,
+                    MPayment = ddlMPayment.SelectedValue,
+                    Date = Convert.ToDateTime(CreationDate),
+                    EmissionAmount = Invoice2.Amount,
+                    Amount = Invoice2.Amount,
+                    Factor = 1,
+                    Currency = Invoice2.Currency,
+                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+                    IsActive = true,
+                    LastModified = LastModified,
+                    CreationDate = CreationDate,
+                    ModifiedBy = ModifiedBy,
+                    CreatedBy = CreatedBy,
+                };
+
+                Invoice1.CashMovements.Add(CashMovement1);
+                Invoice2.CashMovements.Add(CashMovement2);
+
+                medicalCare.IsPaid = true;
+                try
+                {
+                    var response1 = BussinessFactory.GetInvoiceService().Save(Invoice1);
+                    var response2 = BussinessFactory.GetInvoiceService().Save(Invoice2);
+                    if (response1.OperationResult == OperationResult.Success & response2.OperationResult == OperationResult.Success)
+                    {
+                        BussinessFactory.GetMedicalCareService().Update(medicalCare);
+                        litMensaje.Text = string.Format("Se Guardó Correctamente");
+                    }
+                    else
+                    {
+                        litMensaje.Text = string.Format("No se pudo Guardar el Pago {0}", response1.Message);
+                    }
+                }
+                catch (Exception e)
+                {
+                    litMensaje.Text = string.Format("No se pudo Guardar el Pago, Error : {0}", e.Message);
                 }
 
+                return;
+             }
+
                    
-                var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+               // var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
                 Invoice.Personal = medical;
 
                 Invoice.MedicalCare = medicalCare;
@@ -204,10 +324,8 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
                     litMensaje.Text = string.Format("No se pudo Guardar el Pago, Error : {0}", e.Message);
                 }
             }
-            else
-            {
-                litMensaje.Text = string.Format("Falta Cancelar las sesiones por el Paciente");
-            }
+           
+                        
        
         }      
     }
@@ -220,11 +338,7 @@ public partial class Derma_Admin_MakePaymentsPersonal : PageBase
             Response.Redirect(string.Format("~/Derma/Admin/EditExchangeRate.aspx?action=new&returnUrl={0}",
                                             Page.Request.RawUrl));
         }
-        //if (Convert.ToDecimal(txtPayUSD.Text) == 0 & Convert.ToDecimal(txtPayPEN.Text) == 0)
-        //{
-        //    litMensaje.Text = string.Format("El Monto a Pagar No puede Ser Cero");
-        //    return;
-        //}
+        
         Save();
     }
 }
