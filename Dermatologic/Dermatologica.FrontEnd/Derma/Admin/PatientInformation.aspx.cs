@@ -23,7 +23,56 @@ public partial class Derma_Admin_PatientInformation : PageBase
     }
     private void LoadPatientInformation(Guid? idPerson)
     {
+        var entity = BussinessFactory.GetPatientInformationService().Get(idPerson);
+        if (entity != null)
+        {
+            HaveHerpesLabial.Checked = Convert.ToBoolean(entity.HaveHerpesLabial);
+            txtDateHerpesLabial.Text = Convert.ToString(entity.DateHerpesLabial);
 
+            IsUseMarcapaso.Checked = Convert.ToBoolean(entity.IsUseMarcapaso);
+            txtDateUseMarcapaso.Text = Convert.ToString(entity.DateUseMarcapaso);
+            HaveVerrugas.Checked = Convert.ToBoolean(entity.HaveVerrugas);
+            txtDateVerrugas.Text = Convert.ToString(entity.DateVerrugas);
+            HaveHepatitisB.Checked = Convert.ToBoolean(entity.HaveHepatitisB);
+            txtDateHepatitisB.Text = Convert.ToString(entity.DateHepatitisB);
+            HaveDiabetes.Checked = Convert.ToBoolean(entity.HaveDiabetes);
+            txtDateDiabetes.Text = Convert.ToString(entity.DateDiabetes);
+            HaveDermatitisAtopica.Checked = Convert.ToBoolean(entity.HaveDermatitisAtopica);
+            txtDateDermatitisAtopica.Text = Convert.ToString(entity.DateDermatitisAtopica);
+            HaveHipotiroidismo.Checked = Convert.ToBoolean(entity.HaveHipotiroidismo);
+            txtDateHipotiroidismo.Text = Convert.ToString(entity.DateHipotiroidismo);
+            txtComentariosAntecedentesEnfermedades.Text = txtComentariosAntecedentesEnfermedades.Text;
+            HaveWarfarina.Checked = Convert.ToBoolean(entity.HaveWarfarina);
+            HaveAntibioticosAcne.Checked = Convert.ToBoolean(entity.HaveAntibioticosAcne);
+            HaveRoaccuatan.Checked = Convert.ToBoolean(entity.HaveRoaccuatan);
+            HaveIsotretinoina.Checked = Convert.ToBoolean(entity.HaveIsotretinoina);
+            HaveAspirinas.Checked = Convert.ToBoolean(entity.HaveAspirinas);
+            HaveVitaminas.Checked = Convert.ToBoolean(entity.HaveVitaminas);
+            txtComentariosMedicacionHabitual.Text= entity.CommentsMedicacionHabitual;
+            HaveAlergiaAnestesicosHabituales.Checked=Convert.ToBoolean(entity.HaveAlergiaAnestesicosHabituales);
+            HaveAlergiaAspirinas.Checked = Convert.ToBoolean(entity.HaveAlergiaAspirinas);
+            HaveAlergiaCorticoides.Checked = Convert.ToBoolean(entity.HaveAlergiaCorticoides);
+            HaveAlergiaAsma.Checked = Convert.ToBoolean(entity.HaveAlergiaAsma);
+            HaveAlergiaRinitis.Checked = Convert.ToBoolean(entity.HaveAlergiaRinitis);
+            txtComentariosAntecedentesAlergias.Text = entity.CommentsAntecedentesAlergias;
+            HaveLifting.Checked = Convert.ToBoolean(entity.HaveLifting);
+            HaveBotox.Checked = Convert.ToBoolean(entity.HaveBotox);
+            HaveRellenos.Checked = Convert.ToBoolean(entity.HaveRellenos);
+            HaveLaser.Checked = Convert.ToBoolean(entity.HaveLaser);
+            txtComentariosTratamientos.Text = entity.CommentsTratamientosCirugiasActAnt;
+            IsFumador.Checked = Convert.ToBoolean(entity.IsFumador);
+            IsHabitoBronceadoSoloVer.Checked = Convert.ToBoolean(entity.IsHabitoBronceadoSoloVer);
+            IsHabitoBronceadoTodoAno.Checked = Convert.ToBoolean(entity.IsHabitoBronceadoTodoAno);
+            IsHabitoEvitoBroncearme.Checked = Convert.ToBoolean(entity.IsHabitoEvitoBroncearme);
+            HaveCicatricesQueloides.Checked = Convert.ToBoolean(entity.HaveCicatricesQueloides);     
+            txtAreaQueloides.Text= entity.AreaCicatricesQueloides;
+            IsDepilacion.Checked = Convert.ToBoolean(entity.IsDepilacion);
+            txtAreaDepilacion.Text=entity.AreaDepilacion;
+            txtMetodoDepilacion.Text = entity.MetodoDepilacion;
+            IsEmbarazada.Checked = Convert.ToBoolean(entity.IsEmbarazada);
+            txtDateLastRegla.Text = Convert.ToString(entity.DateLastRegla);      
+ 
+            }
     }
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
@@ -33,10 +82,10 @@ public partial class Derma_Admin_PatientInformation : PageBase
     {
         Response.Redirect("~/Derma/Admin/ListPatients.aspx", true);
     }
-    private void Save()
+   private void Save()
     {
         var idPerson = Request.QueryString.Get("id");
-        var entity = BussinessFactory.GetPatientInformationService().Get(idPerson);
+        var entity = BussinessFactory.GetPatientInformationService().Get(new Guid(idPerson));
         if (entity != null)
         {
             entity.HaveHerpesLabial = HaveHerpesLabial.Checked;
@@ -113,8 +162,8 @@ public partial class Derma_Admin_PatientInformation : PageBase
         else
         {
             var info = new PatientInformation
-                           {
-                               Id =entity.Id,
+                           {                                                                                         
+                               Id =new Guid(idPerson),
                                HaveHerpesLabial = HaveHerpesLabial.Checked,
                                DateHerpesLabial = !string.IsNullOrEmpty(txtDateHerpesLabial.Text) ? Convert.ToDateTime(txtDateHerpesLabial.Text) : (DateTime?)null,
                                IsUseMarcapaso = IsUseMarcapaso.Checked,

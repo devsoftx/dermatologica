@@ -38,7 +38,7 @@ namespace Dermatologic.Services
             try
             {
                 IPersonRepository repository = new PersonRepository();
-                response.Staff = repository.GetPacients(example);
+                response.Staff = repository.GetStaff(example);
                 response.OperationResult = OperationResult.Success;
                 return response;
             }
