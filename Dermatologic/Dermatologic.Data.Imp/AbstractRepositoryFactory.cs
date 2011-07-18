@@ -63,5 +63,9 @@ namespace Dermatologic.Data
         public abstract IPatientInformationRepository GetPatientInformationRepository();
 
         public abstract IStaffInformationRepository GetStaffInformationRepository();
+
+        public abstract IEmployeeTypeRepository GetEmployeeTypeRepository();
+
+        public abstract ITypeContractRepository GetTypeContractRepository();
     }
 }

@@ -411,7 +411,22 @@ namespace Dermatologic.Data.Persistence
                         m.Fetch(FetchMode.Join);
                         m.NotNullable(true);
                     });
-               
+                cm.ManyToOne(
+                    x => x.EmployeeType,
+                    m =>
+                    {
+                        m.Column("IdEmployeeType");
+                        m.Fetch(FetchMode.Join);
+                        m.NotNullable(true);
+                    });
+                cm.ManyToOne(
+                   x => x.TypeContract,
+                   m =>
+                   {
+                       m.Column("IdTypeContract");
+                       m.Fetch(FetchMode.Join);
+                       m.NotNullable(true);
+                   });
 
             });
 
@@ -863,6 +878,32 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
                 }
                 );
+            mapper.Class<EmployeeType>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.Name, m => m.Column("Name"));
+                   cm.Property(x => x.Description, m => m.Column("Description"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
+            mapper.Class<TypeContract>(
+               cm =>
+               {
+                   cm.Id(x => x.Id, m => m.Column("Id"));
+                   cm.Property(x => x.Name, m => m.Column("Name"));
+                   cm.Property(x => x.Description, m => m.Column("Description"));
+                   cm.Property(x => x.IsActive, m => m.Column("IsActive"));
+                   cm.Property(x => x.CreationDate, m => m.Column("CreationDate"));
+                   cm.Property(x => x.LastModified, m => m.Column("LastModified"));
+                   cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
+                   cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+               }
+               );
         }
 
         private static IEnumerable<Type> GetEntities()

@@ -66,5 +66,9 @@ namespace Dermatologic.Services
         public abstract IPatientInformationService GetPatientInformationService();
 
         public abstract IStaffInformationService GetStaffInformationService();
+
+        public abstract IEmployeeTypeService GetEmployeeTypeService();
+
+        public abstract ITypeContractService GetTypeContractService();
     }
 }

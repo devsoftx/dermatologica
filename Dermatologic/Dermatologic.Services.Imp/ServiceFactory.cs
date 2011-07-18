@@ -121,5 +121,14 @@ namespace Dermatologic.Services
         {
             return new StaffInformationService();
         }
+
+        public override IEmployeeTypeService GetEmployeeTypeService()
+        {
+            return new EmployeeTypeService();
+        }
+        public override ITypeContractService GetTypeContractService()
+        {
+            return  new TypeContractService();
+        }
     }
 }

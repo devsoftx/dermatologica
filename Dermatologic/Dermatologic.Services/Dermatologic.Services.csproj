@@ -48,6 +48,7 @@
     <Compile Include="Inter\IAppointmentService.cs" />
     <Compile Include="Inter\ICashMovementService.cs" />
     <Compile Include="Inter\ICostCenterService.cs" />
+    <Compile Include="Inter\IEmployeeTypeService.cs" />
     <Compile Include="Inter\IExchangeRateService.cs" />
     <Compile Include="Inter\IInvoiceService.cs" />
     <Compile Include="Inter\IMedicalCareService.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Inter\IStaffInformationService.cs" />
     <Compile Include="Inter\ISupplyService.cs" />
     <Compile Include="Inter\IRateService.cs" />
+    <Compile Include="Inter\ITypeContractService.cs" />
     <Compile Include="Inter\IUbigeoService.cs" />
     <Compile Include="Inter\IUsersInRolesService.cs" />
     <Compile Include="Inter\IUsersService.cs" />

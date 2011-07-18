@@ -120,5 +120,13 @@ namespace Dermatologic.Data
         {
             return new StaffInformationRepository();
         }
+        public override IEmployeeTypeRepository GetEmployeeTypeRepository()
+        {
+            return new EmployeeTypeRepository();
+        }
+        public override ITypeContractRepository GetTypeContractRepository()
+        {
+            return new TypeContractRepository();
+        }
     }
 }

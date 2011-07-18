@@ -51,6 +51,7 @@
     <Compile Include="Contracts\Enums.cs" />
     <Compile Include="Contracts\MailRequest.cs" />
     <Compile Include="CostCenter.cs" />
+    <Compile Include="EmployeeType.cs" />
     <Compile Include="ExchangeRate.cs" />
     <Compile Include="Invoice.cs" />
     <Compile Include="MedicalCare.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="StaffInformation.cs" />
     <Compile Include="Supply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeContract.cs" />
     <Compile Include="Ubigeo.cs" />
     <Compile Include="USers.cs" />
     <Compile Include="UsersInRoles.cs" />

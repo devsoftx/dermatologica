@@ -47,6 +47,7 @@
     <Compile Include="Inter\IAccountRepository.cs" />
     <Compile Include="Inter\ICashMovementRepository.cs" />
     <Compile Include="Inter\ICostCenterRepository.cs" />
+    <Compile Include="Inter\IEmployeeTypeRepository.cs" />
     <Compile Include="Inter\IExchangeRateRepository.cs" />
     <Compile Include="Inter\IAppointmentRepository.cs" />
     <Compile Include="Inter\IInvoiceRepository.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Inter\IRateRepository.cs" />
     <Compile Include="Inter\IMenuRepository.cs" />
     <Compile Include="Inter\IPersonRepository.cs" />
+    <Compile Include="Inter\ITypeContract.cs" />
     <Compile Include="Inter\IUbigeoRepository.cs" />
     <Compile Include="Inter\IUsersInRolesRepository.cs" />
     <Compile Include="Inter\IUsersRepository.cs" />
