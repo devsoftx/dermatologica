@@ -101,7 +101,7 @@
                     <table class="style1">
                         <tr>
                             <td class="style5">
-                    <asp:TextBox ID="txtDatePayment" runat="server" Enabled="False" Width="70px"></asp:TextBox>
+                    <asp:TextBox ID="txtDatePayment" runat="server" Width="70px"></asp:TextBox>
                             </td>
                             <td class="style6">
                     <asp:Label ID="Label3" runat="server" Text="Tipo de Cambio"></asp:Label>
