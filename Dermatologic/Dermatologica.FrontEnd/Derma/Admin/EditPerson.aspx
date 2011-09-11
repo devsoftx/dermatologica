@@ -127,6 +127,17 @@
         </tr>
         <tr>
             <td>
+                &nbsp;</td>
+            <td>
+                Llamar en Emergencia</td>
+            <td>
+                <asp:TextBox ID="txtEmergencyPerson" runat="server" Width="119px"></asp:TextBox>
+            </td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>
                 &nbsp;
             </td>
             <td>

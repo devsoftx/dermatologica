@@ -50,6 +50,7 @@ public partial class Derma_Admin_EditPerson : PageBase
         txtApellidoMaterno.Text = person.LastNameM;
         txtTelefono.Text = person.Phone;
         txtTelefonoEmergencia.Text = person.EmergencyPhone;
+        txtEmergencyPerson.Text = person.EmergencyPerson;
         txtNumeroDocumento.Text = person.DocumentNumber;
         txtCelular.Text = person.CellPhone;
         txtEmail.Text = person.Email;

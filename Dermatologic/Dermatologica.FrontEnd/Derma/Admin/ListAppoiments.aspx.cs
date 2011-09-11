@@ -27,6 +27,11 @@ public partial class Derma_Admin_ListAppoiments : PageBase
                                       LastNameM = txtSearch.Text.Trim()
                                   }
                           };
+        if (!string.IsNullOrEmpty(txtDate.Text))
+        {
+            example.StartDate = Convert.ToDateTime(txtDate.Text);
+            example.StartDate.Value.AddDays(1);
+        }
         var response = BussinessFactory.GetAppointmentService().GetByOpMedical(example);
         if (response.OperationResult == OperationResult.Success)
         {
@@ -57,7 +62,7 @@ public partial class Derma_Admin_ListAppoiments : PageBase
 
     private void GeteAppointments()
     {
-        var appointments = BussinessFactory.GetAppointmentService().GetAll(u => u.IsActive == true);
+        var appointments = BussinessFactory.GetAppointmentService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
         BindControl<Appointment>.BindGrid(gvAppointments, appointments);
     }
 
