@@ -99,7 +99,8 @@ public partial class Derma_Default : PageBase
 
     protected void radCalendar_AppointmentClick(object sender, SchedulerEventArgs e)
     {
-        
+        if(e.Appointment.ID != null)
+            Response.Redirect(string.Format("Appointment.aspx?Id={0}", e.Appointment.ID));
     }
 
     protected void radCalendar_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
@@ -267,6 +268,9 @@ public partial class Derma_Default : PageBase
                 case SchedulerNavigationCommand.SwitchToWeekView:
                     LoadAppointments(radCalendar.SelectedDate);
                     break;
+                case SchedulerNavigationCommand.SwitchToSelectedDay:
+                    LoadAppointments(radCalendar.SelectedDate);
+                    break;
                 default:
                     LoadAppointments(radCalendar.SelectedDate);
                     break;
@@ -321,6 +325,35 @@ public partial class Derma_Default : PageBase
             {
                 e.Appointment.ToolTip = string.Format("Medico/Cosmeatra: {0}", entity.Medical.CompleteName);
             }
+        }
+    }
+    protected void radCalendar_AppointmentCancelingEdit(object sender, AppointmentCancelingEditEventArgs e)
+    {
+        if (e.Appointment.Subject == String.Empty)
+        {
+            e.Cancel = true;
+        }
+        LoadAppointments(radCalendar.SelectedDate);
+    }
+    protected void radCalendar_NavigationCommand(object sender, SchedulerNavigationCommandEventArgs e)
+    {
+        switch (e.Command)
+        {
+            case SchedulerNavigationCommand.SwitchToDayView:
+                LoadAppointments(radCalendar.SelectedDate);
+                break;
+            case SchedulerNavigationCommand.SwitchToMonthView:
+                LoadAppointments(radCalendar.SelectedDate);
+                break;
+            case SchedulerNavigationCommand.SwitchToWeekView:
+                LoadAppointments(radCalendar.SelectedDate);
+                break;
+            case SchedulerNavigationCommand.SwitchToSelectedDay:
+                LoadAppointments(radCalendar.SelectedDate);
+                break;
+            default:
+                LoadAppointments(radCalendar.SelectedDate);
+                break;
         }
     }
 }

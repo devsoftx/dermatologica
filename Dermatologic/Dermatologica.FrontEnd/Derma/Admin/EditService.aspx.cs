@@ -72,7 +72,7 @@ public partial class Derma_Admin_EditService : PageBase
             }
             else
             {
-                litMensaje.Text = string.Format("No se pudo crear El Servicio");
+                litMensaje.Text = string.Format("No se pudo crear el Tratamiento");
             }
         }
         catch (Exception e)

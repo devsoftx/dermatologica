@@ -60,7 +60,7 @@ public partial class Derma_Admin_ListServices :PageBase
             var response = BussinessFactory.GetServiceService().Update(Service);
             if (response.OperationResult == OperationResult.Success)
             {
-                litMensaje.Text = string.Format("Se eliminó El Servicio");
+                litMensaje.Text = string.Format("Se eliminó el Tratamiento");
                 return;
             }
         }

@@ -16,10 +16,8 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
             SetPayment();
             txtDateAttention.Text = Convert.ToString(CreationDate);
             LoadPersonType();
-           
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
-       
     }
 
     private void SetPayment()
@@ -28,7 +26,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         var currentSession = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
         var IdMedication = currentSession.Medication.Id;
         var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
-        txtPatient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName,medication.Patient.LastNameP,medication.Patient.LastNameM);
+        txtPatient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
         txtSession.Text = currentSession.Medication.Service.Name;
     }
 
@@ -39,49 +37,31 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         var IdMedication = session.Medication.Id;
         var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
         var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-       
-        
-
         var example1 = medical;
-        var example2=medication.Service;
-
-        var response1 = BussinessFactory.GetRateService().GetRatesByPersonService(example1,example2);
-        var rate= new Rate();
+        var example2 = medication.Service;
+        var response1 = BussinessFactory.GetRateService().GetRatesByPersonService(example1, example2);
+        var rate = new Rate();
         if (response1.OperationResult == OperationResult.Success)
         {
-           var List = response1.Rates;
-
-           if (List.Count != 0)
-           {
-               rate = List.FirstOrDefault();
-           }
-           else
-           {
-            litMensaje.Text = string.Format("Falta Agregar la Tarifa de este Servicio para este Medico");
-            return;
-           }
+            var List = response1.Rates;
+            if (List.Count != 0)
+            {
+                rate = List.FirstOrDefault();
+            }
+            else
+            {
+                litMensaje.Text = string.Format("Falta Agregar la Tarifa de este Tratamiento para este Medico");
+                return;
+            }
         }
 
-        var partner = new Person();
-
-        if (rate.UnitCostPartner != 0)
-        {
-        partner = BussinessFactory.GetPersonService().Get(new Guid("754124e0-7551-4e32-8dc4-5c4b80bad8e2"));//Ursula dueña
-        }
-        else
-        {
-            partner = null;
-        }
-
-       
-
-
+        Person partner = rate.UnitCostPartner != 0 ? BussinessFactory.GetPersonService().Get(new Guid("754124e0-7551-4e32-8dc4-5c4b80bad8e2")) : null;
         var medicalCare = new MedicalCare
                               {
                                   Id = Guid.NewGuid(),
                                   Description = txtDescription.Text.Trim(),
                                   DateAttention = Convert.ToDateTime(CreationDate),
-                                  IsReplacement=chkIsReplacement.Checked,
+                                  IsReplacement = chkIsReplacement.Checked,
                                   IsActive = true,
                                   LastModified = LastModified,
                                   CreationDate = CreationDate,
@@ -90,8 +70,8 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
                                   Pacient = medication.Patient,
                                   Session = session,
                                   Medical = medical,
-                                  Partner=partner,
-                                  Rate=rate,                                                                           
+                                  Partner = partner,
+                                  Rate = rate,
                               };
 
         session.IsCompleted = true;
@@ -129,24 +109,20 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     {
         var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
         BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
-        //BindControl<PersonType>.BindDropDownList(ddlPersonType1, types);
-
     }
+
     private void LoadCostCenterR()
     {
-       
-        var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
 
+        var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
         if (StaffInformation.CostCenter.Id.HasValue)
         {
-              var CostCenterId=StaffInformation.CostCenter.Id.Value.ToString();
-              var costCenters = BussinessFactory.GetCostCenterService().GetAll().Where(p => p.Id.ToString() != CostCenterId).ToList();
-              BindControl<CostCenter>.BindDropDownList(ddlCostCenterR, costCenters);
+            var CostCenterId = StaffInformation.CostCenter.Id.Value.ToString();
+            var costCenters = BussinessFactory.GetCostCenterService().GetAll().Where(p => p.Id.ToString() != CostCenterId).ToList();
+            BindControl<CostCenter>.BindDropDownList(ddlCostCenterR, costCenters);
         }
-       
-        //devuelve los centros de costo en los cuales el no trabaja
-       
 
+        //devuelve los centros de costo en los cuales el no trabaja
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)
@@ -167,12 +143,11 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         ucSearchPersonsMedical.SelectedValue = string.Empty;
         ucSearchPersonsMedical.Text = string.Empty;
     }
-  
+
     protected void chkIsReplacement_CheckedChanged(object sender, EventArgs e)
     {
         if (chkIsReplacement.Checked == true)
         {
-
             if (ucSearchPersonsMedical.Text == "")
             {
                 litMensaje.Text = ("Falta Ingresar el Operador Medico");
@@ -182,13 +157,10 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
             {
                 LoadCostCenterR();
             }
-
-
         }
         else
         {
             ddlCostCenterR.DataSource = null;
         }
-
     }
 }

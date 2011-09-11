@@ -27,7 +27,7 @@
                 <td class="style2">
                     &nbsp;</td>
                 <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
-                    Servicios de la Clinica</td>
+                    Tratamiento de la Clinica</td>
                 <td>
                     &nbsp;</td>
             </tr>

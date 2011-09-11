@@ -21,7 +21,7 @@ public partial class Derma_Admin_EditMenu : PageBase
 
     private void LoadMenuFathers()
     {
-        var faths = BussinessFactory.GetMenuService().GetAll(x => x.ParentId == null);
+        var faths = BussinessFactory.GetMenuService().GetAll(x => x.ParentId == null).OrderBy(p => p.Orden).ToList();
         BindControl<Menu>.BindDropDownList(ddlMenuPadre,faths);
     }
 

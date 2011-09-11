@@ -43,7 +43,7 @@
                         ForeColor="#333333" GridLines="None" OnRowCommand="gvMedication_RowCommand" Width="750px">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
-                            <asp:TemplateField HeaderText="Servicio">
+                            <asp:TemplateField HeaderText="Tratamiento">
                                 <ItemTemplate>
                                     <asp:Literal ID="litService" runat="server" Text='<%# ((Service)Eval("Service")).Name %>'></asp:Literal>
                                 </ItemTemplate>

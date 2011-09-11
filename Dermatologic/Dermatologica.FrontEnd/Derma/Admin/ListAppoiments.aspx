@@ -1,6 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="ListAppoiments.aspx.cs" Inherits="Derma_Admin_ListAppoiments" %>
 <%@ Import Namespace="Dermatologic.Domain" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+    <script type="text/javascript">
+        $(function () {
+            $("#MainContent_txtDate").datepicker();
+            $("#MainContent_txtDate").datepicker($.datepicker.regional['es']);
+        });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
 <div id="main">
@@ -27,7 +33,10 @@
                                 <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar por Medico/Cosmeatra"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtSearch" runat="server" Width="450px"></asp:TextBox>
+                                <asp:TextBox ID="txtSearch" runat="server" Width="350px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtDate" runat="server" Width="100px"></asp:TextBox>
                             </td>
                             <td>
                                 <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="80px" OnClick="btnSearch_Click" />

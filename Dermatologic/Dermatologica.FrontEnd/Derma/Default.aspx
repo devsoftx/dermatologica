@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="Default.aspx.cs"Inherits="Derma_Default" %>
-
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
@@ -50,7 +49,9 @@
                                     EnableCustomAttributeEditing="True" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
                                     OnFormCreated="radCalendar_FormCreated" OnNavigationComplete="radCalendar_NavigationComplete"
                                     RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%"
-                                    OnAppointmentDataBound="radCalendar_AppointmentDataBound">
+                                    OnAppointmentDataBound="radCalendar_AppointmentDataBound" 
+                                    onappointmentcancelingedit="radCalendar_AppointmentCancelingEdit" 
+                                    onnavigationcommand="radCalendar_NavigationCommand">
                                     <WeekView DayEndTime="18:30:00" DayStartTime="09:00:00" WorkDayEndTime="18:30:00"
                                         WorkDayStartTime="09:00:00" />
                                     <DayView DayEndTime="18:30:00" DayStartTime="09:00:00" />

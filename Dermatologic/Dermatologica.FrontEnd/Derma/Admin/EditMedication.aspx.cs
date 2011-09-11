@@ -50,12 +50,11 @@ public partial class Derma_Admin_EditMedication : PageBase
         var medication = BussinessFactory.GetMedicationService().Get(id);
         txtDescription.Text = medication.Description;
         txtNumberSessions.Text = Convert.ToString(medication.NumberSessions);
-        ddlDocumentType.SelectedValue = medication.Patient.DocumentType.HasValue ? medication.Patient.DocumentType.Value.ToString() : "0";
-        txtDni.Text = medication.Patient.DocumentNumber;
         txtPacient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
         lblCurrency.Text = medication.Service.Currency;
         txtPriceT.Text = medication.Price.ToString();
         txtDiscountT.Text = medication.DiscountT.ToString();
+        txtDni.Value = medication.Patient.DocumentNumber;
         if (medication.Service.Id.HasValue)
         {
             dwService.SelectedValue = medication.Service.Id.Value.ToString();
@@ -65,7 +64,7 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     private void Save()
     {
-        var patientResponse = BussinessFactory.GetPersonService().GetPersonByDni(txtDni.Text.Trim());
+        var patientResponse = BussinessFactory.GetPersonService().GetPersonByDni(txtDni.Value.Trim());
         var patient = patientResponse.Person;
         var medication = new Medication
                              {
@@ -179,22 +178,6 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     protected void lnkSearch_Click(object sender, EventArgs e)
     {
-        var dni = txtDni.Text.Trim();
-        if (!string.IsNullOrEmpty(dni))
-        {
-            var example = new Person
-                              {
-                                  DocumentNumber = txtDni.Text.Trim(),
-                                  DocumentType = Convert.ToInt32(ddlDocumentType.SelectedIndex)
-                              };
-            var examples = BussinessFactory.GetPersonService().GetByExample(example);
-            if (examples.Count > 0)
-            {
-                var pacient = examples.FirstOrDefault();
-                txtPacient.Text = string.Format("{0} {1} {2}", pacient.FirstName, pacient.LastNameP, pacient.LastNameM);
-                return;
-            }
-        }
         const string javascript = "openRadWindow('SearchPersons.aspx?personType=9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68','rw1');";
         System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
     }
@@ -204,34 +187,18 @@ public partial class Derma_Admin_EditMedication : PageBase
         var id = Session["personSelected"];
         var response = BussinessFactory.GetPersonService().Get(new Guid(id.ToString()));
         txtPacient.Text = string.Format("{0} {1} {2}", response.FirstName,response.LastNameP, response.LastNameM);
-        txtDni.Text = response.DocumentNumber;
-        if (response.DocumentType != null) ddlDocumentType.SelectedValue = response.DocumentType.Value.ToString();
+        txtDni.Value = response.DocumentNumber;
     }
 
     protected void btnAddSessions_Click(object sender, EventArgs e)
     {
         var intSession = Convert.ToInt32(txtNumberSessions.Value);
-
-        
-         if (txtDiscountT.Text == "")
-         {
-             txtDiscountT.Text = "0";
-         }
-         var discount = Convert.ToDecimal(txtDiscountT.Text.Trim());
-
-
-
-        decimal priceService;
-        if (chkUnpaid.Checked == true)
+        if (txtDiscountT.Text == "")
         {
-            priceService = 0;
+            txtDiscountT.Text = "0";
         }
-        else
-        {
-            priceService = Convert.ToDecimal(txtPrice.Text.Trim());
-        }
-      
-
+        var discount = Convert.ToDecimal(txtDiscountT.Text.Trim());
+        decimal priceService = chkUnpaid.Checked == true ? 0 : Convert.ToDecimal(txtPrice.Text.Trim());
         decimal price = ((priceService * intSession) - discount);
         IList<Session> sessions = new List<Session>();
         for (var i = 0; i < intSession; i++)
