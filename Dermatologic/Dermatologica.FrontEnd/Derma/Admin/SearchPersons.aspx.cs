@@ -12,8 +12,11 @@ public partial class Derma_SearchPersons : PageBase{
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        Session["personSelected"] = null;
-        SearchPersons();
+        if (!IsPostBack)
+        {
+            Session["personSelected"] = null;
+            SearchPersons();
+        }
     }
 
     private void SearchPersons()
