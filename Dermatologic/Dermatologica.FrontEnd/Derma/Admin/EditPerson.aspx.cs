@@ -75,6 +75,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             CellPhone = txtCelular.Text.Trim(),
             Email = txtEmail.Text.Trim(),
             EmergencyPhone = txtTelefonoEmergencia.Text.Trim(),
+            EmergencyPerson = txtEmergencyPerson.Text.Trim(),
             Address = txtDireccion.Text.Trim(),
             IsActive = true,
             LastModified = LastModified,

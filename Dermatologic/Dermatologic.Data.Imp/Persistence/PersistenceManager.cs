@@ -556,6 +556,7 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.LastModified, m => m.Column("LastModified"));
                     cm.Property(x => x.CreatedBy, m => m.Column("CreatedBy"));
                     cm.Property(x => x.ModifiedBy, m => m.Column("ModifiedBy"));
+                    cm.Property(x => x.EmergencyPerson, m => m.Column("EmergencyPerson"));
                 }
                 );
 

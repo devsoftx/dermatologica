@@ -65,7 +65,7 @@ public partial class Derma_Admin_EditOffice : PageBase
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo crear El Tipo de Persona");
+                litMensaje.Text = string.Format("No se puedo crear el consultorio");
             }
         }
         catch (Exception e)

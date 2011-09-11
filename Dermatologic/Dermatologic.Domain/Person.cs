@@ -57,6 +57,9 @@ namespace Dermatologic.Domain
         public virtual string EmergencyPhone { set; get; }
 
         [DataMember]
+        public virtual string EmergencyPerson { set; get; }
+
+        [DataMember]
         public virtual string Address { set; get; }
 
         [DataMember]
