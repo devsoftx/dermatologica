@@ -18,7 +18,7 @@ public partial class Derma_Appointment : PageBase
             {
                 var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(Id));
                 txtPatient.Text = appointment.Patient;
-                txtMedical.Text = appointment.Medical.CompleteName;
+                txtMedical.Text = appointment.Medical != null? appointment.Medical.CompleteName : string.Empty;
                 txtConsultorio.Text = appointment.Office.Name;
                 txtConsultorio.BackColor = Color.FromName(appointment.Office.ColorId);
                 if (appointment.StartDate != null) txtDateStart.Text = appointment.StartDate.Value.ToShortTimeString();
@@ -26,5 +26,11 @@ public partial class Derma_Appointment : PageBase
                 txtDescription.Text = appointment.Description;
             }
         }
+    }
+    protected void LinkReturn_Click(object sender, EventArgs e)
+    {
+        var returnUrl = Request.Params.Get("returnUrl");
+        if(!string.IsNullOrEmpty(returnUrl))
+            Response.Redirect(returnUrl);
     }
 }

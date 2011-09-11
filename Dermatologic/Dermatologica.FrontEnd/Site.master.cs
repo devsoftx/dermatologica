@@ -11,7 +11,13 @@ public partial class SiteMaster : MasterPageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!Page.IsPostBack)
+        {
+            if(Session["userName"] == null)
+            {
+                
+            }
+        }
     }
 
     protected void HeadLoginView_ViewChanged(object sender, EventArgs e)
@@ -23,6 +29,5 @@ public partial class SiteMaster : MasterPageBase
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage(returnUrl);
         }
-        
     }
 }

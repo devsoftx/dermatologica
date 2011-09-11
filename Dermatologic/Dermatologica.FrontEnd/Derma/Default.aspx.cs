@@ -100,7 +100,7 @@ public partial class Derma_Default : PageBase
     protected void radCalendar_AppointmentClick(object sender, SchedulerEventArgs e)
     {
         if(e.Appointment.ID != null)
-            Response.Redirect(string.Format("Appointment.aspx?Id={0}", e.Appointment.ID));
+            Response.Redirect(string.Format("Appointment.aspx?id={0}&action=edit&returnUrl={1}", e.Appointment.ID,Request.RawUrl));
     }
 
     protected void radCalendar_AppointmentDelete(object sender, SchedulerCancelEventArgs e)

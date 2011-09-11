@@ -51,7 +51,7 @@ public partial class Derma_Admin_ListAppoiments : PageBase
         {
             case "cmd_editar":
                 var id = new Guid(e.CommandArgument.ToString());
-                Response.Redirect(string.Format("~/Derma/Appointment.aspx?id={0}&action=edit", id), true);
+                Response.Redirect(string.Format("~/Derma/Appointment.aspx?id={0}&action=edit&returnUrl={1}", id,Request.RawUrl), true);
                 break;
             case "cmd_eliminar":
                 DeleteAppointment(new Guid(e.CommandArgument.ToString()));

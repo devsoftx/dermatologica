@@ -5,7 +5,21 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div id="main">
-        <table cellpadding="1" cellspacing="1">
+        <table>
+            <tr >
+                <td>
+                    
+                </td>
+                <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
+                    Detalle de Cita
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
             <tr>
                 <td>
                     <asp:Label Text="Paciente" runat="server" ID="Label0" />
@@ -71,8 +85,18 @@
                     <asp:Label Text="Description:" runat="server" ID="Label5" />
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="txtDescription" Enabled="False" Rows="3" 
-                        TextMode="MultiLine" />
+                    <asp:TextBox runat="server" ID="txtDescription" Enabled="False" Rows="3" TextMode="MultiLine" />
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:LinkButton Text="Cancelar" runat="server" ID="LinkReturn" OnClick="LinkReturn_Click" />
+                </td>
+                <td>
                 </td>
                 <td>
                 </td>
