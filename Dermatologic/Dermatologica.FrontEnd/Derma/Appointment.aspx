@@ -94,7 +94,7 @@
             </tr>
             <tr>
                 <td>
-                    <asp:LinkButton Text="Cancelar" runat="server" ID="LinkReturn" OnClick="LinkReturn_Click" />
+                    <asp:LinkButton Text="Volver" runat="server" ID="LinkReturn" OnClick="LinkReturn_Click" />
                 </td>
                 <td>
                 </td>

@@ -11,7 +11,7 @@
                 </td>
                 <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;"
                     colspan="2">
-                    Mantenimiento de Tipo de Persona
+                    Mantenimiento de Categoria/Función
                 </td>
             </tr>
             <tr>

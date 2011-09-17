@@ -104,8 +104,7 @@
                 <td>
                     &nbsp;
                 </td>
-                <td>
-                    <asp:LinkButton ID="lnkNew" runat="server" Text="Nuevo" OnClick="lnkNew_Click" />
+                <td>                    
                     <asp:Literal ID="litMensaje" runat="server" />
                 </td>
                 <td>

@@ -13,7 +13,7 @@ public partial class Derma_Admin_ListAppoiments : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Page.IsPostBack) return;
-        GeteAppointments();
+        GetAppointments();
     }
 
     protected void btnSearch_Click(object sender, EventArgs e)
@@ -30,7 +30,10 @@ public partial class Derma_Admin_ListAppoiments : PageBase
         if (!string.IsNullOrEmpty(txtDate.Text))
         {
             example.StartDate = Convert.ToDateTime(txtDate.Text);
-            example.StartDate.Value.AddDays(1);
+        }
+        else
+        {
+            example.StartDate = null;
         }
         var response = BussinessFactory.GetAppointmentService().GetByOpMedical(example);
         if (response.OperationResult == OperationResult.Success)
@@ -38,11 +41,6 @@ public partial class Derma_Admin_ListAppoiments : PageBase
             var appointments = response.Appointments;
             BindControl<Appointment>.BindGrid(gvAppointments, appointments);
         }
-    }
-
-    protected void lnkNew_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("~/Derma/Appointment.aspx?action=new");
     }
 
     protected void gvAppointments_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -55,12 +53,12 @@ public partial class Derma_Admin_ListAppoiments : PageBase
                 break;
             case "cmd_eliminar":
                 DeleteAppointment(new Guid(e.CommandArgument.ToString()));
-                GeteAppointments();
+                GetAppointments();
                 break;
         }
     }
 
-    private void GeteAppointments()
+    private void GetAppointments()
     {
         var appointments = BussinessFactory.GetAppointmentService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
         BindControl<Appointment>.BindGrid(gvAppointments, appointments);

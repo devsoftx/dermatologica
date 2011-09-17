@@ -94,10 +94,25 @@ namespace Dermatologic.Services
         public AppointmentResponse GetByOpMedical(Appointment example)
         {
             var response = new AppointmentResponse();
+            List<Appointment> filter;
             try
             {
                 IAppointmentRepository _repository = new AppointmentRepository();
-                response.Appointments = _repository.GetByOpMedical(example);
+                IList<Appointment> results = _repository.GetByOpMedical(example);
+                filter = new List<Appointment>();
+                if (example.StartDate.HasValue)
+                {
+                    filter = results.Where(
+                        p =>
+                        p.StartDate.Value.Year == example.StartDate.Value.Year &&
+                        p.StartDate.Value.Month == example.StartDate.Value.Month &&
+                        p.StartDate.Value.Day == example.StartDate.Value.Day).ToList();
+                    response.Appointments = filter;
+                }
+                else
+                {
+                    response.Appointments = results;
+                }
                 response.OperationResult = OperationResult.Success;
             }
             catch (Exception ex)

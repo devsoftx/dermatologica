@@ -327,14 +327,12 @@ public partial class Derma_Default : PageBase
             }
         }
     }
+
     protected void radCalendar_AppointmentCancelingEdit(object sender, AppointmentCancelingEditEventArgs e)
     {
-        if (e.Appointment.Subject == String.Empty)
-        {
-            e.Cancel = true;
-        }
         LoadAppointments(radCalendar.SelectedDate);
     }
+
     protected void radCalendar_NavigationCommand(object sender, SchedulerNavigationCommandEventArgs e)
     {
         switch (e.Command)

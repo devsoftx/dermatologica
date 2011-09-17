@@ -11,7 +11,7 @@
                     &nbsp;
                 </td>
                 <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
-                    Tipo de Personas
+                    Categoria / Función
                 </td>
                 <td>
                     &nbsp;

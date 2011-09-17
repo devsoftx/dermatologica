@@ -129,7 +129,7 @@
             <td>
                 &nbsp;</td>
             <td>
-                Llamar en Emergencia</td>
+                Persona/Emergencia</td>
             <td>
                 <asp:TextBox ID="txtEmergencyPerson" runat="server" Width="119px"></asp:TextBox>
             </td>

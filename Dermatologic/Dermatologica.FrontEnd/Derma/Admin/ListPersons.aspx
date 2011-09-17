@@ -11,7 +11,7 @@
                     &nbsp;
                 </td>
                 <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
-                    Personas
+                    Datos Personales Generales
                 </td>
                 <td>
                     &nbsp;
@@ -67,6 +67,14 @@
                             <asp:BoundField DataField="DocumentNumber" HeaderText="N° Documento" />
                             <asp:BoundField DataField="Email" HeaderText="Correo Electronico" />
                             <asp:BoundField DataField="CellPhone" HeaderText="Celular" />
+                            <asp:TemplateField HeaderText="Info">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="lnk_Info" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
+                                        CommandName="cmd_info">
+                                        <img id="Img5" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
