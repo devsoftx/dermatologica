@@ -1,5 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
-    CodeFile="EditPerson.aspx.cs" Inherits="Derma_Admin_EditPerson" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="EditPerson.aspx.cs"Inherits="Derma_Admin_EditPerson" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
     <script type="text/javascript">
@@ -53,7 +52,7 @@
                 &nbsp;
             </td>
         </tr>
-                <tr>
+        <tr>
             <td>
                 &nbsp;
             </td>
@@ -66,7 +65,7 @@
             <td>
                 &nbsp;
             </td>
-        </tr>
+        </tr>        
         <tr>
             <td>
                 &nbsp;
@@ -75,7 +74,7 @@
                 <asp:Label ID="Label3" runat="server" Text="Tipo de Documento"></asp:Label>
             </td>
             <td>
-                <asp:DropDownList ID="dwTipoDocumento" runat="server"/>                    
+                <asp:DropDownList ID="dwTipoDocumento" runat="server" />
             </td>
             <td>
                 &nbsp;
@@ -127,14 +126,17 @@
         </tr>
         <tr>
             <td>
-                &nbsp;</td>
+                &nbsp;
+            </td>
             <td>
-                Persona/Emergencia</td>
+                Persona/Emergencia
+            </td>
             <td>
                 <asp:TextBox ID="txtEmergencyPerson" runat="server" Width="119px"></asp:TextBox>
             </td>
             <td>
-                &nbsp;</td>
+                &nbsp;
+            </td>
         </tr>
         <tr>
             <td>
@@ -186,7 +188,9 @@
                 <asp:Label ID="Label11" runat="server" Text="Email"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="txtEmail" runat="server" Width="517px"></asp:TextBox>
+                <asp:TextBox ID="txtEmail" runat="server" Width="400px"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtEmail"
+                    ErrorMessage="*" ForeColor="Red"></asp:RequiredFieldValidator>
             </td>
             <td>
                 &nbsp;
@@ -208,14 +212,16 @@
         </tr>
         <tr>
             <td>
-            </td>
-            <td>
                 &nbsp;
             </td>
             <td>
                 &nbsp;
             </td>
             <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
             </td>
         </tr>
         <tr>
@@ -227,20 +233,6 @@
             </td>
             <td>
                 <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
-            </td>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                &nbsp;
             </td>
             <td>
                 &nbsp;

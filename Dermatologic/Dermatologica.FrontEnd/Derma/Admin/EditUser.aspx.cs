@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
 
 public partial class Derma_Admin_EditUser : PageBase
@@ -60,10 +55,9 @@ public partial class Derma_Admin_EditUser : PageBase
             }
             catch (Exception ex)
             {
-                throw ex;
+                ErrorMessage.Text = string.Format("No se pudo actualizar usuario - {0}",ex.Message);
             }
         }
-        ErrorMessage.Text = "No se pudo actualizar usuario";
     }
 
     private void New()
@@ -72,9 +66,9 @@ public partial class Derma_Admin_EditUser : PageBase
         var password = Password.Text;
         var email = Email.Text;
         var question = Question.Text;
-        var security = Answer.Text;
+        var passwordAnswer = Answer.Text;
         MembershipCreateStatus status;
-        Membership.CreateUser(userName, password, email, question, security, false, out status);
+        var response = Membership.CreateUser(userName, password, email, question, passwordAnswer, true, out status);
         if(status == MembershipCreateStatus.Success)
         {
             Response.Redirect("~/Derma/Admin/ListUsers.aspx", true);

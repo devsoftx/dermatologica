@@ -82,6 +82,7 @@ public partial class Derma_Admin_EditOffice : PageBase
         {
             office.Name = txtName.Text.Trim();
             office.Description = txtDescription.Text.Trim();
+            office.ColorId = string.Format("#{0}", txtColor.Text.Trim());
             office.IsActive = true;
             office.LastModified = LastModified;
             office.ModifiedBy = ModifiedBy;

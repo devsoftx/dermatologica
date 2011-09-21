@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
@@ -16,10 +15,13 @@ public partial class Derma_Admin_ListPersons : PageBase
   
     protected void gvPersons_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        var id = new Guid(e.CommandArgument.ToString());
         switch (e.CommandName)
         {
+            case "cmd_info":
+                Response.Redirect(string.Format("PrivateInfomation.aspx?id={0}&action=edit", id), true);
+                break;
             case "cmd_editar":
-                var id = new Guid(e.CommandArgument.ToString());
                 Response.Redirect(string.Format("EditPerson.aspx?id={0}&action=edit", id), true);
                 break;
             case "cmd_eliminar":
@@ -76,6 +78,31 @@ public partial class Derma_Admin_ListPersons : PageBase
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         SearchPersons();
+    }
+
+    protected void gvPersons_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            var entity = e.Row.DataItem as Person;
+            if (entity != null)
+            {
+                var img = ((System.Web.UI.HtmlControls.HtmlImage)e.Row.FindControl("Img1"));
+                var lnk = ((LinkButton)e.Row.FindControl("lnk_info"));
+                if (entity.PersonType.Id == new Guid(DermaConstants.PERSON_TYPE))
+                {
+                    if (true)
+                    {
+                        img.Src = "~/images/security.png";
+                    }
+
+                }
+                else
+                {
+                    lnk.CommandName = "#";
+                }
+            }
+        }
     }
 
 }

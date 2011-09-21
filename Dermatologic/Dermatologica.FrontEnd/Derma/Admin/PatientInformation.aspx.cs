@@ -19,26 +19,26 @@ public partial class Derma_Admin_PatientInformation : PageBase
             }
         }
     }
+
     private void LoadPatientInformation(Guid? idPerson)
     {
         var entity = BussinessFactory.GetPatientInformationService().Get(idPerson);
         if (entity != null)
         {
             HaveHerpesLabial.Checked = Convert.ToBoolean(entity.HaveHerpesLabial);
-            txtDateHerpesLabial.Text = Convert.ToString(entity.DateHerpesLabial);
-
+            txtDateHerpesLabial.Text = entity.DateHerpesLabial.HasValue ? Convert.ToString(entity.DateHerpesLabial.Value.ToShortDateString()) : null;
             IsUseMarcapaso.Checked = Convert.ToBoolean(entity.IsUseMarcapaso);
-            txtDateUseMarcapaso.Text = Convert.ToString(entity.DateUseMarcapaso);
+            txtDateUseMarcapaso.Text = entity.DateUseMarcapaso.HasValue ? Convert.ToString(entity.DateUseMarcapaso.Value.ToShortDateString()) : null;
             HaveVerrugas.Checked = Convert.ToBoolean(entity.HaveVerrugas);
-            txtDateVerrugas.Text = Convert.ToString(entity.DateVerrugas);
+            txtDateVerrugas.Text = entity.DateVerrugas.HasValue ? Convert.ToString(entity.DateVerrugas.Value.ToShortDateString()) : null;
             HaveHepatitisB.Checked = Convert.ToBoolean(entity.HaveHepatitisB);
-            txtDateHepatitisB.Text = Convert.ToString(entity.DateHepatitisB);
+            txtDateHepatitisB.Text = entity.DateHepatitisB.HasValue ? Convert.ToString(entity.DateHepatitisB.Value.ToShortDateString()) : null;
             HaveDiabetes.Checked = Convert.ToBoolean(entity.HaveDiabetes);
-            txtDateDiabetes.Text = Convert.ToString(entity.DateDiabetes);
+            txtDateDiabetes.Text = entity.DateDiabetes.HasValue ? Convert.ToString(entity.DateDiabetes.Value.ToShortDateString()) : null;
             HaveDermatitisAtopica.Checked = Convert.ToBoolean(entity.HaveDermatitisAtopica);
-            txtDateDermatitisAtopica.Text = Convert.ToString(entity.DateDermatitisAtopica);
+            txtDateDermatitisAtopica.Text = entity.DateDermatitisAtopica.HasValue ? Convert.ToString(entity.DateDermatitisAtopica.Value.ToShortDateString()) : null;
             HaveHipotiroidismo.Checked = Convert.ToBoolean(entity.HaveHipotiroidismo);
-            txtDateHipotiroidismo.Text = Convert.ToString(entity.DateHipotiroidismo);
+            txtDateHipotiroidismo.Text = entity.DateHipotiroidismo.HasValue ? Convert.ToString(entity.DateHipotiroidismo.Value.ToShortDateString()) : null;
             txtComentariosAntecedentesEnfermedades.Text = txtComentariosAntecedentesEnfermedades.Text;
             HaveWarfarina.Checked = Convert.ToBoolean(entity.HaveWarfarina);
             HaveAntibioticosAcne.Checked = Convert.ToBoolean(entity.HaveAntibioticosAcne);
@@ -68,19 +68,21 @@ public partial class Derma_Admin_PatientInformation : PageBase
             txtAreaDepilacion.Text=entity.AreaDepilacion;
             txtMetodoDepilacion.Text = entity.MetodoDepilacion;
             IsEmbarazada.Checked = Convert.ToBoolean(entity.IsEmbarazada);
-            txtDateLastRegla.Text = Convert.ToString(entity.DateLastRegla);      
- 
-            }
+            txtDateLastRegla.Text = entity.DateLastRegla.HasValue ? Convert.ToString(entity.DateLastRegla.Value.ToShortDateString()) : null;
+        }
     }
+
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
         Save();
     }
+
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/ListPatients.aspx", true);
     }
-   private void Save()
+
+    private void Save()
     {
         var idPerson = Request.QueryString.Get("id");
         var entity = BussinessFactory.GetPatientInformationService().Get(new Guid(idPerson));
@@ -224,5 +226,5 @@ public partial class Derma_Admin_PatientInformation : PageBase
             }
         }
     }
-    
+
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListPersons.aspx.cs"Inherits="Derma_Admin_ListPersons" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListPersons.aspx.cs"Inherits="Derma_Admin_ListPersons" %>
 <%@ Import Namespace="ASP.App_Code" %>
 <%@ Import Namespace="Dermatologic.Domain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
@@ -25,10 +25,10 @@
                     <table>
                         <tr>
                             <td style="text-align: right">
-                                <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar Por Nombres"></asp:Label>
+                                <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar por Nombres"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="txtSearch" runat="server" Width="360px"></asp:TextBox>
+                                <asp:TextBox ID="txtSearch" runat="server" Width="500px"></asp:TextBox>
                             </td>
                             <td>
                                 <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="80px" OnClick="btnSearch_Click" />
@@ -46,7 +46,8 @@
                 </td>
                 <td>
                     <asp:GridView ID="gvPersons" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                        ForeColor="#333333" GridLines="None" OnRowCommand="gvPersons_RowCommand">
+                        ForeColor="#333333" GridLines="None" OnRowCommand="gvPersons_RowCommand" 
+                        onrowdatabound="gvPersons_RowDataBound">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:TemplateField HeaderText="Nombres">
@@ -54,7 +55,7 @@
                                     <asp:Literal ID="litNombresCompletos" runat="server" Text='<%# string.Format("{0} {1} {2}", Eval("FirstName") , Eval("LastNameP"), Eval("LastNameM")) %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Tipo de Persona">
+                            <asp:TemplateField HeaderText="Categoria">
                                 <ItemTemplate>
                                     <asp:Literal ID="litNombres" runat="server" Text='<%# ((PersonType)Eval("PersonType")).Name %>' />
                                 </ItemTemplate>
@@ -63,20 +64,16 @@
                                 <ItemTemplate>
                                     <asp:Literal ID="litDocType" runat="server" Text='<%#  Enum.GetName(typeof(DocumentType),Eval("DocumentType"))  %>' />
                                 </ItemTemplate>
-                            </asp:TemplateField>                            
+                            </asp:TemplateField>
                             <asp:BoundField DataField="DocumentNumber" HeaderText="N° Documento" />
                             <asp:BoundField DataField="Email" HeaderText="Correo Electronico" />
                             <asp:BoundField DataField="CellPhone" HeaderText="Celular" />
-                            <asp:TemplateField HeaderText="Info">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="lnk_Info" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                                        CommandName="cmd_info">
-                                        <img id="Img5" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />
-                                    </asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
+                                    <asp:LinkButton ID="lnk_info" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
+                                        CommandName="cmd_info">
+                                        <img id="Img1" src="~/images/warning.png" alt="Información privada" border="0" runat="server" />
+                                    </asp:LinkButton>
                                     <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
                                         CommandName="cmd_editar">
                                         <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />

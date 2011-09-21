@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
@@ -34,7 +31,7 @@ public partial class Derma_Admin_ListOffices : PageBase
 
     private void GetOffices()
     {
-        var offices = BussinessFactory.GetOfficeService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
+        var offices = BussinessFactory.GetOfficeService().GetAll(u => u.IsActive).OrderBy(p => p.Name).ToList();
         BindControl<Office>.BindGrid(gvOffices, offices);
     }
 

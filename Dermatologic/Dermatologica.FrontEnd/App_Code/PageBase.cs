@@ -83,7 +83,12 @@ namespace ASP.App_Code
             }
         }
     }
-    
+
+    public static class DermaConstants
+    {
+        public const string PERSON_TYPE = "9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68";
+    }
+
     [DataContract]
     public enum Frecuence : int
     {
