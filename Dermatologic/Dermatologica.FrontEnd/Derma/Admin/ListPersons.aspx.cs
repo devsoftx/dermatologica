@@ -99,6 +99,7 @@ public partial class Derma_Admin_ListPersons : PageBase
                 }
                 else
                 {
+                    img.Src = "~/images/clinic.png";
                     lnk.CommandName = "#";
                 }
             }
