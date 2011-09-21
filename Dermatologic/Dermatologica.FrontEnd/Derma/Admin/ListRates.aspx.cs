@@ -18,24 +18,18 @@ public partial class Derma_Admin_ListRates : PageBase
     {
         if (!Page.IsPostBack)
         {
-           
             LoadPersonType();
-           
-           
         }
-       // GetRates();
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
     }
+
     protected void gvRates_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
         {
             case "cmd_editar":
                 var id = new Guid(e.CommandArgument.ToString());
-                //var idpersontype=new Guid(ucSearchPersonsMedical.SelectedValue);
-                //Response.Redirect(string.Format("EditRate.aspx?id={0}&idpersontype={1}&action=edit", id), true);
                 Response.Redirect(string.Format("EditRate.aspx?id={0}&action=edit", id), true);
-                //idSession={0}&idMedication={1}
                 break;
             case "cmd_eliminar":
                 DeleteRate(new Guid(e.CommandArgument.ToString()));
@@ -43,12 +37,12 @@ public partial class Derma_Admin_ListRates : PageBase
                 break;
         }
     }
+
     private void LoadPersonType()
     {
         var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
         BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
     }
- 
 
     protected void ddlPersonType_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -59,7 +53,6 @@ public partial class Derma_Admin_ListRates : PageBase
     private void SearchRatesByPerson()
     {
        var example = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-        
        var response = BussinessFactory.GetRateService().GetRatesByPerson(example);
         if (response.OperationResult == OperationResult.Success)
         {
@@ -72,6 +65,7 @@ public partial class Derma_Admin_ListRates : PageBase
     {
         SearchRatesByPerson();
     }
+
     private void DeleteRate(Guid id)
     {
         var Rate = BussinessFactory.GetRateService().Get(id);
@@ -88,6 +82,7 @@ public partial class Derma_Admin_ListRates : PageBase
             }
         }
     }
+
     protected void lnkNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/EditRate.aspx?action=new");
