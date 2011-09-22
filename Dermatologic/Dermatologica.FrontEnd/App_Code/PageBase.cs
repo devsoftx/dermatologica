@@ -20,7 +20,7 @@ namespace ASP.App_Code
             list.DataBind();
         }
 
-        public static void BindDropDownList(DropDownList list, List<T> source, bool band  = true)
+        public static void BindDropDownList(DropDownList list, List<T> source, bool band)
         {
             list.DataValueField = "Id";
             list.DataTextField = "CompleteName";

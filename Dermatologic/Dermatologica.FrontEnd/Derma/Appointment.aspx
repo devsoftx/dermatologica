@@ -88,7 +88,7 @@
                     <asp:Label Text="Description:" runat="server" ID="Label5" />
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="txtDescription" Enabled="False" Rows="3" TextMode="MultiLine" />
+                    <asp:TextBox runat="server" ID="txtDescription" Rows="3" TextMode="MultiLine" />
                 </td>
                 <td>
                 </td>
@@ -97,7 +97,21 @@
             </tr>
             <tr>
                 <td>
-                    <asp:LinkButton Text="Volver" runat="server" ID="LinkReturn" OnClick="LinkReturn_Click" />
+                    &nbsp;
+                </td>
+                <td>
+                    <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" OnClick="btnAceptar_Click" />
+                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />                    
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
                 </td>
                 <td>
                 </td>
