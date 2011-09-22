@@ -89,16 +89,61 @@ public partial class Derma_Admin_MakePayments : PageBase
                     CreatedBy = CreatedBy,
                 };
 
-                if (Pago > Session.Residue)
+                decimal venta=Convert.ToDecimal(txtVenta.Text);
+                decimal compra = Convert.ToDecimal(txtCompra.Text);
+
+                if (medication.Currency == ddlCurrency.SelectedValue)//si la moneda de tratamiento=moneda de pago
                 {
-                    Invoice.Amount = Session.Residue;
-                    Pago = Pago - Session.Residue;
+                    if (Pago > Session.Residue)
+                    {
+                        Invoice.Amount = Session.Residue;
+                        Pago = Pago - Session.Residue;
+                    }
+                    else
+                    {
+                        Invoice.Amount = Pago;
+                        Pago = Convert.ToDecimal(0);
+                    }
+
+                    Session.Account = Session.Account + Invoice.Amount;
+                    Session.Residue = Session.Price - Session.Account;
                 }
-                else
+                else if(medication.Currency != ddlCurrency.SelectedValue)
                 {
-                    Invoice.Amount = Pago;
-                    Pago = Convert.ToDecimal(0);
+                    if (medication.Currency == "PEN")//pago paciente en $.
+                    {
+                        if (Pago > Session.Residue/compra)
+                        {
+                            Invoice.Amount = Session.Residue/compra;
+                            Pago = Pago - Session.Residue/compra;
+                        }
+                        else
+                        {
+                            Invoice.Amount = Pago;
+                            Pago = Convert.ToDecimal(0);
+                        }
+
+                        Session.Account = Session.Account + Invoice.Amount*compra ;
+                        Session.Residue = Session.Price - Session.Account;
+                    }
+                    else if (medication.Currency == "USD")//pago paciente S/.
+                    {
+                        if (Pago > Session.Residue*venta)
+                        {
+                            Invoice.Amount = Session.Residue * venta;
+                            Pago = Pago - Session.Residue * venta;
+                        }
+                        else
+                        {
+                            Invoice.Amount = Pago;
+                            Pago = Convert.ToDecimal(0);
+                        }
+
+                        Session.Account = Session.Account + Invoice.Amount/venta ;
+                        Session.Residue = Session.Price - Session.Account;
+                    }
                 }
+               
 
                 Invoice.Patient = medication.Patient;
                 Invoice.Session = Session;
@@ -107,8 +152,6 @@ public partial class Derma_Admin_MakePayments : PageBase
                 Invoice.Personal = null;
                 Invoice.MedicalCare = null;
 
-                Session.Account = Session.Account + Invoice.Amount;
-                Session.Residue = Session.Price - Session.Account;
                 if (Session.Residue == 0)
                 {
                     Session.IsPaid = true;
@@ -161,14 +204,14 @@ public partial class Derma_Admin_MakePayments : PageBase
 
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
-       
-        if (ddlCurrency.SelectedValue == "USD" & txtVenta.Text == "")
+        if (Convert.ToDecimal(txtAmount.Text) != 0 & string.IsNullOrEmpty(txtVenta.Text))
         {
-            
-            Response.Redirect(string.Format("~/Derma/Admin/EditExchangeRate.aspx?action=new&returnUrl={0}", Page.Request.RawUrl));
-     
+            litMensaje.Text = string.Format("No se ha Ingresado el Tipo de Cambio del día");
+            Response.Redirect(string.Format("~/Derma/Admin/EditExchangeRate.aspx?action=new&returnUrl={0}",
+                                            Page.Request.RawUrl));
         }
-        if (Convert.ToDecimal(txtAmount.Text) == 0)
+       
+          if (Convert.ToDecimal(txtAmount.Text) == 0)
         {
             litMensaje.Text = string.Format("El Monto a Pagar No puede Ser Cero");
             return;
