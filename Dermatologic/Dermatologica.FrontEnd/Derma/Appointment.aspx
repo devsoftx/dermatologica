@@ -25,7 +25,8 @@
                     <asp:Label Text="Paciente" runat="server" ID="Label0" />
                 </td>
                 <td>
-                    <asp:Label runat="server" ID="txtPatient" />
+                    <asp:TextBox ID="txtPatient" runat="server">
+                    </asp:TextBox>
                 </td>
                 <td>
                 </td>
@@ -61,7 +62,8 @@
                     <asp:Label Text="Medico/Cosmetra:" runat="server" ID="Label3" />
                 </td>
                 <td>
-                    <asp:Label runat="server" ID="txtMedical" Width="250px" />
+                    <asp:DropDownList ID="ddlMedical" runat="server">
+                    </asp:DropDownList>
                 </td>
                 <td>
                 </td>
@@ -73,7 +75,8 @@
                     <asp:Label Text="Consultorio:" runat="server" ID="Label4" />
                 </td>
                 <td>
-                    <asp:Label runat="server" ID="txtConsultorio" />
+                    <asp:DropDownList ID="ddlConsultorio" runat="server">
+                    </asp:DropDownList>
                 </td>
                 <td>
                 </td>

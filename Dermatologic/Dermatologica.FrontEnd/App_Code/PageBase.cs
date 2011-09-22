@@ -20,6 +20,14 @@ namespace ASP.App_Code
             list.DataBind();
         }
 
+        public static void BindDropDownList(DropDownList list, List<T> source, bool band  = true)
+        {
+            list.DataValueField = "Id";
+            list.DataTextField = "CompleteName";
+            list.DataSource = source;
+            list.DataBind();
+        }
+
         public static void BindDropDownListToEnum(DropDownList list, Type t)
         {
             if (t == typeof(T))
@@ -87,6 +95,8 @@ namespace ASP.App_Code
     public static class DermaConstants
     {
         public const string PERSON_TYPE = "9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68";
+        public const string PERSON_TYPE_MEDICAL = "DA913E86-1EB8-41E1-8DA0-81ABD6195254";
+        public const string PERSON_TYPE_COSMEATRA = "FB546D8B-898C-4E19-8937-ADA8FC10F744";
     }
 
     [DataContract]
