@@ -52,6 +52,11 @@ public partial class Derma_Admin_ListRates : PageBase
     
     private void SearchRatesByPerson()
     {
+        if (ucSearchPersonsMedical.Text == "")
+        {
+            litMensaje.Text = string.Format("Falta Seleccionar la Persona Tratante");
+            return;
+        }
        var example = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
        var response = BussinessFactory.GetRateService().GetRatesByPerson(example);
         if (response.OperationResult == OperationResult.Success)
