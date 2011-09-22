@@ -227,11 +227,12 @@
                                                     <asp:Literal ID="litNSession" runat="server" Text='<%# ((Session)Eval("Session")).RowId %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Sesión">
+                                            <asp:TemplateField HeaderText="Paciente">
                                                 <ItemTemplate>
-                                                    <asp:Literal ID="litSession" runat="server" Text='<%# ((Session)Eval("Session")).Description %>'></asp:Literal>
+                                                    <asp:Literal ID="litPaciente" runat="server" Text='<%#((Person)Eval("Pacient")).CompleteName %>'></asp:Literal>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                             
                                             <asp:BoundField HeaderText="Fecha de Atencion" DataField="DateAttention" DataFormatString="{0:dd-MM-yyyy}" />
                                             <asp:TemplateField HeaderText="Moneda">
                                                 <ItemTemplate>
