@@ -52,7 +52,7 @@ public partial class Derma_Admin_ListRates : PageBase
     
     private void SearchRatesByPerson()
     {
-        if (ucSearchPersonsMedical.Text == "")
+        if (string.IsNullOrEmpty(ucSearchPersonsMedical.Text))
         {
             litMensaje.Text = string.Format("Falta Seleccionar la Persona Tratante");
             return;
