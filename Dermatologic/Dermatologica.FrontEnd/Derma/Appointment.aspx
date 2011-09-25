@@ -88,7 +88,7 @@
                     <asp:Label Text="Description:" runat="server" ID="Label5" />
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="txtDescription" Rows="3" TextMode="MultiLine" />
+                    <asp:TextBox runat="server" ID="txtDescription" Rows="5" TextMode="MultiLine" Width="400" />
                 </td>
                 <td>
                 </td>

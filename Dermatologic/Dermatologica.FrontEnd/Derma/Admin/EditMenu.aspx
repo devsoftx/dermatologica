@@ -11,7 +11,7 @@
             <tr>
                 <td><asp:Label Text = "Padre" runat="server" ID="Label2" /></td>
                 <td><asp:DropDownList ID="ddlMenuPadre" runat="server" AppendDataBoundItems="True" 
-                        Width="100px"/></td>
+                        Width="150px"/></td>
                 <td><asp:CheckBox ID="CheckBox1" runat="server" Text = "Es Padre" 
                         oncheckedchanged="CheckBox1_CheckedChanged" AutoPostBack="True" /></td>
                 <td></td>

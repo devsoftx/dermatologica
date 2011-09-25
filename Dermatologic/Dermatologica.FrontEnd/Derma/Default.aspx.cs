@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -17,15 +16,26 @@ public partial class Derma_Default : PageBase
     {
         if (!IsPostBack)
         {
+            DateTime? date = null;
             ConfigureRadCalendar();
-            var date = DateTime.Now.ToShortDateString();
-            if (!string.IsNullOrEmpty(date))
-                radCalendar.SelectedDate = DateTime.ParseExact(date, "dd/MM/yyyy", new CultureInfo("ES-pe"));
-            var userName = Session["userName"];
-            if (userName != null)
+            var id = Request.Params.Get("id");
+            if (id == null)
             {
+                radCalendar.SelectedDate = DateTime.ParseExact(DateTime.Now.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ES-pe"));
+                var userName = Session["userName"];
+                if (userName != null)
+                {
+                    LoadAppointments(radCalendar.SelectedDate);
+                }   
+            }
+            else
+            {
+                var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id));
+                date = appointment.StartDate;
+                radCalendar.SelectedDate = DateTime.ParseExact(date.Value.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ES-pe"));
+                radCalendar.SelectedView = SchedulerViewType.DayView;
                 LoadAppointments(radCalendar.SelectedDate);
-            }   
+            }
         }
     }
 
@@ -55,7 +65,7 @@ public partial class Derma_Default : PageBase
         IEnumerable<Person> medicals = GetMedicals();
         IEnumerable<Person> cosmeatras = GetCosmeatras();
         var response = medicals.Union(cosmeatras).OrderBy(p => p.CompleteName).ToList();
-        var rtMedical = new ResourceType()
+        var rtMedical = new ResourceType
         {
             Name = "Medico/Cosmeatra",
             DataSource = response,

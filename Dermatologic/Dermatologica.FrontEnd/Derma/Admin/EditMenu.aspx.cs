@@ -14,8 +14,8 @@ public partial class Derma_Admin_EditMenu : PageBase
     {
         if (!Page.IsPostBack)
         {
-            SetMenu();
             LoadMenuFathers();
+            SetMenu();
         }
     }
 
@@ -70,36 +70,38 @@ public partial class Derma_Admin_EditMenu : PageBase
 
     private void Update()
     {
-        var MenuId = Request.QueryString.Get("id");
-        var Menu = BussinessFactory.GetMenuService().Get(new Guid(MenuId));
-        if (Menu != null)
+        var id = Request.QueryString.Get("id");
+        var menu = BussinessFactory.GetMenuService().Get(new Guid(id));
+        if (menu != null)
         {
-            Menu.Name = txtNombre.Text.Trim();
-            Menu.Url = txtUrl.Text.Trim();
-            Menu.Orden = !string.IsNullOrEmpty(txtOrder.Text) ? Convert.ToInt32(txtOrder.Text) : 0;
-            Menu.IsActive = true;
-            Menu.LastModified = LastModified;
-            Menu.ModifiedBy = ModifiedBy;
-            Menu.Description = txtDescription.Text.Trim();
-            var response = BussinessFactory.GetMenuService().Update(Menu);
+            menu.Name = txtNombre.Text.Trim();
+            menu.Url = txtUrl.Text.Trim();
+            menu.Orden = !string.IsNullOrEmpty(txtOrder.Text) ? Convert.ToInt32(txtOrder.Text) : 0;
+            menu.Description = txtDescription.Text.Trim();
+            menu.ParentId = new Guid(ddlMenuPadre.SelectedValue);
+            menu.IsActive = true;
+            menu.LastModified = LastModified;
+            menu.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetMenuService().Update(menu);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListMenus.aspx", true);
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo actualizar el menu: {0}", Menu.Name);
+                litMensaje.Text = string.Format("No se puedo actualizar el menu: {0}", menu.Name);
             }
         }
     }
 
     private void LoadMenu(Guid id)
     {
-        var Menu = BussinessFactory.GetMenuService().Get(id);
-        txtNombre.Text = Menu.Name;
-        txtUrl.Text = Menu.Url;
-        txtOrder.Text = Menu.Orden.HasValue ? Menu.Orden.Value.ToString(): string.Empty;
-        txtDescription.Text = Menu.Description;
+        var menu = BussinessFactory.GetMenuService().Get(id);
+        txtNombre.Text = menu.Name;
+        txtUrl.Text = menu.Url;
+        txtOrder.Text = menu.Orden.HasValue ? menu.Orden.Value.ToString(): string.Empty;
+        txtDescription.Text = menu.Description;
+        if (menu.ParentId.HasValue) ddlMenuPadre.SelectedValue = menu.ParentId.Value.ToString();
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)
