@@ -25,7 +25,20 @@
                     <asp:Label Text="Paciente" runat="server" ID="Label0" />
                 </td>
                 <td>
-                    <asp:TextBox ID="txtPatient" runat="server">
+                    <asp:TextBox ID="txtPatient" runat="server" Width="400px">
+                    </asp:TextBox>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label Text="Tratamiento" runat="server" ID="Label6" />
+                </td>
+                <td>
+                    <asp:TextBox ID="txtTratamiento" runat="server" Width="400px">
                     </asp:TextBox>
                 </td>
                 <td>
@@ -89,6 +102,18 @@
                 </td>
                 <td>
                     <asp:TextBox runat="server" ID="txtDescription" Rows="5" TextMode="MultiLine" Width="400" />
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label Text="Auditoria:" runat="server" ID="Label7" />
+                </td>
+                <td>
+                    <asp:Label runat="server" ID="lblAuditoria" />
                 </td>
                 <td>
                 </td>

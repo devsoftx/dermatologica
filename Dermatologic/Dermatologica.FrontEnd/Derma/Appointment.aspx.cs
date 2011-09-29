@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Web.Security;
 using ASP.App_Code;
 using Dermatologic.Domain;
 using Dermatologic.Services;
@@ -71,18 +68,19 @@ public partial class Derma_Appointment : PageBase
         var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id));
         appointment.Patient = txtPatient.Text;
         appointment.Description = txtDescription.Text;
+        appointment.Subject = txtTratamiento.Text;
         appointment.Medical = BussinessFactory.GetPersonService().Get(new Guid(ddlMedical.SelectedValue));
         appointment.Office = BussinessFactory.GetOfficeService().Get(new Guid(ddlConsultorio.SelectedValue));
+        appointment.ModifiedBy = ModifiedBy;
+        appointment.CreatedBy = CreatedBy;
+        appointment.CreationDate = CreationDate;
+        appointment.LastModified = LastModified;
         var response = BussinessFactory.GetAppointmentService().Update(appointment);
         if(response.OperationResult == OperationResult.Success)
         {
             var returnUrl = Request.Params.Get("returnUrl");
             if (!string.IsNullOrEmpty(returnUrl))
                 Response.Redirect(string.Format("{0}?id={1}", returnUrl, id));
-        }
-        else
-        {
-
         }
     }
 
@@ -119,5 +117,20 @@ public partial class Derma_Appointment : PageBase
         if (appointment.Medical != null) ddlMedical.SelectedValue = appointment.Medical.Id.Value.ToString();
         if (appointment.Office != null) ddlConsultorio.SelectedValue = appointment.Office.Id.Value.ToString();
         txtDescription.Text = appointment.Description;
+        txtTratamiento.Text = appointment.Subject;
+        MembershipUser user0 = null;
+        MembershipUser user1 = null;
+        if(appointment.CreatedBy.HasValue)
+            user0 = Membership.GetUser(appointment.CreatedBy);
+        if(appointment.ModifiedBy.HasValue)
+            user1 = Membership.GetUser(appointment.ModifiedBy);
+        if(user0 != null && user1 != null)
+        {
+            lblAuditoria.Text = string.Format("Creado por: {0} - Fecha de Creación: {1} , Modificación por : {2} - Fecha Modificación: {3}"
+                                ,user0.UserName
+                                ,appointment.CreationDate.Value.ToShortDateString()
+                                ,user1.UserName
+                                ,appointment.LastModified.Value.ToShortDateString());
+        }
     }
 }

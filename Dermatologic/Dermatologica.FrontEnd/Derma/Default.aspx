@@ -43,18 +43,18 @@
                         <tr>
                             <td>
                                 <telerik:RadScheduler ID="radCalendar" runat="server" Skin="Simple" Culture="es-PE"
-                                    SelectedView="MonthView" DayEndTime="20:00:00" DayStartTime="09:00:00" OnAppointmentDelete="radCalendar_AppointmentDelete"
+                                    SelectedView="MonthView" DayEndTime="21:00:00" DayStartTime="08:00:00" OnAppointmentDelete="radCalendar_AppointmentDelete"
                                     OnAppointmentInsert="radCalendar_AppointmentInsert" OnAppointmentUpdate="radCalendar_AppointmentUpdate"
-                                    OverflowBehavior="Expand" WorkDayEndTime="20:00:00" WorkDayStartTime="09:00:00"
+                                    OverflowBehavior="Expand" WorkDayEndTime="21:00:00" WorkDayStartTime="08:00:00"
                                     EnableCustomAttributeEditing="True" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
                                     OnFormCreated="radCalendar_FormCreated" OnNavigationComplete="radCalendar_NavigationComplete"
                                     RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%"
                                     OnAppointmentDataBound="radCalendar_AppointmentDataBound" 
                                     onappointmentcancelingedit="radCalendar_AppointmentCancelingEdit" 
                                     onnavigationcommand="radCalendar_NavigationCommand">
-                                    <WeekView DayEndTime="20:00:00" DayStartTime="09:00:00" WorkDayEndTime="20:00:00"
-                                        WorkDayStartTime="09:00:00" />
-                                    <DayView DayEndTime="20:00:00" DayStartTime="09:00:00" />
+                                    <WeekView DayEndTime="21:00:00" DayStartTime="08:00:00" WorkDayEndTime="21:00:00"
+                                        WorkDayStartTime="08:00:00" />
+                                    <DayView DayEndTime="21:00:00" DayStartTime="08:00:00" />
                                     <AdvancedForm Modal="True" EnableCustomAttributeEditing="True" />
                                     <TimelineView UserSelectable="false" />
                                     <Localization AllDay="Todo el dia" AdvancedAllDayEvent="Todo el día" AdvancedCalendarCancel="Cancelar"
@@ -83,7 +83,7 @@
                                         HeaderDay="Día" HeaderMonth="Mes" HeaderMultiDay="multi-día" HeaderNextDay="día siguiente"
                                         HeaderPrevDay="día anterior" HeaderTimeline="Linea de Tiempo" HeaderToday="hoy"
                                         HeaderWeek="Semana" Save="Guardar" Show24Hours="Mostrar todas las horas" ShowAdvancedForm="Detalle"
-                                        ShowBusinessHours="Mostrar horas laborales" ShowMore="más..." />
+                                        ShowBusinessHours="Mostrar horas laborales" ShowMore="+" />
                                     <AppointmentTemplate>
                                         <div>
                                             <b style="font-size: 10px;">
