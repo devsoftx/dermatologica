@@ -72,8 +72,6 @@ public partial class Derma_Appointment : PageBase
         appointment.Medical = BussinessFactory.GetPersonService().Get(new Guid(ddlMedical.SelectedValue));
         appointment.Office = BussinessFactory.GetOfficeService().Get(new Guid(ddlConsultorio.SelectedValue));
         appointment.ModifiedBy = ModifiedBy;
-        appointment.CreatedBy = CreatedBy;
-        appointment.CreationDate = CreationDate;
         appointment.LastModified = LastModified;
         var response = BussinessFactory.GetAppointmentService().Update(appointment);
         if(response.OperationResult == OperationResult.Success)

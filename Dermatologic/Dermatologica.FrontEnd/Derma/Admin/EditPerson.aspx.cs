@@ -54,6 +54,7 @@ public partial class Derma_Admin_EditPerson : PageBase
         txtNumeroDocumento.Text = person.DocumentNumber;
         txtCelular.Text = person.CellPhone;
         txtEmail.Text = person.Email;
+        txtCode.Text = person.Code;
         if (person.DateBirthDay != null) txtFechaCumpleaños.Text = person.DateBirthDay.Value.ToShortDateString();
         dwTipoPersona.SelectedValue = person.PersonType.Id.ToString();
         if (person.DocumentType != null) dwTipoDocumento.SelectedValue = person.DocumentType.Value.ToString();
@@ -76,6 +77,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             Email = txtEmail.Text.Trim(),
             EmergencyPhone = txtTelefonoEmergencia.Text.Trim(),
             EmergencyPerson = txtEmergencyPerson.Text.Trim(),
+            Code = txtCode.Text,
             Address = txtDireccion.Text.Trim(),
             IsActive = true,
             LastModified = LastModified,
@@ -115,6 +117,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             person.DocumentNumber = txtNumeroDocumento.Text.Trim();
             person.Phone = txtTelefono.Text.Trim();
             person.EmergencyPhone = txtTelefonoEmergencia.Text.Trim();
+            person.Code = txtCode.Text;
             person.CellPhone = txtCelular.Text.Trim();
             person.Address = txtDireccion.Text.Trim();
             person.Email = txtEmail.Text.Trim();

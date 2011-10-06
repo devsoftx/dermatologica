@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
@@ -18,10 +19,13 @@ public partial class Derma_Default : PageBase
         {
             DateTime? date = null;
             ConfigureRadCalendar();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("ES-pe");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("ES-pe");
+            var currentCulture = Thread.CurrentThread.CurrentCulture;
             var id = Request.Params.Get("id");
             if (id == null)
             {
-                radCalendar.SelectedDate = DateTime.ParseExact(DateTime.Now.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ES-pe"));
+                radCalendar.SelectedDate = DateTime.ParseExact(DateTime.Now.ToShortDateString(), "dd/MM/yyyy", currentCulture);
                 var userName = Session["userName"];
                 if (userName != null)
                 {
@@ -32,7 +36,7 @@ public partial class Derma_Default : PageBase
             {
                 var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id));
                 date = appointment.StartDate;
-                radCalendar.SelectedDate = DateTime.ParseExact(date.Value.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ES-pe"));
+                radCalendar.SelectedDate = DateTime.ParseExact(date.Value.ToShortDateString(), "dd/MM/yyyy", currentCulture);
                 radCalendar.SelectedView = SchedulerViewType.DayView;
                 LoadAppointments(radCalendar.SelectedDate);
             }

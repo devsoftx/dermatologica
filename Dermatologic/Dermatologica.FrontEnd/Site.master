@@ -4,9 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head runat="server">
     <title>Clinica Dermatologica</title>
-    <link href="http://localhost/dermatologica.com/Images/favicon.ico" rel="icon" type="image/x-icon" />
-    <link rel="image_src" href="http://localhost/dermatologica.com/Images/logo.jpg" />
-    <link href="http://localhost/dermatologica.com/Styles/Site.css" rel="stylesheet" type="text/css" />	
+    <link href="~/Images/favicon.ico" rel="icon" type="image/x-icon" />
+    <link rel="image_src" href="~/Images/logo.jpg" />
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />	
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
 </head>

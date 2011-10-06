@@ -71,6 +71,22 @@
                 &nbsp;
             </td>
             <td>
+                <asp:Label ID="Label12" runat="server" Text="Codigo:"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="txtCode" runat="server" Width="100px"></asp:TextBox><asp:RequiredFieldValidator
+                    ID="rfvtxtCode" runat="server" ErrorMessage="*" 
+                    ControlToValidate="txtCode" ForeColor="Red"></asp:RequiredFieldValidator>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>        
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
                 <asp:Label ID="Label3" runat="server" Text="Tipo de Documento"></asp:Label>
             </td>
             <td>
