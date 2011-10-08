@@ -483,6 +483,8 @@ namespace Dermatologic.Data.Persistence
                     cm.Property(x => x.ApplicationId, m => m.Column("ApplicationId"));
                     cm.Property(x => x.UserName, m => m.Column("UserName"));
                     cm.Property(x => x.LoweredUserName, m => m.Column("LoweredUserName"));
+                    cm.Property(x => x.IsAnonymous, m => m.Column("IsAnonymous"));
+                    cm.Property(x => x.LastActivityDate, m => m.Column("LastActivityDate"));
                 }
                 );
 

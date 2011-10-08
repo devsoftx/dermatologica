@@ -6,5 +6,7 @@ namespace Dermatologic.Data
     public interface IAppointmentRepository : IRepository<Appointment>
     {
         IList<Appointment> GetByOpMedical(Appointment example);
+
+        IList<Appointment> GetByPatient(Appointment example);
     }
 }

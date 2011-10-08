@@ -16,5 +16,15 @@ namespace Dermatologic.Data
                               };
             return Query(query, parameters, values);
         }
+
+        public IList<Appointment> GetByPatient(Appointment example)
+        {
+            const string query = "from Appointment a where (lower(a.Patient) like :name) and a.IsActive = 1 order by a.StartDate asc";
+            string[] parameters = { "name" };
+            object[] values = {
+                                  string.Format("%{0}%", example.Patient)
+                              };
+            return Query(query, parameters, values);
+        }
     }
 }

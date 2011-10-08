@@ -31,12 +31,11 @@ public partial class Derma_Admin_EditUser : PageBase
     private void LoadUser(string id)
     {
         var user = Membership.GetUser(new Guid(id), false);
-        Answer.Enabled = false;
-        Question.Enabled = false;
         if (user != null)
         {
             UserName.Text = user.UserName;
             Email.Text = user.Email;
+            Question.Text = user.PasswordQuestion;
         }
     }
     
@@ -50,7 +49,10 @@ public partial class Derma_Admin_EditUser : PageBase
             try
             {
                 Membership.UpdateUser(user);
-                Response.Redirect("~/Derma/Admin/ListUsers.aspx", true);
+                user.ChangePassword(user.ResetPassword(), Password.Text.Trim());
+                user.ChangePasswordQuestionAndAnswer(Password.Text.Trim(),Question.Text.Trim(),Answer.Text.Trim());
+                var returnUrl = Request.Params.Get("returnUrl");
+                Response.Redirect(!string.IsNullOrEmpty(returnUrl) ? returnUrl : "~/Derma/Admin/ListUsers.aspx", true);
                 return;
             }
             catch (Exception ex)
@@ -78,8 +80,10 @@ public partial class Derma_Admin_EditUser : PageBase
     }
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Derma/Admin/ListUsers.aspx", true);
+        var returnUrl = Request.Params.Get("returnUrl");
+        Response.Redirect(!string.IsNullOrEmpty(returnUrl) ? returnUrl : "~/Derma/Admin/ListUsers.aspx", true);
     }
+
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
         var action = Request.QueryString.Get("action");

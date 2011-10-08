@@ -123,6 +123,27 @@ namespace Dermatologic.Services
             return response;
         }
 
+        public AppointmentResponse GetByPatient(Appointment example, DateTime? startDate, DateTime? endDate)
+        {
+            var response = new AppointmentResponse();
+            try
+            {
+                IAppointmentRepository _repository = new AppointmentRepository();
+                IList<Appointment> results = _repository.GetByPatient(example);
+                var query = from t in results
+                            where t.StartDate >= startDate.Value && t.StartDate < endDate.Value
+                            select t;
+                response.Results = query.ToList<Appointment>();
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.OperationResult = OperationResult.Failed;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
         private static int GetNroDayFromDay(DayOfWeek dayOfWeek)
         {
             var returnDay = 0;

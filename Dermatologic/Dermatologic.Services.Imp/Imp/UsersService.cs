@@ -7,11 +7,14 @@ namespace Dermatologic.Services
     [DataContract]
     public class UsersService : ServiceController<Users>, IUsersService
     {
-         public UsersService()
-         {
-             Repository = RepositoryFactory.GetUsersRepository();
-         }
+        public UsersService()
+        {
+            Repository = RepositoryFactory.GetUsersRepository();
+        }
 
-        
+        public void UpdatePassword(Users user)
+        {
+            
+        }
     }
 }

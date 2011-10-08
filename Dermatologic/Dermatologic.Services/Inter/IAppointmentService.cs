@@ -21,5 +21,7 @@ namespace Dermatologic.Services
         DateTime[] GetDatesNearby(DateTime dateTime);
 
         AppointmentResponse GetByOpMedical(Appointment example);
+
+        AppointmentResponse GetByPatient(Appointment example, DateTime? startDate, DateTime? endDate);
     }
 }

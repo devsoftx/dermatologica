@@ -1,11 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListAppoiments.aspx.cs"Inherits="Derma_Admin_ListAppoiments" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="ListAppoimentsByPatient.aspx.cs"Inherits="Derma_Admin_ListAppoimentsByPatient" %>
 
 <%@ Import Namespace="Dermatologic.Domain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
     <script type="text/javascript">
         $(function () {
-            $("#MainContent_txtDate").datepicker();
-            $("#MainContent_txtDate").datepicker($.datepicker.regional['es']);
+            $("#MainContent_txtDateEnd").datepicker();
+            $("#MainContent_txtDateEnd").datepicker($.datepicker.regional['es']);
+
+            $("#MainContent_txtDateStart").datepicker();
+            $("#MainContent_txtDateStart").datepicker($.datepicker.regional['es']);
         });
     </script>
 </asp:Content>
@@ -53,13 +56,16 @@
                                 <table>
                                     <tr>
                                         <td style="text-align: right">
-                                            <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar por Medico/Cosmeatra"></asp:Label>
+                                            <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar por Paciente"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="txtSearch" runat="server" Width="350px"></asp:TextBox>
+                                            <asp:TextBox ID="txtSearch" runat="server" Width="300px"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="txtDate" runat="server" Width="100px"></asp:TextBox>
+                                            <asp:TextBox ID="txtDateStart" runat="server" Width="100px"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="txtDateEnd" runat="server" Width="100px"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="80px" OnClick="btnSearch_Click" />
