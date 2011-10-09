@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Dermatologic.Data
 {
@@ -15,11 +13,12 @@ namespace Dermatologic.Data
         long Count();
         long Count(Expression<Func<T, bool>> criterion);
         IList<T> GetAll();
+        IList<T> GetAll(Expression<Func<T, bool>> criterion);
+        IList<T> GetAll(Expression<Func<T, bool>> criterion, int pageIndex, int pageSize, out int count);
         IList<T> Query(string myQuery, string[] parameters, object[] values);
         IList SqlQuery(string myQuery, string[] parameters, object[] values);
-        void Delete(string myQuery, string[] parameters, object[] values);
         void ExecuteNonQuery(string myQuery, string[] parameters, object[] values);
-        IList<T> GetAll(Expression<Func<T, bool>> criterion);
+        void ExecuteNonSQLQuery(string myQuery, string[] parameters, object[] values);
         T Get(object id);
         T Get(Expression<Func<T, bool>> criterion);
         IList<T> GetByExample(T entity);

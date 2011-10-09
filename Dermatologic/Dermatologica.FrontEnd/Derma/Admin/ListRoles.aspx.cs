@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -19,8 +20,12 @@ public partial class Derma_Admin_ListRoles : PageBase
 
     private void GetRoles()
     {
-        var roles = BussinessFactory.GetRoleService().GetAll();
-        BindControl<Role>.BindGrid(gvRoles, roles);
+        var response = BussinessFactory.GetRoleService().GetAll();
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var roles = response.Results;
+            BindControl<Role>.BindGrid(gvRoles, roles);    
+        }
     }
 
     protected void gvRoles_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -45,16 +50,13 @@ public partial class Derma_Admin_ListRoles : PageBase
 
     private void Delete(Guid id)
     {
-        var role = BussinessFactory.GetRoleService().Get(id);
-        var appId = new Guid("2D6C5D1C-8913-4803-85B7-4499A413062E");
-        if (role != null)
+        var appId = new Guid(ConfigurationManager.AppSettings.Get("ApplicationId"));
+        var response = BussinessFactory.GetRoleService().DeleteRole(id, appId);
+        if (response.OperationResult == OperationResult.Success)
         {
-            var response = BussinessFactory.GetRoleService().DeleteRole(role.RoleId.Value, appId);
-            if (response.OperationResult == OperationResult.Success)
-            {
-                litMensaje.Text = string.Format("Se eliminó el rol: {0}", role.RoleName);
-                return;
-            }
+            var role = response.Entity;
+            litMensaje.Text = string.Format("Se eliminó el rol: {0}", role.RoleName);
+            return;
         }
     }
 }

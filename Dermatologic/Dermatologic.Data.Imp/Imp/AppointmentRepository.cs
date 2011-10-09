@@ -20,10 +20,12 @@ namespace Dermatologic.Data
 
         public IList<Appointment> GetByPatient(Appointment example)
         {
-            const string query = "from Appointment a where (lower(a.Patient) like :name) and a.IsActive = 1 order by a.StartDate asc";
-            string[] parameters = { "name" };
+            const string query = "from Appointment a where ((lower(a.Patient) like :name ) and (a.IsActive = 1) and (a.StartDate between :start and :end)) order by a.StartDate asc";
+            string[] parameters = { "name", "start", "end" };
             object[] values = {
-                                  string.Format("%{0}%", example.Patient)
+                                  string.Format("%{0}%", example.Patient),
+                                  example.StartDate.Value,
+                                  example.EndDate.Value
                               };
             return Query(query, parameters, values);
         }

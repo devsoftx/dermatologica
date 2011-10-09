@@ -29,7 +29,8 @@ public partial class Derma_Admin_ListAppoiments : PageBase
                           };
         if (!string.IsNullOrEmpty(txtDate.Text))
         {
-            example.StartDate = Convert.ToDateTime(txtDate.Text);
+            var date = Convert.ToDateTime(txtDate.Text);
+            example.StartDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
         }
         else
         {
@@ -45,30 +46,38 @@ public partial class Derma_Admin_ListAppoiments : PageBase
 
     protected void gvAppointments_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName)
+        if (e.CommandName != "Page")
         {
-            case "cmd_editar":
-                var id = new Guid(e.CommandArgument.ToString());
-                Response.Redirect(string.Format("~/Derma/Appointment.aspx?id={0}&action=edit&returnUrl={1}", id,Request.RawUrl), true);
-                break;
-            case "cmd_eliminar":
-                DeleteAppointment(new Guid(e.CommandArgument.ToString()));
-                GetAppointments();
-                break;
+            switch (e.CommandName)
+            {
+                case "cmd_editar":
+                    var id = new Guid(e.CommandArgument.ToString());
+                    Response.Redirect(string.Format("~/Derma/Appointment.aspx?id={0}&action=edit&returnUrl={1}", id, Request.RawUrl), true);
+                    break;
+                case "cmd_eliminar":
+                    DeleteAppointment(new Guid(e.CommandArgument.ToString()));
+                    GetAppointments();
+                    break;
+            }   
         }
     }
 
     private void GetAppointments()
     {
-        var appointments = BussinessFactory.GetAppointmentService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
-        BindControl<Appointment>.BindGrid(gvAppointments, appointments);
+        var response = BussinessFactory.GetAppointmentService().GetAll(u => u.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var appointments = response.Results.OrderBy(p => p.LastModified).ToList();
+            BindControl<Appointment>.BindGrid(gvAppointments, appointments);   
+        }
     }
 
     private void DeleteAppointment(Guid id)
     {
-        var appointment = BussinessFactory.GetAppointmentService().Get(id);
-        if (appointment != null)
+        var responseAppointment = BussinessFactory.GetAppointmentService().Get(id);
+        if (responseAppointment.OperationResult == OperationResult.Success)
         {
+            var appointment = responseAppointment.Entity;
             appointment.IsActive = false;
             appointment.LastModified = LastModified;
             appointment.ModifiedBy = ModifiedBy;
@@ -81,4 +90,49 @@ public partial class Derma_Admin_ListAppoiments : PageBase
         }
     }
 
+
+    protected void gvAppointments_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        try
+        {
+            ResponseBase<Appointment> response;
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                response = BussinessFactory.GetAppointmentService().GetAll(p => p.IsActive);
+            }
+            else
+            {
+                var example = new Appointment
+                {
+                    Medical =
+                    {
+                        FirstName = txtSearch.Text.Trim(),
+                        LastNameP = txtSearch.Text.Trim(),
+                        LastNameM = txtSearch.Text.Trim()
+                    }
+                };
+                if (!string.IsNullOrEmpty(txtDate.Text))
+                {
+                    var date = Convert.ToDateTime(txtDate.Text);
+                    example.StartDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
+                }
+                else
+                {
+                    example.StartDate = null;
+                }
+                response = BussinessFactory.GetAppointmentService().GetByOpMedical(example);
+            }
+            if (response.OperationResult == OperationResult.Success)
+            {
+                var persons = response.Results;
+                gvAppointments.DataSource = persons;
+                gvAppointments.PageIndex = e.NewPageIndex;
+                gvAppointments.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            litMensaje.Text = string.Format("Error: {0}", ex.Message);
+        }
+    }
 }

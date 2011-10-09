@@ -20,22 +20,26 @@ public partial class Derma_Admin_MakePayments : PageBase
     private void SetPayment()
     {
         var IdSession = Request.QueryString.Get("idSession");
-        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession)).Entity;
         var IdMedication = session.Medication.Id;
-        var Medication = BussinessFactory.GetMedicationService().Get(IdMedication);
+        var Medication = BussinessFactory.GetMedicationService().Get(IdMedication).Entity;
         if (IdMedication != null) LoadSessions(IdMedication.Value);
         txtName.Text = "Pago del Tratamiento " + Medication.Description;
         lblCurrency.Text = Convert.ToString(session.Currency);
-        var List = BussinessFactory.GetExchangeRateService().GetAll().Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();     
-        var echangeToday = List.OrderBy(p => p.CreationDate).FirstOrDefault();
-        if (echangeToday!=null)
+        var responseBase =
+            BussinessFactory.GetExchangeRateService().GetAll(
+                p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString()));
+        if(responseBase.OperationResult == OperationResult.Success)
         {
-            txtCompra.Text = echangeToday.Buy.ToString();
-            txtVenta.Text = echangeToday.Sale.ToString(); 
+            var results = responseBase.Results;
+            var echangeToday = results.OrderBy(p => p.CreationDate).FirstOrDefault();
+            if (echangeToday != null)
+            {
+                txtCompra.Text = echangeToday.Buy.ToString();
+                txtVenta.Text = echangeToday.Sale.ToString();
+            }
         }
     }
-
-   
 
     private void LoadSessions(Guid medicationId)
     {
@@ -52,23 +56,21 @@ public partial class Derma_Admin_MakePayments : PageBase
     private void Save()
     {
         var Pago = Convert.ToDecimal(txtAmount.Text.Trim());
-
         var idsession = Request.QueryString.Get("idSession");
-        var session = BussinessFactory.GetSessionService().Get(new Guid(idsession));
+        var session = BussinessFactory.GetSessionService().Get(new Guid(idsession)).Entity;
         var MedicationId = session.Medication.Id;
 
-        //var MedicationId = Request.QueryString.Get("idMedication");
         foreach (GridViewRow row in gvSessions.Rows)
         {
             if (Pago == 0)
             {
                 break;
             }
-            if (((CheckBox)row.FindControl("chkIsPaid")).Checked == false)
+            if (!((CheckBox)row.FindControl("chkIsPaid")).Checked)
             {
-                var medication = BussinessFactory.GetMedicationService().Get(MedicationId);
+                var medication = BussinessFactory.GetMedicationService().Get(MedicationId).Entity;
                 var IdSession = new Guid(gvSessions.DataKeys[row.RowIndex][0].ToString());
-                var Session = BussinessFactory.GetSessionService().Get(IdSession);
+                var entity = BussinessFactory.GetSessionService().Get(IdSession).Entity;
                 var Invoice = new Invoice
                 {
                     Id = Guid.NewGuid(),
@@ -80,24 +82,22 @@ public partial class Derma_Admin_MakePayments : PageBase
                     NInvoice = txtNInvoice.Text.Trim(),
                     Currency = ddlCurrency.SelectedValue,
                     ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
-                    Movement="Ingreso",
+                    Movement = "Ingreso",
                     IsActive = true,
-                                             
                     LastModified = LastModified,
                     CreationDate = CreationDate,
                     ModifiedBy = ModifiedBy,
                     CreatedBy = CreatedBy,
                 };
 
-                decimal venta=Convert.ToDecimal(txtVenta.Text);
+                decimal venta = Convert.ToDecimal(txtVenta.Text);
                 decimal compra = Convert.ToDecimal(txtCompra.Text);
-
-                if (medication.Currency == ddlCurrency.SelectedValue)//si la moneda de tratamiento=moneda de pago
+                if (medication.Currency == ddlCurrency.SelectedValue) //si la moneda de tratamiento=moneda de pago
                 {
-                    if (Pago > Session.Residue)
+                    if (Pago > entity.Residue)
                     {
-                        Invoice.Amount = Session.Residue;
-                        Pago = Pago - Session.Residue;
+                        Invoice.Amount = entity.Residue;
+                        Pago = Pago - entity.Residue;
                     }
                     else
                     {
@@ -105,17 +105,17 @@ public partial class Derma_Admin_MakePayments : PageBase
                         Pago = Convert.ToDecimal(0);
                     }
 
-                    Session.Account = Session.Account + Invoice.Amount;
-                    Session.Residue = Session.Price - Session.Account;
+                    entity.Account = entity.Account + Invoice.Amount;
+                    entity.Residue = entity.Price - entity.Account;
                 }
                 else if(medication.Currency != ddlCurrency.SelectedValue)
                 {
                     if (medication.Currency == "PEN")//pago paciente en $.
                     {
-                        if (Pago > Session.Residue/compra)
+                        if (Pago > entity.Residue/compra)
                         {
-                            Invoice.Amount = Session.Residue/compra;
-                            Pago = Pago - Session.Residue/compra;
+                            Invoice.Amount = entity.Residue/compra;
+                            Pago = Pago - entity.Residue/compra;
                         }
                         else
                         {
@@ -123,15 +123,15 @@ public partial class Derma_Admin_MakePayments : PageBase
                             Pago = Convert.ToDecimal(0);
                         }
 
-                        Session.Account = Session.Account + Invoice.Amount*compra ;
-                        Session.Residue = Session.Price - Session.Account;
+                        entity.Account = entity.Account + Invoice.Amount*compra ;
+                        entity.Residue = entity.Price - entity.Account;
                     }
                     else if (medication.Currency == "USD")//pago paciente S/.
                     {
-                        if (Pago > Session.Residue*venta)
+                        if (Pago > entity.Residue*venta)
                         {
-                            Invoice.Amount = Session.Residue * venta;
-                            Pago = Pago - Session.Residue * venta;
+                            Invoice.Amount = entity.Residue * venta;
+                            Pago = Pago - entity.Residue * venta;
                         }
                         else
                         {
@@ -139,25 +139,21 @@ public partial class Derma_Admin_MakePayments : PageBase
                             Pago = Convert.ToDecimal(0);
                         }
 
-                        Session.Account = Session.Account + Invoice.Amount/venta ;
-                        Session.Residue = Session.Price - Session.Account;
+                        entity.Account = entity.Account + Invoice.Amount/venta ;
+                        entity.Residue = entity.Price - entity.Account;
                     }
                 }
                
 
                 Invoice.Patient = medication.Patient;
-                Invoice.Session = Session;
+                Invoice.Session = entity;
                 Invoice.CostCenter = medication.Service.CostCenter;
-                //Invoice.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
                 Invoice.Personal = null;
                 Invoice.MedicalCare = null;
-
-                if (Session.Residue == 0)
+                if (entity.Residue == 0)
                 {
-                    Session.IsPaid = true;
+                    entity.IsPaid = true;
                 }
-
-
                 var CashMovement = new CashMovement
                 {
                     Id = Guid.NewGuid(),
@@ -171,22 +167,18 @@ public partial class Derma_Admin_MakePayments : PageBase
                     Currency = ddlCurrency.SelectedValue,
                     ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
                     IsActive = true,
-                    LastModified = LastModified,
                     CreationDate = CreationDate,
-                    ModifiedBy = ModifiedBy,
                     CreatedBy = CreatedBy,
                 };
 
                 Invoice.CashMovements.Add(CashMovement);
-
-                
                 try
                 {
 
                     var response = BussinessFactory.GetInvoiceService().Save(Invoice);
                     if (response.OperationResult == OperationResult.Success)
                     {
-                        BussinessFactory.GetSessionService().Update(Session);
+                        BussinessFactory.GetSessionService().Update(entity);
                     }
                     else
                     {
@@ -232,7 +224,7 @@ public partial class Derma_Admin_MakePayments : PageBase
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
         var IdSession = Request.QueryString.Get("idSession");
-        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession)).Entity;
         var IdMedication = session.Medication.Id;
         Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", IdMedication), true);
     }

@@ -18,8 +18,12 @@ public partial class Derma_Admin_EditService : PageBase
     }
     private void LoadCostCenter()
     {
-        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var costcenters = response.Results;
+            BindControl<CostCenter>.BindDropDownList(ddlCostCenter, costcenters);   
+        }
     }
     private void SetService()
     {
@@ -37,12 +41,16 @@ public partial class Derma_Admin_EditService : PageBase
 
     private void LoadService(Guid id)
     {
-        var service = BussinessFactory.GetServiceService().Get(id);
-        txtName.Text = service.Name;
-        txtDescription.Text = service.Description;
-        txtPrice.Text = service.Price.ToString();
-        ddlCurrency.SelectedValue = service.Currency;
-        ddlCostCenter.SelectedValue = service.CostCenter.Name;
+        var response = BussinessFactory.GetServiceService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var service = response.Entity;
+            txtName.Text = service.Name;
+            txtDescription.Text = service.Description;
+            txtPrice.Text = service.Price.ToString();
+            ddlCurrency.SelectedValue = service.Currency;
+            ddlCostCenter.SelectedValue = service.CostCenter.Name;   
+        }
     }
 
     private void Save()
@@ -59,13 +67,11 @@ public partial class Derma_Admin_EditService : PageBase
             CreationDate = CreationDate,
             ModifiedBy = ModifiedBy,
             CreatedBy = CreatedBy,
-            CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue))
+            CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)).Entity
         };
-        //Service.CostCenter = costcenter;
         try
         {
             var response = BussinessFactory.GetServiceService().Save(Service);
-
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListServices.aspx", true);
@@ -85,11 +91,10 @@ public partial class Derma_Admin_EditService : PageBase
     private void Update()
     {
         var id = Request.QueryString.Get("id");
-        var service = BussinessFactory.GetServiceService().Get(new Guid(id));
-       
-
-        if (service != null)
+        var responseService = BussinessFactory.GetServiceService().Get(new Guid(id));
+        if (responseService.OperationResult == OperationResult.Success)
         {
+            var service = responseService.Entity;
             service.Name = txtName.Text.Trim();
             service.Description = txtDescription.Text.Trim();
             service.IsActive = true;
@@ -97,8 +102,7 @@ public partial class Derma_Admin_EditService : PageBase
             service.ModifiedBy = ModifiedBy;
             service.Price = Convert.ToDecimal(txtPrice.Text.Trim());
             service.Currency = ddlCurrency.SelectedValue;
-            service.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
-
+            service.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)).Entity;
             var response = BussinessFactory.GetServiceService().Update(service);
             if (response.OperationResult == OperationResult.Success)
             {

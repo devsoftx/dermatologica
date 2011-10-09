@@ -46,7 +46,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Padre">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblPadre" runat="server" Text='<%# Eval("ParentId") == null ? string.Empty : BussinessFactory.GetMenuService().Get(new Guid(Eval("ParentId").ToString())).Name %>'></asp:Label>
+                                        <asp:Label ID="lblPadre" runat="server" Text='<%# Eval("ParentId") == null ? string.Empty : BussinessFactory.GetMenuService().Get(new Guid(Eval("ParentId").ToString())).Entity.Name %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Url" HeaderText="Url" />                                                                

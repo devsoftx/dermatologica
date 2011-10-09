@@ -24,15 +24,23 @@ public partial class Derma_Admin_ListRevenues : PageBase
         var movement = Request.QueryString.Get("Movement");
         if (!string.IsNullOrEmpty(movement))
         {
-            var invoices = BussinessFactory.GetInvoiceService().GetAll(p => p.IsActive && p.Movement == movement);
-            BindControl<Invoice>.BindGrid(gvRevenues, new List<Invoice>(invoices));
+            var respose = BussinessFactory.GetInvoiceService().GetAll(p => p.IsActive && p.Movement == movement);
+            if (respose.OperationResult == OperationResult.Success)
+            {
+                var invoices = respose.Results;
+                BindControl<Invoice>.BindGrid(gvRevenues, new List<Invoice>(invoices));   
+            }
         }
     }
 
     private void LoadCostCenter()
     {
-        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);   
+        }
     }
 
     protected void btnSearch_Click(object sender, EventArgs e)
@@ -47,8 +55,7 @@ public partial class Derma_Admin_ListRevenues : PageBase
                               MPayment = ddlMPayment.SelectedValue,
                               Currency = ddlCurrency.SelectedValue,
                               InvoiceType = ddlInvoice.SelectedValue,
-                              CostCenter =
-                                  BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue))
+                              CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)).Entity
                           };
 
         var movement = Request.QueryString.Get("Movement");
@@ -62,8 +69,6 @@ public partial class Derma_Admin_ListRevenues : PageBase
                     break;
                 case "Egreso":
                     response = BussinessFactory.GetInvoiceService().GetExpensesByParams(example);
-                    break;
-                default:
                     break;
 
             }

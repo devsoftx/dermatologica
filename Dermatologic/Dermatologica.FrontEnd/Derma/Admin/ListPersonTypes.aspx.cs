@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
@@ -33,15 +30,20 @@ public partial class Derma_Admin_ListPersonTypes : PageBase
 
     private void GetPersonTypes()
     {
-        var personTypes = BussinessFactory.GetPersonTypeService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
-        BindControl<PersonType>.BindGrid(gvPersonTypes, personTypes);
+        var response = BussinessFactory.GetPersonTypeService().GetAll(u => u.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var personTypes = response.Results.OrderBy(p => p.Name).ToList();
+            BindControl<PersonType>.BindGrid(gvPersonTypes, personTypes);   
+        }
     }
 
     private void DeletePersonType(Guid id)
     {
-        var PersonType = BussinessFactory.GetPersonTypeService().Get(id);
-        if (PersonType != null)
+        var responsePersonType = BussinessFactory.GetPersonTypeService().Get(id);
+        if (responsePersonType.OperationResult == OperationResult.Success)
         {
+            var PersonType = responsePersonType.Entity; 
             PersonType.IsActive = false;
             PersonType.LastModified = LastModified;
             PersonType.ModifiedBy = ModifiedBy;

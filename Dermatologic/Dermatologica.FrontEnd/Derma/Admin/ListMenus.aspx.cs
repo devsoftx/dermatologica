@@ -15,12 +15,16 @@ public partial class Derma_Admin_ListMenus : PageBase
 
     private void GetMenus()
     {
-        var menus = BussinessFactory.GetMenuService().GetAll();
-        if (menus.Count > 0)
+        var response = BussinessFactory.GetMenuService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
         {
-            var ordered = menus.Where(u => u.IsActive == true).OrderBy(p => p.ParentId).ToList();
-            BindControl<Menu>.BindGrid(gvMenus, ordered);
-        }            
+            var menus = response.Results;
+            if (menus.Count > 0)
+            {
+                var ordered = menus.OrderBy(p => p.ParentId).ToList();
+                BindControl<Menu>.BindGrid(gvMenus, ordered);
+            }               
+        }
     }
 
     protected void gvMenus_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -45,16 +49,17 @@ public partial class Derma_Admin_ListMenus : PageBase
 
     private void Delete(Guid id)
     {
-        var Menu = BussinessFactory.GetMenuService().Get(id);
-        if (Menu != null)
+        var responseMenu = BussinessFactory.GetMenuService().Get(id);
+        if (responseMenu.OperationResult == OperationResult.Success)
         {
-            Menu.IsActive = false;
-            Menu.LastModified = LastModified;
-            Menu.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetMenuService().Update(Menu);
+            var menu = responseMenu.Entity;
+            menu.IsActive = false;
+            menu.LastModified = LastModified;
+            menu.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetMenuService().Update(menu);
             if (response.OperationResult == OperationResult.Success)
             {
-                litMensaje.Text = string.Format("Se eliminó el menu: {0}", Menu.Name);
+                litMensaje.Text = string.Format("Se eliminó el menu: {0}", menu.Name);
                 return;
             }
         }

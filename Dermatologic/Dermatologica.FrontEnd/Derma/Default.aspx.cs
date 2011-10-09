@@ -33,7 +33,7 @@ public partial class Derma_Default : PageBase
             }
             else
             {
-                var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id));
+                var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id)).Entity;
                 DateTime? date = appointment.StartDate;
                 if (date != null)
                     radCalendar.SelectedDate = DateTime.ParseExact(date.Value.ToShortDateString(), "dd/MM/yyyy", currentCulture);
@@ -80,17 +80,20 @@ public partial class Derma_Default : PageBase
         };
         radCalendar.ResourceTypes.Add(rtMedical);
 
-        var offices = BussinessFactory.GetOfficeService().GetAll(p => p.IsActive).OrderBy(u => u.Name).ToList();
-
-        var rtOffice = new ResourceType
+        var responseOffice = BussinessFactory.GetOfficeService().GetAll(p => p.IsActive);
+        if (responseOffice.OperationResult == OperationResult.Success)
         {
-            Name = "Consultorio",
-            DataSource = offices,
-            KeyField = "Id",
-            TextField = "Name",
-            ForeignKeyField = "Office",
-        };
-        radCalendar.ResourceTypes.Add(rtOffice);
+            var offices = responseOffice.Results.OrderBy(u => u.Name).ToList();
+            var rtOffice = new ResourceType
+            {
+                Name = "Consultorio",
+                DataSource = offices,
+                KeyField = "Id",
+                TextField = "Name",
+                ForeignKeyField = "Office",
+            };
+            radCalendar.ResourceTypes.Add(rtOffice);
+        }
     }
 
     private IEnumerable<Person> GetMedicals()
@@ -124,7 +127,7 @@ public partial class Derma_Default : PageBase
     protected void radCalendar_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
     {
         var idAppointment = new Guid(e.Appointment.ID.ToString());
-        var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment);
+        var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment).Entity;
         appoinment.IsActive = false;
         appoinment.LastModified = LastModified;
         appoinment.ModifiedBy = ModifiedBy;
@@ -173,13 +176,13 @@ public partial class Derma_Default : PageBase
                                     Patient = e.Appointment.Attributes["Paciente"],
                                     NotifyEach = notificarCada,
                                     Frecuence = frecuence.HasValue ? frecuence.Value : (int?) null,
-                                    Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce) : null,
+                                    Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce).Entity : null,
                                     CreationDate = CreationDate,
                                     CreatedBy = CreatedBy,
                                     IsActive = true,
                                     ModifiedBy = ModifiedBy,
                                     LastModified = LastModified,
-                                    Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null
+                                    Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical).Entity : null
                                 };
         var response = BussinessFactory.GetAppointmentService().Save(appointment);
         if(response.OperationResult == OperationResult.Success)
@@ -221,7 +224,7 @@ public partial class Derma_Default : PageBase
             }
         }
         var idAppointment = new Guid(e.Appointment.ID.ToString());
-        var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment);
+        var appoinment = BussinessFactory.GetAppointmentService().Get(idAppointment).Entity;
         appoinment.Subject = e.ModifiedAppointment.Subject;
         appoinment.StartDate = e.ModifiedAppointment.Start;
         appoinment.EndDate = e.ModifiedAppointment.End;
@@ -231,9 +234,9 @@ public partial class Derma_Default : PageBase
         if (appoinment.Frecuence == null)
             appoinment.Frecuence = frecuence.HasValue ? frecuence.Value : (int?) null;
         if (appoinment.Medical == null)
-            appoinment.Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical) : null;
+            appoinment.Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical).Entity : null;
         if (appoinment.Office == null)
-            appoinment.Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce) : null;
+            appoinment.Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce).Entity : null;
         appoinment.Description = e.ModifiedAppointment.Description;
         appoinment.IsActive = true;
         appoinment.CreationDate = CreationDate;

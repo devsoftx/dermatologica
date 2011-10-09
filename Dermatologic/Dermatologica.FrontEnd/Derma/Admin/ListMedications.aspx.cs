@@ -32,15 +32,20 @@ public partial class Derma_Admin_ListMedications : PageBase
 
     private void GetMedications()
     {
-        var Medications = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
-        BindControl<Medication>.BindGrid(gvMedications, Medications);
+        var response = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var source = response.Results.OrderBy(p => p.LastModified).ToList();
+            BindControl<Medication>.BindGrid(gvMedications, source);   
+        }
     }
 
     private void DeleteMedication(Guid id)
     {
-        var Medication = BussinessFactory.GetMedicationService().Get(id);
-        if (Medication != null)
+        var responseMedication = BussinessFactory.GetMedicationService().Get(id);
+        if (responseMedication.OperationResult == OperationResult.Success)
         {
+            var Medication = responseMedication.Entity;
             Medication.IsActive = false;
             Medication.LastModified = LastModified;
             Medication.ModifiedBy = ModifiedBy;
@@ -60,9 +65,6 @@ public partial class Derma_Admin_ListMedications : PageBase
     
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-        //const string javascript = "openRadWindow('SearchPersons.aspx?personType=','rw1');";
-        //System.Web.UI.ScriptManager.RegisterStartupScript(Page, GetType(), "OpenSearchPersons", javascript, true);
-
         if (Page.IsPostBack)
         {
             SearchPersons();

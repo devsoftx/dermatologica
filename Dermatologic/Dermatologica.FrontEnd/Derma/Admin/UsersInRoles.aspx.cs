@@ -69,8 +69,12 @@ public partial class Derma_Admin_UsersInRoles : PageBase
 
     protected void ddlRole_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var role = BussinessFactory.GetRoleService().Get(new Guid(ddlRole.SelectedValue));
-        txtNombre.Text = role.RoleName;
-        txtDescription.Text = role.Description;
+        var response = BussinessFactory.GetRoleService().Get(new Guid(ddlRole.SelectedValue));
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var role = response.Entity;
+            txtNombre.Text = role.RoleName;
+            txtDescription.Text = role.Description;   
+        }
     }
 }

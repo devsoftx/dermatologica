@@ -39,26 +39,34 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     private void LoadServices()
     {
-        var services = BussinessFactory.GetServiceService().GetAll().OrderBy(p => p.Name).ToList();
-        BindControl<Service>.BindDropDownList(dwService, services);
-        txtPrice.Text = services.FirstOrDefault().Price.ToString();
-        lblCurrency.Text = services.FirstOrDefault().Currency;
+        var response = BussinessFactory.GetServiceService().GetAll(p => p.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var services = response.Results.OrderBy(p => p.Name).ToList();
+            BindControl<Service>.BindDropDownList(dwService, services);
+            txtPrice.Text = services.FirstOrDefault().Price.ToString();
+            lblCurrency.Text = services.FirstOrDefault().Currency;   
+        }
     }
 
     private void LoadMedication(Guid id)
     {
-        var medication = BussinessFactory.GetMedicationService().Get(id);
-        txtDescription.Text = medication.Description;
-        txtNumberSessions.Text = Convert.ToString(medication.NumberSessions);
-        txtPacient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
-        lblCurrency.Text = medication.Service.Currency;
-        txtPriceT.Text = medication.Price.ToString();
-        txtDiscountT.Text = medication.DiscountT.ToString();
-        txtDni.Value = medication.Patient.DocumentNumber;
-        if (medication.Service.Id.HasValue)
+        var response = BussinessFactory.GetMedicationService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
         {
-            dwService.SelectedValue = medication.Service.Id.Value.ToString();
-            txtPrice.Text = medication.Service.Price.ToString();
+            var medication = response.Entity;
+            txtDescription.Text = medication.Description;
+            txtNumberSessions.Text = Convert.ToString(medication.NumberSessions);
+            txtPacient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
+            lblCurrency.Text = medication.Service.Currency;
+            txtPriceT.Text = medication.Price.ToString();
+            txtDiscountT.Text = medication.DiscountT.ToString();
+            txtDni.Value = medication.Patient.DocumentNumber;
+            if (medication.Service.Id.HasValue)
+            {
+                dwService.SelectedValue = medication.Service.Id.Value.ToString();
+                txtPrice.Text = medication.Service.Price.ToString();
+            }   
         }
     }
 
@@ -81,9 +89,14 @@ public partial class Derma_Admin_EditMedication : PageBase
                                  CreationDate = CreationDate,
                                  ModifiedBy = ModifiedBy,
                                  CreatedBy = CreatedBy,
-                                 Patient = patient,
-                                 Service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue))
+                                 Patient = patient
                              };
+        var responseService = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue));
+        if (responseService.OperationResult == OperationResult.Success)
+        {
+            medication.Service = responseService.Entity;
+        }
+
         try
         {
             foreach (GridViewRow row in gvSessions.Rows)
@@ -133,19 +146,18 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     private void Update()
     {
-        var Id = Request.QueryString.Get("id");
-        var Medication = BussinessFactory.GetMedicationService().Get(new Guid(Id));
-        if (Medication != null)
+        var id = Request.QueryString.Get("id");
+        var responseMedication = BussinessFactory.GetMedicationService().Get(new Guid(id));
+        if (responseMedication.OperationResult == OperationResult.Success)
         {
-            Medication.Description = txtDescription.Text.Trim();
-            Medication.NumberSessions = Convert.ToInt32(txtNumberSessions.Text.Trim());
-            Medication.IsActive = true;
-            Medication.LastModified = LastModified;
-            Medication.ModifiedBy = ModifiedBy;
-
-            Medication.Service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue));
-
-            var response = BussinessFactory.GetMedicationService().Update(Medication);
+            var medication = responseMedication.Entity;
+            medication.Description = txtDescription.Text.Trim();
+            medication.NumberSessions = Convert.ToInt32(txtNumberSessions.Text.Trim());
+            medication.IsActive = true;
+            medication.LastModified = LastModified;
+            medication.ModifiedBy = ModifiedBy;
+            medication.Service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue)).Entity;
+            var response = BussinessFactory.GetMedicationService().Update(medication);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListMedications.aspx", true);
@@ -186,8 +198,12 @@ public partial class Derma_Admin_EditMedication : PageBase
     {
         var id = Session["personSelected"];
         var response = BussinessFactory.GetPersonService().Get(new Guid(id.ToString()));
-        txtPacient.Text = string.Format("{0} {1} {2}", response.FirstName,response.LastNameP, response.LastNameM);
-        txtDni.Value = response.DocumentNumber;
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var person = response.Entity;
+            txtPacient.Text = string.Format("{0} {1} {2}", person.FirstName, person.LastNameP, person.LastNameM);
+            txtDni.Value = person.DocumentNumber;   
+        }
     }
 
     protected void btnAddSessions_Click(object sender, EventArgs e)
@@ -257,9 +273,10 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     private void Delete(Guid id)
     {
-        var session = BussinessFactory.GetSessionService().Get(id);
-        if (session != null)
+        var responseSession = BussinessFactory.GetSessionService().Get(id);
+        if (responseSession.OperationResult == OperationResult.Success)
         {
+            var session = responseSession.Entity;
             session.IsActive = false;
             session.LastModified = LastModified;
             session.ModifiedBy = ModifiedBy;
@@ -274,8 +291,12 @@ public partial class Derma_Admin_EditMedication : PageBase
 
     protected void dwService_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var service = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue));
-        txtPrice.Value = Convert.ToDouble(service.Price);
-        lblCurrency.Text = service.Currency;
+        var response = BussinessFactory.GetServiceService().Get(new Guid(dwService.SelectedValue));
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var service = response.Entity;
+            txtPrice.Value = Convert.ToDouble(service.Price);
+            lblCurrency.Text = service.Currency;   
+        }
     }
 }

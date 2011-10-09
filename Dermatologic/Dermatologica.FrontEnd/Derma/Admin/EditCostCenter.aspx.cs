@@ -32,9 +32,13 @@ public partial class Derma_Admin_EditCostCenter : PageBase
     }
     void LoadCostCenter(Guid id)
     {
-        var CostCenter = BussinessFactory.GetCostCenterService().Get(id);
-        txtName.Text = CostCenter.Name;
-        txtDescription.Text = CostCenter.Description;
+        var response = BussinessFactory.GetCostCenterService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var costCenter = response.Entity;
+            txtName.Text = costCenter.Name;
+            txtDescription.Text = costCenter.Description;   
+        }
     }
 
     private void Save()
@@ -73,23 +77,22 @@ public partial class Derma_Admin_EditCostCenter : PageBase
     private void Update()
     {
         var Id = Request.QueryString.Get("id");
-        var CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(Id));
-        if (CostCenter != null)
+        var responseCostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(Id));
+        if (responseCostCenter.OperationResult == OperationResult.Success)
         {
-            CostCenter.Name = txtName.Text.Trim();
-            CostCenter.Description = txtDescription.Text.Trim();
-            CostCenter.IsActive = true;
-            CostCenter.LastModified = LastModified;
-            CostCenter.ModifiedBy = ModifiedBy;
-
-            var response = BussinessFactory.GetCostCenterService().Update(CostCenter);
+            var costCenter = responseCostCenter.Entity;
+            costCenter.Name = txtName.Text.Trim();
+            costCenter.Description = txtDescription.Text.Trim();
+            costCenter.LastModified = LastModified;
+            costCenter.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetCostCenterService().Update(costCenter);
             if (response.OperationResult == OperationResult.Success)
             {
-                Response.Redirect("~/Derma/Admin/ListCostCenters.aspx", true);
+                Response.Redirect("~/Derma/Admin/ListCostCenters.aspx", false);
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo actualizar el Tipo de Persona");
+                litMensaje.Text = string.Format("No se puedo actualizar el Centro de Costo");
             }
         }
     }

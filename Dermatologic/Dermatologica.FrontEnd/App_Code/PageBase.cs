@@ -97,6 +97,7 @@ namespace ASP.App_Code
         public const string PERSON_TYPE = "9B64DDB9-1C00-4A8B-99E5-FDCD96B3FF68";
         public const string PERSON_TYPE_MEDICAL = "DA913E86-1EB8-41E1-8DA0-81ABD6195254";
         public const string PERSON_TYPE_COSMEATRA = "FB546D8B-898C-4E19-8937-ADA8FC10F744";
+        public const string PERSON_URSULA = "754124E0-7551-4E32-8DC4-5C4B80BAD8E2";
     }
 
     [DataContract]

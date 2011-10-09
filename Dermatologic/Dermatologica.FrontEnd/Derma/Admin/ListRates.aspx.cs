@@ -40,8 +40,12 @@ public partial class Derma_Admin_ListRates : PageBase
 
     private void LoadPersonType()
     {
-        var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
-        BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
+        var response = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
+        }
     }
 
     protected void ddlPersonType_SelectedIndexChanged(object sender, EventArgs e)
@@ -58,7 +62,7 @@ public partial class Derma_Admin_ListRates : PageBase
             return;
         }
        var example = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-       var response = BussinessFactory.GetRateService().GetRatesByPerson(example);
+       var response = BussinessFactory.GetRateService().GetRatesByPerson(example.Entity);
         if (response.OperationResult == OperationResult.Success)
         {
             gvRates.DataSource = response.Rates;
@@ -73,16 +77,17 @@ public partial class Derma_Admin_ListRates : PageBase
 
     private void DeleteRate(Guid id)
     {
-        var Rate = BussinessFactory.GetRateService().Get(id);
-        if (Rate != null)
+        var responseRate = BussinessFactory.GetRateService().Get(id);
+        if (responseRate.OperationResult == OperationResult.Success)
         {
-            Rate.IsActive = false;
-            Rate.LastModified = LastModified;
-            Rate.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetRateService().Update(Rate);
+            var rate = responseRate.Entity;
+            rate.IsActive = false;
+            rate.LastModified = LastModified;
+            rate.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetRateService().Update(rate);
             if (response.OperationResult == OperationResult.Success)
             {
-                litMensaje.Text = string.Format("Se eliminó El Tipo de Persona");
+                litMensaje.Text = string.Format("Se eliminó la tarifa");
                 return;
             }
         }

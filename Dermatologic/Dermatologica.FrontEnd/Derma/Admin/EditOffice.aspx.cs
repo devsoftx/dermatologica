@@ -35,10 +35,14 @@ public partial class Derma_Admin_EditOffice : PageBase
 
     void LoadOffice(Guid id)
     {
-        var office = BussinessFactory.GetOfficeService().Get(id);
-        txtName.Text = office.Name;
-        txtDescription.Text = office.Description;
-        txtColor.BackColor = Color.FromName(office.ColorId);
+        var response = BussinessFactory.GetOfficeService().Get(id);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var office = response.Entity;
+            txtName.Text = office.Name;
+            txtDescription.Text = office.Description;
+            txtColor.BackColor = Color.FromName(office.ColorId);   
+        }
     }
 
     private void Save()
@@ -76,10 +80,11 @@ public partial class Derma_Admin_EditOffice : PageBase
 
     private void Update()
     {
-        var Id = Request.QueryString.Get("id");
-        var office = BussinessFactory.GetOfficeService().Get(new Guid(Id));
-        if (office != null)
+        var id = Request.QueryString.Get("id");
+        var responseOffice = BussinessFactory.GetOfficeService().Get(new Guid(id));
+        if (responseOffice.OperationResult == OperationResult.Success)
         {
+            var office = responseOffice.Entity;
             office.Name = txtName.Text.Trim();
             office.Description = txtDescription.Text.Trim();
             office.ColorId = string.Format("#{0}", txtColor.Text.Trim());
@@ -94,7 +99,7 @@ public partial class Derma_Admin_EditOffice : PageBase
             else
             {
                 litMensaje.Text = string.Format("No se puedo actualizar la oficina");
-            }
+            }   
         }
     }
 

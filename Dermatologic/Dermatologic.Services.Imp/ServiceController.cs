@@ -7,7 +7,7 @@ using Dermatologic.Data.Persistence;
 
 namespace Dermatologic.Services
 {
-    public class ServiceController<T> : IServiceController<T>
+    public class ServiceController<T> : IServiceController<T> where T : new()
     {
         private AbstractRepositoryFactory repositoryFactory = AbstractRepositoryFactory.Instance(AbstractRepositoryFactory.REPOSITORY_FACTORY);
 
@@ -102,9 +102,58 @@ namespace Dermatologic.Services
             return Repository.Count(criterion);
         }
 
-        public IList<T> GetAll()
+        public ResponseBase<T> GetAll()
         {
-            return Repository.GetAll();
+            var response = new ResponseBase<T>();
+            try
+            {
+                var results = Repository.GetAll();
+                response.Results = results;
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.OperationResult = OperationResult.Failed;
+            }
+            return response;
+        }
+
+        public ResponseBase<T> GetAll(Expression<Func<T, bool>> criterion)
+        {
+            var response = new ResponseBase<T>();
+            try
+            {
+                var results = Repository.GetAll(criterion);
+                response.Results = results;
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.OperationResult = OperationResult.Failed;
+            }
+            return response;
+        }
+
+        public ResponseBase<T> GetAll(Expression<Func<T, bool>> criterion, PagingParameters parameters)
+        {
+            var response = new ResponseBase<T>();
+            try
+            {
+                int count = 0;
+                var results = Repository.GetAll(criterion, parameters.PageIndex, parameters.PageSize, out count);
+                parameters.VirtualCount = count;
+                response.Results = results;
+                response.PagingParameters = parameters;
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.OperationResult = OperationResult.Failed;
+            }
+            return response;
         }
 
         public ResponseBase<T> Query(string myQuery, string[] parameters, object[] values)
@@ -124,16 +173,21 @@ namespace Dermatologic.Services
             }
         }
 
-        public void ExecuteNonQuery(string myQuery, string[] parameters, object[] values)
+        public ResponseBase<T> ExecuteNonQuery(string myQuery, string[] parameters, object[] values)
         {
+            var response = new ResponseBase<T>();
             try
             {
                 Repository.ExecuteNonQuery(myQuery,parameters,values);
+                response.OperationResult = OperationResult.Success;
             }
             catch (Exception ex)
             {
-                throw ex;            
+                response.Message = ex.Message;
+                response.OperationResult = OperationResult.Failed;
+                throw ex;
             }
+            return response;
         }
 
         public IList SqlQuery(string myQuery, string[] parameters, object[] values)
@@ -148,13 +202,13 @@ namespace Dermatologic.Services
             }
         }
 
-        public ResponseBase<T> Delete(string myQuery, string[] parameters, object[] values)
+        public ResponseBase<T> ExecuteNonSQLQuery(string myQuery, string[] parameters, object[] values)
         {
             var response = new ResponseBase<T>();
             try
             {
                 response.OperationResult = OperationResult.Success;
-                Repository.Delete(myQuery, parameters, values);
+                Repository.ExecuteNonSQLQuery(myQuery, parameters, values);
                 return response;
             }
             catch (Exception ex)
@@ -166,24 +220,55 @@ namespace Dermatologic.Services
             
         }
 
-        public IList<T> GetAll(Expression<Func<T, bool>> criterion)
+        public ResponseBase<T> GetByExample(T example)
         {
-            return Repository.GetAll(criterion);
+            var response = new ResponseBase<T>();
+            try
+            {
+                var results = Repository.GetByExample(example); ; 
+                response.Results = results;
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.OperationResult = OperationResult.Failed;
+            }
+            return response;
         }
 
-        public IList<T> GetByExample(T example)
+        public ResponseBase<T> Get(object id)
         {
-            return Repository.GetByExample(example);
+            var response = new ResponseBase<T>();
+            try
+            {
+                var entity = Repository.Get(id);
+                response.Entity = entity;
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.OperationResult = OperationResult.Failed;
+            }
+            return response;
         }
 
-        public T Get(object id)
+        public ResponseBase<T> Get(Expression<Func<T, bool>> criterion)
         {
-            return Repository.Get(id);
-        }
-
-        public T Get(Expression<Func<T, bool>> criterion)
-        {
-            return Repository.Get(criterion);
+            var response = new ResponseBase<T>();
+            try
+            {
+                var entity = Repository.Get(criterion);
+                response.Entity = entity;
+                response.OperationResult = OperationResult.Success;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.OperationResult = OperationResult.Failed;
+            }
+            return response;
         }
     }
 }

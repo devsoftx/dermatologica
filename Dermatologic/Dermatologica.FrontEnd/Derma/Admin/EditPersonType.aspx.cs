@@ -34,9 +34,13 @@ public partial class Derma_Admin_EditPersonType : PageBase
 
     void LoadPersonType(Guid id)
     {
-        var PersonType = BussinessFactory.GetPersonTypeService().Get(id);
-        txtName.Text = PersonType.Name;
-        txtDescription.Text = PersonType.Description;
+        var response = BussinessFactory.GetPersonTypeService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var personType = response.Entity;
+            txtName.Text = personType.Name;
+            txtDescription.Text = personType.Description;   
+        }
     }
 
     private void Save()
@@ -75,17 +79,17 @@ public partial class Derma_Admin_EditPersonType : PageBase
 
     private void Update()
     {
-        var Id = Request.QueryString.Get("id");
-        var PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(Id));
-        if (PersonType != null)
+        var id = Request.QueryString.Get("id");
+        var responsePersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(id));
+        if (responsePersonType.OperationResult == OperationResult.Success)
         {
-            PersonType.Name = txtName.Text.Trim();
-            PersonType.Description = txtDescription.Text.Trim();
-            PersonType.IsActive = true;
-            PersonType.LastModified = LastModified;
-            PersonType.ModifiedBy = ModifiedBy;
-
-            var response = BussinessFactory.GetPersonTypeService().Update(PersonType);
+            var personType = responsePersonType.Entity;
+            personType.Name = txtName.Text.Trim();
+            personType.Description = txtDescription.Text.Trim();
+            personType.IsActive = true;
+            personType.LastModified = LastModified;
+            personType.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetPersonTypeService().Update(personType);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListPersonTypes.aspx", true);

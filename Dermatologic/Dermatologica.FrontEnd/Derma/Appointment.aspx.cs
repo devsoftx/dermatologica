@@ -18,8 +18,12 @@ public partial class Derma_Appointment : PageBase
     
     private void GetOffices()
     {
-        var offices = BussinessFactory.GetOfficeService().GetAll(u => u.IsActive).OrderBy(p => p.Name).ToList();
-        BindControl<Office>.BindDropDownList(ddlConsultorio, offices);
+        var response = BussinessFactory.GetOfficeService().GetAll(u => u.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var offices = response.Results.OrderBy(p => p.Name).ToList();
+            BindControl<Office>.BindDropDownList(ddlConsultorio, offices);
+        }
     }
 
     private void GetOpMedical()
@@ -65,12 +69,12 @@ public partial class Derma_Appointment : PageBase
     private void Update()
     {
         var id = Request.QueryString.Get("id");
-        var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id));
+        var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id)).Entity;
         appointment.Patient = txtPatient.Text;
         appointment.Description = txtDescription.Text;
         appointment.Subject = txtTratamiento.Text;
-        appointment.Medical = BussinessFactory.GetPersonService().Get(new Guid(ddlMedical.SelectedValue));
-        appointment.Office = BussinessFactory.GetOfficeService().Get(new Guid(ddlConsultorio.SelectedValue));
+        appointment.Medical = BussinessFactory.GetPersonService().Get(new Guid(ddlMedical.SelectedValue)).Entity;
+        appointment.Office = BussinessFactory.GetOfficeService().Get(new Guid(ddlConsultorio.SelectedValue)).Entity;
         appointment.ModifiedBy = ModifiedBy;
         appointment.LastModified = LastModified;
         var response = BussinessFactory.GetAppointmentService().Update(appointment);
@@ -108,7 +112,7 @@ public partial class Derma_Appointment : PageBase
     {
         GetOffices();
         GetOpMedical();
-        var appointment = BussinessFactory.GetAppointmentService().Get(id);
+        var appointment = BussinessFactory.GetAppointmentService().Get(id).Entity;
         txtPatient.Text = appointment.Patient;
         if (appointment.StartDate != null) txtDateStart.Text = appointment.StartDate.Value.ToShortTimeString();
         if (appointment.EndDate != null) txtDateEnd.Text = appointment.EndDate.Value.ToShortTimeString();

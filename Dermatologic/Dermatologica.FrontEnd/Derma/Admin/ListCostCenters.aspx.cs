@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
@@ -32,18 +29,23 @@ public partial class Derma_Admin_ListCostCenters : PageBase
     
     private void GetCostCenters()
     {
-        var CostCenters = BussinessFactory.GetCostCenterService().GetAll(u => u.IsActive == true).OrderBy(p => p.Name).ToList();
-        BindControl<CostCenter>.BindGrid(gvCostCenters, CostCenters);
+        var response = BussinessFactory.GetCostCenterService().GetAll(u => u.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var costCenters = response.Results.OrderBy(p => p.Name).ToList();
+            BindControl<CostCenter>.BindGrid(gvCostCenters, costCenters);    
+        }
     }
     private void DeleteCostCenter(Guid id)
     {
-        var CostCenter = BussinessFactory.GetCostCenterService().Get(id);
-        if (CostCenter != null)
+        var responseCostCenter = BussinessFactory.GetCostCenterService().Get(id);
+        if (responseCostCenter.OperationResult == OperationResult.Success)
         {
-            CostCenter.IsActive = false;
-            CostCenter.LastModified = LastModified;
-            CostCenter.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetCostCenterService().Update(CostCenter);
+            var costCenter = responseCostCenter.Entity;
+            costCenter.IsActive = false;
+            costCenter.LastModified = LastModified;
+            costCenter.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetCostCenterService().Update(costCenter);
             if (response.OperationResult == OperationResult.Success)
             {
                 litMensaje.Text = string.Format("Se eliminó El Centro de Costo");

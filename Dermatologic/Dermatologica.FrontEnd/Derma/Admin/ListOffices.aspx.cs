@@ -31,15 +31,20 @@ public partial class Derma_Admin_ListOffices : PageBase
 
     private void GetOffices()
     {
-        var offices = BussinessFactory.GetOfficeService().GetAll(u => u.IsActive).OrderBy(p => p.Name).ToList();
-        BindControl<Office>.BindGrid(gvOffices, offices);
+        var response = BussinessFactory.GetOfficeService().GetAll(u => u.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var offices = response.Results.OrderBy(p => p.Name).ToList();
+            BindControl<Office>.BindGrid(gvOffices, offices);
+        }
     }
 
     private void DeleteOffice(Guid id)
     {
-        var office = BussinessFactory.GetPersonTypeService().Get(id);
-        if (office != null)
+        var responseOffice = BussinessFactory.GetPersonTypeService().Get(id);
+        if (responseOffice.OperationResult == OperationResult.Success)
         {
+            var office = responseOffice.Entity;
             office.IsActive = false;
             office.LastModified = LastModified;
             office.ModifiedBy = ModifiedBy;

@@ -22,7 +22,7 @@ public partial class Derma_Admin_PatientInformation : PageBase
 
     private void LoadPatientInformation(Guid? idPerson)
     {
-        var entity = BussinessFactory.GetPatientInformationService().Get(idPerson);
+        var entity = BussinessFactory.GetPatientInformationService().Get(idPerson).Entity;
         if (entity != null)
         {
             HaveHerpesLabial.Checked = Convert.ToBoolean(entity.HaveHerpesLabial);
@@ -85,7 +85,7 @@ public partial class Derma_Admin_PatientInformation : PageBase
     private void Save()
     {
         var idPerson = Request.QueryString.Get("id");
-        var entity = BussinessFactory.GetPatientInformationService().Get(new Guid(idPerson));
+        var entity = BussinessFactory.GetPatientInformationService().Get(new Guid(idPerson)).Entity;
         if (entity != null)
         {
             entity.HaveHerpesLabial = HaveHerpesLabial.Checked;
@@ -145,10 +145,9 @@ public partial class Derma_Admin_PatientInformation : PageBase
             entity.AreaDepilacion=txtAreaDepilacion.Text.Trim();
             entity.MetodoDepilacion=txtMetodoDepilacion.Text.Trim();
             entity.IsEmbarazada=IsEmbarazada.Checked;
-            entity.DateLastRegla = !string.IsNullOrEmpty(txtDateLastRegla.Text) ? Convert.ToDateTime(txtDateLastRegla.Text) : (DateTime?)null;
-
-
-
+            entity.DateLastRegla = !string.IsNullOrEmpty(txtDateLastRegla.Text)
+                                       ? Convert.ToDateTime(txtDateLastRegla.Text)
+                                       : (DateTime?) null;
             var response = BussinessFactory.GetPatientInformationService().Update(entity);
             if (response.OperationResult == OperationResult.Success)
             {
@@ -163,7 +162,7 @@ public partial class Derma_Admin_PatientInformation : PageBase
         {
             var info = new PatientInformation
                            {                                                                                         
-                               Id =new Guid(idPerson),
+                               Id = new Guid(idPerson),
                                HaveHerpesLabial = HaveHerpesLabial.Checked,
                                DateHerpesLabial = !string.IsNullOrEmpty(txtDateHerpesLabial.Text) ? Convert.ToDateTime(txtDateHerpesLabial.Text) : (DateTime?)null,
                                IsUseMarcapaso = IsUseMarcapaso.Checked,
@@ -208,7 +207,6 @@ public partial class Derma_Admin_PatientInformation : PageBase
                                MetodoDepilacion=txtMetodoDepilacion.Text.Trim(),
                                IsEmbarazada=IsEmbarazada.Checked,
                                DateLastRegla = !string.IsNullOrEmpty(txtDateLastRegla.Text) ? Convert.ToDateTime(txtDateLastRegla.Text) : (DateTime?)null,
-
                                IsActive = true,
                                LastModified = LastModified,
                                CreationDate = CreationDate,

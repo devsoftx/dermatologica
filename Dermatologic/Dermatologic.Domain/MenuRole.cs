@@ -32,7 +32,7 @@ namespace Dermatologic.Domain
         }
 
         [DataMember]
-        public virtual bool? IsActive { set; get; }
+        public virtual bool IsActive { set; get; }
 
         [DataMember]
         public virtual DateTime? CreationDate { set; get; }

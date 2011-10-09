@@ -4,13 +4,15 @@ using System.Runtime.Serialization;
 namespace Dermatologic.Services
 {
     [DataContract]
-    public class ResponseBase<T>
+    public class ResponseBase<T> where T : new()
     {
         private IList<T> _list;
+        private T _entity;
 
         public ResponseBase()
         {
-            _list = new List<T>();       
+            _list = new List<T>();   
+            _entity = new T();
         }
 
         [DataMember]
@@ -18,6 +20,13 @@ namespace Dermatologic.Services
         {
             get { return _list; }
             set { _list = value; }
+        }
+
+        [DataMember]
+        public T Entity
+        {
+            get { return _entity; }
+            set { _entity = value; }
         }
 
         [DataMember]
@@ -33,6 +42,13 @@ namespace Dermatologic.Services
             get; 
             set;
         }
+
+        [DataMember]
+        public PagingParameters PagingParameters
+        {
+            get;
+            set;
+        }
     }
 
     [DataContract]
@@ -44,5 +60,18 @@ namespace Dermatologic.Services
         Failed,
         [DataMember]
         SuccessWithWarning
+    }
+
+    [DataContract]
+    public class PagingParameters
+    {
+        [DataMember]
+        public int PageIndex { set; get; }
+
+        [DataMember]
+        public int PageSize { set; get; }
+
+        [DataMember]
+        public int VirtualCount { set; get; }
     }
 }

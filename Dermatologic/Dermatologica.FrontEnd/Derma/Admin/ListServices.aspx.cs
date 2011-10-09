@@ -20,6 +20,7 @@ public partial class Derma_Admin_ListServices :PageBase
            
         }
     }
+
     protected void gvServices_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
@@ -34,26 +35,34 @@ public partial class Derma_Admin_ListServices :PageBase
                 break;
         }
     }
+
     private void LoadCostCenter()
     {
-        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);   
+        }
     }
+
     private void GetServices()
     {
         var example = BussinessFactory.GetCostCenterService().Get(new Guid (ddlCostCenter.SelectedValue));
-        var response = BussinessFactory.GetServiceService().GetServicesByCostCenter(example);
+        var response = BussinessFactory.GetServiceService().GetServicesByCostCenter(example.Entity);
         if (response.OperationResult == OperationResult.Success)
         {
             gvServices.DataSource = response.Services;
             gvServices.DataBind();
         }
     }
+
     private void DeleteService(Guid id)
     {
-        var Service = BussinessFactory.GetServiceService().Get(id);
-        if (Service != null)
+        var responseService = BussinessFactory.GetServiceService().Get(id);
+        if (responseService.OperationResult == OperationResult.Success)
         {
+            var Service = responseService.Entity;
             Service.IsActive = false;
             Service.LastModified = LastModified;
             Service.ModifiedBy = ModifiedBy;
@@ -65,15 +74,15 @@ public partial class Derma_Admin_ListServices :PageBase
             }
         }
     }
+
     protected void lnkNew_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/EditService.aspx?action=new");
     }
 
-
-
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         GetServices();
     }
+
 }

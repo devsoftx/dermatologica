@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
@@ -18,20 +15,18 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
 
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-        var example = new Appointment
-                          {
-                              Patient = txtSearch.Text.Trim().ToLower()
-                                  
-                          };
+        var example = new Appointment {Patient = txtSearch.Text.Trim().ToLower()};
         DateTime? startDate = null;
         DateTime? endDate = null;
         if (!string.IsNullOrEmpty(txtDateStart.Text))
         {
-            startDate = Convert.ToDateTime(txtDateStart.Text.Trim());
+            var date = Convert.ToDateTime(txtDateStart.Text.Trim());
+            startDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
         }
         if (!string.IsNullOrEmpty(txtDateEnd.Text))
         {
-            endDate = Convert.ToDateTime(txtDateEnd.Text.Trim());
+            var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
+            endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
         }
         var response = BussinessFactory.GetAppointmentService().GetByPatient(example, startDate, endDate);
         if (response.OperationResult == OperationResult.Success)
@@ -43,30 +38,38 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
 
     protected void gvAppointments_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName)
+        if (e.CommandName != "Page")
         {
-            case "cmd_editar":
-                var id = new Guid(e.CommandArgument.ToString());
-                Response.Redirect(string.Format("~/Derma/Appointment.aspx?id={0}&action=edit&returnUrl={1}", id,Request.RawUrl), true);
-                break;
-            case "cmd_eliminar":
-                DeleteAppointment(new Guid(e.CommandArgument.ToString()));
-                GetAppointments();
-                break;
+            switch (e.CommandName)
+            {
+                case "cmd_editar":
+                    var id = new Guid(e.CommandArgument.ToString());
+                    Response.Redirect(string.Format("~/Derma/Appointment.aspx?id={0}&action=edit&returnUrl={1}", id, Request.RawUrl), true);
+                    break;
+                case "cmd_eliminar":
+                    DeleteAppointment(new Guid(e.CommandArgument.ToString()));
+                    GetAppointments();
+                    break;
+            }   
         }
     }
 
     private void GetAppointments()
     {
-        var appointments = BussinessFactory.GetAppointmentService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
-        BindControl<Appointment>.BindGrid(gvAppointments, appointments);
+        var response = BussinessFactory.GetAppointmentService().GetAll(u => u.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var appointments = response.Results.OrderBy(p => p.LastModified).ToList();
+            BindControl<Appointment>.BindGrid(gvAppointments, appointments);   
+        }
     }
 
     private void DeleteAppointment(Guid id)
     {
-        var appointment = BussinessFactory.GetAppointmentService().Get(id);
-        if (appointment != null)
+        var responsAppointment = BussinessFactory.GetAppointmentService().Get(id);
+        if (responsAppointment.OperationResult == OperationResult.Success)
         {
+            var appointment = responsAppointment.Entity;
             appointment.IsActive = false;
             appointment.LastModified = LastModified;
             appointment.ModifiedBy = ModifiedBy;
@@ -79,4 +82,43 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
         }
     }
 
+    protected void gvAppointments_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        try
+        {
+            ResponseBase<Appointment> response;
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                response = BussinessFactory.GetAppointmentService().GetAll(p => p.IsActive);
+            }
+            else
+            {
+                var example = new Appointment { Patient = txtSearch.Text.Trim().ToLower() };
+                DateTime? startDate = null;
+                DateTime? endDate = null;
+                if (!string.IsNullOrEmpty(txtDateStart.Text))
+                {
+                    var date = Convert.ToDateTime(txtDateStart.Text.Trim());
+                    startDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
+                }
+                if (!string.IsNullOrEmpty(txtDateEnd.Text))
+                {
+                    var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
+                    endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
+                }
+                response = BussinessFactory.GetAppointmentService().GetByPatient(example, startDate, endDate);
+            }
+            if (response.OperationResult == OperationResult.Success)
+            {
+                var persons = response.Results;
+                gvAppointments.DataSource = persons;
+                gvAppointments.PageIndex = e.NewPageIndex;
+                gvAppointments.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            litMensaje.Text = string.Format("Error: {0}", ex.Message);
+        }
+    }
 }

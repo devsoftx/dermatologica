@@ -12,43 +12,51 @@ public partial class Derma_Admin_ListPersons : PageBase
         if (Page.IsPostBack) return;
         GetPersons();
     }
-  
+
     protected void gvPersons_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        var id = new Guid(e.CommandArgument.ToString());
-        switch (e.CommandName)
+        if (e.CommandName != "Page")
         {
-            case "cmd_info":
-                Response.Redirect(string.Format("PrivateInfomation.aspx?id={0}&action=edit", id), true);
-                break;
-            case "cmd_editar":
-                Response.Redirect(string.Format("EditPerson.aspx?id={0}&action=edit", id), true);
-                break;
-            case "cmd_eliminar":
-                DeletePerson(new Guid(e.CommandArgument.ToString()));
-                GetPersons();
-                break;
+            var id = new Guid(e.CommandArgument.ToString());
+            switch (e.CommandName)
+            {
+                case "cmd_info":
+                    Response.Redirect(string.Format("PrivateInfomation.aspx?id={0}&action=edit", id), true);
+                    break;
+                case "cmd_editar":
+                    Response.Redirect(string.Format("EditPerson.aspx?id={0}&action=edit", id), true);
+                    break;
+                case "cmd_eliminar":
+                    DeletePerson(new Guid(e.CommandArgument.ToString()));
+                    GetPersons();
+                    break;
+            }
         }
     }
   
     private void GetPersons()
     {
-        var persons = BussinessFactory.GetPersonService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
-        BindControl<Person>.BindGrid(gvPersons, persons);
+        var response = BussinessFactory.GetPersonService().GetAll(p => p.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var persons = response.Results.OrderBy(p => p.LastModified).ToList();
+            BindControl<Person>.BindGrid(gvPersons, persons);   
+        }
     }
 
     private void DeletePerson(Guid id)
     {
-        var Person = BussinessFactory.GetPersonService().Get(id);
-        if (Person != null)
+        var responsePerson = BussinessFactory.GetPersonService().Get(id);
+        if (responsePerson.OperationResult == OperationResult.Success)
         {
-            Person.IsActive = false;
-            Person.LastModified = LastModified;
-            Person.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetPersonService().Update(Person);
+            var person = responsePerson.Entity;
+            person.IsActive = false;
+            person.LastModified = LastModified;
+            person.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetPersonService().Update(person);
             if (response.OperationResult == OperationResult.Success)
             {
-                litMensaje.Text = string.Format("Se eliminó la Persona: {0}", Person.FirstName);
+                litMensaje.Text = string.Format("Se eliminó la Persona: {0}", person.FirstName);
                 return;
             }
         }
@@ -106,4 +114,22 @@ public partial class Derma_Admin_ListPersons : PageBase
         }
     }
 
+    protected void gvPersons_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        try
+        {
+            var response = BussinessFactory.GetPersonService().GetAll(p => p.IsActive);
+            if (response.OperationResult == OperationResult.Success)
+            {
+                var persons = response.Results;
+                gvPersons.DataSource = persons;
+                gvPersons.PageIndex = e.NewPageIndex;
+                gvPersons.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            litMensaje.Text = string.Format("Error: {0}", ex.Message);
+        }
+    }
 }

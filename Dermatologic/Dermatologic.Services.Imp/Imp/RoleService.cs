@@ -23,8 +23,8 @@ namespace Dermatologic.Services
             {   
                 const string query = "delete from Role r where r.RoleId =: roleId and r.ApplicationId =: appId ";
                 NhibernateHelper.BeginTransaction();
-                usersInRoles.Delete("delete from UsersInRoles u where u.RoleId =: roleId", parameters, objects);
-                Delete(query, pars, values);
+                usersInRoles.ExecuteNonQuery("delete from UsersInRoles u where u.RoleId =: roleId", parameters, objects);
+                ExecuteNonQuery(query, pars, values);
                 NhibernateHelper.EndTransaction();
                 roleResponse.OperationResult = OperationResult.Success;
                 return roleResponse;

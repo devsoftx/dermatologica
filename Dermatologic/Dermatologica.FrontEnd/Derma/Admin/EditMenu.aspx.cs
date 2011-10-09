@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Menu = Dermatologic.Domain.Menu;
 using Dermatologic.Services;
@@ -21,8 +17,12 @@ public partial class Derma_Admin_EditMenu : PageBase
 
     private void LoadMenuFathers()
     {
-        var faths = BussinessFactory.GetMenuService().GetAll(x => x.ParentId == null).OrderBy(p => p.Orden).ToList();
-        BindControl<Menu>.BindDropDownList(ddlMenuPadre,faths);
+        var response = BussinessFactory.GetMenuService().GetAll(x => x.ParentId == null);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var faths = response.Results.OrderBy(p => p.Orden).ToList();
+            BindControl<Menu>.BindDropDownList(ddlMenuPadre,faths);   
+        }
     }
 
     private void SetMenu()
@@ -52,10 +52,9 @@ public partial class Derma_Admin_EditMenu : PageBase
                            CreationDate = CreationDate,
                            ModifiedBy = ModifiedBy,
                            CreatedBy = CreatedBy,
-                           Description = txtDescription.Text.Trim()
-                           
+                           Description = txtDescription.Text.Trim(),
+                           ParentId = !CheckBox1.Checked ? new Guid(ddlMenuPadre.SelectedValue) : (Guid?) null
                        };
-        Menu.ParentId = !CheckBox1.Checked ? new Guid(ddlMenuPadre.SelectedValue) : (Guid?) null;
         var response = BussinessFactory.GetMenuService().Save(Menu);
       
         if (response.OperationResult == OperationResult.Success)
@@ -71,9 +70,10 @@ public partial class Derma_Admin_EditMenu : PageBase
     private void Update()
     {
         var id = Request.QueryString.Get("id");
-        var menu = BussinessFactory.GetMenuService().Get(new Guid(id));
-        if (menu != null)
+        var responseMenu = BussinessFactory.GetMenuService().Get(new Guid(id));
+        if (responseMenu.OperationResult == OperationResult.Success)
         {
+            var menu = responseMenu.Entity;
             menu.Name = txtNombre.Text.Trim();
             menu.Url = txtUrl.Text.Trim();
             menu.Orden = !string.IsNullOrEmpty(txtOrder.Text) ? Convert.ToInt32(txtOrder.Text) : 0;
@@ -96,12 +96,16 @@ public partial class Derma_Admin_EditMenu : PageBase
 
     private void LoadMenu(Guid id)
     {
-        var menu = BussinessFactory.GetMenuService().Get(id);
-        txtNombre.Text = menu.Name;
-        txtUrl.Text = menu.Url;
-        txtOrder.Text = menu.Orden.HasValue ? menu.Orden.Value.ToString(): string.Empty;
-        txtDescription.Text = menu.Description;
-        if (menu.ParentId.HasValue) ddlMenuPadre.SelectedValue = menu.ParentId.Value.ToString();
+        var response = BussinessFactory.GetMenuService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var menu = response.Entity;
+            txtNombre.Text = menu.Name;
+            txtUrl.Text = menu.Url;
+            txtOrder.Text = menu.Orden.HasValue ? menu.Orden.Value.ToString() : string.Empty;
+            txtDescription.Text = menu.Description;
+            if (menu.ParentId.HasValue) ddlMenuPadre.SelectedValue = menu.ParentId.Value.ToString();   
+        }
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)

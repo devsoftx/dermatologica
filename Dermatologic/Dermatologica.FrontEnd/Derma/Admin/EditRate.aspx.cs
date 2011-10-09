@@ -23,6 +23,7 @@ public partial class Derma_Admin_EditRatet : PageBase
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
     }
+
     private void SetRate()
     {
         var action = Request.QueryString.Get("action");
@@ -36,27 +37,40 @@ public partial class Derma_Admin_EditRatet : PageBase
                 break;
         }
     }
+
     void LoadRate(Guid id)
     {
-        var Rate = BussinessFactory.GetRateService().Get(id);
-        ddlCurrency.SelectedValue = Rate.Currency;
-        txtUnitCost.Text = Rate.UnitCost.ToString();
-        txtObservation.Text = Rate.Observation;
-        ucSearchPersonsMedical.SelectedValue = Convert.ToString(Rate.Person.PersonType.Id);
-        ddlPersonType.SelectedValue = Convert.ToString(Rate.Person.PersonType.Id);
-        ucSearchPersonsMedical.Text=Rate.Person.CompleteName;
-
+        var response = BussinessFactory.GetRateService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var rate = response.Entity;
+            ddlCurrency.SelectedValue = rate.Currency;
+            txtUnitCost.Text = rate.UnitCost.ToString();
+            txtObservation.Text = rate.Observation;
+            ucSearchPersonsMedical.SelectedValue = Convert.ToString(rate.Person.PersonType.Id);
+            ddlPersonType.SelectedValue = Convert.ToString(rate.Person.PersonType.Id);
+            ucSearchPersonsMedical.Text = rate.Person.CompleteName;
+        }
     }
+
     private void LoadPersonType()
     {
-        var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
-        BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
+        var response = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<PersonType>.BindDropDownList(ddlPersonType, types);   
+        }
     }
+
     private void LoadServices()
     {
-        var services = BussinessFactory.GetServiceService().GetAll().OrderBy(p => p.Name).ToList();
-        BindControl<Service>.BindDropDownList(ddlService, services);
-       
+        var response = BussinessFactory.GetServiceService().GetAll(p => p.IsActive);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var services = response.Results.OrderBy(p => p.Name).ToList();
+            BindControl<Service>.BindDropDownList(ddlService, services);   
+        }
     }
 
     protected void ddlPersonType_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,13 +78,17 @@ public partial class Derma_Admin_EditRatet : PageBase
         ucSearchPersonsMedical.SelectedValue = string.Empty;
         ucSearchPersonsMedical.Text = string.Empty;
     }
+
     private void Save()
     {
-        if (txtUnitCostPartner.Text == "")
+        if (string.IsNullOrEmpty(txtUnitCostPartner.Text))
         {
             txtUnitCostPartner.Text = "0";
         }
-        var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        var responseMedical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        Person medical = null;
+        if (responseMedical.OperationResult == OperationResult.Success)
+            medical = responseMedical.Entity;
 
         var Rate = new Rate
         {
@@ -79,8 +97,8 @@ public partial class Derma_Admin_EditRatet : PageBase
             UnitCost = Convert.ToDecimal(txtUnitCost.Text.Trim()),
             UnitCostPartner = Convert.ToDecimal(txtUnitCostPartner.Text.Trim()),
             Observation = txtObservation.Text.Trim(),
-            Person=medical,
-            Service = BussinessFactory.GetServiceService().Get(new Guid(ddlService.SelectedValue)),
+            Person = medical,
+            Service = BussinessFactory.GetServiceService().Get(new Guid(ddlService.SelectedValue)).Entity,
             IsActive = true,
             LastModified = LastModified,
             CreationDate = CreationDate,
@@ -91,7 +109,6 @@ public partial class Derma_Admin_EditRatet : PageBase
         try
         {
             var response = BussinessFactory.GetRateService().Save(Rate);
-
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListRates.aspx", true);
@@ -105,23 +122,23 @@ public partial class Derma_Admin_EditRatet : PageBase
         {
             throw e;
         }
-
     }
+
     private void Update()
     {
         var Id = Request.QueryString.Get("id");
-        var Rate = BussinessFactory.GetRateService().Get(new Guid(Id));
-        if (Rate != null)
+        var responseRate = BussinessFactory.GetRateService().Get(new Guid(Id));
+        if (responseRate.OperationResult == OperationResult.Success)
         {
-            Rate.Currency = ddlCurrency.SelectedValue;
-            Rate.UnitCost = Convert.ToDecimal(txtUnitCost.Text.Trim());
-            Rate.UnitCostPartner = Convert.ToDecimal(txtUnitCostPartner.Text.Trim());
-            Rate.Observation = txtObservation.Text.Trim();
-            Rate.IsActive = true;
-            Rate.LastModified = LastModified;
-            Rate.ModifiedBy = ModifiedBy;
-
-            var response = BussinessFactory.GetRateService().Update(Rate);
+            var rate = responseRate.Entity;
+            rate.Currency = ddlCurrency.SelectedValue;
+            rate.UnitCost = Convert.ToDecimal(txtUnitCost.Text.Trim());
+            rate.UnitCostPartner = Convert.ToDecimal(txtUnitCostPartner.Text.Trim());
+            rate.Observation = txtObservation.Text.Trim();
+            rate.IsActive = true;
+            rate.LastModified = LastModified;
+            rate.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetRateService().Update(rate);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListRates.aspx", true);

@@ -37,13 +37,6 @@ namespace Dermatologic.Domain
         [DataMember]
         public virtual Guid? ModifiedBy { set; get; }
 
-        //[DataMember]
-        //public virtual Service Service
-        //{
-        //    get { return _service; }
-        //    set { _service = value; }
-        //}
-
         public virtual bool Equals(CostCenter other)
         {
             return Id.Equals(other.Id);

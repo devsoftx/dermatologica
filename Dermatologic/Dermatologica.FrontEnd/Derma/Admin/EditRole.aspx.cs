@@ -35,9 +35,13 @@ public partial class Derma_Admin_EditRole : PageBase
 
     private void LoadRole(Guid id)
     {
-        var Role = BussinessFactory.GetRoleService().Get(id);
-        txtRolName.Text = Role.RoleName;
-        txtDescripción.Text = Role.Description;
+        var response = BussinessFactory.GetRoleService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var Role = response.Entity;
+            txtRolName.Text = Role.RoleName;
+            txtDescripción.Text = Role.Description;   
+        }
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)
@@ -78,21 +82,22 @@ public partial class Derma_Admin_EditRole : PageBase
 
     private void Update()
     {
-        var RoleId = Request.QueryString.Get("id");
-        var Role = BussinessFactory.GetRoleService().Get(new Guid(RoleId));
-        if (Role != null)
+        var id = Request.QueryString.Get("id");
+        var responseRole = BussinessFactory.GetRoleService().Get(new Guid(id));
+        if (responseRole.OperationResult == OperationResult.Success)
         {
-            Role.RoleName = txtRolName.Text.Trim();
-            Role.LoweredRoleName = txtRolName.Text.Trim().ToLower();
-            Role.Description = txtDescripción.Text;
-            var response = BussinessFactory.GetRoleService().Update(Role);
+            var role = responseRole.Entity;
+            role.RoleName = txtRolName.Text.Trim();
+            role.LoweredRoleName = txtRolName.Text.Trim().ToLower();
+            role.Description = txtDescripción.Text;
+            var response = BussinessFactory.GetRoleService().Update(role);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/ListRoles.aspx", true);
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo crear el usuario: {0}", Role.RoleName);
+                litMensaje.Text = string.Format("No se puedo crear el usuario: {0}", role.RoleName);
             }
         }
     }

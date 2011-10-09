@@ -9,7 +9,7 @@ using ExchangeRate = Dermatologic.Domain.ExchangeRate;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 
-public partial class Derma_Admin_EditExchangeRate :PageBase
+public partial class Derma_Admin_EditExchangeRate : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -36,11 +36,15 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
 
     public void LoadExchangeRate(Guid id)
     {
-        var ExchangeRate = BussinessFactory.GetExchangeRateService().Get(id);
-        txtDateRate.Text = Convert.ToString(ExchangeRate.DateRate);
-        ddlCurrency.SelectedValue = ExchangeRate.Currency;
-        txtBuy.Text = Convert.ToString(ExchangeRate.Buy);
-        txtSale.Text = Convert.ToString(ExchangeRate.Sale);
+        var response = BussinessFactory.GetExchangeRateService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var exchangeRate = response.Entity;
+            txtDateRate.Text = Convert.ToString(exchangeRate.DateRate);
+            ddlCurrency.SelectedValue = exchangeRate.Currency;
+            txtBuy.Text = Convert.ToString(exchangeRate.Buy);
+            txtSale.Text = Convert.ToString(exchangeRate.Sale);
+        }
     }
 
     private void Save()
@@ -49,9 +53,9 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
         {
             Id = Guid.NewGuid(),
             DateRate = Convert.ToDateTime(txtDateRate.Text),
-            Currency= ddlCurrency.SelectedValue,
-            Buy=Convert.ToDecimal(txtBuy.Text.Trim()),
-            Sale =Convert.ToDecimal(txtSale.Text.Trim()),
+            Currency = ddlCurrency.SelectedValue,
+            Buy = Convert.ToDecimal(txtBuy.Text.Trim()),
+            Sale = Convert.ToDecimal(txtSale.Text.Trim()),
             IsActive = true,
             LastModified = LastModified,
             CreationDate = CreationDate,
@@ -83,27 +87,24 @@ public partial class Derma_Admin_EditExchangeRate :PageBase
     private void Update()
     {
         var Id = Request.QueryString.Get("id");
-        var ExchangeRate = BussinessFactory.GetExchangeRateService().Get(new Guid(Id));
-        if (ExchangeRate != null)
+        var responseExchangeRate = BussinessFactory.GetExchangeRateService().Get(new Guid(Id));
+        if (responseExchangeRate.OperationResult == OperationResult.Success)
         {
-              ExchangeRate.DateRate = Convert.ToDateTime(txtDateRate.Text);
-             ExchangeRate.Currency= ddlCurrency.SelectedValue;
-             ExchangeRate.Buy=Convert.ToDecimal(txtBuy.Text.Trim());
-             ExchangeRate.Sale = Convert.ToDecimal(txtSale.Text.Trim());
-            
-            
-            ExchangeRate.IsActive = true;
-            ExchangeRate.LastModified = LastModified;
-            ExchangeRate.ModifiedBy = ModifiedBy;
-
-            var response = BussinessFactory.GetExchangeRateService().Update(ExchangeRate);
+            var exchangeRate = responseExchangeRate.Entity;
+            exchangeRate.DateRate = Convert.ToDateTime(txtDateRate.Text);
+            exchangeRate.Currency = ddlCurrency.SelectedValue;
+            exchangeRate.Buy = Convert.ToDecimal(txtBuy.Text.Trim());
+            exchangeRate.Sale = Convert.ToDecimal(txtSale.Text.Trim());
+            exchangeRate.LastModified = LastModified;
+            exchangeRate.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetExchangeRateService().Update(exchangeRate);
             if (response.OperationResult == OperationResult.Success)
             {
-                Response.Redirect("~/Derma/Admin/ListExchangeRates.aspx", true);
+                Response.Redirect("~/Derma/Admin/ListExchangeRates.aspx", false);
             }
             else
             {
-                litMensaje.Text = string.Format("No se puedo actualizar el Tipo de Persona");
+                litMensaje.Text = string.Format("No se puedo actualizar el tipo de cambio");
             }
         }
     }

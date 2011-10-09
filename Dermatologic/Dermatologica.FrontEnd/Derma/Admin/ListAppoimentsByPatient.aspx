@@ -15,7 +15,17 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
         <AjaxSettings>
-            <telerik:AjaxSetting AjaxControlID="btnSearch">
+            <telerik:AjaxSetting AjaxControlID="btnSearch" EventName="btnSearch_Click">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="gvAppointments" EventName="gvAppointments_RowCommand">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="gvAppointments" EventName="gvAppointments_PageIndexChanging">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
                 </UpdatedControls>
@@ -36,7 +46,7 @@
         <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlReport">
-                    <table>
+                    <table width="100%">
                         <tr>
                             <td>
                                 &nbsp;
@@ -83,7 +93,9 @@
                             </td>
                             <td>
                                 <asp:GridView ID="gvAppointments" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                    ForeColor="#333333" GridLines="None" OnRowCommand="gvAppointments_RowCommand">
+                                    ForeColor="#333333" GridLines="None" OnRowCommand="gvAppointments_RowCommand"
+                                    Width="100%" AllowPaging="True" 
+                                    onpageindexchanging="gvAppointments_PageIndexChanging">
                                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                     <Columns>
                                         <asp:BoundField DataField="StartDate" HeaderText="Fecha" />
@@ -139,18 +151,7 @@
                             <td>
                                 &nbsp;
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                &nbsp;
-                            </td>
-                            <td>
-                                &nbsp;
-                            </td>
-                            <td>
-                                &nbsp;
-                            </td>
-                        </tr>
+                        </tr>                        
                     </table>
                 </asp:Panel>
             </ContentTemplate>

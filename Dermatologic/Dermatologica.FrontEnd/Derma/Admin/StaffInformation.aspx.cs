@@ -23,26 +23,44 @@ public partial class Derma_Admin_StaffInformation : PageBase
             }
         }
     }
+
     private void LoadCostCenter()
     {
-        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<CostCenter>.BindDropDownList(ddlCostCenter, types);    
+        }
+        
     }
+
     private void LoadEmployeeType()
     {
-        var types = BussinessFactory.GetEmployeeTypeService().GetAll(p => p.IsActive);
-        BindControl<EmployeeType>.BindDropDownList(ddlEmployeeType, types);
+        var response = BussinessFactory.GetEmployeeTypeService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<EmployeeType>.BindDropDownList(ddlEmployeeType, types);   
+        }
     }
+
     private void LoadTypeContract()
     {
-        var types = BussinessFactory.GetTypeContractService().GetAll(p => p.IsActive);
-        BindControl<TypeContract>.BindDropDownList(ddlTypeContract, types);
+        var response = BussinessFactory.GetTypeContractService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<TypeContract>.BindDropDownList(ddlTypeContract, types);
+        }
     }
+
     private void LoadStaffInformation(Guid? idPerson)
     {
-        var entity = BussinessFactory.GetStaffInformationService().Get(idPerson);
-        if (entity != null)
+        var response = BussinessFactory.GetStaffInformationService().Get(idPerson);
+        if (response.OperationResult == OperationResult.Success)
         {
+            var entity = response.Entity;
             txtJoinDate.Text = Convert.ToString(entity.JoinDate);
             txtNetMonthlySalary.Text = Convert.ToString(entity.NetMonthlySalary);
             txtOvertimePay.Text = Convert.ToString(entity.OvertimePay);
@@ -52,22 +70,23 @@ public partial class Derma_Admin_StaffInformation : PageBase
         }
 
     }
+
     private void Save()
     {
         var idPerson = Request.QueryString.Get("id");
-        var employee = BussinessFactory.GetStaffInformationService().Get(new Guid(idPerson));
-        if (employee != null)
+        var responseEmployee = BussinessFactory.GetStaffInformationService().Get(new Guid(idPerson));
+        if (responseEmployee.OperationResult == OperationResult.Success)
         {
+            var employee = responseEmployee.Entity;
             employee.JoinDate = !string.IsNullOrEmpty(txtJoinDate.Text)
                                           ? Convert.ToDateTime(txtJoinDate.Text)
                                           : (DateTime?)null;
             employee.NetMonthlySalary = Convert.ToDecimal(txtNetMonthlySalary.Text);
             employee.OvertimePay = Convert.ToDecimal(txtOvertimePay.Text);
-            employee.EmployeeType = BussinessFactory.GetEmployeeTypeService().Get(new Guid(ddlEmployeeType.SelectedValue));
-            employee.TypeContract = BussinessFactory.GetTypeContractService().Get(new Guid(ddlTypeContract.SelectedValue));
-             employee.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue));
-       
-              var response = BussinessFactory.GetStaffInformationService().Update(employee);
+            employee.EmployeeType = BussinessFactory.GetEmployeeTypeService().Get(new Guid(ddlEmployeeType.SelectedValue)).Entity;
+            employee.TypeContract = BussinessFactory.GetTypeContractService().Get(new Guid(ddlTypeContract.SelectedValue)).Entity;
+            employee.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)).Entity;
+            var response = BussinessFactory.GetStaffInformationService().Update(employee);
             if (response.OperationResult == OperationResult.Success)
             {
                 Response.Redirect("~/Derma/Admin/Staff.aspx", true);
@@ -85,11 +104,9 @@ public partial class Derma_Admin_StaffInformation : PageBase
                                JoinDate = !string.IsNullOrEmpty(txtJoinDate.Text) ? Convert.ToDateTime(txtJoinDate.Text) : (DateTime?)null,
                                NetMonthlySalary = Convert.ToDecimal(txtNetMonthlySalary.Text),
                                OvertimePay = Convert.ToDecimal(txtOvertimePay.Text),
-                               EmployeeType = BussinessFactory.GetEmployeeTypeService().Get(new Guid(ddlEmployeeType.SelectedValue)),
-                               TypeContract = BussinessFactory.GetTypeContractService().Get(new Guid(ddlTypeContract.SelectedValue)),
-                               CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)),
-
-
+                               EmployeeType = BussinessFactory.GetEmployeeTypeService().Get(new Guid(ddlEmployeeType.SelectedValue)).Entity,
+                               TypeContract = BussinessFactory.GetTypeContractService().Get(new Guid(ddlTypeContract.SelectedValue)).Entity,
+                               CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenter.SelectedValue)).Entity,
                                IsActive = true,
                                LastModified = LastModified,
                                CreationDate = CreationDate,
@@ -108,12 +125,15 @@ public partial class Derma_Admin_StaffInformation : PageBase
 
         }
     }
+
     protected void btnAceptar_Click(object sender, EventArgs e)
     {
         Save();
     }
+
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/ListPatients.aspx", true);
     }
+
 }

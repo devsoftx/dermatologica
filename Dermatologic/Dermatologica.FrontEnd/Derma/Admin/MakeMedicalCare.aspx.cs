@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
 using Dermatologic.Services;
@@ -23,9 +19,9 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     private void SetPayment()
     {
         var IdSession = Request.QueryString.Get("idSession");
-        var currentSession = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var currentSession = BussinessFactory.GetSessionService().Get(new Guid(IdSession)).Entity;
         var IdMedication = currentSession.Medication.Id;
-        var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
+        var medication = BussinessFactory.GetMedicationService().Get(IdMedication).Entity;
         txtPatient.Text = string.Format("{0} {1} {2}", medication.Patient.FirstName, medication.Patient.LastNameP, medication.Patient.LastNameM);
         txtSession.Text = currentSession.Medication.Service.Name;
     }
@@ -33,10 +29,10 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
     private void Save()
     {
         var IdSession = Request.QueryString.Get("idSession");
-        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
+        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession)).Entity;
         var IdMedication = session.Medication.Id;
-        var medication = BussinessFactory.GetMedicationService().Get(IdMedication);
-        var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        var medication = BussinessFactory.GetMedicationService().Get(IdMedication).Entity;
+        var medical = BussinessFactory.GetPersonService().Get(new Guid(ucSearchPersonsMedical.SelectedValue)).Entity;
         var example1 = medical;
         var example2 = medication.Service;
         var response1 = BussinessFactory.GetRateService().GetRatesByPersonService(example1, example2);
@@ -55,7 +51,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
             }
         }
 
-        Person partner = rate.UnitCostPartner != 0 ? BussinessFactory.GetPersonService().Get(new Guid("754124e0-7551-4e32-8dc4-5c4b80bad8e2")) : null;
+        Person partner = rate.UnitCostPartner != 0 ? BussinessFactory.GetPersonService().Get(new Guid(DermaConstants.PERSON_URSULA)).Entity : null;
         var medicalCare = new MedicalCare
                               {
                                   Id = Guid.NewGuid(),
@@ -75,16 +71,7 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
                               };
 
         session.IsCompleted = true;
-
-        if (chkIsReplacement.Checked == true)
-        {
-
-            medicalCare.CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenterR.SelectedValue));
-        }
-        else
-        {
-            medicalCare.CostCenter = null;
-        }
+        medicalCare.CostCenter = chkIsReplacement.Checked ? BussinessFactory.GetCostCenterService().Get(new Guid(ddlCostCenterR.SelectedValue)).Entity : null;
         try
         {
             var response = BussinessFactory.GetMedicalCareService().Save(medicalCare);
@@ -100,28 +87,34 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
         }
         catch (Exception e)
         {
-            throw e;
+            litMensaje.Text = string.Format("No se pudo guardar la atencion -> Error: {0}", e.Message);
         }
-
     }
 
     private void LoadPersonType()
     {
-        var types = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
-        BindControl<PersonType>.BindDropDownList(ddlPersonType, types);
+        var response = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<PersonType>.BindDropDownList(ddlPersonType, types);   
+        }
     }
 
     private void LoadCostCenterR()
     {
 
-        var StaffInformation = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
-        if (StaffInformation.CostCenter.Id.HasValue)
+        var response = BussinessFactory.GetStaffInformationService().Get(new Guid(ucSearchPersonsMedical.SelectedValue));
+        if (response.OperationResult == OperationResult.Success)
         {
-            var CostCenterId = StaffInformation.CostCenter.Id.Value.ToString();
-            var costCenters = BussinessFactory.GetCostCenterService().GetAll().Where(p => p.Id.ToString() != CostCenterId).ToList();
-            BindControl<CostCenter>.BindDropDownList(ddlCostCenterR, costCenters);
+            var staffInformation = response.Entity;
+            if (staffInformation.CostCenter.Id.HasValue)
+            {
+                var CostCenterId = staffInformation.CostCenter.Id.Value.ToString();
+                var costCenters = BussinessFactory.GetCostCenterService().GetAll(p => p.Id != null && !p.Id.Value.Equals(CostCenterId));
+                BindControl<CostCenter>.BindDropDownList(ddlCostCenterR, costCenters.Results);
+            }
         }
-
         //devuelve los centros de costo en los cuales el no trabaja
     }
 
@@ -132,10 +125,10 @@ public partial class Derma_Admin_MakeMedicalCare : PageBase
 
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
-        var IdSession = Request.QueryString.Get("idSession");
-        var session = BussinessFactory.GetSessionService().Get(new Guid(IdSession));
-        var IdMedication = session.Medication.Id;
-        Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", IdMedication), true);
+        var idSession = Request.QueryString.Get("idSession");
+        var session = BussinessFactory.GetSessionService().Get(new Guid(idSession)).Entity;
+        var idMedication = session.Medication.Id;
+        Response.Redirect(string.Format("EditMedication.aspx?id={0}&action=edit", idMedication), true);
     }
 
     protected void ddlPersonType_SelectedIndexChanged(object sender, EventArgs e)

@@ -12,7 +12,17 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
         <AjaxSettings>
-            <telerik:AjaxSetting AjaxControlID="btnSearch">
+            <telerik:AjaxSetting AjaxControlID="btnSearch" EventName="btnSearch_Click">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="gvAppointments" EventName="gvAppointments_RowCommand">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="gvAppointments" EventName="gvAppointments_PageIndexChanging">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
                 </UpdatedControls>
@@ -21,9 +31,9 @@
     </telerik:RadAjaxManager>
     <telerik:RadAjaxLoadingPanel runat="server" ID="rlpLoading" Transparency="50" Height="100%"
         Width="100%">
-        <table style="height: 100%; width: 100%;" border="0">
+        <table style="height: 100%; width: 100%;">
             <tr>
-                <td width="100%" align="center" valign="middle" style="background-color: #F0FFFF">
+                <td width="100%" style="background-color: #F0FFFF">
                     <img src="../../Images/loading.gif" alt="Loading..." style="border: 0px;" />
                 </td>
             </tr>
@@ -33,7 +43,7 @@
         <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlReport">
-                    <table>
+                    <table width="100%">
                         <tr>
                             <td>
                                 &nbsp;
@@ -77,10 +87,12 @@
                             </td>
                             <td>
                                 <asp:GridView ID="gvAppointments" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                                    ForeColor="#333333" GridLines="None" OnRowCommand="gvAppointments_RowCommand">
+                                    ForeColor="#333333" GridLines="None" OnRowCommand="gvAppointments_RowCommand"
+                                    Width="100%" onpageindexchanging="gvAppointments_PageIndexChanging" 
+                                    AllowPaging="True">
                                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                     <Columns>
-                                        <asp:BoundField DataField="StartDate" HeaderText="Fecha" />
+                                        <asp:BoundField DataField="StartDate" HeaderText="Fecha" DataFormatString="{0:dd-MM-yyyy}" />
                                         <asp:BoundField DataField="Patient" HeaderText="Paciente" />
                                         <asp:BoundField DataField="Description" HeaderText="Descripción" />
                                         <asp:BoundField DataField="Subject" HeaderText="Tratamiento" />

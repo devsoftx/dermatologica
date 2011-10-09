@@ -33,8 +33,13 @@ public partial class Derma_Admin_EditPerson : PageBase
 
     private void GetPersonTypes()
     {
-        var personTypes = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive).OrderBy(u => u.Name).ToList();
-        BindControl<PersonType>.BindDropDownList(dwTipoPersona,personTypes);
+        var respons = BussinessFactory.GetPersonTypeService().GetAll(p => p.IsActive);
+        if(respons.OperationResult == OperationResult.Success)
+        {
+            var personTypes = respons.Results.OrderBy(u => u.Name).ToList();
+            BindControl<PersonType>.BindDropDownList(dwTipoPersona, personTypes);
+        }
+            
     }
 
     private void GetDocumentTypes()
@@ -44,21 +49,25 @@ public partial class Derma_Admin_EditPerson : PageBase
 
     private void LoadPerson(Guid id)
     {
-        var person = BussinessFactory.GetPersonService().Get(id);
-        txtNombres.Text = person.FirstName;
-        txtApellidoPaterno.Text = person.LastNameP;
-        txtApellidoMaterno.Text = person.LastNameM;
-        txtTelefono.Text = person.Phone;
-        txtTelefonoEmergencia.Text = person.EmergencyPhone;
-        txtEmergencyPerson.Text = person.EmergencyPerson;
-        txtNumeroDocumento.Text = person.DocumentNumber;
-        txtCelular.Text = person.CellPhone;
-        txtEmail.Text = person.Email;
-        txtCode.Text = person.Code;
-        if (person.DateBirthDay != null) txtFechaCumpleaños.Text = person.DateBirthDay.Value.ToShortDateString();
-        dwTipoPersona.SelectedValue = person.PersonType.Id.ToString();
-        if (person.DocumentType != null) dwTipoDocumento.SelectedValue = person.DocumentType.Value.ToString();
-        txtDireccion.Text = person.Address;
+        var response = BussinessFactory.GetPersonService().Get(id);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var person = response.Entity;
+            txtNombres.Text = person.FirstName;
+            txtApellidoPaterno.Text = person.LastNameP;
+            txtApellidoMaterno.Text = person.LastNameM;
+            txtTelefono.Text = person.Phone;
+            txtTelefonoEmergencia.Text = person.EmergencyPhone;
+            txtEmergencyPerson.Text = person.EmergencyPerson;
+            txtNumeroDocumento.Text = person.DocumentNumber;
+            txtCelular.Text = person.CellPhone;
+            txtEmail.Text = person.Email;
+            txtCode.Text = person.Code;
+            if (person.DateBirthDay != null) txtFechaCumpleaños.Text = person.DateBirthDay.Value.ToShortDateString();
+            dwTipoPersona.SelectedValue = person.PersonType.Id.ToString();
+            if (person.DocumentType != null) dwTipoDocumento.SelectedValue = person.DocumentType.Value.ToString();
+            txtDireccion.Text = person.Address;   
+        }
     }
     
     private void Save()
@@ -85,7 +94,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             ModifiedBy = ModifiedBy,
             CreatedBy = CreatedBy
         };
-        person.PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue));
+        person.PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue)).Entity;
         try
         {
             var response = BussinessFactory.GetPersonService().Save(person);
@@ -107,9 +116,10 @@ public partial class Derma_Admin_EditPerson : PageBase
     private void Update()
     {
         var id = Request.QueryString.Get("id");
-        var person = BussinessFactory.GetPersonService().Get(new Guid(id));
-        if (person != null)
+        var responsePerson = BussinessFactory.GetPersonService().Get(new Guid(id));
+        if (responsePerson.OperationResult == OperationResult.Success)
         {
+            var person = responsePerson.Entity;
             person.FirstName = txtNombres.Text.Trim();
             person.LastNameP = txtApellidoPaterno.Text.Trim();
             person.LastNameM = txtApellidoMaterno.Text.Trim();
@@ -125,7 +135,7 @@ public partial class Derma_Admin_EditPerson : PageBase
             person.IsActive = true;
             person.LastModified = LastModified;
             person.ModifiedBy = ModifiedBy;
-            person.PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue));
+            person.PersonType = BussinessFactory.GetPersonTypeService().Get(new Guid(dwTipoPersona.SelectedValue)).Entity;
             var response = BussinessFactory.GetPersonService().Update(person);
             if (response.OperationResult == OperationResult.Success)
             {

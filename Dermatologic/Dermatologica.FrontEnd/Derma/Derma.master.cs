@@ -10,22 +10,41 @@ using Dermatologic.Services;
 using Menu = Dermatologic.Domain.Menu;
 public partial class Derma_Derma : MasterPageBase
 {
-    protected void Page_Load(object sender, EventArgs e)
+
+    protected void Page_PreRender(object sender, EventArgs e)
     {
+        var userName = Session["userName"];
         if (!Page.IsPostBack)
         {
-            var userName = Session["userName"];
             if (userName != null)
             {
                 GetMenu(userName.ToString());
             }
-            else
-            {
-                Session["userName"] = null;
-                FormsAuthentication.SignOut();
-                FormsAuthentication.RedirectToLoginPage(Request.RawUrl);
-            }   
         }
+        if (userName == null)
+        {
+            Session["userName"] = null;
+            FormsAuthentication.SignOut();
+            FormsAuthentication.RedirectToLoginPage(Request.RawUrl);
+        }   
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //var userName = Session["userName"];
+        //if (!Page.IsPostBack)
+        //{
+        //    if (userName != null)
+        //    {
+        //        GetMenu(userName.ToString());
+        //    }
+        //}
+        //if (userName == null)
+        //{
+        //    Session["userName"] = null;
+        //    FormsAuthentication.SignOut();
+        //    FormsAuthentication.RedirectToLoginPage(Request.RawUrl);
+        //}   
     }
 
     private void GetMenu(string userName)

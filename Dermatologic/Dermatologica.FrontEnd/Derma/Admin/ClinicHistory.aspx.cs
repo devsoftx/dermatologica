@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
+using Dermatologic.Services;
 
 public partial class Derma_Admin_ClinicHistory : PageBase
 {
@@ -36,13 +37,23 @@ public partial class Derma_Admin_ClinicHistory : PageBase
 
     private void GetCostCenter()
     {
-        var list = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive == true);
-        BindControl<CostCenter>.BindDropDownList(ddlCostCenter,list);
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive == true);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var list = response.Results;
+            BindControl<CostCenter>.BindDropDownList(ddlCostCenter, list);    
+        }
+        
     }
 
     private void GetMedications()
     {
-        var Medications = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive == true).OrderBy(p => p.LastModified).ToList();
-        BindControl<Medication>.BindGrid(gvMedications, Medications);
+        var response = BussinessFactory.GetMedicationService().GetAll(u => u.IsActive == true);
+        if(response.OperationResult == OperationResult.Success)
+        {
+            var medications = response.Results.OrderBy(p => p.LastModified).ToList();
+            BindControl<Medication>.BindGrid(gvMedications, medications);
+        }
+        
     }
 }

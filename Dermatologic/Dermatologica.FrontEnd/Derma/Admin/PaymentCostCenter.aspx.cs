@@ -20,7 +20,7 @@ public partial class Derma_Admin_PaymentCostCenter : PageBase
     private void SetPayment()
     {
         if (CreationDate != null) txtDatePayment.Text = CreationDate.Value.ToShortDateString();
-        var List = BussinessFactory.GetExchangeRateService().GetAll().Where(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).ToList();
+        var List = BussinessFactory.GetExchangeRateService().GetAll(p => p.DateRate.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).Results;
         var echangeToday = List.OrderBy(p => p.CreationDate).FirstOrDefault();
         if (echangeToday != null)
         {
@@ -32,13 +32,16 @@ public partial class Derma_Admin_PaymentCostCenter : PageBase
 
     private void LoadCostCenter()
     {
-        var types = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
-        BindControl<CostCenter>.BindDropDownList(ddlDebtorCostCenter, types);
-        BindControl<CostCenter>.BindDropDownList(ddlCreditorCostCenter, types);
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var types = response.Results;
+            BindControl<CostCenter>.BindDropDownList(ddlDebtorCostCenter, types);
+            BindControl<CostCenter>.BindDropDownList(ddlCreditorCostCenter, types);   
+        }
     }
     private void Save()
     {
-
         var Invoice1 = new Invoice
         {
             Id = Guid.NewGuid(),
@@ -53,103 +56,99 @@ public partial class Derma_Admin_PaymentCostCenter : PageBase
             ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
             Movement = "Egreso",
             IsActive = true,
-
             MedicalCare = null,
-            CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlDebtorCostCenter.SelectedValue)),
+            CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlDebtorCostCenter.SelectedValue)).Entity,
             Personal = null,
             Patient = null,
             Session = null,
-
             LastModified = LastModified,
             CreationDate = CreationDate,
             ModifiedBy = ModifiedBy,
             CreatedBy = CreatedBy,
         };           
 
-                var CashMovement1 = new CashMovement
-                {
-                    Id = Guid.NewGuid(),
-                    CostCenter = Invoice1.CostCenter,
-                    Invoice = Invoice1,
-                    MPayment = ddlMPayment.SelectedValue,
-                    Date = Convert.ToDateTime(CreationDate),
-                    EmissionAmount = Invoice1.Amount,
-                    Amount = Invoice1.Amount,
-                    Factor = -1,
-                    Currency = ddlCurrency.SelectedValue,
-                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
-                    IsActive = true,
-                    LastModified = LastModified,
-                    CreationDate = CreationDate,
-                    ModifiedBy = ModifiedBy,
-                    CreatedBy = CreatedBy,
-                };
-                var Invoice2 = new Invoice
-                {
-                    Id = Guid.NewGuid(),
-                    Name = txtName.Text.Trim(),
-                    Description = txtName.Text.Trim(),
-                    DatePayment = Convert.ToDateTime(CreationDate),
-                    MPayment = ddlMPayment.SelectedValue,
-                    InvoiceType = ddlInvoice.SelectedValue,
-                    NInvoice = txtNInvoice.Text.Trim(),
-                    Currency = ddlCurrency.SelectedValue,
-                    Amount = Convert.ToDecimal(txtAmount.Text),
-                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
-                    Movement = "Ingreso",
-                    IsActive = true,
+        var CashMovement1 = new CashMovement
+        {
+            Id = Guid.NewGuid(),
+            CostCenter = Invoice1.CostCenter,
+            Invoice = Invoice1,
+            MPayment = ddlMPayment.SelectedValue,
+            Date = Convert.ToDateTime(CreationDate),
+            EmissionAmount = Invoice1.Amount,
+            Amount = Invoice1.Amount,
+            Factor = -1,
+            Currency = ddlCurrency.SelectedValue,
+            ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+            IsActive = true,
+            LastModified = LastModified,
+            CreationDate = CreationDate,
+            ModifiedBy = ModifiedBy,
+            CreatedBy = CreatedBy,
+        };
 
-                    MedicalCare = null,
-                    CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCreditorCostCenter.SelectedValue)),
-                    Personal = null,
-                    Patient = null,
-                    Session = null,
+        var Invoice2 = new Invoice
+        {
+            Id = Guid.NewGuid(),
+            Name = txtName.Text.Trim(),
+            Description = txtName.Text.Trim(),
+            DatePayment = Convert.ToDateTime(CreationDate),
+            MPayment = ddlMPayment.SelectedValue,
+            InvoiceType = ddlInvoice.SelectedValue,
+            NInvoice = txtNInvoice.Text.Trim(),
+            Currency = ddlCurrency.SelectedValue,
+            Amount = Convert.ToDecimal(txtAmount.Text),
+            ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+            Movement = "Ingreso",
+            IsActive = true,
+            MedicalCare = null,
+            CostCenter = BussinessFactory.GetCostCenterService().Get(new Guid(ddlCreditorCostCenter.SelectedValue)).Entity,
+            Personal = null,
+            Patient = null,
+            Session = null,
+            LastModified = LastModified,
+            CreationDate = CreationDate,
+            ModifiedBy = ModifiedBy,
+            CreatedBy = CreatedBy,
+        };
+        var CashMovement2 = new CashMovement
+        {
+            Id = Guid.NewGuid(),
+            CostCenter = Invoice2.CostCenter,
+            Invoice = Invoice2,
+            MPayment = ddlMPayment.SelectedValue,
+            Date = Convert.ToDateTime(CreationDate),
+            EmissionAmount = Invoice2.Amount,
+            Amount = Invoice2.Amount,
+            Factor = 1,
+            Currency = ddlCurrency.SelectedValue,
+            ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
+            IsActive = true,
+            LastModified = LastModified,
+            CreationDate = CreationDate,
+            ModifiedBy = ModifiedBy,
+            CreatedBy = CreatedBy,
+        };
 
-                    LastModified = LastModified,
-                    CreationDate = CreationDate,
-                    ModifiedBy = ModifiedBy,
-                    CreatedBy = CreatedBy,
-                };
-                var CashMovement2 = new CashMovement
-                {
-                    Id = Guid.NewGuid(),
-                    CostCenter = Invoice2.CostCenter,
-                    Invoice = Invoice2,
-                    MPayment = ddlMPayment.SelectedValue,
-                    Date = Convert.ToDateTime(CreationDate),
-                    EmissionAmount = Invoice2.Amount,
-                    Amount = Invoice2.Amount,
-                    Factor = 1,
-                    Currency = ddlCurrency.SelectedValue,
-                    ExchangeRate = Convert.ToDecimal(txtVenta.Text.Trim()),
-                    IsActive = true,
-                    LastModified = LastModified,
-                    CreationDate = CreationDate,
-                    ModifiedBy = ModifiedBy,
-                    CreatedBy = CreatedBy,
-                };
-
-                Invoice1.CashMovements.Add(CashMovement1);
-                Invoice2.CashMovements.Add(CashMovement2);
-                try
-                {
-                    var response1 = BussinessFactory.GetInvoiceService().Save(Invoice1);
-                    var response2 = BussinessFactory.GetInvoiceService().Save(Invoice2);
-                    if (response1.OperationResult == OperationResult.Success & response2.OperationResult == OperationResult.Success)
-                    {
+        Invoice1.CashMovements.Add(CashMovement1);
+        Invoice2.CashMovements.Add(CashMovement2);
+        try
+        {
+            var response1 = BussinessFactory.GetInvoiceService().Save(Invoice1);
+            var response2 = BussinessFactory.GetInvoiceService().Save(Invoice2);
+            if (response1.OperationResult == OperationResult.Success & response2.OperationResult == OperationResult.Success)
+            {
                         
-                        litMensaje.Text = string.Format("Se Guardó Correctamente");
-                    }
-                    else
-                    {
-                        litMensaje.Text = string.Format("No se pudo Guardar el Pago {0}", response1.Message);
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-            
+                litMensaje.Text = string.Format("Se Guardó Correctamente");
+            }
+            else
+            {
+                litMensaje.Text = string.Format("No se pudo Guardar el Pago {0}", response1.Message);
+            }
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)

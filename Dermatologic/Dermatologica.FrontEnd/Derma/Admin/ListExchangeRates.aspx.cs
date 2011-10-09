@@ -33,19 +33,24 @@ public partial class Derma_Admin_ListExchangeRates : PageBase
     
     private void GetExchangeRates()
     {    
-        var ExchangeRates = BussinessFactory.GetExchangeRateService().GetAll(u => u.IsActive == true);
-        BindControl<ExchangeRate>.BindGrid(gvExchangeRates, ExchangeRates);
+        var response = BussinessFactory.GetExchangeRateService().GetAll(u => u.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var exchangeRates = response.Results;
+            BindControl<ExchangeRate>.BindGrid(gvExchangeRates, exchangeRates);    
+        }
     }
    
     private void DeleteExchangeRate(Guid id)
     {
-        var ExchangeRate = BussinessFactory.GetExchangeRateService().Get(id);
-        if (ExchangeRate != null)
+        var responseExchangeRate = BussinessFactory.GetExchangeRateService().Get(id);
+        if (responseExchangeRate.OperationResult == OperationResult.Success)
         {
-            ExchangeRate.IsActive = false;
-            ExchangeRate.LastModified = LastModified;
-            ExchangeRate.ModifiedBy = ModifiedBy;
-            var response = BussinessFactory.GetExchangeRateService().Update(ExchangeRate);
+            var exchangeRate = responseExchangeRate.Entity;
+            exchangeRate.IsActive = false;
+            exchangeRate.LastModified = LastModified;
+            exchangeRate.ModifiedBy = ModifiedBy;
+            var response = BussinessFactory.GetExchangeRateService().Update(exchangeRate);
             if (response.OperationResult == OperationResult.Success)
             {
                 litMensaje.Text = string.Format("Se eliminó tipo de cambio");

@@ -6,8 +6,6 @@ using System.Linq.Expressions;
 using Dermatologic.Data.Persistence;
 using NHibernate;
 using NHibernate.Criterion;
-using NHibernate.Linq;
-
 
 namespace Dermatologic.Data
 {
@@ -48,7 +46,7 @@ namespace Dermatologic.Data
             return query.List();
         }
 
-        public void Delete(string myQuery, string[] parameters, object[] values)
+        public void ExecuteNonQuery(string myQuery, string[] parameters, object[] values)
         {
             var query = NhibernateHelper.GetCurrentSession().CreateQuery(myQuery);
             for (var i = 0; i <= parameters.Length - 1; i++)
@@ -58,7 +56,7 @@ namespace Dermatologic.Data
             query.ExecuteUpdate();
         }
 
-        public void ExecuteNonQuery(string myQuery, string[] parameters, object[] values)
+        public void ExecuteNonSQLQuery(string myQuery, string[] parameters, object[] values)
         {
             var query = NhibernateHelper.GetCurrentSession().CreateSQLQuery(myQuery);
             for (var i = 0; i <= parameters.Length - 1; i++)
@@ -90,6 +88,13 @@ namespace Dermatologic.Data
             return NhibernateHelper.Linq<T>().Where(criterion).ToList();
         }
 
+        public IList<T> GetAll(Expression<Func<T, bool>> criterion, int pageIndex, int pageSize, out int count)
+        {
+            IQueryable<T> query = NhibernateHelper.Linq<T>();
+            count = query.Count();
+            return query.Where(criterion).Paged<T>(pageIndex, pageSize).ToList();
+        }
+
         public T Get(object id)
         {
             return NhibernateHelper.GetCurrentSession().Get<T>(id);
@@ -104,5 +109,6 @@ namespace Dermatologic.Data
         {
             return NhibernateHelper.GetCurrentSession().CreateCriteria(typeof(T)).Add(Example.Create(entity)).List<T>();
         }
+
     }
 }
