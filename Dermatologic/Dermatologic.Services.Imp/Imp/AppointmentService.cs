@@ -28,6 +28,23 @@ namespace Dermatologic.Services
             return new List<Appointment>(Repository.GetAll( p => p.StartDate >= fechaInicio || p.EndDate <= fechaFin)).Where(p => p.IsActive == true).ToList();
         }
 
+        public AppointmentResponse GetAppointments(DateTime? start, DateTime? end)
+        {
+            var response = new AppointmentResponse();
+            try
+            {
+                IAppointmentRepository _repository = new AppointmentRepository();
+                var results = _repository.GetAppointments(start, end);
+                response.Results = results;
+                response.OperationResult = OperationResult.Success;
+            }
+            catch
+            {
+                response.OperationResult = OperationResult.Failed;
+            }
+            return response;
+        }
+
         public List<Appointment> GetByMonth(DateTime? dateTime, Guid? idOffice)
         {
             var appointments = Repository.GetAll(p => p.Office.Id == idOffice);
@@ -94,15 +111,13 @@ namespace Dermatologic.Services
         public AppointmentResponse GetByOpMedical(Appointment example)
         {
             var response = new AppointmentResponse();
-            List<Appointment> filter;
             try
             {
                 IAppointmentRepository _repository = new AppointmentRepository();
                 IList<Appointment> results = _repository.GetByOpMedical(example);
-                filter = new List<Appointment>();
                 if (example.StartDate.HasValue)
                 {
-                    filter = results.Where(
+                    List<Appointment> filter = results.Where(
                         p =>
                         p.StartDate.Value.Year == example.StartDate.Value.Year &&
                         p.StartDate.Value.Month == example.StartDate.Value.Month &&
@@ -172,6 +187,54 @@ namespace Dermatologic.Services
                     break;
             }
             return returnDay;
+        }
+
+        public static int GetNroDaysFromMonth(DateTime? date)
+        {
+            var returnDays = 0;
+            if (date.HasValue)
+            {
+                switch (date.Value.Month)
+                {
+                    case 1:
+                        returnDays = 31;
+                        break;
+                    case 2:
+                        returnDays = 28;
+                        break;
+                    case 3:
+                        returnDays = 31;
+                        break;
+                    case 4:
+                        returnDays = 30;
+                        break;
+                    case 5:
+                        returnDays = 31;
+                        break;
+                    case 6:
+                        returnDays = 30;
+                        break;
+                    case 7:
+                        returnDays = 31;
+                        break;
+                    case 8:
+                        returnDays = 31;
+                        break;
+                    case 9:
+                        returnDays = 30;
+                        break;
+                    case 10:
+                        returnDays = 31;
+                        break;
+                    case 11:
+                        returnDays = 30;
+                        break;
+                    case 12:
+                        returnDays = 31;
+                        break;
+                }
+            }
+            return returnDays;
         }
 
     }

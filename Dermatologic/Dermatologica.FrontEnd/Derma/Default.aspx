@@ -14,9 +14,9 @@
     </telerik:RadAjaxManager>
     <telerik:RadAjaxLoadingPanel runat="server" ID="rlpLoading" Transparency="50" Height="100%"
         Width="100%">
-        <table style="height: 100%; width: 100%;" border="0">
+        <table style="height: 100%; width: 100%;">
             <tr>
-                <td width="100%" align="center" valign="middle" style="background-color: #F0FFFF">
+                <td width="100%" style="background-color: #F0FFFF">
                     <img src="../Images/loading.gif" alt="Loading..." style="border: 0px;" />
                 </td>
             </tr>
@@ -26,20 +26,12 @@
         <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlReport">
-                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                    <table width="100%">
                         <tr>
                             <td>
                                 <asp:Literal ID="litMessage" runat="server" />
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 30px;">
-                            </td>
-                        </tr>
+                        </tr>                        
                         <tr>
                             <td>
                                 <telerik:RadScheduler ID="radCalendar" runat="server" Skin="Simple" Culture="es-PE"
@@ -47,15 +39,14 @@
                                     OnAppointmentInsert="radCalendar_AppointmentInsert" OnAppointmentUpdate="radCalendar_AppointmentUpdate"
                                     OverflowBehavior="Expand" WorkDayEndTime="21:00:00" WorkDayStartTime="08:00:00"
                                     EnableCustomAttributeEditing="True" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
-                                    OnFormCreated="radCalendar_FormCreated" OnNavigationComplete="radCalendar_NavigationComplete"
-                                    RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%"
+                                    OnFormCreated="radCalendar_FormCreated" RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%"
                                     OnAppointmentDataBound="radCalendar_AppointmentDataBound" 
                                     onappointmentcancelingedit="radCalendar_AppointmentCancelingEdit" 
-                                    onnavigationcommand="radCalendar_NavigationCommand">
+                                    onnavigationcommand="radCalendar_NavigationCommand" StartInsertingInAdvancedForm="true">
                                     <WeekView DayEndTime="21:00:00" DayStartTime="08:00:00" WorkDayEndTime="21:00:00"
                                         WorkDayStartTime="08:00:00" />
                                     <DayView DayEndTime="21:00:00" DayStartTime="08:00:00" />
-                                    <AdvancedForm Modal="True" EnableCustomAttributeEditing="True" />
+                                    <AdvancedForm Modal="True" EnableCustomAttributeEditing="True" />                                    
                                     <TimelineView UserSelectable="false" />
                                     <Localization AllDay="Todo el dia" AdvancedAllDayEvent="Todo el día" AdvancedCalendarCancel="Cancelar"
                                         AdvancedCalendarToday="Hoy" AdvancedClose="Cerrar" AdvancedDaily="Diario" AdvancedDay="Día"

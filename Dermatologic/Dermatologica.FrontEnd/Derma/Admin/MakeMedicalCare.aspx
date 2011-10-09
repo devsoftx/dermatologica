@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="MakeMedicalCare.aspx.cs"Inherits="Derma_Admin_MakeMedicalCare" %>
-
 <%@ Register src="../../SmartControls/wucSearchPersons.ascx" tagname="wucSearchPersons" tagprefix="uc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
     <script type="text/javascript">
         $(function () {

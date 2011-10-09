@@ -23,5 +23,7 @@ namespace Dermatologic.Services
         AppointmentResponse GetByOpMedical(Appointment example);
 
         AppointmentResponse GetByPatient(Appointment example, DateTime? startDate, DateTime? endDate);
+
+        AppointmentResponse GetAppointments(DateTime? start, DateTime? end);
     }
 }

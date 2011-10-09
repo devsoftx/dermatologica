@@ -17,7 +17,6 @@ public partial class Derma_Default : PageBase
     {
         if (!IsPostBack)
         {
-            DateTime? date = null;
             ConfigureRadCalendar();
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("ES-pe");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("ES-pe");
@@ -29,16 +28,17 @@ public partial class Derma_Default : PageBase
                 var userName = Session["userName"];
                 if (userName != null)
                 {
-                    LoadAppointments(radCalendar.SelectedDate);
+                    LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.MonthView);
                 }   
             }
             else
             {
                 var appointment = BussinessFactory.GetAppointmentService().Get(new Guid(id));
-                date = appointment.StartDate;
-                radCalendar.SelectedDate = DateTime.ParseExact(date.Value.ToShortDateString(), "dd/MM/yyyy", currentCulture);
+                DateTime? date = appointment.StartDate;
+                if (date != null)
+                    radCalendar.SelectedDate = DateTime.ParseExact(date.Value.ToShortDateString(), "dd/MM/yyyy", currentCulture);
                 radCalendar.SelectedView = SchedulerViewType.DayView;
-                LoadAppointments(radCalendar.SelectedDate);
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.DayView);
             }
         }
     }
@@ -115,14 +115,10 @@ public partial class Derma_Default : PageBase
     {
         const string url = "Default.aspx";
         var id = Request.Params.Get("id");
-        if (string.IsNullOrEmpty(id))
-        {
-            Response.Redirect(string.Format("Appointment.aspx?id={0}&action=edit&returnUrl={1}", e.Appointment.ID,Request.RawUrl));
-        }
-        else
-        {
-            Response.Redirect(string.Format("Appointment.aspx?id={0}&action=edit&returnUrl={1}", e.Appointment.ID, url));
-        }
+        Response.Redirect(string.IsNullOrEmpty(id)
+                              ? string.Format("Appointment.aspx?id={0}&action=edit&returnUrl={1}", e.Appointment.ID,
+                                              Request.RawUrl)
+                              : string.Format("Appointment.aspx?id={0}&action=edit&returnUrl={1}", e.Appointment.ID, url));
     }
 
     protected void radCalendar_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
@@ -137,7 +133,7 @@ public partial class Derma_Default : PageBase
         var response = BussinessFactory.GetAppointmentService().Update(appoinment);
         if (response.OperationResult == OperationResult.Success)
         {
-            LoadAppointments(radCalendar.SelectedDate);
+            LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.MonthView);
         }
     }
 
@@ -188,7 +184,12 @@ public partial class Derma_Default : PageBase
         var response = BussinessFactory.GetAppointmentService().Save(appointment);
         if(response.OperationResult == OperationResult.Success)
         {
-            LoadAppointments(radCalendar.SelectedDate);
+            if (radCalendar.SelectedView == SchedulerViewType.MonthView)
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.MonthView);
+            if (radCalendar.SelectedView == SchedulerViewType.DayView)
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.DayView);
+            if (radCalendar.SelectedView == SchedulerViewType.WeekView)
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.WeekView);
         }
         else
         {
@@ -242,7 +243,12 @@ public partial class Derma_Default : PageBase
         var response = BussinessFactory.GetAppointmentService().Update(appoinment);
         if (response.OperationResult == OperationResult.Success)
         {
-            LoadAppointments(radCalendar.SelectedDate);
+            if (radCalendar.SelectedView == SchedulerViewType.MonthView)
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.MonthView);
+            if (radCalendar.SelectedView == SchedulerViewType.DayView)
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.DayView);
+            if (radCalendar.SelectedView == SchedulerViewType.WeekView)
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.WeekView);
         }
         else
         {
@@ -273,55 +279,85 @@ public partial class Derma_Default : PageBase
         checkBox.Checked = false;
     }
 
-    protected void radCalendar_NavigationComplete(object sender, SchedulerNavigationCompleteEventArgs e)
-    {
-        if (e.Command == SchedulerNavigationCommand.NavigateToNextPeriod ||
-                e.Command == SchedulerNavigationCommand.NavigateToPreviousPeriod ||
-                e.Command == SchedulerNavigationCommand.NavigateToSelectedDate)
-        {
-            switch (e.Command)
-            {
-                case SchedulerNavigationCommand.SwitchToDayView:
-                    LoadAppointments(radCalendar.SelectedDate);
-                    break;
-                case SchedulerNavigationCommand.SwitchToMonthView:
-                    LoadAppointments(radCalendar.SelectedDate);
-                    break;
-                case SchedulerNavigationCommand.SwitchToWeekView:
-                    LoadAppointments(radCalendar.SelectedDate);
-                    break;
-                case SchedulerNavigationCommand.SwitchToSelectedDay:
-                    LoadAppointments(radCalendar.SelectedDate);
-                    break;
-                default:
-                    LoadAppointments(radCalendar.SelectedDate);
-                    break;
-            }
-        }
-    }
-
     protected void radCalendar_PreRender(object sender, EventArgs e)
     {
         var popupCalendar = radCalendar.FindControl("SelectedDateCalendar") as RadCalendar;
         if (popupCalendar == null) return;
-        foreach (var dayWithAppointment in radCalendar.Appointments.Select(a => new RadCalendarDay
+        var appointments = radCalendar.Appointments;
+        Color color;
+        switch (appointments.Count)
         {
-            ToolTip = string.Format("Sr(a) {0}, Motivo: {1} ", a.Attributes["Paciente"],a.Subject),
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                color = Color.Aquamarine;
+                break;
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+            case 20:
+                color = Color.Blue;
+                break;
+            default:
+                color = Color.Red;
+                break;
+        }
+        foreach (var dayWithAppointment in appointments.Select(a => new RadCalendarDay
+        {
+            ToolTip = string.Format("N° de Citas: {0}", appointments.Count),
             Date = a.Start
         }))
         {
-            dayWithAppointment.ItemStyle.BackColor = Color.Red;
+            dayWithAppointment.ItemStyle.BackColor = color;
             popupCalendar.SpecialDays.Add(dayWithAppointment);
         }
     }
 
-    private void LoadAppointments(DateTime? dateTime)
+    private void LoadAppointments(DateTime? dateTime, SchedulerViewType view)
     {
+        DateTime? start = null;
+        DateTime? end = null;
+        DateTime[] days = new DateTime[2];
         if (dateTime.HasValue)
         {
-            var fecha = new DateTime(radCalendar.SelectedDate.Year, radCalendar.SelectedDate.Month, 1);
-            var appointments = BussinessFactory.GetAppointmentService().GetByOffices(fecha.AddMonths(-1), fecha.AddMonths(1));
-            BindAppointments(appointments);
+            switch (view)
+            {
+                case SchedulerViewType.DayView:
+                    start = new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 8, 0, 0);
+                    end = new DateTime(dateTime.Value.Year, dateTime.Value.Month, dateTime.Value.Day, 21, 0, 0);
+                    break;
+                case SchedulerViewType.MonthView:
+                    start = new DateTime(dateTime.Value.Year, dateTime.Value.Month, 1, 8, 0, 0);
+                    end = AppointmentService.GetNroDaysFromMonth(dateTime) > 30
+                                       ? new DateTime(dateTime.Value.Year, dateTime.Value.Month, 31, 21, 0, 0)
+                                       : new DateTime(dateTime.Value.Year, dateTime.Value.Month, 30, 21, 0, 0);
+                    break;
+                case SchedulerViewType.WeekView:
+                    days = BussinessFactory.GetAppointmentService().GetDatesNearby(dateTime.Value);
+                    start = new DateTime(days[0].Year, days[0].Month, days[0].Day, 8, 0, 0);
+                    end = new DateTime(days[1].Year, days[1].Month, days[1].Day, 21, 0, 0);
+                    break;
+            }
+            radCalendar.SelectedView = view;
+            var response = BussinessFactory.GetAppointmentService().GetAppointments(start, end);
+            if (response.OperationResult == OperationResult.Success)
+            {
+                var appointments = response.Results;
+                BindAppointments(appointments);
+            }
         }
     }
 
@@ -352,28 +388,48 @@ public partial class Derma_Default : PageBase
 
     protected void radCalendar_AppointmentCancelingEdit(object sender, AppointmentCancelingEditEventArgs e)
     {
-        LoadAppointments(radCalendar.SelectedDate);
+        LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.MonthView);
     }
 
     protected void radCalendar_NavigationCommand(object sender, SchedulerNavigationCommandEventArgs e)
     {
         switch (e.Command)
         {
-            case SchedulerNavigationCommand.SwitchToDayView:
-                LoadAppointments(radCalendar.SelectedDate);
-                break;
             case SchedulerNavigationCommand.SwitchToMonthView:
-                LoadAppointments(radCalendar.SelectedDate);
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.MonthView);
                 break;
             case SchedulerNavigationCommand.SwitchToWeekView:
-                LoadAppointments(radCalendar.SelectedDate);
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.WeekView);
+                break;
+            case SchedulerNavigationCommand.SwitchToDayView:
+                LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.DayView);
                 break;
             case SchedulerNavigationCommand.SwitchToSelectedDay:
-                LoadAppointments(radCalendar.SelectedDate);
+                LoadAppointments(e.SelectedDate, SchedulerViewType.DayView);
+                break;
+            case SchedulerNavigationCommand.NavigateToPreviousPeriod:
+                if(radCalendar.SelectedView == SchedulerViewType.MonthView)
+                    LoadAppointments(radCalendar.SelectedDate.AddMonths(-1), SchedulerViewType.MonthView);
+                if (radCalendar.SelectedView == SchedulerViewType.DayView)
+                    LoadAppointments(radCalendar.SelectedDate.AddDays(-1), SchedulerViewType.DayView);
+                if (radCalendar.SelectedView == SchedulerViewType.WeekView)
+                    LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.WeekView);
+                break;
+            case SchedulerNavigationCommand.NavigateToNextPeriod:
+                if(radCalendar.SelectedView == SchedulerViewType.MonthView)
+                    LoadAppointments(radCalendar.SelectedDate.AddMonths(1), SchedulerViewType.MonthView);
+                if (radCalendar.SelectedView == SchedulerViewType.DayView)
+                    LoadAppointments(radCalendar.SelectedDate.AddDays(1), SchedulerViewType.DayView);
+                if (radCalendar.SelectedView == SchedulerViewType.WeekView)
+                    LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.WeekView);
+                break;
+            case SchedulerNavigationCommand.NavigateToSelectedDate:
+                LoadAppointments(e.SelectedDate, SchedulerViewType.DayView);
                 break;
             default:
-                LoadAppointments(radCalendar.SelectedDate);
+                LoadAppointments(e.SelectedDate, SchedulerViewType.MonthView);
                 break;
         }
     }
+
 }

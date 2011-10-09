@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Dermatologic.Domain;
 
@@ -23,6 +24,17 @@ namespace Dermatologic.Data
             string[] parameters = { "name" };
             object[] values = {
                                   string.Format("%{0}%", example.Patient)
+                              };
+            return Query(query, parameters, values);
+        }
+
+        public IList<Appointment> GetAppointments(DateTime? start , DateTime? end)
+        {
+            const string query = "from Appointment a where a.StartDate between :start and :end";
+            string[] parameters = { "start", "end" };
+            object[] values = {
+                                  start.Value,
+                                  end.Value
                               };
             return Query(query, parameters, values);
         }
