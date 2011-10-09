@@ -28,7 +28,21 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
             var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
             endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
         }
-        var response = BussinessFactory.GetAppointmentService().GetByPatient(example, startDate, endDate);
+        if(startDate == null)
+        {
+            var date = DateTime.Now;
+            startDate = new DateTime(date.Year, date.Month, 1, 8, 0, 0);
+        }
+        if (endDate == null)
+        {
+            var date = DateTime.Now;
+            endDate = AppointmentService.GetNroDaysFromMonth(date) > 30
+                                       ? new DateTime(date.Year, date.Month, 31, 21, 0, 0)
+                                       : new DateTime(date.Year, date.Month, 30, 21, 0, 0);
+        }
+        example.StartDate = startDate;
+        example.EndDate = endDate;
+        var response = BussinessFactory.GetAppointmentService().GetByPatient(example);
         if (response.OperationResult == OperationResult.Success)
         {
             var appointments = response.Appointments;
@@ -106,7 +120,19 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
                     var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
                     endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
                 }
-                response = BussinessFactory.GetAppointmentService().GetByPatient(example, startDate, endDate);
+                if (startDate == null)
+                {
+                    var date = DateTime.Now;
+                    startDate = new DateTime(date.Year, date.Month, 1, 8, 0, 0);
+                }
+                if (endDate == null)
+                {
+                    var date = DateTime.Now;
+                    endDate = AppointmentService.GetNroDaysFromMonth(date) > 30
+                                               ? new DateTime(date.Year, date.Month, 31, 21, 0, 0)
+                                               : new DateTime(date.Year, date.Month, 30, 21, 0, 0);
+                }
+                response = BussinessFactory.GetAppointmentService().GetByPatient(example);
             }
             if (response.OperationResult == OperationResult.Success)
             {

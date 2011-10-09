@@ -138,17 +138,14 @@ namespace Dermatologic.Services
             return response;
         }
 
-        public AppointmentResponse GetByPatient(Appointment example, DateTime? startDate, DateTime? endDate)
+        public AppointmentResponse GetByPatient(Appointment example)
         {
             var response = new AppointmentResponse();
             try
             {
                 IAppointmentRepository _repository = new AppointmentRepository();
                 IList<Appointment> results = _repository.GetByPatient(example);
-                var query = from t in results
-                            where t.StartDate >= startDate.Value && t.StartDate < endDate.Value
-                            select t;
-                response.Results = query.ToList<Appointment>();
+                response.Appointments = results;
                 response.OperationResult = OperationResult.Success;
             }
             catch (Exception ex)

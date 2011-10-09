@@ -24,8 +24,8 @@ namespace Dermatologic.Data
             string[] parameters = { "name", "start", "end" };
             object[] values = {
                                   string.Format("%{0}%", example.Patient),
-                                  example.StartDate.Value,
-                                  example.EndDate.Value
+                                  example.StartDate.HasValue ? example.StartDate.Value : (DateTime?)null,
+                                  example.EndDate.HasValue ? example.EndDate.Value : (DateTime?)null
                               };
             return Query(query, parameters, values);
         }
@@ -35,8 +35,8 @@ namespace Dermatologic.Data
             const string query = "from Appointment a where a.StartDate between :start and :end";
             string[] parameters = { "start", "end" };
             object[] values = {
-                                  start.Value,
-                                  end.Value
+                                  start.HasValue ? start.Value : (DateTime?)null,
+                                  end.HasValue ? end.Value : (DateTime?)null
                               };
             return Query(query, parameters, values);
         }
