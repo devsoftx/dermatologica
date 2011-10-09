@@ -64,4 +64,22 @@ public partial class Derma_Admin_ListMenus : PageBase
             }
         }
     }
+    protected void gvMenus_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        try
+        {
+            var response = BussinessFactory.GetMenuService().GetAll(p => p.IsActive);
+            if (response.OperationResult == OperationResult.Success)
+            {
+                var persons = response.Results;
+                gvMenus.DataSource = persons;
+                gvMenus.PageIndex = e.NewPageIndex;
+                gvMenus.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            litMensaje.Text = string.Format("Error: {0}", ex.Message);
+        }
+    }
 }
