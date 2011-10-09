@@ -12,16 +12,19 @@ public partial class Derma_Derma : MasterPageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        var userName = Session["userName"];
-        if (userName != null)
+        if (!Page.IsPostBack)
         {
-            GetMenu(userName.ToString());
-        }
-        else
-        {
-            Session["userName"] = null;
-            FormsAuthentication.SignOut();
-            FormsAuthentication.RedirectToLoginPage(Request.RawUrl);
+            var userName = Session["userName"];
+            if (userName != null)
+            {
+                GetMenu(userName.ToString());
+            }
+            else
+            {
+                Session["userName"] = null;
+                FormsAuthentication.SignOut();
+                FormsAuthentication.RedirectToLoginPage(Request.RawUrl);
+            }   
         }
     }
 
