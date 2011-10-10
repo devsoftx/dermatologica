@@ -5,8 +5,40 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
-    <div>
-        <table width='800px'>
+    <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="gvMedications" EventName="gvPersons_RowCommand">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="gvMedications" EventName="gvPersons_PageIndexChanging">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="btnSearch" EventName="btnSearch_Click">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
+    <telerik:RadAjaxLoadingPanel runat="server" ID="rlpLoading" Transparency="50" Height="100%"
+        Width="100%">
+        <table style="height: 100%; width: 100%;">
+            <tr>
+                <td width="100%" style="background-color: #F0FFFF">
+                    <img src="../../Images/loading.gif" alt="Loading..." style="border: 0px;" />
+                </td>
+            </tr>
+        </table>
+    </telerik:RadAjaxLoadingPanel>
+    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" Width="100%">
+        <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:Panel runat="server" ID="pnlReport">
+                <table width='100%'>
             <tr>
                 <td style="font-weight: bold; background-color: #006699; color: #FFFFFF; text-align: center;">
                     Tratamientos
@@ -40,7 +72,9 @@
             <tr>
                 <td>
                     <asp:GridView ID="gvMedications" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                        ForeColor="#333333" GridLines="None" OnRowCommand="gvMedication_RowCommand" Width="750px">
+                        ForeColor="#333333" GridLines="None" 
+                        OnRowCommand="gvMedication_RowCommand" Width="100%" AllowPaging="True" 
+                        onpageindexchanging="gvMedications_PageIndexChanging">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:TemplateField HeaderText="Tratamiento">
@@ -74,7 +108,7 @@
                         <EditRowStyle BackColor="#999999" />
                         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
                         <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Left" />
                         <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                         <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
                         <SortedAscendingCellStyle BackColor="#E9E7E2" />
@@ -95,7 +129,15 @@
                 </td>
             </tr>
         </table>
-    </div>
-</asp:Content>
+                </asp:Panel>
+                </ContentTemplate>
+                </asp:UpdatePanel>
+                </telerik:RadAjaxPanel>
+                </asp:Content>
+                
+
+        
+    
+
 <asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" runat="Server">
 </asp:Content>

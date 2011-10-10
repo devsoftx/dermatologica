@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
@@ -86,4 +85,35 @@ public partial class Derma_Admin_ListMedications : PageBase
             gvMedications.DataBind(); 
         }
     }
+
+    protected void gvMedications_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        ResponseBase<Medication> response;
+        if (string.IsNullOrEmpty(txtSearch.Text))
+        {
+            response = BussinessFactory.GetMedicationService().GetAll(p => p.IsActive);
+        }
+        else
+        {
+            var example = new Person
+            {
+                FirstName = txtSearch.Text.Trim().ToLower(),
+                LastNameP = txtSearch.Text.Trim().ToLower(),
+                LastNameM = txtSearch.Text.Trim().ToLower(),
+            };
+            response = BussinessFactory.GetMedicationService().GetMedicationsByPatient(example);
+        }
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var persons = response.Results;
+            gvMedications.DataSource = persons;
+            gvMedications.PageIndex = e.NewPageIndex;
+            gvMedications.DataBind();
+        }
+        else
+        {
+            litMensaje.Text = string.Format("Error: {0}", response.Message);
+        }
+    }
+
 }

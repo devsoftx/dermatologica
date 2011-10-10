@@ -26,12 +26,15 @@ public partial class Derma_Admin_ClinicHistory : PageBase
 
     protected void gvMedication_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        switch (e.CommandName)
+        if(e.CommandName != "Page")
         {
-            case "cmd_editar":
-                var id = new Guid(e.CommandArgument.ToString());
-                Response.Redirect(string.Format("ClinicHistoryInformation.aspx?id={0}&action=edit", id), true);
-                break;
+            switch (e.CommandName)
+            {
+                case "cmd_editar":
+                    var id = new Guid(e.CommandArgument.ToString());
+                    Response.Redirect(string.Format("ClinicHistoryInformation.aspx?id={0}&action=edit", id), true);
+                    break;
+            }
         }
     }
 
@@ -55,5 +58,9 @@ public partial class Derma_Admin_ClinicHistory : PageBase
             BindControl<Medication>.BindGrid(gvMedications, medications);
         }
         
+    }
+    protected void gvMedications_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+
     }
 }

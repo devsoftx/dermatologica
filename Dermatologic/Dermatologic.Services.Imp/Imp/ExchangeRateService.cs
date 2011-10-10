@@ -12,7 +12,7 @@ namespace Dermatologic.Services
             Repository = RepositoryFactory.GetExchangeRateRepository();
         }
 
-        public ExchangeRateResponse GetExchangeRateByDates(DateTime stardate, DateTime enddate)
+        public ExchangeRateResponse GetExchangeRateByDates(DateTime? stardate, DateTime? enddate)
         {
             var response = new ExchangeRateResponse();
             try

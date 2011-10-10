@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Dermatologic.Domain
 {
+    [DataContract]
     public class ExchangeRate: IEquatable<ExchangeRate>
     {
         [DataMember]

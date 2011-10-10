@@ -5,7 +5,7 @@ namespace Dermatologic.Services
 {
     public interface IExchangeRateService : IServiceController<ExchangeRate>
     {
-        ExchangeRateResponse GetExchangeRateByDates(DateTime stardate, DateTime enddate);
+        ExchangeRateResponse GetExchangeRateByDates(DateTime? stardate, DateTime? enddate);
         ExchangeRateResponse GetExchangeRateByCurrentRate(DateTime CurrentDate);
     }
 }

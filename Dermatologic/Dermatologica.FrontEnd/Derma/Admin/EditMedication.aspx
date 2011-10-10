@@ -1,16 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="EditMedication.aspx.cs"Inherits="Derma_Admin_EditMedication" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
+    CodeFile="EditMedication.aspx.cs" Inherits="Derma_Admin_EditMedication" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
-    <style type="text/css">
-        .style1
-        {
-            width: 100%;
-        }
-        .style2
-        {
-            width: 53px;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:RadCodeBlock ID="rcbInvitation" runat="server">
@@ -39,6 +29,11 @@
     </telerik:RadCodeBlock>
     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="dwCostCenter" EventName="dwCostCenter_SelectedIndexChanged">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="dwService">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="pnlReport" LoadingPanelID="rlpLoading" />
@@ -73,9 +68,9 @@
     </telerik:RadAjaxManager>
     <telerik:RadAjaxLoadingPanel runat="server" ID="rlpLoading" Transparency="50" Height="100%"
         Width="100%">
-        <table style="height: 100%; width: 100%;" border="0">
+        <table style="height: 100%; width: 100%;">
             <tr>
-                <td width="100%" align="center" valign="middle" style="background-color: #F0FFFF">
+                <td width="100%" style="background-color: #F0FFFF">
                     <img src='../../images/loading.gif' alt="Loading..." style="border: 0px;" />
                 </td>
             </tr>
@@ -98,10 +93,24 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <asp:Label ID="Label2" runat="server" Text="Unidad de Negocio"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="dwCostCenter" runat="server" AutoPostBack="True" 
+                                        OnSelectedIndexChanged="dwCostCenter_SelectedIndexChanged" Width="200px">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <asp:Label ID="Label5" runat="server" Text="Tratamiento"></asp:Label>
                                 </td>
                                 <td>
-                                    <asp:DropDownList ID="dwService" runat="server" AutoPostBack="True" OnSelectedIndexChanged="dwService_SelectedIndexChanged">
+                                    <asp:DropDownList ID="dwService" runat="server" AutoPostBack="True" 
+                                        OnSelectedIndexChanged="dwService_SelectedIndexChanged" Width="200px">
                                     </asp:DropDownList>
                                 </td>
                                 <td>
@@ -113,7 +122,7 @@
                                     <asp:Label ID="Label1" runat="server" Text="Descripción"></asp:Label>
                                 </td>
                                 <td>
-                                    <asp:TextBox ID="txtDescription" runat="server" Width="342px"></asp:TextBox>
+                                    <asp:TextBox ID="txtDescription" runat="server" Width="350px"></asp:TextBox>
                                 </td>
                                 <td>
                                     &nbsp;
@@ -128,7 +137,7 @@
                                         <tr>
                                             <td>
                                                 <asp:HiddenField ID="txtDni" runat="server" />
-                                                <asp:TextBox ID="txtPacient" runat="server" Width="339px"></asp:TextBox>
+                                                <asp:TextBox ID="txtPacient" runat="server" Width="350px"></asp:TextBox>
                                             </td>
                                             <td>
                                                 <asp:LinkButton runat="server" ID="lnkSearch" Text="Buscar" OnClick="lnkSearch_Click" />
@@ -156,9 +165,9 @@
                                     Precio Unitario
                                 </td>
                                 <td>
-                                    <table class="style1">
+                                    <table>
                                         <tr>
-                                            <td class="style2">
+                                            <td>
                                                 <telerik:RadNumericTextBox ID="txtPrice" runat="server" DataType="System.Decimal"
                                                     MaxValue="9999" MinValue="1" Width="50px">
                                                 </telerik:RadNumericTextBox>
@@ -257,13 +266,13 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Pagar">
                                                 <ItemTemplate>
-                                                    <asp:HyperLink ID="lnkPay" runat="server" Enabled='<%# Request.QueryString.Get("action") == "new" ? false : true %>'
+                                                    <asp:HyperLink ID="lnkPay" runat="server" Enabled='<%# Request.QueryString.Get("action") != "new" %>'
                                                         NavigateUrl='<%# string.Format("MakePayments.aspx?idSession={0}&idMedication={1}",Eval("Id"),Request.QueryString.Get("id")) %>'>Pagar</asp:HyperLink>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Atender">
                                                 <ItemTemplate>
-                                                    <asp:HyperLink ID="lnkAtender" runat="server" Enabled='<%# Request.QueryString.Get("action") == "new" ? false : true %>'
+                                                    <asp:HyperLink ID="lnkAtender" runat="server" Enabled='<%# Request.QueryString.Get("action") != "new" %>'
                                                         NavigateUrl='<%# string.Format("MakeMedicalCare.aspx?idSession={0}&idMedication={1}",Eval("Id"),Request.QueryString.Get("id")) %>'>Atender</asp:HyperLink>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -271,12 +280,12 @@
                                             <asp:TemplateField HeaderText="Acciones">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                                                        CommandName="cmd_editar" Enabled='<%# Request.QueryString.Get("action") == "new" ? false : true %>'>
+                                                        CommandName="cmd_editar" Enabled='<%# Request.QueryString.Get("action") != "new" %>'>
                                                         <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />
                                                     </asp:LinkButton>
                                                     <asp:LinkButton ID="lnk_eliminar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
                                                         CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tratamiento?');"
-                                                        Enabled='<%# Request.QueryString.Get("action") == "new" ? false : true %>'>
+                                                        Enabled='<%# Request.QueryString.Get("action") != "new" %>'>
                                                         <img id="Img4" src="~/images/action_delete.png" alt="Eliminar" border="0" runat="server" />
                                                     </asp:LinkButton>
                                                 </ItemTemplate>

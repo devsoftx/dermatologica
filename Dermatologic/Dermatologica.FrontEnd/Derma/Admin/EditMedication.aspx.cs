@@ -15,10 +15,22 @@ public partial class Derma_Admin_EditMedication : PageBase
     {
         if (!Page.IsPostBack)
         {
-            LoadServices();
+            LoadCostCenter();
             SetMedication();
         }
         btnAceptar.Enabled = false;
+    }
+
+    private void LoadCostCenter()
+    {
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var costcenters = response.Results;
+            BindControl<CostCenter>.BindDropDownList(dwCostCenter, costcenters);
+            if (!string.IsNullOrEmpty(dwCostCenter.SelectedValue))
+                LoadServices(new Guid(dwCostCenter.SelectedValue));
+        }
     }
 
     private void SetMedication()
@@ -37,9 +49,9 @@ public partial class Derma_Admin_EditMedication : PageBase
         }
     }
 
-    private void LoadServices()
+    private void LoadServices(Guid? idService)
     {
-        var response = BussinessFactory.GetServiceService().GetAll(p => p.IsActive);
+        var response = BussinessFactory.GetServiceService().GetAll(p => p.IsActive && p.CostCenter.Id == idService);
         if(response.OperationResult == OperationResult.Success)
         {
             var services = response.Results.OrderBy(p => p.Name).ToList();
@@ -298,5 +310,11 @@ public partial class Derma_Admin_EditMedication : PageBase
             txtPrice.Value = Convert.ToDouble(service.Price);
             lblCurrency.Text = service.Currency;   
         }
+    }
+
+    protected void dwCostCenter_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var idCostCenter = dwCostCenter.SelectedValue;
+        LoadServices(new Guid(idCostCenter));
     }
 }
