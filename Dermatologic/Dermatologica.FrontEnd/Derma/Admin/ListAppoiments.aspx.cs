@@ -27,7 +27,7 @@ public partial class Derma_Admin_ListAppoiments : PageBase
                           };
         if (!string.IsNullOrEmpty(txtDate.Text))
         {
-            var date = Convert.ToDateTime(txtDate.Text);
+            var date = Convert.ToDateTime(txtDate.Text, CurrentCulture);
             example.StartDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
         }
         else
@@ -113,7 +113,7 @@ public partial class Derma_Admin_ListAppoiments : PageBase
                 };
                 if (!string.IsNullOrEmpty(txtDate.Text))
                 {
-                    var date = Convert.ToDateTime(txtDate.Text);
+                    var date = Convert.ToDateTime(txtDate.Text, CurrentCulture);
                     example.StartDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
                 }
                 else
@@ -146,7 +146,7 @@ public partial class Derma_Admin_ListAppoiments : PageBase
                           };
         if (!string.IsNullOrEmpty(txtDate.Text))
         {
-            var date = Convert.ToDateTime(txtDate.Text);
+            var date = Convert.ToDateTime(txtDate.Text, CurrentCulture);
             example.StartDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
         }
         else
@@ -184,5 +184,4 @@ public partial class Derma_Admin_ListAppoiments : PageBase
             ExportToExcel("Citas.xls", dg);
         }
     }
-
 }

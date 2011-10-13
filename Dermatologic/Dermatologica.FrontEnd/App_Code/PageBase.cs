@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dermatologic.Services;
@@ -50,6 +52,12 @@ namespace ASP.App_Code
 
     public class PageBase : Page
     {
+        public PageBase()
+        {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("ES-pe");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("ES-pe");
+        }
+
         private readonly AbstractServiceFactory bussinessFactory = new ServiceFactory();
 
         protected AbstractServiceFactory BussinessFactory
@@ -91,7 +99,7 @@ namespace ASP.App_Code
             }
         }
 
-        public void ExportToExcel(string strFileName, DataGrid dg)
+        protected void ExportToExcel(string strFileName, DataGrid dg)
         {
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment; filename=" + strFileName);
@@ -101,6 +109,15 @@ namespace ASP.App_Code
             dg.RenderControl(htw);
             Response.Write(sw.ToString());
             Response.End();
+        }
+
+        protected CultureInfo CurrentCulture
+        {
+            get
+            {
+                var currentCulture = Thread.CurrentThread.CurrentCulture;
+                return currentCulture;    
+            }
         }
     }
 

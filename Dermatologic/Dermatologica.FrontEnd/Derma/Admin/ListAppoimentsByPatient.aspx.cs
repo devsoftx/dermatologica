@@ -21,22 +21,22 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
         DateTime? endDate = null;
         if (!string.IsNullOrEmpty(txtDateStart.Text))
         {
-            var date = Convert.ToDateTime(txtDateStart.Text.Trim());
+            var date = Convert.ToDateTime(txtDateStart.Text.Trim(), CurrentCulture);
             startDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
         }
         if (!string.IsNullOrEmpty(txtDateEnd.Text))
         {
-            var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
+            var date = Convert.ToDateTime(txtDateEnd.Text.Trim(), CurrentCulture);
             endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
         }
         if(startDate == null)
         {
-            var date = DateTime.Now;
+            var date = Convert.ToDateTime(DateTime.Now, CurrentCulture);
             startDate = new DateTime(date.Year, date.Month, 1, 8, 0, 0);
         }
         if (endDate == null)
         {
-            var date = DateTime.Now;
+            var date = Convert.ToDateTime(DateTime.Now, CurrentCulture);
             endDate = AppointmentService.GetNroDaysFromMonth(date) > 30
                                        ? new DateTime(date.Year, date.Month, 31, 21, 0, 0)
                                        : new DateTime(date.Year, date.Month, 30, 21, 0, 0);
@@ -101,10 +101,16 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
     {
         try
         {
-            ResponseBase<Appointment> response;
             if (string.IsNullOrEmpty(txtSearch.Text))
             {
-                response = BussinessFactory.GetAppointmentService().GetAll(p => p.IsActive);
+                var response = BussinessFactory.GetAppointmentService().GetAll(p => p.IsActive);
+                if (response.OperationResult == OperationResult.Success)
+                {
+                    var persons = response.Results;
+                    gvAppointments.DataSource = persons;
+                    gvAppointments.PageIndex = e.NewPageIndex;
+                    gvAppointments.DataBind();
+                }
             }
             else
             {
@@ -113,36 +119,36 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
                 DateTime? endDate = null;
                 if (!string.IsNullOrEmpty(txtDateStart.Text))
                 {
-                    var date = Convert.ToDateTime(txtDateStart.Text.Trim());
+                    var date = Convert.ToDateTime(txtDateStart.Text.Trim(), CurrentCulture);
                     startDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
                 }
                 if (!string.IsNullOrEmpty(txtDateEnd.Text))
                 {
-                    var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
+                    var date = Convert.ToDateTime(txtDateEnd.Text.Trim(), CurrentCulture);
                     endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
                 }
                 if (startDate == null)
                 {
-                    var date = DateTime.Now;
+                    var date = Convert.ToDateTime(DateTime.Now, CurrentCulture);
                     startDate = new DateTime(date.Year, date.Month, 1, 8, 0, 0);
                 }
                 if (endDate == null)
                 {
-                    var date = DateTime.Now;
+                    var date = Convert.ToDateTime(DateTime.Now, CurrentCulture);
                     endDate = AppointmentService.GetNroDaysFromMonth(date) > 30
                                                ? new DateTime(date.Year, date.Month, 31, 21, 0, 0)
                                                : new DateTime(date.Year, date.Month, 30, 21, 0, 0);
                 }
                 example.StartDate = startDate;
                 example.EndDate = endDate;
-                response = BussinessFactory.GetAppointmentService().GetByPatient(example);
-            }
-            if (response.OperationResult == OperationResult.Success)
-            {
-                var persons = response.Results;
-                gvAppointments.DataSource = persons;
-                gvAppointments.PageIndex = e.NewPageIndex;
-                gvAppointments.DataBind();
+                var responseAppoinment = BussinessFactory.GetAppointmentService().GetByPatient(example);
+                if (responseAppoinment.OperationResult == OperationResult.Success)
+                {
+                    var persons = responseAppoinment.Appointments;
+                    gvAppointments.DataSource = persons;
+                    gvAppointments.PageIndex = e.NewPageIndex;
+                    gvAppointments.DataBind();
+                }
             }
         }
         catch (Exception ex)
@@ -158,22 +164,22 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
         DateTime? endDate = null;
         if (!string.IsNullOrEmpty(txtDateStart.Text))
         {
-            var date = Convert.ToDateTime(txtDateStart.Text.Trim());
+            var date = Convert.ToDateTime(txtDateStart.Text.Trim(), CurrentCulture);
             startDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
         }
         if (!string.IsNullOrEmpty(txtDateEnd.Text))
         {
-            var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
+            var date = Convert.ToDateTime(txtDateEnd.Text.Trim(), CurrentCulture);
             endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
         }
         if (startDate == null)
         {
-            var date = DateTime.Now;
+            var date = Convert.ToDateTime(DateTime.Now, CurrentCulture);
             startDate = new DateTime(date.Year, date.Month, 1, 8, 0, 0);
         }
         if (endDate == null)
         {
-            var date = DateTime.Now;
+            var date = Convert.ToDateTime(DateTime.Now, CurrentCulture);
             endDate = AppointmentService.GetNroDaysFromMonth(date) > 30
                                         ? new DateTime(date.Year, date.Month, 31, 21, 0, 0)
                                         : new DateTime(date.Year, date.Month, 30, 21, 0, 0);
