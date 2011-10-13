@@ -203,7 +203,7 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
                 row[4] = appointment.Description;
                 row[5] = appointment.Subject;
                 row[6] = appointment.Office != null ? appointment.Office.Name : string.Empty;
-                row[7] = appointment.Medical.CompleteName;
+                row[7] = appointment.Medical != null ? appointment.Medical.CompleteName : string.Empty;
                 dt.Rows.Add(row);
             }
             var dg = new DataGrid {DataSource = dt};
