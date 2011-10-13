@@ -2,15 +2,23 @@
 
 <%@ Import Namespace="Dermatologic.Domain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
-    <script type="text/javascript">
-        $(function () {
-            $("#MainContent_txtDateEnd").datepicker();
-            $("#MainContent_txtDateEnd").datepicker($.datepicker.regional['es']);
+    <telerik:RadCodeBlock ID="rcbInvitation" runat="server">
+        <script type="text/javascript">
+            $(function () {
+                $("#MainContent_txtDateEnd").datepicker();
+                $("#MainContent_txtDateEnd").datepicker($.datepicker.regional['es']);
 
-            $("#MainContent_txtDateStart").datepicker();
-            $("#MainContent_txtDateStart").datepicker($.datepicker.regional['es']);
-        });
-    </script>
+                $("#MainContent_txtDateStart").datepicker();
+                $("#MainContent_txtDateStart").datepicker($.datepicker.regional['es']);
+            });
+            function conditionalPostback(sender, eventArgs) {
+                var theRegexp = new RegExp("\.btnExport$", "ig");
+                if (eventArgs.get_eventTarget().match(theRegexp)) {
+                    eventArgs.set_enableAjax(false);
+                }
+            }
+        </script>
+    </telerik:RadCodeBlock>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
@@ -42,7 +50,7 @@
             </tr>
         </table>
     </telerik:RadAjaxLoadingPanel>
-    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" Width="100%">
+    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" Width="100%" ClientEvents-OnRequestStart="conditionalPostback">
         <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlReport">
@@ -69,13 +77,13 @@
                                             <asp:Label ID="Label1" runat="server" Style="text-align: right" Text="Buscar por Paciente"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="txtSearch" runat="server" Width="300px"></asp:TextBox>
+                                            <asp:TextBox ID="txtSearch" runat="server" Width="350px"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="txtDateStart" runat="server" Width="100px"></asp:TextBox>
+                                            Fecha Inicial<asp:TextBox ID="txtDateStart" runat="server" Width="80px"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="txtDateEnd" runat="server" Width="100px"></asp:TextBox>
+                                            Fecha Final<asp:TextBox ID="txtDateEnd" runat="server" Width="80px"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:Button ID="btnSearch" runat="server" Text="Buscar" Width="80px" OnClick="btnSearch_Click" />
@@ -94,8 +102,7 @@
                             <td>
                                 <asp:GridView ID="gvAppointments" runat="server" AutoGenerateColumns="False" CellPadding="4"
                                     ForeColor="#333333" GridLines="None" OnRowCommand="gvAppointments_RowCommand"
-                                    Width="100%" AllowPaging="True" 
-                                    onpageindexchanging="gvAppointments_PageIndexChanging">
+                                    Width="100%" AllowPaging="True" OnPageIndexChanging="gvAppointments_PageIndexChanging">
                                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                     <Columns>
                                         <asp:BoundField DataField="StartDate" HeaderText="Fecha" />
@@ -146,12 +153,23 @@
                                 &nbsp;
                             </td>
                             <td>
+                                <asp:Button ID="btnExport" runat="server" Text="Exportar" OnClick="btnExport_Click" />
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
                                 <asp:Literal ID="litMensaje" runat="server" />
                             </td>
                             <td>
                                 &nbsp;
                             </td>
-                        </tr>                        
+                        </tr>
                     </table>
                 </asp:Panel>
             </ContentTemplate>

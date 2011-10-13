@@ -2,12 +2,20 @@
 
 <%@ Import Namespace="Dermatologic.Domain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+<telerik:RadCodeBlock ID="rcbInvitation" runat="server">
     <script type="text/javascript">
         $(function () {
             $("#MainContent_txtDate").datepicker();
             $("#MainContent_txtDate").datepicker($.datepicker.regional['es']);
         });
+        function conditionalPostback(sender, eventArgs) {
+            var theRegexp = new RegExp("\.btnExport$", "ig");
+            if (eventArgs.get_eventTarget().match(theRegexp)) {
+                eventArgs.set_enableAjax(false);
+            }
+        }
     </script>
+    </telerik:RadCodeBlock>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <telerik:RadAjaxManager ID="RadAjaxManager" runat="server">
@@ -39,7 +47,7 @@
             </tr>
         </table>
     </telerik:RadAjaxLoadingPanel>
-    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" Width="100%">
+    <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" Width="100%" ClientEvents-OnRequestStart="conditionalPostback">
         <asp:UpdatePanel ID="upnBlockingpprovalFlow" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlReport">
@@ -92,7 +100,7 @@
                                     AllowPaging="True">
                                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                                     <Columns>
-                                        <asp:BoundField DataField="StartDate" HeaderText="Fecha" DataFormatString="{0:dd-MM-yyyy}" />
+                                        <asp:BoundField DataField="StartDate" HeaderText="Fecha" />
                                         <asp:BoundField DataField="Patient" HeaderText="Paciente" />
                                         <asp:BoundField DataField="Description" HeaderText="Descripción" />
                                         <asp:BoundField DataField="Subject" HeaderText="Tratamiento" />
@@ -122,7 +130,7 @@
                                     <EditRowStyle BackColor="#999999" />
                                     <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
                                     <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Left" />
                                     <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                                     <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
                                     <SortedAscendingCellStyle BackColor="#E9E7E2" />
@@ -151,7 +159,8 @@
                                 &nbsp;
                             </td>
                             <td>
-                                &nbsp;
+                                <asp:Button ID="btnExport" runat="server" Text="Exportar" 
+                                    onclick="btnExport_Click" />
                             </td>
                             <td>
                                 &nbsp;

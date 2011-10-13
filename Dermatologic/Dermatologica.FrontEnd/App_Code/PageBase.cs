@@ -90,6 +90,18 @@ namespace ASP.App_Code
                 return DateTime.Now;
             }
         }
+
+        public void ExportToExcel(string strFileName, DataGrid dg)
+        {
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment; filename=" + strFileName);
+            Response.ContentType = "application/excel";
+            var sw = new System.IO.StringWriter();
+            var htw = new HtmlTextWriter(sw);
+            dg.RenderControl(htw);
+            Response.Write(sw.ToString());
+            Response.End();
+        }
     }
 
     public static class DermaConstants

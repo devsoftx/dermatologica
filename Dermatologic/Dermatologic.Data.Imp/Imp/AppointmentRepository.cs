@@ -32,7 +32,7 @@ namespace Dermatologic.Data
 
         public IList<Appointment> GetAppointments(DateTime? start , DateTime? end)
         {
-            const string query = "from Appointment a where a.StartDate between :start and :end";
+            const string query = "from Appointment a where (a.StartDate between :start and :end) and (a.IsActive = 1)";
             string[] parameters = { "start", "end" };
             object[] values = {
                                   start.HasValue ? start.Value : (DateTime?)null,

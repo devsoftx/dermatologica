@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
@@ -132,6 +133,8 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
                                                ? new DateTime(date.Year, date.Month, 31, 21, 0, 0)
                                                : new DateTime(date.Year, date.Month, 30, 21, 0, 0);
                 }
+                example.StartDate = startDate;
+                example.EndDate = endDate;
                 response = BussinessFactory.GetAppointmentService().GetByPatient(example);
             }
             if (response.OperationResult == OperationResult.Success)
@@ -145,6 +148,69 @@ public partial class Derma_Admin_ListAppoimentsByPatient : PageBase
         catch (Exception ex)
         {
             litMensaje.Text = string.Format("Error: {0}", ex.Message);
+        }
+    }
+
+    protected void btnExport_Click(object sender, EventArgs e)
+    {
+        var example = new Appointment { Patient = txtSearch.Text.Trim().ToLower() };
+        DateTime? startDate = null;
+        DateTime? endDate = null;
+        if (!string.IsNullOrEmpty(txtDateStart.Text))
+        {
+            var date = Convert.ToDateTime(txtDateStart.Text.Trim());
+            startDate = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
+        }
+        if (!string.IsNullOrEmpty(txtDateEnd.Text))
+        {
+            var date = Convert.ToDateTime(txtDateEnd.Text.Trim());
+            endDate = new DateTime(date.Year, date.Month, date.Day, 21, 0, 0);
+        }
+        if (startDate == null)
+        {
+            var date = DateTime.Now;
+            startDate = new DateTime(date.Year, date.Month, 1, 8, 0, 0);
+        }
+        if (endDate == null)
+        {
+            var date = DateTime.Now;
+            endDate = AppointmentService.GetNroDaysFromMonth(date) > 30
+                                        ? new DateTime(date.Year, date.Month, 31, 21, 0, 0)
+                                        : new DateTime(date.Year, date.Month, 30, 21, 0, 0);
+        }
+        example.StartDate = startDate;
+        example.EndDate = endDate;
+        var response = BussinessFactory.GetAppointmentService().GetByPatient(example);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var appointments = response.Appointments;
+            var dt = new DataTable();
+            dt.Columns.Add("<b>Fecha</b>");
+            dt.Columns.Add("<b>Hora Inicial</b>");
+            dt.Columns.Add("<b>Hora Final</b>");
+            dt.Columns.Add("<b>Paciente</b>");
+            dt.Columns.Add("<b>Descripcion</b>");
+            dt.Columns.Add("<b>Tratamiento</b>");
+            dt.Columns.Add("<b>Oficina</b>");
+            dt.Columns.Add("<b>Operador Medico</b>"); 
+            foreach (var appointment in appointments)
+            {
+                var row = dt.NewRow();
+                row[0] = appointment.StartDate != null ? appointment.StartDate.Value.ToShortDateString() : string.Empty;
+                row[1] = appointment.StartDate != null ? appointment.StartDate.Value.ToShortTimeString() : string.Empty;
+                row[2] = appointment.EndDate != null ? appointment.EndDate.Value.ToShortTimeString() : string.Empty;
+                row[3] = appointment.Patient;
+                row[4] = appointment.Description;
+                row[5] = appointment.Subject;
+                row[6] = appointment.Office != null ? appointment.Office.Name : string.Empty;
+                row[7] = appointment.Medical.CompleteName;
+                dt.Rows.Add(row);
+            }
+            var dg = new DataGrid {DataSource = dt};
+            dg.DataBind();
+            ExportToExcel(
+                string.Format("Citas_{0}-{1}.xls", startDate.Value.ToShortDateString(),
+                              endDate.Value.ToShortDateString()), dg);
         }
     }
 }
