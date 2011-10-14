@@ -131,12 +131,10 @@ public partial class Derma_Default : PageBase
         appoinment.IsActive = false;
         appoinment.LastModified = LastModified;
         appoinment.ModifiedBy = ModifiedBy;
-        appoinment.CreatedBy = CreatedBy;
-        appoinment.CreationDate = CreationDate;
         var response = BussinessFactory.GetAppointmentService().Update(appoinment);
         if (response.OperationResult == OperationResult.Success)
         {
-            LoadAppointments(radCalendar.SelectedDate, SchedulerViewType.MonthView);
+            LoadAppointments(radCalendar.SelectedDate, radCalendar.SelectedView);
         }
     }
 
@@ -177,9 +175,9 @@ public partial class Derma_Default : PageBase
                                     NotifyEach = notificarCada,
                                     Frecuence = frecuence.HasValue ? frecuence.Value : (int?) null,
                                     Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce).Entity : null,
+                                    IsActive = true,
                                     CreationDate = CreationDate,
                                     CreatedBy = CreatedBy,
-                                    IsActive = true,
                                     ModifiedBy = ModifiedBy,
                                     LastModified = LastModified,
                                     Medical = medical.HasValue ? BussinessFactory.GetPersonService().Get(medical).Entity : null
@@ -239,8 +237,6 @@ public partial class Derma_Default : PageBase
             appoinment.Office = idOfficce.HasValue ? BussinessFactory.GetOfficeService().Get(idOfficce).Entity : null;
         appoinment.Description = e.ModifiedAppointment.Description;
         appoinment.IsActive = true;
-        appoinment.CreationDate = CreationDate;
-        appoinment.CreatedBy = CreatedBy;
         appoinment.ModifiedBy = ModifiedBy;
         appoinment.LastModified = LastModified;
         var response = BussinessFactory.GetAppointmentService().Update(appoinment);
@@ -333,7 +329,6 @@ public partial class Derma_Default : PageBase
     {
         DateTime? start = null;
         DateTime? end = null;
-        DateTime[] days = new DateTime[2];
         if (dateTime.HasValue)
         {
             switch (view)
@@ -349,7 +344,7 @@ public partial class Derma_Default : PageBase
                                        : new DateTime(dateTime.Value.Year, dateTime.Value.Month, 30, 21, 0, 0);
                     break;
                 case SchedulerViewType.WeekView:
-                    days = BussinessFactory.GetAppointmentService().GetDatesNearby(dateTime.Value);
+                    var days = BussinessFactory.GetAppointmentService().GetDatesNearby(dateTime.Value);
                     start = new DateTime(days[0].Year, days[0].Month, days[0].Day, 8, 0, 0);
                     end = new DateTime(days[1].Year, days[1].Month, days[1].Day, 21, 0, 0);
                     break;

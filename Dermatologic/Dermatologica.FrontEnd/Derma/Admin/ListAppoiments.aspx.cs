@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
+using System.Web;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Domain;
@@ -172,11 +173,11 @@ public partial class Derma_Admin_ListAppoiments : PageBase
                 row[0] = appointment.StartDate != null ? appointment.StartDate.Value.ToShortDateString() : string.Empty;
                 row[1] = appointment.StartDate != null ? appointment.StartDate.Value.ToShortTimeString() : string.Empty;
                 row[2] = appointment.EndDate != null ? appointment.EndDate.Value.ToShortTimeString() : string.Empty;
-                row[3] = appointment.Patient;
-                row[4] = appointment.Description;
-                row[5] = appointment.Subject;
+                row[3] = HttpUtility.HtmlEncode(appointment.Patient);
+                row[4] = HttpUtility.HtmlEncode(appointment.Description);
+                row[5] = HttpUtility.HtmlEncode(appointment.Subject);
                 row[6] = appointment.Office != null ? appointment.Office.Name : string.Empty;
-                row[7] = appointment.Medical != null ? appointment.Medical.CompleteName : string.Empty;
+                row[7] = appointment.Medical != null ? HttpUtility.HtmlEncode(appointment.Medical.CompleteName) : string.Empty;
                 dt.Rows.Add(row);
             }
             var dg = new DataGrid { DataSource = dt };
