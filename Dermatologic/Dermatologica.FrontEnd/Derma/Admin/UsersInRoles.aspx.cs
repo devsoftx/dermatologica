@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
-using Dermatologic.Domain;
 using Dermatologic.Services;
 
 public partial class Derma_Admin_UsersInRoles : PageBase
@@ -43,11 +35,14 @@ public partial class Derma_Admin_UsersInRoles : PageBase
 
     private void GetRoles()
     {
-        var roles = BussinessFactory.GetRoleService().GetAll();
-        ddlRole.DataSource = roles;
-        ddlRole.DataValueField = "RoleId";
-        ddlRole.DataTextField = "RoleName";
-        ddlRole.DataBind();
+        var response = BussinessFactory.GetRoleService().GetAll();
+        if (response.OperationResult == OperationResult.Success)
+        {
+            ddlRole.DataSource = response.Results;
+            ddlRole.DataValueField = "RoleId";
+            ddlRole.DataTextField = "RoleName";
+            ddlRole.DataBind();
+        }
     }
 
     protected void btnAceptar_Click(object sender, EventArgs e)
