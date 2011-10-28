@@ -16,7 +16,7 @@ namespace Dermatologic.Services
             string[] parameters = { "userid", "roleid" };
             const string query =
                 "insert into [aspnet_UsersInRoles](UserId,RoleId) values(:userid,:roleid)";
-            Repository.ExecuteNonQuery(query, parameters, objects);
+            Repository.ExecuteNonSQLQuery(query, parameters, objects);
         }
     }
 }
