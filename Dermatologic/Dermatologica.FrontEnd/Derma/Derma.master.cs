@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ASP.App_Code;
 using Dermatologic.Services;
+using Telerik.Web.UI;
 using Menu = Dermatologic.Domain.Menu;
 public partial class Derma_Derma : MasterPageBase
 {
@@ -53,19 +54,20 @@ public partial class Derma_Derma : MasterPageBase
         var listmenuchilds = BussinessFactory.GetMenuService().GetMenuByUser(userName).Results.Where(p => p.ParentId != null).ToList();
         foreach (Menu item in listmenus)
         {
-            var mnuItem = new MenuItem(item.Name, item.Id.ToString(), "", item.Url);
+            //var mnuItem = new RadMenuItem(item.Name, item.Id.ToString(), "", item.Url);
+            var mnuItem = new RadMenuItem(item.Name, item.Url);
             NavigationMenu.Items.Add(mnuItem);
             var childs = listmenuchilds.Where(p => p.ParentId.Value.Equals(item.Id.Value)).ToList();
             AddChilds(mnuItem, childs);
         }
     }
 
-    private void AddChilds(MenuItem item, IEnumerable<Menu> childs)
+    private void AddChilds(RadMenuItem item, IEnumerable<Menu> childs)
     {
         foreach (var menu in childs)
         {
-            var mnuItemChild = new MenuItem { Value = menu.Id.ToString(), Text = menu.Name, NavigateUrl = menu.Url };
-            item.ChildItems.Add(mnuItemChild);
+            var mnuItemChild = new RadMenuItem { Text = menu.Name, NavigateUrl = menu.Url };
+            item.Items.Add(mnuItemChild);
         }
     }
 }

@@ -34,15 +34,17 @@
                         </tr>                        
                         <tr>
                             <td>
-                                <telerik:RadScheduler ID="radCalendar" runat="server" Skin="Simple" Culture="es-PE"
+                                <telerik:RadScheduler ID="radCalendar" runat="server" Skin="WebBlue" Culture="es-PE"
                                     SelectedView="MonthView" DayEndTime="21:00:00" DayStartTime="08:00:00" OnAppointmentDelete="radCalendar_AppointmentDelete"
                                     OnAppointmentInsert="radCalendar_AppointmentInsert" OnAppointmentUpdate="radCalendar_AppointmentUpdate"
                                     OverflowBehavior="Expand" WorkDayEndTime="21:00:00" WorkDayStartTime="08:00:00"
                                     EnableCustomAttributeEditing="True" OnPreRender="radCalendar_PreRender" EnableDescriptionField="True"
-                                    OnFormCreated="radCalendar_FormCreated" RowHeight="35px" OnAppointmentClick="radCalendar_AppointmentClick" Width="100%"
+                                    OnFormCreated="radCalendar_FormCreated" RowHeight="35px" 
+                                    OnAppointmentClick="radCalendar_AppointmentClick" Width="100%"
                                     OnAppointmentDataBound="radCalendar_AppointmentDataBound" 
                                     onappointmentcancelingedit="radCalendar_AppointmentCancelingEdit" 
-                                    onnavigationcommand="radCalendar_NavigationCommand" StartInsertingInAdvancedForm="true">
+                                    onnavigationcommand="radCalendar_NavigationCommand" 
+                                    StartInsertingInAdvancedForm="true">
                                     <WeekView DayEndTime="21:00:00" DayStartTime="08:00:00" WorkDayEndTime="21:00:00"
                                         WorkDayStartTime="08:00:00" />
                                     <DayView DayEndTime="21:00:00" DayStartTime="08:00:00" />

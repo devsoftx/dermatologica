@@ -1,9 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="ListOffices.aspx.cs" Inherits="Derma_Admin_ListOffices" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"
+    CodeFile="ListOffices.aspx.cs" Inherits="Derma_Admin_ListOffices" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-<div id="Main">
-        <table width='600px'>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+    <div id="Main">
+        <table width='100%'>
             <tr>
                 <td>
                     &nbsp;
@@ -32,8 +34,8 @@
                 </td>
                 <td>
                     <asp:GridView ID="gvOffices" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                        ForeColor="#333333" GridLines="None" OnRowCommand="gvOffices_RowCommand" 
-                        onrowdatabound="gvOffices_RowDataBound">
+                        ForeColor="#333333" GridLines="None" OnRowCommand="gvOffices_RowCommand" OnRowDataBound="gvOffices_RowDataBound"
+                        Width="100%">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" Width="600px" />
                         <Columns>
                             <asp:BoundField DataField="Name" HeaderText="Nombre" />
@@ -41,8 +43,10 @@
                             <asp:BoundField DataField="LastModified" DataFormatString="{0:dd-MM-yyyy}" HeaderText="Última Modificación" />
                             <asp:TemplateField HeaderText="Color">
                                 <ItemTemplate>
-                                    <asp:TextBox ID="lblColor" runat="server" Width="20px" ReadOnly="true"/>
+                                    <asp:TextBox ID="lblColor" runat="server" Width="20px" ReadOnly="true" />
                                 </ItemTemplate>
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <ItemStyle HorizontalAlign="Center" />
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
@@ -51,10 +55,12 @@
                                         <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />
                                     </asp:LinkButton>
                                     <asp:LinkButton ID="lnk_eliminar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
-                                        CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar El Tipo de Persona?');">
+                                        CommandName="cmd_eliminar" OnClientClick="javascript:return confirm('¿Esta seguro de eliminar este consultorio?');">
                                         <img id="Img4" src="~/images/action_delete.png" alt="Eliminar" border="0" runat="server" />
                                     </asp:LinkButton>
                                 </ItemTemplate>
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <ItemStyle HorizontalAlign="Center" />
                             </asp:TemplateField>
                         </Columns>
                         <EditRowStyle BackColor="#999999" />
@@ -98,5 +104,5 @@
         </table>
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" runat="Server">
 </asp:Content>

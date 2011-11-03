@@ -52,7 +52,7 @@ namespace ASP.App_Code
 
     public class PageBase : Page
     {
-        public PageBase()
+        protected PageBase()
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("ES-pe");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("ES-pe");

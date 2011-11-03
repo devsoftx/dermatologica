@@ -7,10 +7,10 @@
     <link href="~/Images/favicon.ico" rel="icon" type="image/x-icon" />
     <link rel="image_src" href="~/Images/logo.jpg" />
     <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
-	<link type="text/css" href="~/Css/ui-lightness/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />
-	<script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-1.4.4.min.js"></script>
-	<script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-ui-1.8.9.custom.min.js"></script>
-    <script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-es.js"></script>    
+    <link type="text/css" href="~/Css/ui-lightness/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />
+    <script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="http://localhost/dermatologica.com/Scripts/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="http://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-es.js"></script>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -26,29 +26,34 @@
                 </h1>
             </div>
             <div class="loginDisplay">
-                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                <asp:LoginView ID="HeadLoginView" runat="server">
                     <AnonymousTemplate>
-                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]
+                        [ <a href="~/Account/Login.aspx" id="HeadLoginStatus" runat="server">Entrar</a>
+                        ]
                     </AnonymousTemplate>
                     <LoggedInTemplate>
-                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
-                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
+                        Bienvenido <span class="bold">
+                            <asp:LoginName ID="HeadLoginName" runat="server" />
+                        </span>! [
+                        <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Salir"
+                            LogoutPageUrl="~/" />
+                        ]
                     </LoggedInTemplate>
                 </asp:LoginView>
             </div>
             <div class="clear hideSkiplink">
-                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">                    
-                </asp:Menu>
+                <telerik:RadMenu ID="NavigationMenu" runat="server" Skin="WebBlue">
+                </telerik:RadMenu>
             </div>
         </div>
         <div class="main">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
         <div class="clear">
         </div>
     </div>
     <div class="footer">
-        <asp:ContentPlaceHolder ID="MainFooter" runat="server"/>
+        <asp:ContentPlaceHolder ID="MainFooter" runat="server" />
     </div>
     </form>
 </body>
