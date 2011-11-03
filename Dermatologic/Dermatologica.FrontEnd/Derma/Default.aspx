@@ -44,7 +44,7 @@
                                     OnAppointmentDataBound="radCalendar_AppointmentDataBound" 
                                     onappointmentcancelingedit="radCalendar_AppointmentCancelingEdit" 
                                     onnavigationcommand="radCalendar_NavigationCommand" 
-                                    StartInsertingInAdvancedForm="true">
+                                    StartInsertingInAdvancedForm="true" FirstDayOfWeek="Monday">
                                     <WeekView DayEndTime="21:00:00" DayStartTime="08:00:00" WorkDayEndTime="21:00:00"
                                         WorkDayStartTime="08:00:00" />
                                     <DayView DayEndTime="21:00:00" DayStartTime="08:00:00" />

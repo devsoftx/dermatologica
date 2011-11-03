@@ -42,7 +42,7 @@
                 </asp:LoginView>
             </div>
             <div class="clear hideSkiplink">
-                <telerik:RadMenu ID="NavigationMenu" runat="server" Skin="WebBlue">
+                <telerik:RadMenu ID="NavigationMenu" runat="server" Skin="WebBlue" Width="100%">
                 </telerik:RadMenu>
             </div>
         </div>
