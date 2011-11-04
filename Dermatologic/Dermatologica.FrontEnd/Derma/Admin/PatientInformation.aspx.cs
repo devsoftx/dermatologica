@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
-//using Invoice = Dermatologic.Domain.Invoice;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 
