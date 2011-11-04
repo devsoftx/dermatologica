@@ -74,7 +74,7 @@
                 <asp:Label ID="Label12" runat="server" Text="Codigo:"></asp:Label>
             </td>
             <td>
-                <asp:TextBox ID="txtCode" runat="server" Width="100px"></asp:TextBox><asp:RequiredFieldValidator
+                <asp:TextBox ID="txtCode" runat="server" Width="100px" MaxLength="5"></asp:TextBox><asp:RequiredFieldValidator
                     ID="rfvtxtCode" runat="server" ErrorMessage="*" 
                     ControlToValidate="txtCode" ForeColor="Red"></asp:RequiredFieldValidator>
             </td>

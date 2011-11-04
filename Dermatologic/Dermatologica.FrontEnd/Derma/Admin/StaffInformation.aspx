@@ -50,7 +50,7 @@
                     <asp:Label ID="Label2" runat="server" Text="Fecha de Ingreso"></asp:Label>
                 </td>
                 <td class="style4">
-                    <asp:TextBox ID="txtJoinDate" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtJoinDate" runat="server" Width="100px"></asp:TextBox>
                 </td>
                 <td class="style5">
                     &nbsp;</td>
@@ -75,7 +75,7 @@
                 </td>
                 <td class="style4">
                                             <asp:TextBox ID="txtOvertimePay" runat="server" 
-                        Width="97px"></asp:TextBox>
+                        Width="100px"></asp:TextBox>
                 </td>
                 <td class="style5">
                     &nbsp;</td>

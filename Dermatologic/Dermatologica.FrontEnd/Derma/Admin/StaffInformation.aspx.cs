@@ -58,10 +58,10 @@ public partial class Derma_Admin_StaffInformation : PageBase
     private void LoadStaffInformation(Guid? idPerson)
     {
         var response = BussinessFactory.GetStaffInformationService().Get(idPerson);
-        if (response.OperationResult == OperationResult.Success)
+        if (response.OperationResult == OperationResult.Success && response.Entity != null)
         {
             var entity = response.Entity;
-            txtJoinDate.Text = Convert.ToString(entity.JoinDate);
+            if (entity.JoinDate != null) txtJoinDate.Text = entity.JoinDate.Value.ToShortDateString();
             txtNetMonthlySalary.Text = Convert.ToString(entity.NetMonthlySalary);
             txtOvertimePay.Text = Convert.ToString(entity.OvertimePay);
             ddlEmployeeType.SelectedValue = Convert.ToString(entity.EmployeeType.Id);
@@ -75,7 +75,7 @@ public partial class Derma_Admin_StaffInformation : PageBase
     {
         var idPerson = Request.QueryString.Get("id");
         var responseEmployee = BussinessFactory.GetStaffInformationService().Get(new Guid(idPerson));
-        if (responseEmployee.OperationResult == OperationResult.Success)
+        if (responseEmployee.Entity != null)
         {
             var employee = responseEmployee.Entity;
             employee.JoinDate = !string.IsNullOrEmpty(txtJoinDate.Text)

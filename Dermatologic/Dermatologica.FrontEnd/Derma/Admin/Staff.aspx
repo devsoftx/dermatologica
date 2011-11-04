@@ -1,10 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true" CodeFile="Staff.aspx.cs" Inherits="Derma_Admin_Staff" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="Staff.aspx.cs"Inherits="Derma_Admin_Staff" %>
+
 <%@ Import Namespace="ASP.App_Code" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-<div>
-        <table>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+    <div>
+        <table width="100%">
             <tr>
                 <td>
                     &nbsp;
@@ -45,8 +46,7 @@
                 </td>
                 <td>
                     <asp:GridView ID="gvStaff" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                        ForeColor="#333333" GridLines="None" Width="735px" 
-                        onrowcommand="gvStaff_RowCommand">
+                        ForeColor="#333333" GridLines="None" Width="100%" OnRowCommand="gvStaff_RowCommand">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>
                             <asp:TemplateField HeaderText="Nombres">
@@ -59,7 +59,7 @@
                                 <ItemTemplate>
                                     <asp:Literal ID="litDocType" runat="server" Text='<%#  Enum.GetName(typeof(DocumentType),Eval("DocumentType"))  %>' />
                                 </ItemTemplate>
-                            </asp:TemplateField>                            
+                            </asp:TemplateField>
                             <asp:BoundField DataField="DocumentNumber" HeaderText="N°" />
                             <asp:BoundField DataField="CellPhone" HeaderText="Celular" />
                             <asp:BoundField DataField="EmergencyPhone" HeaderText="Tel.  de Emergencia" />
@@ -69,7 +69,7 @@
                                     <asp:LinkButton ID="lnk_editar" runat="server" BorderStyle="None" CommandArgument='<%# Eval("id") %>'
                                         CommandName="cmd_editar">
                                         <img id="Img3" src="~/images/action_check.png" alt="Editar" border="0" runat="server" />
-                                    </asp:LinkButton>                                    
+                                    </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -89,19 +89,8 @@
                     &nbsp;
                 </td>
             </tr>
-            <tr>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
         </table>
     </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" Runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="MainFooter" runat="Server">
 </asp:Content>
