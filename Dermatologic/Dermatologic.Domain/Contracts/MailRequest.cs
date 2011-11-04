@@ -7,6 +7,12 @@ namespace Dermatologic.Domain.Contracts
     public class MailRequest
     {
         [DataMember]
+        public string Sender { set; get; }
+
+        [DataMember]
+        public string PasswordSender { set; get; }
+
+        [DataMember]
         public string Subject{ set; get; }
 
         [DataMember]

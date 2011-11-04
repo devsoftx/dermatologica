@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASP.App_Code;
-using Dermatologic.Services;
 
 public partial class Account_ChangePassword : PageBase
 {
@@ -23,9 +17,7 @@ public partial class Account_ChangePassword : PageBase
             var user = Membership.GetUser(userId);
             if (user != null)
             {
-                var currentPassword = user.GetPassword();
-                Response.Write(currentPassword);
-                user.ChangePassword(ChangeUserPassword.CurrentPassword, ChangeUserPassword.NewPassword);
+                user.ChangePassword(user.ResetPassword(), ChangeUserPassword.NewPassword.Trim());
                 Response.Redirect("~/ChangePasswordSuccess.aspx", true);
             }
             else

@@ -37,7 +37,9 @@ public partial class Account_RecoverPassword : PageBase
                     IsHtmlBody = true,
                     Host = ConfigurationManager.AppSettings["smtpServer"],
                     EnableSSL = Convert.ToBoolean(ConfigurationManager.AppSettings["conSSL"]),
-                    Port = Convert.ToInt32(ConfigurationManager.AppSettings["puerto"])
+                    Port = Convert.ToInt32(ConfigurationManager.AppSettings["puerto"]),
+                    Sender = ConfigurationManager.AppSettings["sender"],
+                    PasswordSender = ConfigurationManager.AppSettings["passwordSender"]
                 };
                 var mailresponse = BussinessFactory.GetMailerService().SendEmail(mailRequest);
                 if (mailresponse.OperationResult == OperationResult.Success)

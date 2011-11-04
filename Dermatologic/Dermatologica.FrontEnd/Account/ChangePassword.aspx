@@ -25,14 +25,7 @@
                  ValidationGroup="ChangeUserPasswordValidationGroup"/>
             <div class="accountInfo">
                 <fieldset class="changePassword">
-                    <legend>Account Information</legend>
-                    <p>
-                        <asp:Label ID="CurrentPasswordLabel" runat="server" AssociatedControlID="CurrentPassword">Old Password:</asp:Label>
-                        <asp:TextBox ID="CurrentPassword" runat="server" CssClass="passwordEntry" TextMode="Password"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="CurrentPasswordRequired" runat="server" ControlToValidate="CurrentPassword" 
-                             CssClass="failureNotification" ErrorMessage="Password is required." ToolTip="Old Password is required." 
-                             ValidationGroup="ChangeUserPasswordValidationGroup">*</asp:RequiredFieldValidator>
-                    </p>
+                    <legend>Account Information</legend>                    
                     <p>
                         <asp:Label ID="NewPasswordLabel" runat="server" AssociatedControlID="NewPassword">New Password:</asp:Label>
                         <asp:TextBox ID="NewPassword" runat="server" CssClass="passwordEntry" TextMode="Password"></asp:TextBox>
