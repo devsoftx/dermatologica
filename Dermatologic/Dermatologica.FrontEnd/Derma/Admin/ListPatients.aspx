@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div>
-        <table>
+        <table width="100%">
             <tr>
                 <td>
                     &nbsp;
@@ -46,7 +46,7 @@
                 </td>
                 <td>
                     <asp:GridView ID="gvPatients" runat="server" AutoGenerateColumns="False" CellPadding="4"
-                        ForeColor="#333333" GridLines="None" Width="735px" 
+                        ForeColor="#333333" GridLines="None" Width="100%" 
                         onrowcommand="gvPatients_RowCommand">
                         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                         <Columns>

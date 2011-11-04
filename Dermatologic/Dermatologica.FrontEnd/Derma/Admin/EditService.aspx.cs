@@ -13,9 +13,9 @@ public partial class Derma_Admin_EditService : PageBase
         {
             LoadCostCenter();
             SetService();
-           
         }
     }
+
     private void LoadCostCenter()
     {
         var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
@@ -25,6 +25,7 @@ public partial class Derma_Admin_EditService : PageBase
             BindControl<CostCenter>.BindDropDownList(ddlCostCenter, costcenters);   
         }
     }
+
     private void SetService()
     {
         var action = Request.QueryString.Get("action");
@@ -49,7 +50,7 @@ public partial class Derma_Admin_EditService : PageBase
             txtDescription.Text = service.Description;
             txtPrice.Text = service.Price.ToString();
             ddlCurrency.SelectedValue = service.Currency;
-            ddlCostCenter.SelectedValue = service.CostCenter.Name;   
+            ddlCostCenter.SelectedValue = service.CostCenter.Id.ToString();   
         }
     }
 
