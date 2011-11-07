@@ -19,8 +19,19 @@ public partial class Derma_Admin_ListRates : PageBase
         if (!Page.IsPostBack)
         {
             LoadPersonType();
+            LoadRates();
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
+    }
+
+    private void LoadRates()
+    {
+        var response = BussinessFactory.GetRateService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var rates = response.Results;
+            BindControl<Rate>.BindGrid(gvRates, rates);
+        }
     }
 
     protected void gvRates_RowCommand(object sender, GridViewCommandEventArgs e)

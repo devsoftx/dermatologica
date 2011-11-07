@@ -17,7 +17,6 @@ public partial class Derma_Admin_ListServices :PageBase
         {
             LoadCostCenter();
             GetServices();
-           
         }
     }
 
@@ -80,9 +79,8 @@ public partial class Derma_Admin_ListServices :PageBase
         Response.Redirect("~/Derma/Admin/EditService.aspx?action=new");
     }
 
-    protected void btnSearch_Click(object sender, EventArgs e)
+    protected void ddlCostCenter_SelectedIndexChanged(object sender, EventArgs e)
     {
         GetServices();
     }
-
 }

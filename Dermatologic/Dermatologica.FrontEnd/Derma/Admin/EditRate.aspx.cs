@@ -19,9 +19,21 @@ public partial class Derma_Admin_EditRatet : PageBase
         {
             SetRate();
             LoadPersonType();
-            LoadServices();
+            LoadCostCenter();
         }
         ucSearchPersonsMedical.PersonTypeControlName = ddlPersonType.ClientID;
+    }
+
+    private void LoadCostCenter()
+    {
+        var response = BussinessFactory.GetCostCenterService().GetAll(p => p.IsActive);
+        if (response.OperationResult == OperationResult.Success)
+        {
+            var costcenters = response.Results;
+            BindControl<CostCenter>.BindDropDownList(dwCostCenter, costcenters);
+            if (!string.IsNullOrEmpty(dwCostCenter.SelectedValue))
+                LoadServices(new Guid(dwCostCenter.SelectedValue));
+        }
     }
 
     private void SetRate()
@@ -38,7 +50,7 @@ public partial class Derma_Admin_EditRatet : PageBase
         }
     }
 
-    void LoadRate(Guid id)
+    private void LoadRate(Guid id)
     {
         var response = BussinessFactory.GetRateService().Get(id);
         if (response.OperationResult == OperationResult.Success)
@@ -63,9 +75,9 @@ public partial class Derma_Admin_EditRatet : PageBase
         }
     }
 
-    private void LoadServices()
+    private void LoadServices(Guid costCenterId)
     {
-        var response = BussinessFactory.GetServiceService().GetAll(p => p.IsActive);
+        var response = BussinessFactory.GetServiceService().GetAll(p => p.IsActive && p.CostCenter.Id == costCenterId);
         if(response.OperationResult == OperationResult.Success)
         {
             var services = response.Results.OrderBy(p => p.Name).ToList();
@@ -167,5 +179,11 @@ public partial class Derma_Admin_EditRatet : PageBase
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/Derma/Admin/ListRates.aspx", true);
+    }
+
+    protected void dwCostCenter_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var idCostCenter = dwCostCenter.SelectedValue;
+        LoadServices(new Guid(idCostCenter));
     }
 }
