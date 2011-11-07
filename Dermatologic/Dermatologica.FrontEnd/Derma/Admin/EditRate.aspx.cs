@@ -117,24 +117,17 @@ public partial class Derma_Admin_EditRatet : PageBase
             LastModified = LastModified,
             CreationDate = CreationDate,
             ModifiedBy = ModifiedBy,
-            CreatedBy = CreatedBy
+            CreatedBy = CreatedBy,
+            CurrencyPartner = ddlCurrencyPartner.SelectedValue
         };
-
-        try
+        var response = BussinessFactory.GetRateService().Save(Rate);
+        if (response.OperationResult == OperationResult.Success)
         {
-            var response = BussinessFactory.GetRateService().Save(Rate);
-            if (response.OperationResult == OperationResult.Success)
-            {
-                Response.Redirect("~/Derma/Admin/ListRates.aspx", true);
-            }
-            else
-            {
-                litMensaje.Text = string.Format("No se pudo crear La Tarifa");
-            }
+            Response.Redirect("~/Derma/Admin/ListRates.aspx", true);
         }
-        catch (Exception e)
+        else
         {
-            throw e;
+            litMensaje.Text = string.Format("No se pudo crear La Tarifa");
         }
     }
 
