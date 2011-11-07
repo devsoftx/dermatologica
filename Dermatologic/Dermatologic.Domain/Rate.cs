@@ -37,6 +37,9 @@ namespace Dermatologic.Domain
         public virtual string Currency { set; get; }
 
         [DataMember]
+        public virtual string CurrencyPartner { set; get; }
+
+        [DataMember]
         public virtual decimal UnitCost { set; get; }
 
         [DataMember]

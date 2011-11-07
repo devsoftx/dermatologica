@@ -145,7 +145,7 @@
                                 <asp:Label ID="Label6" runat="server" Text="Tarifa Partner"></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="ddlCurrency1" runat="server" AppendDataBoundItems="True" Width="50px">
+                                <asp:DropDownList ID="ddlCurrencyPartner" runat="server" AppendDataBoundItems="True" Width="50px">
                                     <asp:ListItem>USD</asp:ListItem>
                                     <asp:ListItem Value="PEN">PEN</asp:ListItem>
                                     <asp:ListItem>EUR</asp:ListItem>

@@ -57,11 +57,13 @@ public partial class Derma_Admin_EditRatet : PageBase
         {
             var rate = response.Entity;
             ddlCurrency.SelectedValue = rate.Currency;
+            ddlCurrencyPartner.SelectedValue = rate.CurrencyPartner;
             txtUnitCost.Text = rate.UnitCost.ToString();
             txtObservation.Text = rate.Observation;
             ucSearchPersonsMedical.SelectedValue = Convert.ToString(rate.Person.PersonType.Id);
             ddlPersonType.SelectedValue = Convert.ToString(rate.Person.PersonType.Id);
             ucSearchPersonsMedical.Text = rate.Person.CompleteName;
+            dwCostCenter.SelectedValue = rate.Service.CostCenter.Id.ToString();
         }
     }
 
