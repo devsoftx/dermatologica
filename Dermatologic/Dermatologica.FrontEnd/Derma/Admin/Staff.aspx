@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Derma/Derma.master" AutoEventWireup="true"CodeFile="Staff.aspx.cs"Inherits="Derma_Admin_Staff" %>
 
-<%@ Import Namespace="ASP.App_Code" %>
+<%@ Import Namespace="Dermatologica.Web" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">

@@ -9,8 +9,9 @@ using System.Threading;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dermatologic.Services;
+using Page = System.Web.UI.Page;
 
-namespace ASP.App_Code
+namespace Dermatologica.Web
 {
     public static class BindControl<T>
     {

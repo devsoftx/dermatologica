@@ -128,7 +128,12 @@ namespace Dermatologic.Services
         }
         public override ITypeContractService GetTypeContractService()
         {
-            return  new TypeContractService();
+            return new TypeContractService();
+        }
+
+        public override IWebEngineService EngineService()
+        {
+            return new WebEngineService();
         }
     }
 }

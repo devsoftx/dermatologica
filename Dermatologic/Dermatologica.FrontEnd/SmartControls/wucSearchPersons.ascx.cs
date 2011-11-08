@@ -1,51 +1,54 @@
 ﻿using System;
 using System.Web.UI;
 
-public partial class SmartControls_wucSearchPersons : UserControl
+namespace Dermatologica.Web
 {
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class SmartControls_wucSearchPersons : UserControl
     {
-
-    }
-
-    public string SelectedValue
-    {
-        get
+        protected void Page_Load(object sender, EventArgs e)
         {
-            return ComboBox.SelectedValue;
+
         }
-        set
+
+        public string SelectedValue
         {
-            ComboBox.SelectedValue = value;
+            get
+            {
+                return ComboBox.SelectedValue;
+            }
+            set
+            {
+                ComboBox.SelectedValue = value;
+            }
         }
-    }
 
-    public string Text
-    {
-        get
+        public string Text
         {
-            return ComboBox.Text;
+            get
+            {
+                return ComboBox.Text;
+            }
+            set
+            {
+                ComboBox.Text = value;
+            }
         }
-        set
+
+        public string EmptyMessage
         {
-            ComboBox.Text = value;
+            set { ComboBox.EmptyMessage = value; }
         }
-    }
 
-    public string EmptyMessage
-    {
-        set { ComboBox.EmptyMessage = value; }
-    }
+        public string PersonTypeControlName { get; set; }
 
-    public string PersonTypeControlName { get; set; }
+        public bool EnableLoadOnDemand { set { ComboBox.EnableLoadOnDemand = value; } }
 
-    public bool EnableLoadOnDemand { set { ComboBox.EnableLoadOnDemand = value; } }
-
-    public string WebServiceMethod
-    {
-        set
+        public string WebServiceMethod
         {
-            ComboBox.WebServiceSettings.Method = value;
+            set
+            {
+                ComboBox.WebServiceSettings.Method = value;
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.UI.WebControls;
-using ASP.App_Code;
+using Dermatologica.Web;
 using Dermatologic.Services;
 
 public partial class Derma_Admin_ListExchangeRates : PageBase

@@ -5,7 +5,8 @@ using Dermatologic.Domain;
 using Dermatologic.Services;
 using Telerik.Web.UI;
 
-
+namespace Dermatologica.Web
+{
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.Web.Script.Services.ScriptService]
@@ -47,7 +48,7 @@ using Telerik.Web.UI;
                 var allResult = from c in response.Pacients
                                 select new RadComboBoxItemData
                                 {
-                                    Text = string.Format("{0} {1} {2}",c.FirstName,c.LastNameP,c.LastNameM),
+                                    Text = c.CompleteName,
                                     Value = c.Id.ToString()
                                 };
                 result.Items = allResult.ToArray();
@@ -59,3 +60,5 @@ using Telerik.Web.UI;
             return result;
         }
     }
+}
+    

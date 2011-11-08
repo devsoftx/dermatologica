@@ -70,5 +70,7 @@ namespace Dermatologic.Services
         public abstract IEmployeeTypeService GetEmployeeTypeService();
 
         public abstract ITypeContractService GetTypeContractService();
+
+        public abstract IWebEngineService EngineService();
     }
 }

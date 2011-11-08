@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ASP.App_Code;
+using Dermatologica.Web;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 public partial class Derma_Admin_MakeMedicalCare : PageBase

@@ -1,7 +1,7 @@
 using System.Web.UI;
 using Dermatologic.Services;
 
-namespace ASP.App_Code
+namespace Dermatologica.Web
 {
     public class MasterPageBase : MasterPage
     {

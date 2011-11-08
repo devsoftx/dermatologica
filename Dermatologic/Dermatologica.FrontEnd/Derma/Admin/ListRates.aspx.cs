@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ASP.App_Code;
+using Dermatologica.Web;
 using Dermatologic.Services;
 using Rate = Dermatologic.Domain.Rate;
 using PersonType = Dermatologic.Domain.PersonType;

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Web.UI.WebControls;
-using ASP.App_Code;
+using Dermatologica.Web;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 

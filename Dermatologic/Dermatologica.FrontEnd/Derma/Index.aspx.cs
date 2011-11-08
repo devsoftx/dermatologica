@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ASP.App_Code;
+using Dermatologica.Web;
 
 public partial class Derma_Index : PageBase
 {

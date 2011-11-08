@@ -74,6 +74,7 @@
     <Compile Include="Imp\UbigeoService.cs" />
     <Compile Include="Imp\UsersInRolesService.cs" />
     <Compile Include="Imp\UsersService.cs" />
+    <Compile Include="Imp\WebEngineService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceController.cs" />
     <Compile Include="ServiceFactory.cs" />

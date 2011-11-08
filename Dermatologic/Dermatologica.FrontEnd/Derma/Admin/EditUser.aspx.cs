@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Security;
-using ASP.App_Code;
+using Dermatologica.Web;
 
 public partial class Derma_Admin_EditUser : PageBase
 {
@@ -70,10 +70,10 @@ public partial class Derma_Admin_EditUser : PageBase
         var question = Question.Text;
         var passwordAnswer = Answer.Text;
         MembershipCreateStatus status;
-        var response = Membership.CreateUser(userName, password, email, question, passwordAnswer, true, out status);
+        Membership.CreateUser(userName, password, email, question, passwordAnswer, true, out status);
         if(status == MembershipCreateStatus.Success)
         {
-            Response.Redirect("~/Derma/Admin/ListUsers.aspx", true);
+            BussinessFactory.EngineService().Navigate(Dermatologic.Services.Page.ListUsers);
             return;
         }
         ErrorMessage.Text = "No se pudo crear usuario";

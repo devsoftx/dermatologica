@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Web.UI.WebControls;
-using ASP.App_Code;
+using Dermatologica.Web;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 using Appointment = Dermatologic.Domain.Appointment;

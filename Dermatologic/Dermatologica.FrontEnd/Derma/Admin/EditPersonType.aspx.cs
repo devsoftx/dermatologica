@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using ASP.App_Code;
+using Dermatologica.Web;
 using PersonType = Dermatologic.Domain.PersonType;
 using Dermatologic.Domain;
 using Dermatologic.Services;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
-using ASP.App_Code;
+using Dermatologica.Web;
 using Dermatologic.Domain;
 using Dermatologic.Services;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Security;
-using ASP.App_Code;
+using Dermatologica.Web;
 
 public partial class Account_ChangePassword : PageBase
 {
