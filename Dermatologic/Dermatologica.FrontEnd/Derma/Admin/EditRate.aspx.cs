@@ -123,7 +123,7 @@ public partial class Derma_Admin_EditRatet : PageBase
         var response = BussinessFactory.GetRateService().Save(Rate);
         if (response.OperationResult == OperationResult.Success)
         {
-            Response.Redirect("~/Derma/Admin/ListRates.aspx", true);
+            BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.ListRates);
         }
         else
         {
@@ -148,7 +148,7 @@ public partial class Derma_Admin_EditRatet : PageBase
             var response = BussinessFactory.GetRateService().Update(rate);
             if (response.OperationResult == OperationResult.Success)
             {
-                Response.Redirect("~/Derma/Admin/ListRates.aspx", true);
+                BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.ListRates);
             }
             else
             {
@@ -173,7 +173,7 @@ public partial class Derma_Admin_EditRatet : PageBase
 
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Derma/Admin/ListRates.aspx", true);
+        BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.ListRates);
     }
 
     protected void dwCostCenter_SelectedIndexChanged(object sender, EventArgs e)

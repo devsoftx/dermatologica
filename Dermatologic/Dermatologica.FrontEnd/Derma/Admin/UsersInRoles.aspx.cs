@@ -53,13 +53,13 @@ public partial class Derma_Admin_UsersInRoles : PageBase
         if (response.Role == null)
         {
             BussinessFactory.GetUsersInRolesService().Insert(userid, roleid);
-            Response.Redirect("~/Derma/Admin/ListUsers.aspx", true);
+            BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.ListUsers);
         }
     }
 
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Derma/Admin/ListUsers.aspx", true);
+        BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.ListUsers);
     }
 
     protected void ddlRole_SelectedIndexChanged(object sender, EventArgs e)

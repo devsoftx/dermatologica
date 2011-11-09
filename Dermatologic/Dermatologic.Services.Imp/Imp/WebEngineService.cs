@@ -19,5 +19,11 @@ namespace Dermatologic.Services
             if (urlAtt != null)
                 _context.Redirect(urlAtt.Url, urlAtt.EndResponse);
         }
+
+        public void Navigate(string page)
+        {
+            var _context = System.Web.HttpContext.Current.Response;
+            _context.Redirect(page, false);
+        }
     }
 }

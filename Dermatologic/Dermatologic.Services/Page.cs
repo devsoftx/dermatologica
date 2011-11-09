@@ -6,6 +6,15 @@ namespace Dermatologic.Services
     {
         [UrlPage(Url = "~/Derma/Admin/ListUsers.aspx")]
         ListUsers,
+
+        [UrlPage(Url = "~/Account/ChangePasswordSuccess.aspx")]
+        ChangePasswordSuccess,
+
+        [UrlPage(Url = "~/Derma/Admin/Staff.aspx")]
+        Staff,
+
+        [UrlPage(Url = "~/Derma/Admin/ListRates.aspx")]
+        ListRates,
     }
 
     [AttributeUsage(AttributeTargets.Field)]

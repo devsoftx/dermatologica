@@ -73,7 +73,7 @@ public partial class Derma_Admin_EditUser : PageBase
         Membership.CreateUser(userName, password, email, question, passwordAnswer, true, out status);
         if(status == MembershipCreateStatus.Success)
         {
-            BussinessFactory.EngineService().Navigate(Dermatologic.Services.Page.ListUsers);
+            BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.ListUsers);
             return;
         }
         ErrorMessage.Text = "No se pudo crear usuario";

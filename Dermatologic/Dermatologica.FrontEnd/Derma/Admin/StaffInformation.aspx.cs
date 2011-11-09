@@ -88,7 +88,7 @@ public partial class Derma_Admin_StaffInformation : PageBase
             var response = BussinessFactory.GetStaffInformationService().Update(employee);
             if (response.OperationResult == OperationResult.Success)
             {
-                Response.Redirect("~/Derma/Admin/Staff.aspx", true);
+                BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.Staff);
             }
             else
             {
@@ -115,7 +115,7 @@ public partial class Derma_Admin_StaffInformation : PageBase
          var response = BussinessFactory.GetStaffInformationService().Save(info);
          if (response.OperationResult == OperationResult.Success)
          {
-             Response.Redirect("~/Derma/Admin/Staff.aspx", true);
+             BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.Staff);
          }
          else
          {
@@ -132,7 +132,6 @@ public partial class Derma_Admin_StaffInformation : PageBase
 
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Derma/Admin/ListPatients.aspx", true);
+        BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.Staff);
     }
-
 }

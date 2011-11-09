@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Dermatologica.Web;
 
-public partial class Account_Register : System.Web.UI.Page
+public partial class Account_Register : PageBase
 {
 
     protected void Page_Load(object sender, EventArgs e)

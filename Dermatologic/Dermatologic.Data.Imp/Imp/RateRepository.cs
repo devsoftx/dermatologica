@@ -8,7 +8,7 @@ namespace Dermatologic.Data
     {
         public IList<Rate> GetRatesByPerson(Person example)
         {
-            const string query = "from Rate r where r.Person.Id = :personId";
+            const string query = "from Rate r where (r.Person.Id = :personId) and r.IsActive = true";
             string[] parameters = { "personId" };
             object[] values = {
                                   example.Id, 
@@ -17,7 +17,7 @@ namespace Dermatologic.Data
         }
         public IList<Rate> GetRatesByPersonService(Person example1,Service example2)
         {
-            const string query = "from Rate r where r.Person.Id = :personId and r.Service.Id=:serviceId";
+            const string query = "from Rate r where (r.Person.Id = :personId and r.Service.Id=:serviceId) and r.IsActive = true";
             string[] parameters = { "personId","serviceId" };
             object[] values = {
                                   example1.Id,example2.Id 

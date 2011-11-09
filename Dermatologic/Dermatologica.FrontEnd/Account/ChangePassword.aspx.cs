@@ -18,7 +18,7 @@ public partial class Account_ChangePassword : PageBase
             if (user != null)
             {
                 user.ChangePassword(user.ResetPassword(), ChangeUserPassword.NewPassword.Trim());
-                Response.Redirect("~/ChangePasswordSuccess.aspx", true);
+                BussinessFactory.EngineService.Navigate(Dermatologic.Services.Page.ChangePasswordSuccess);
             }
             else
             {

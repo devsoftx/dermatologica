@@ -44,7 +44,7 @@ public partial class Derma_Admin_ListRates : PageBase
                 break;
             case "cmd_eliminar":
                 DeleteRate(new Guid(e.CommandArgument.ToString()));
-                SearchRatesByPerson();
+                LoadRates();
                 break;
         }
     }
@@ -106,7 +106,6 @@ public partial class Derma_Admin_ListRates : PageBase
 
     protected void lnkNew_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Derma/Admin/EditRate.aspx?action=new");
+        BussinessFactory.EngineService.Navigate("~/Derma/Admin/EditRate.aspx?action=new");
     }
-   
 }
