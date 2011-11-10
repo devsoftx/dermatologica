@@ -380,6 +380,7 @@ public partial class Derma_Default : PageBase
             if (entity.Medical != null)
             {
                 e.Appointment.ToolTip = string.Format("Medico/Cosmeatra: {0}", entity.Medical.CompleteName);
+                e.Appointment.BorderColor = Color.Black;
             }
         }
     }
